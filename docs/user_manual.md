@@ -1,156 +1,121 @@
-# Adaptive Flashcards — Complete Step-by-Step User Manual
+# Adaptive Flashcards — User Manual (No GitHub Account Required)
 
-This manual is written for a **brand-new user on a brand-new computer** with everyday computer skills. You do **not** need to install any software, and you do **not** need to use a terminal or write any code. Everything is done inside your regular web browser (Chrome, Safari, Edge, or Firefox).
-
----
-
-## Why Isn't There a Web Address (URL) Yet?
-Right now, the FlashCards program code is stored on GitHub (`https://github.com/bkindereit/flashCards`), which is like a folder of blueprints. To get your own personal, private **Web Address (URL)** and your own free **Cloud Database** where your flashcards are saved, you complete **Part 1** once in your web browser (~10 minutes, 100% free). After that, you will have a permanent bookmarkable link you can open on any computer or phone forever.
+> **Important Note Before Sharing This Manual:**
+> Right now, this application has not been published to a public website link yet.
+> - **Completed Once by the App Owner:** Follow **Appendix A** at the bottom of this document **one time** (~10 minutes, free, email-only—no GitHub account needed) to create your live Web Address (e.g., `https://my-flashcards.netlify.app`) and paste that link into **Step 1** below.
+> - **For Every End User After That:** Once that link is created, **End Users only follow Steps 1–5 below**. They do **not** need a GitHub account, do **not** need to install any software, and do **not** need to set up any database.
 
 ---
 
-## Part 1: One-Time Setup to Get Your Web Address (URL)
-*(You only do Part 1 once. Everything is free and no credit card is required.)*
+## What You Need Before Starting
+1. **Any Web Browser:** Chrome, Safari, Microsoft Edge, or Firefox.
+2. **Your Email Address:** Used to receive a one-click sign-in link (no password to remember).
+3. **Your `.csv` File of Questions & Answers:** Saved on your computer (for example, in your *Desktop*, *Documents*, or *Downloads* folder).
 
-### Step 1A: Create Your Free Cloud Database (Supabase)
-1. Open your web browser and go to **[https://supabase.com](https://supabase.com)**.
-2. Click **Start your project** (top right) and sign in with your **GitHub** account (or create a free account with your email).
-3. Click the green **New project** button:
-   - **Organization:** Leave the default selected.
-   - **Name:** Type `FlashCards`
-   - **Database Password:** Click **Generate a password** (you won't need to type this password again).
-   - **Region:** Pick the region closest to where you live.
-   - Click **Create new project**.
-4. Wait about 60 seconds while the page says *"Setting up project..."* until it finishes.
-
-### Step 1B: Set Up the Flashcard Tables in Your Database
-1. Open a **second browser tab** and go to this exact link (this is the database setup file from the project):
-   **[https://raw.githubusercontent.com/bkindereit/flashCards/main/supabase/migrations/20261010000000_initial_schema.sql](https://raw.githubusercontent.com/bkindereit/flashCards/main/supabase/migrations/20261010000000_initial_schema.sql)**
-2. Select all the text on that page (**Ctrl + A** on Windows, or **Cmd + A** on Mac) and copy it (**Ctrl + C** or **Cmd + C**).
-3. Go back to your **Supabase** browser tab:
-   - On the left-hand menu bar, click **SQL Editor** (the icon that looks like `>_`).
-   - Click into the big blank text area on the right and **Paste** (**Ctrl + V** or **Cmd + V**) the text you copied.
-   - Click the green **Run** button in the bottom-right corner.
-   - You will see **`Success. No rows returned`** at the bottom. *(Your database tables are now ready!)*
-
-### Step 1C: Copy Your Two Database Connection Keys
-1. Still in Supabase, look at the left-hand menu bar and click **Project Settings** (the **Gear icon ⚙️** at the bottom of the left sidebar).
-2. In the Settings menu that appears, click **API** (or **Data API**).
-3. Keep this tab open — you will copy two things from this page in the next step:
-   - **Project URL:** A web link that looks like `https://abcdefghijklm.supabase.co`
-   - **Project API Keys → `anon` `public`:** A long string of letters and numbers that starts with `eyJ...` (click the **Copy** button next to `anon` `public`).
-
-### Step 1D: Publish Your Personal Web Address for Free (Vercel)
-1. Open a new browser tab and go to **[https://vercel.com](https://vercel.com)**.
-2. Click **Sign Up** (or **Log In**), choose **Hobby (Free)**, and click **Continue with GitHub**.
-3. Once logged in to Vercel, click the **Add New...** button (top right) and select **Project**.
-4. Under **Import Git Repository**, find **`flashCards`** in the list and click **Import** next to it.
-   *(If you don't see `flashCards`, click **Adjust GitHub App Permissions** on that screen to allow Vercel to see your `flashCards` repository).*
-5. On the **Configure Project** page, click to expand the section called **Environment Variables**. You will add **two** items here:
-   - **Item 1:**
-     - In the **Key** box, type exactly: `VITE_SUPABASE_URL`
-     - In the **Value** box, paste your **Project URL** from Step 1C (e.g., `https://abcdefghijklm.supabase.co`).
-     - Click **Add** (if there is an Add button, or move to the second row).
-   - **Item 2:**
-     - In the **Key** box, type exactly: `VITE_SUPABASE_ANON_KEY`
-     - In the **Value** box, paste your **`anon` `public` key** from Step 1C.
-     - Click **Add**.
-6. Click the big **Deploy** button at the bottom.
-7. Wait about **45–60 seconds** while Vercel builds your site. Confetti will appear on screen with the message **"Congratulations!"**
-8. Click **Continue to Dashboard**. Under **Domains**, you will see your new permanent **Web Address (URL)** — it will look like:
-   **`https://flash-cards-yourname.vercel.app`**
-9. **Copy that `https://...vercel.app` link!** That is your personal Adaptive Flashcards web address.
-
-### Step 1E: Connect Your Sign-In Email Link to Your New Web Address
-1. Switch back to your **Supabase** browser tab one last time.
-2. On the left-hand menu bar, click **Authentication** (the **Lock icon 🔒**), then click **URL Configuration**.
-3. Look for the box labeled **Site URL** (it currently says `http://localhost:3000`):
-   - Erase `http://localhost:3000` and **paste your new `https://...vercel.app` address** from Step 1D.
-   - Click the green **Save changes** button.
-
-**🎉 One-Time Setup Complete!** Bookmark your `https://...vercel.app` link in your browser. You will never have to repeat Part 1 again, even if you buy a new computer or use your phone.
+### How Your `.csv` Spreadsheet Should Look
+If you created your flashcards in **Excel**, **Google Sheets**, or **Apple Numbers**:
+- Put all your **Questions** in **Column A** and all your **Answers** in **Column B**.
+- Type `question` in the top-left cell (**A1**) and `answer` in the next cell (**B1**).
+- Save or export the file as **CSV UTF-8 (Comma delimited) (`.csv`)**.
 
 ---
 
-## Part 2: Daily Use — Signing In, Uploading Your CSV, and Studying
-
-### Step 1: Check Your Local `.csv` File
-Before uploading, make sure your question-and-answer spreadsheet on your computer is saved as a **`.csv` (CSV UTF-8)** file.
-- If you made your list in **Microsoft Excel**, **Apple Numbers**, or **Google Sheets**:
-  - Put your questions in **Column A** and your answers in **Column B**.
-  - Put `question` in cell **A1** and `answer` in cell **B1** (optional, but saves a step!).
-  - Click **File → Save As** (or **Download**) and choose **CSV UTF-8 (Comma delimited) (`.csv`)**.
-
----
-
-### Step 2: Open Your Web Address & Sign In
-1. Open your bookmarked **`https://...vercel.app`** web address in your browser.
-2. On the **Adaptive Flashcards** sign-in box:
-   - Click inside **Enter your email address** and type your email address.
-   - Click the blue **Send Magic Sign-In Link** button.
-3. A green message will appear:
+## Step 1: Open the Website & Sign In with Your Email
+1. Open your web browser (Chrome, Safari, Edge, or Firefox) and click or type this web address into the top address bar:
+   > **Web Address (URL):** `https://YOUR-FLASHCARDS-LINK-HERE.netlify.app` *(Replace with your live link once Appendix A is completed once)*
+2. You will see the **Adaptive Flashcards** sign-in screen in the center of the page:
+   - Click inside the box that says **"Enter your email address"** and type your email address.
+   - Click the blue **"Send Magic Sign-In Link"** button.
+3. A green message will appear below the button:
    > *"Check your email for the magic sign-in link or OTP code!"*
-4. Open your email inbox (check your *Spam/Junk* folder if you don't see it within 30 seconds), open the email titled **Magic Link**, and click **Log In**.
-5. Your browser will open directly into **Your Flashcard Decks**.
-
-*(Optional Tip: Want an icon on your Desktop or Dock so it feels like an installed program? In Chrome or Edge, click the little **Computer/Download icon** on the right side of the address bar and click **Install**. In Safari on a Mac, click **File → Add to Dock**).*
-
----
-
-### Step 3: Create a Deck for Your Cards
-1. On the **Your Flashcard Decks** screen, click the blue **+ Create Deck** button.
-2. A window will pop up:
-   - **Deck Name:** Type a name for your flashcards (for example, `Spanish Vocabulary` or `History Exam`).
-   - **Description (Optional):** You can leave this blank or write a short note.
-   - **Target Exam Date (Optional):** Leave blank unless you want to track a test date.
-   - Leave the other numbers (**Desired Retention** `0.90` and **Cohort Size** `10`) as they are.
-3. Click the blue **Create Deck** button. Your new deck box now appears on the screen.
+4. Open your email inbox in another tab or on your phone (check your *Spam* or *Junk* folder if it doesn't arrive within 1 minute).
+5. Open the email titled **"Magic Link"** and click **"Log In"**.
+6. Your browser will automatically open to your personal **Your Flashcard Decks** home screen.
 
 ---
 
-### Step 4: Upload Your `.csv` File from Your Computer
-1. Look at your new deck box on the screen. At the bottom of that box, right next to the blue **▶ Study** button, click the **Upload button** (the icon with an **upward-pointing arrow ↑**).
-2. A window titled **Import CSV Flashcards** will open:
-   - Click anywhere inside the big dashed box that says **"Choose a UTF-8 .csv file"**.
-   - A file finder window from your computer will open. Go to the folder where your `.csv` file is saved (such as *Desktop*, *Documents*, or *Downloads*), click your `.csv` file, and click **Open**.
-3. **If You See a Yellow "Column Mapping Required" Box:**
-   - This only appears if your spreadsheet didn't name the first row `question` and `answer`.
-   - Use the **Question Column** dropdown to pick the column that has your questions.
-   - Use the **Answer Column** dropdown to pick the column that has your answers.
-   - Click the yellow **Apply Mapping** button.
-4. **Check the Preview:**
-   - You will see four boxes showing:
-     - **Total Data Rows:** How many rows were in your file.
-     - **Valid Inserts (Green):** How many flashcards are ready to be added.
-     - **File Duplicates (Yellow):** Any identical duplicate rows that were automatically skipped.
-     - **Rejected (Red):** Any blank rows that were skipped.
-   - Below that, you will see the first 20 questions and answers in a table so you can double-check that Question and Answer aren't backwards.
-5. Click the blue **Commit Import** button in the bottom-right corner of the window.
-6. The window will close, and all of your questions and answers are now saved in your deck!
+## Step 2: Create a New Flashcard Deck
+1. On the **Your Flashcard Decks** screen, click the blue **"+ Create Deck"** button.
+2. A small window titled **Create New Deck** will pop up:
+   - **Deck Name:** Type a name for your topic (for example, `Biology Chapter 1` or `Real Estate Exam`).
+   - **Description (Optional):** Leave blank, or type a short note.
+   - **Target Exam Date (Optional):** Leave blank unless you want to enter an upcoming test date.
+   - Leave the other settings (**Desired Retention** `0.90` and **Cohort Size** `10`) alone.
+3. Click the blue **"Create Deck"** button at the bottom of the pop-up window.
+4. You will now see a box for your new deck on your home screen.
 
 ---
 
-### Step 5: Study Your Flashcards
-1. On your deck box, click the blue **▶ Study** button.
-2. A window will ask **how many minutes** you want to study:
-   - Click one of the time buttons (**5 min**, **10 min**, **15 min**, **20 min**, **30 min**, **45 min**, or **60 min**) and click **Start Session**.
-3. **How to Review Each Card:**
-   - Read the **Question** on screen and think of the answer in your head.
-   - Click the blue **Show Answer** button (or press the **Spacebar** or **Enter** key on your keyboard).
-   - The **Answer** will appear below the question, along with two grading buttons:
-     - Click the green **I got it!** button (or press **`1`** on your keyboard) if you knew the answer.
-     - Click the red **Dang, I missed it!** button (or press **`2`** on your keyboard) if you missed it.
-   - The app automatically schedules cards you missed to come back sooner, and spaces out cards you know well!
-4. **Other Buttons on the Study Screen:**
-   - **Undo Last Grade** *(bottom of card)*: Clicked the wrong button by mistake? Click this to go right back to the card you just graded.
-   - **Pause** *(top right)*: Pauses the study timer if you need to take a break.
-   - **End Session** *(top right)*: Stops studying early and shows your score summary.
-5. When your timer runs out (or you finish all due cards), a **Study Session Completed** screen shows how many cards you reviewed and your accuracy percentage. Click **Return to Deck** to go back to your home screen.
+## Step 3: Upload the `.csv` File from Your Computer
+1. Look at your new deck box on the home screen. Along the bottom of that box, right next to the blue **▶ Study** button, click the **Upload button** (the gray square icon with an **upward-pointing arrow ↑**).
+2. A window titled **"Import CSV Flashcards"** will open:
+   - Click in the middle of the big dashed box that says **"Choose a UTF-8 .csv file"**.
+   - A file window will open showing the folders on your computer.
+   - Click the folder where your file is saved (such as *Desktop*, *Downloads*, or *Documents*), click on your **`.csv` file**, and click **"Open"**.
+3. **If a Yellow Box Appears Saying "Column Mapping Required":**
+   - *(This only happens if the first row of your spreadsheet didn't say `question` and `answer`.)*
+   - In the **Question Column** dropdown menu, choose the column that has your questions.
+   - In the **Answer Column** dropdown menu, choose the column that has your answers.
+   - Click the yellow **"Apply Mapping"** button.
+4. **Check Your Preview:**
+   - The window will show how many cards were found under **Valid Inserts** (in green) and show the first 20 questions and answers in a table.
+   - Glance at the table to make sure your questions are under **Question** and your answers are under **Answer**.
+5. Click the blue **"Commit Import"** button in the bottom-right corner of the window.
+6. The window will close — all of your question-and-answer pairs are now uploaded and saved!
 
 ---
 
-### Step 6: Viewing, Editing, or Backing Up Your Cards Later
-- **To View, Search, Edit, or Delete Individual Cards:**
-  On your deck box, click the **Manage Cards** button (the **stacked-squares icon** next to the Upload arrow). Here you can search for a word, click **Edit** to fix a typo on a card, click **Delete** to remove a card, or click **+ New Card** to type in a single card by hand.
-- **To Save a Backup Copy to Your Computer:**
-  Click **Export JSON** in the top-right bar of the screen at any time to download a complete backup file of all your decks and flashcards.
+## Step 4: Study Your Flashcards
+1. On your deck box, click the blue **"▶ Study"** button.
+2. A window will ask how long you want to study:
+   - Click one of the time buttons (**5 min**, **10 min**, **15 min**, **20 min**, **30 min**, **45 min**, or **60 min**).
+   - Click the blue **"Start Session"** button.
+3. **Going Through Your Cards:**
+   - Read the **Question** shown on the card and think of the answer.
+   - Click the blue **"Show Answer"** button (or press the **Spacebar** on your keyboard).
+   - Read the **Answer** that appears, then click one of the two buttons below it:
+     - Click the green **"I got it!"** button (or press **`1`** on your keyboard) if you knew the answer.
+     - Click the red **"Dang, I missed it!"** button (or press **`2`** on your keyboard) if you missed it.
+   - The next card will appear automatically. Cards you miss will come back more often; cards you know well will be spaced out over days and weeks.
+4. **Helpful Buttons While Studying:**
+   - **Undo Last Grade** *(at the bottom of the card)*: If you clicked the wrong button by mistake, click this to go back one card.
+   - **Pause** *(top right)*: Freezes the timer if you need to step away from your computer.
+   - **End Session** *(top right)*: Finishes your study session early and shows your score.
+5. When your timer finishes, you will see the **Study Session Completed** screen with your score and accuracy. Click **"Return to Deck"** to go back to your home screen.
+
+---
+
+## Step 5: Editing Cards or Downloading a Backup Copy
+- **To Fix a Typo, Add a Single Card, or Delete a Card:**
+  On your deck box, click the **Manage Cards** button (the **stacked-squares icon** next to the Upload arrow). You can search for any card using the search box, click **Edit** (pencil icon) to change the text, click **Delete** (trash icon) to remove it, or click **+ New Card** to type in one card manually.
+- **To Save a Backup File to Your Computer:**
+  Click **"Export JSON"** in the top-right corner of the screen at any time to save a complete backup file of your flashcards to your *Downloads* folder.
+
+---
+---
+
+# Appendix A: One-Time Setup to Create the Live Web Address (No GitHub Account Required)
+
+*Because this application was just built, it does not have a live website address on the internet yet. Complete the steps below **one time** using only an email address (no GitHub account required) to create the free database and live website link.*
+
+### 1. Create a Free Supabase Database Using Email & Password
+1. In your web browser, go to **[https://supabase.com/dashboard/sign-up](https://supabase.com/dashboard/sign-up)**.
+2. Enter your **Email address** and choose a **Password**, then click **Sign up** *(do **not** click Continue with GitHub)*.
+3. Open your email inbox, click the confirmation link from Supabase, and sign in.
+4. Click **New project**:
+   - **Name:** `FlashCards`
+   - **Database Password:** Click **Generate a password**
+   - Click **Create new project** and wait ~60 seconds for it to finish setting up.
+5. Set up the database tables:
+   - Open a new browser tab and go to this public link (no login needed):
+     **[https://raw.githubusercontent.com/bkindereit/flashCards/main/supabase/migrations/20261010000000_initial_schema.sql](https://raw.githubusercontent.com/bkindereit/flashCards/main/supabase/migrations/20261010000000_initial_schema.sql)**
+   - Select everything on the page (**Ctrl+A** on Windows / **Cmd+A** on Mac) and Copy it (**Ctrl+C** / **Cmd+C**).
+   - Switch back to your Supabase tab, click **SQL Editor** (`>_` icon on the left menu), **Paste** (**Ctrl+V** / **Cmd+V**) into the text box, and click the green **Run** button (bottom right). It will say `Success. No rows returned`.
+6. Find your two database keys:
+   - In Supabase, click **Project Settings** (the **Gear icon ⚙️** at the bottom of the left menu) → click **API** (or **Data API**).
+   - Keep this page open so you can copy:
+     1. **Project URL** (looks like `https://abcdefghijklm.supabase.co`)
+     2. **`anon` `public` Key** (long code starting with `eyJ...`)
+
+### 2. Publish Your Live Website Link for Free
+Once your Project URL and `anon` `public` key are ready, we can build your ready-to-upload `dist` website folder right here on your Mac so you can drag-and-drop it onto **[https://app.netlify.com/drop](https://app.netlify.com/drop)** (which only asks for an email address and password—no GitHub account needed) and immediately get your permanent `https://...netlify.app` web address!
