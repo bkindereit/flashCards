@@ -1,0 +1,598 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Bidirectional Requirements Traceability Matrix — FCA-SRS-001 vs FCA-VVP-001",
+  "version": "1.0",
+  "generated_at": "2026-10-10T00:00:00Z",
+  "requirements": [
+    {
+      "requirement_id": "ARC-001", "priority": "Must", "description": "Single-page application using React, Vite, TypeScript strict mode.",
+      "verification_methods": ["I", "T"], "activity_ids": ["VA-ARC-001"],
+      "automated_test_ids": ["build:tsc", "build:vite"],
+      "evidence_paths": ["dist/", "dist/manifest.webmanifest"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ARC-002", "priority": "Must", "description": "TypeScript strict mode with no implicit any.",
+      "verification_methods": ["I"], "activity_ids": ["VA-ARC-001"],
+      "automated_test_ids": ["build:tsc"],
+      "evidence_paths": ["tsconfig.json"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ARC-003", "priority": "Must", "description": "Production build generates static files.",
+      "verification_methods": ["T"], "activity_ids": ["VA-ARC-001"],
+      "automated_test_ids": ["build:vite"],
+      "evidence_paths": ["dist/index.html", "dist/assets/"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ARC-004", "priority": "Must", "description": "Progressive Web App manifest with app metadata.",
+      "verification_methods": ["I", "T"], "activity_ids": ["VA-ARC-002"],
+      "automated_test_ids": ["build:pwa-manifest"],
+      "evidence_paths": ["dist/manifest.webmanifest", "vite.config.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ARC-005", "priority": "Must", "description": "Service worker generated for PWA offline support.",
+      "verification_methods": ["I"], "activity_ids": ["VA-ARC-002"],
+      "automated_test_ids": ["build:sw"],
+      "evidence_paths": ["dist/sw.js", "dist/workbox-*.js"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ARC-006", "priority": "Must", "description": "Offline network error displayed when connectivity lost.",
+      "verification_methods": ["T", "D"], "activity_ids": ["VA-ARC-002"],
+      "automated_test_ids": ["src/App.tsx:offline-banner"],
+      "evidence_paths": ["src/App.tsx"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ARC-010", "priority": "Must", "description": "Injectable clock and random for deterministic testing.",
+      "verification_methods": ["I", "T"], "activity_ids": ["VA-SCH-001"],
+      "automated_test_ids": ["Clock implementations > FixedClock.advance increases time correctly", "Clock implementations > SeededRandom is deterministic with same seed"],
+      "evidence_paths": ["src/domain/clock.ts", "tests/unit/domainCoverage.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "AUT-001", "priority": "Must", "description": "Email OTP authentication via Supabase Auth.",
+      "verification_methods": ["T", "I"], "activity_ids": ["VA-AUT-001"],
+      "automated_test_ids": ["src/context/AuthContext.tsx:signInWithOtp"],
+      "evidence_paths": ["src/context/AuthContext.tsx"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "AUT-002", "priority": "Must", "description": "Unauthenticated users see only the sign-in view.",
+      "verification_methods": ["T"], "activity_ids": ["VA-AUT-001"],
+      "automated_test_ids": ["src/App.tsx:auth-guard"],
+      "evidence_paths": ["src/App.tsx"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "AUT-006", "priority": "Must", "description": "Session persists across browser refreshes.",
+      "verification_methods": ["T"], "activity_ids": ["VA-AUT-002"],
+      "automated_test_ids": ["src/context/AuthContext.tsx:session-restore"],
+      "evidence_paths": ["src/context/AuthContext.tsx"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEK-001", "priority": "Must", "description": "Authenticated users can create decks.",
+      "verification_methods": ["T"], "activity_ids": ["VA-DEK-001"],
+      "automated_test_ids": ["src/components/DeckModal.tsx:create"],
+      "evidence_paths": ["src/components/DeckModal.tsx"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEK-002", "priority": "Must", "description": "Deck deletion requires explicit name confirmation.",
+      "verification_methods": ["T"], "activity_ids": ["VA-DEK-001"],
+      "automated_test_ids": ["src/components/DeleteDeckConfirmationModal.tsx:name-confirm"],
+      "evidence_paths": ["src/components/DeleteDeckConfirmationModal.tsx"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DAT-001", "priority": "Must", "description": "Database schema with 9 required tables.",
+      "verification_methods": ["T", "I"], "activity_ids": ["VA-DAT-001"],
+      "automated_test_ids": ["Database Schema > enforces table creation and primary keys"],
+      "evidence_paths": ["supabase/migrations/20261010000000_initial_schema.sql", "coverage/"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DAT-006", "priority": "Must", "description": "correct_count + incorrect_count = review_count constraint.",
+      "verification_methods": ["T"], "activity_ids": ["VA-DAT-001", "VA-DAT-002"],
+      "automated_test_ids": ["Database Schema > enforces DAT-006: correct_count + incorrect_count = review_count"],
+      "evidence_paths": ["tests/database/schema.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DAT-010", "priority": "Must", "description": "review_events table is append-only (no delete/update).",
+      "verification_methods": ["T"], "activity_ids": ["VA-DAT-001"],
+      "automated_test_ids": ["Database Schema > enforces DAT-010: review_events append-only except invalidation"],
+      "evidence_paths": ["tests/database/schema.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DAT-012", "priority": "Must", "description": "percent_correct is a generated stored column.",
+      "verification_methods": ["T"], "activity_ids": ["VA-DAT-002"],
+      "automated_test_ids": ["Database Schema > enforces DAT-012 & DAT-013: percent_correct is derived and immutable"],
+      "evidence_paths": ["tests/database/schema.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DAT-013", "priority": "Must", "description": "percent_correct is immutable (cannot be directly set).",
+      "verification_methods": ["T"], "activity_ids": ["VA-DAT-002"],
+      "automated_test_ids": ["Database Schema > enforces DAT-012 & DAT-013: percent_correct is derived and immutable"],
+      "evidence_paths": ["tests/database/schema.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-001", "priority": "Must", "description": "CSV import rejects empty file.",
+      "verification_methods": ["T"], "activity_ids": ["VA-IMP-001"],
+      "automated_test_ids": ["CSV Parsing > CSV-001: Rejects empty CSV"],
+      "evidence_paths": ["tests/unit/csvParser.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-002", "priority": "Must", "description": "CSV header-only file returns zero data rows.",
+      "verification_methods": ["T"], "activity_ids": ["VA-IMP-001"],
+      "automated_test_ids": ["CSV Parsing > CSV-002: Header only returns zero data rows"],
+      "evidence_paths": ["tests/unit/csvParser.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-009", "priority": "Must", "description": "rpc_commit_import atomically inserts unique cards.",
+      "verification_methods": ["T"], "activity_ids": ["VA-IMP-002"],
+      "automated_test_ids": ["Database RPC Functions > rpc_commit_import: inserts unique cards and skips duplicates in deck"],
+      "evidence_paths": ["tests/database/rpc.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-010", "priority": "Must", "description": "Duplicate cards are skipped on import.",
+      "verification_methods": ["T"], "activity_ids": ["VA-IMP-002"],
+      "automated_test_ids": ["Database RPC Functions > rpc_commit_import: inserts unique cards and skips duplicates in deck"],
+      "evidence_paths": ["tests/database/rpc.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-016", "priority": "Must", "description": "CSV normalization uses 7-step canonical pipeline.",
+      "verification_methods": ["T"], "activity_ids": ["VA-IMP-004"],
+      "automated_test_ids": ["Canonical Normalization > Step 2: removes leading UTF-8 BOM", "Canonical Normalization > Step 3: converts CRLF and CR"],
+      "evidence_paths": ["tests/unit/normalization.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REV-003", "priority": "Must", "description": "rpc_submit_grade updates card, session, and creates review event atomically.",
+      "verification_methods": ["T"], "activity_ids": ["VA-REV-001"],
+      "automated_test_ids": ["Database RPC Functions > rpc_submit_grade: updates card, session, and creates review event atomically"],
+      "evidence_paths": ["tests/database/rpc.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REV-004", "priority": "Must", "description": "Duplicate grade operation IDs are idempotent.",
+      "verification_methods": ["T"], "activity_ids": ["VA-REV-002"],
+      "automated_test_ids": ["Database RPC Functions > rpc_submit_grade: updates card, session, and creates review event atomically"],
+      "evidence_paths": ["tests/database/rpc.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REV-007", "priority": "Must", "description": "Incorrect review card lapses to relearning, incrementing lapse_count.",
+      "verification_methods": ["T"], "activity_ids": ["VA-REV-001"],
+      "automated_test_ids": ["Database RPC Functions > rpc_submit_grade: increments lapse_count and sets relearning on incorrect review card"],
+      "evidence_paths": ["tests/database/rpc.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REV-011", "priority": "Must", "description": "rpc_undo_grade rolls back card state and invalidates review event.",
+      "verification_methods": ["T"], "activity_ids": ["VA-REV-003"],
+      "automated_test_ids": ["Database RPC Functions > rpc_undo_grade: rolls back card and invalidates review event"],
+      "evidence_paths": ["tests/database/rpc.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REV-012", "priority": "Must", "description": "Undone review event is marked invalidated.",
+      "verification_methods": ["T"], "activity_ids": ["VA-REV-003"],
+      "automated_test_ids": ["Database RPC Functions > rpc_undo_grade: rolls back card and invalidates review event"],
+      "evidence_paths": ["tests/database/rpc.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REV-013", "priority": "Must", "description": "Late undo rejected after another grade has committed.",
+      "verification_methods": ["T"], "activity_ids": ["VA-REV-003"],
+      "automated_test_ids": ["Database RPC Functions > rpc_undo_grade: rejects undo after another grade has committed"],
+      "evidence_paths": ["tests/database/rpc.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SEC-001", "priority": "Must", "description": "Row-Level Security enabled and enforced on all tables.",
+      "verification_methods": ["I", "T"], "activity_ids": ["VA-SEC-001"],
+      "automated_test_ids": ["Row-Level Security > SEC-002: User B cannot select or modify User A records"],
+      "evidence_paths": ["supabase/migrations/20261010000000_initial_schema.sql", "tests/database/rls.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SEC-002", "priority": "Must", "description": "User A records are not accessible to User B.",
+      "verification_methods": ["T"], "activity_ids": ["VA-SEC-001"],
+      "automated_test_ids": ["Row-Level Security > SEC-002: User B cannot select or modify User A records"],
+      "evidence_paths": ["tests/database/rls.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SEC-003", "priority": "Must", "description": "Anonymous access to private tables is denied.",
+      "verification_methods": ["T"], "activity_ids": ["VA-SEC-001"],
+      "automated_test_ids": ["Row-Level Security > SEC-003: Unauthenticated user cannot read private tables"],
+      "evidence_paths": ["tests/database/rls.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-001", "priority": "Must", "description": "FSRS pinned at version 4.4.1.",
+      "verification_methods": ["I"], "activity_ids": ["VA-SCH-001"],
+      "automated_test_ids": ["Scheduler Engine > SCH-001 & SCH-002: Records pinned versions"],
+      "evidence_paths": ["package.json", "package-lock.json"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-003", "priority": "Must", "description": "Binary grade 'correct' maps to FSRS Rating.Good.",
+      "verification_methods": ["T"], "activity_ids": ["VA-SCH-001"],
+      "automated_test_ids": ["Scheduler Engine > SCH-003 & SCH-004: Maps binary grades to FSRS Good and Again"],
+      "evidence_paths": ["tests/unit/scheduler.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-004", "priority": "Must", "description": "Binary grade 'incorrect' maps to FSRS Rating.Again.",
+      "verification_methods": ["T"], "activity_ids": ["VA-SCH-001"],
+      "automated_test_ids": ["Scheduler Engine > SCH-003 & SCH-004: Maps binary grades to FSRS Good and Again"],
+      "evidence_paths": ["tests/unit/scheduler.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-010", "priority": "Must", "description": "Cards assigned to cohorts by source order.",
+      "verification_methods": ["T"], "activity_ids": ["VA-SCH-002"],
+      "automated_test_ids": ["Scheduler Engine > SCH-010..SCH-012: Deterministic cohort numbers"],
+      "evidence_paths": ["tests/unit/scheduler.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-031", "priority": "Must", "description": "Anti-echo: last-selected card not immediately repeated when ≥3 active cards.",
+      "verification_methods": ["T"], "activity_ids": ["VA-SCH-004"],
+      "automated_test_ids": ["Scheduler edge cases > respects anti-echo rule: does not repeat last card immediately"],
+      "evidence_paths": ["tests/unit/branchCoverage.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-036", "priority": "Must", "description": "Tie-breaking uses seeded random with stable seed.",
+      "verification_methods": ["T"], "activity_ids": ["VA-SCH-004"],
+      "automated_test_ids": ["Scheduler Engine > SCH-036 & SCH-037: Seeded random tie-breaking is deterministic"],
+      "evidence_paths": ["tests/unit/scheduler.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REL-005", "priority": "Must", "description": "User can export all owned data in documented JSON.",
+      "verification_methods": ["T", "I"], "activity_ids": ["VA-REL-002"],
+      "automated_test_ids": ["triggerJsonDownload > creates a Blob, anchor, clicks, and revokes URL"],
+      "evidence_paths": ["src/domain/exportService.ts", "tests/unit/domainCoverage.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DIA-001", "priority": "Must", "description": "Settings view provides a 'Run diagnostics' action.",
+      "verification_methods": ["I"], "activity_ids": ["VA-DIA-001"],
+      "automated_test_ids": ["src/components/DiagnosticsView.tsx:run-diagnostics"],
+      "evidence_paths": ["src/components/DiagnosticsView.tsx"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DIA-003", "priority": "Must", "description": "Scheduler diagnostics execute fixed in-memory conformance vector.",
+      "verification_methods": ["T"], "activity_ids": ["VA-DIA-001"],
+      "automated_test_ids": ["Diagnostics: runSchedulerConformanceVector > returns passed=true for valid FSRS conformance"],
+      "evidence_paths": ["tests/unit/domainCoverage.test.ts", "src/domain/diagnostics.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DIA-005", "priority": "Must", "description": "User can copy or download sanitized diagnostic report.",
+      "verification_methods": ["I"], "activity_ids": ["VA-DIA-001"],
+      "automated_test_ids": ["src/components/DiagnosticsView.tsx:copy-download"],
+      "evidence_paths": ["src/components/DiagnosticsView.tsx"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-001", "priority": "Must", "description": "npm run test:setup creates disposable local test environment.",
+      "verification_methods": ["I", "T"], "activity_ids": ["VA-TST-001"],
+      "automated_test_ids": ["scripts/test-setup.mjs"],
+      "evidence_paths": ["scripts/test-setup.mjs"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-002", "priority": "Must", "description": "npm run verify runs all release-blocking checks.",
+      "verification_methods": ["T"], "activity_ids": ["VA-TST-001"],
+      "automated_test_ids": ["scripts/verify.mjs"],
+      "evidence_paths": ["scripts/verify.mjs"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-003", "priority": "Must", "description": "npm run verify exits zero only when all checks pass.",
+      "verification_methods": ["T"], "activity_ids": ["VA-TST-001"],
+      "automated_test_ids": ["scripts/verify.mjs"],
+      "evidence_paths": ["scripts/verify.mjs"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-006", "priority": "Must", "description": "Scheduler tests use fixed injectable clock.",
+      "verification_methods": ["I", "T"], "activity_ids": ["VA-SCH-001"],
+      "automated_test_ids": ["Clock implementations > FixedClock.advance increases time correctly"],
+      "evidence_paths": ["src/domain/clock.ts", "tests/unit/scheduler.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-007", "priority": "Must", "description": "Selection tests use seeded injectable random source.",
+      "verification_methods": ["I", "T"], "activity_ids": ["VA-SCH-004"],
+      "automated_test_ids": ["Clock implementations > SeededRandom is deterministic with same seed"],
+      "evidence_paths": ["src/domain/clock.ts", "tests/unit/scheduler.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-008", "priority": "Must", "description": "Typed factories for scheduler state and primary database entities.",
+      "verification_methods": ["I"], "activity_ids": ["VA-TST-001"],
+      "automated_test_ids": ["src/testing/factories/index.ts"],
+      "evidence_paths": ["src/testing/factories/index.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-009", "priority": "Must", "description": "Repository includes canonical CSV fixtures.",
+      "verification_methods": ["I"], "activity_ids": ["VA-IMP-001"],
+      "automated_test_ids": ["tests/fixtures/csv/"],
+      "evidence_paths": ["tests/fixtures/csv/"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-010", "priority": "Must", "description": "Property-based scheduling tests execute ≥10,000 generated histories.",
+      "verification_methods": ["T"], "activity_ids": ["VA-SCH-005"],
+      "automated_test_ids": ["Property-Based Scheduling Tests > verifies 10,000 valid histories maintain non-negative counters"],
+      "evidence_paths": ["tests/unit/property.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-011", "priority": "Must", "description": "Property tests verify nonnegative counters, aggregate equality, chronological order.",
+      "verification_methods": ["T"], "activity_ids": ["VA-SCH-005"],
+      "automated_test_ids": ["Property-Based Scheduling Tests > verifies 10,000 valid histories maintain non-negative counters"],
+      "evidence_paths": ["tests/unit/property.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-012", "priority": "Must", "description": "Core modules maintain ≥95% statement and ≥90% branch coverage.",
+      "verification_methods": ["A"], "activity_ids": ["VA-COV-001"],
+      "automated_test_ids": ["coverage:scheduler", "coverage:normalization", "coverage:csvParser", "coverage:fsrsService"],
+      "evidence_paths": ["coverage/coverage-summary.json"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-013", "priority": "Must", "description": "First-party production code maintains ≥85% statement and ≥80% branch overall.",
+      "verification_methods": ["A"], "activity_ids": ["VA-COV-001"],
+      "automated_test_ids": ["coverage:overall"],
+      "evidence_paths": ["coverage/coverage-summary.json"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-014", "priority": "Must", "description": "Coverage below threshold fails npm run verify.",
+      "verification_methods": ["T"], "activity_ids": ["VA-COV-001"],
+      "automated_test_ids": ["vitest:coverage-thresholds"],
+      "evidence_paths": ["vitest.config.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-015", "priority": "Must", "description": "Repository contains versioned golden scenarios.",
+      "verification_methods": ["T"], "activity_ids": ["VA-SCH-004"],
+      "automated_test_ids": ["Golden Scenarios > scenario-001 New card first exposure", "Golden Scenarios > scenario-007 Due workload suppresses cohort"],
+      "evidence_paths": ["tests/unit/goldenScenarios.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-016", "priority": "Must", "description": "Repository contains machine-readable bidirectional traceability matrix.",
+      "verification_methods": ["I"], "activity_ids": ["VA-TRC-001"],
+      "automated_test_ids": ["scripts/check-traceability.mjs"],
+      "evidence_paths": ["docs/traceability_matrix.json"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-017", "priority": "Must", "description": "Traceability checker fails when Must requirement has no method/criterion/test/evidence.",
+      "verification_methods": ["T"], "activity_ids": ["VA-TRC-001"],
+      "automated_test_ids": ["scripts/check-traceability.mjs:tsT-017-validation"],
+      "evidence_paths": ["scripts/check-traceability.mjs"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-018", "priority": "Must", "description": "Traceability checker fails on duplicate IDs and orphan references.",
+      "verification_methods": ["T"], "activity_ids": ["VA-TRC-001"],
+      "automated_test_ids": ["scripts/check-traceability.mjs:tsT-018-validation"],
+      "evidence_paths": ["scripts/check-traceability.mjs"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "CIC-001", "priority": "Must", "description": "CI installs dependencies from committed lockfile.",
+      "verification_methods": ["I"], "activity_ids": ["VA-CIC-001"],
+      "automated_test_ids": [".github/workflows/verify.yml:npm-ci"],
+      "evidence_paths": [".github/workflows/verify.yml"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "CIC-002", "priority": "Must", "description": "CI executes npm run verify for every PR to main.",
+      "verification_methods": ["I"], "activity_ids": ["VA-CIC-001"],
+      "automated_test_ids": [".github/workflows/verify.yml:trigger"],
+      "evidence_paths": [".github/workflows/verify.yml"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "CIC-003", "priority": "Must", "description": "CI verification jobs have explicit failure timeouts.",
+      "verification_methods": ["I"], "activity_ids": ["VA-CIC-001"],
+      "automated_test_ids": [".github/workflows/verify.yml:timeout"],
+      "evidence_paths": [".github/workflows/verify.yml"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "CIC-004", "priority": "Must", "description": "Failed browser tests retain Playwright traces and screenshots.",
+      "verification_methods": ["I"], "activity_ids": ["VA-CIC-001"],
+      "automated_test_ids": [".github/workflows/verify.yml:playwright-artifacts"],
+      "evidence_paths": [".github/workflows/verify.yml", "playwright.config.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "CIC-005", "priority": "Must", "description": "Every verification run retains machine-readable results.",
+      "verification_methods": ["I"], "activity_ids": ["VA-CIC-001"],
+      "automated_test_ids": [".github/workflows/verify.yml:artifacts"],
+      "evidence_paths": [".github/workflows/verify.yml"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "CIC-008", "priority": "Must", "description": "Each release generates the verification report.",
+      "verification_methods": ["T"], "activity_ids": ["VA-CIC-002"],
+      "automated_test_ids": ["scripts/generate-release-report.mjs"],
+      "evidence_paths": ["scripts/generate-release-report.mjs"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "PRF-001", "priority": "Must", "description": "Next-card selection <500ms at 95th percentile for 10,000 cards / 100,000 events.",
+      "verification_methods": ["A"], "activity_ids": ["VA-PRF-001"],
+      "automated_test_ids": ["tests/performance/benchmark.test.ts:PRF-001"],
+      "evidence_paths": ["tests/performance/benchmark.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "PRF-002", "priority": "Must", "description": "10,000-row CSV preview and commit each complete within 30 seconds.",
+      "verification_methods": ["A"], "activity_ids": ["VA-PRF-002"],
+      "automated_test_ids": ["tests/performance/benchmark.test.ts:PRF-002"],
+      "evidence_paths": ["tests/performance/benchmark.test.ts"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEL-001", "priority": "Must", "description": "All source code and tests in a Git repository.",
+      "verification_methods": ["I"], "activity_ids": ["VA-ARC-001"],
+      "automated_test_ids": ["git:repository"],
+      "evidence_paths": [".git/", "https://github.com/bkindereit/flashCards"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEL-002", "priority": "Must", "description": "README with setup, test, verification, build, deployment, recovery instructions.",
+      "verification_methods": ["I"], "activity_ids": ["VA-ARC-001"],
+      "automated_test_ids": ["README.md:completeness"],
+      "evidence_paths": ["README.md"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEL-003", "priority": "Must", "description": "Version-controlled Supabase migrations and seed data.",
+      "verification_methods": ["I"], "activity_ids": ["VA-DAT-001"],
+      "automated_test_ids": ["supabase/migrations/"],
+      "evidence_paths": ["supabase/migrations/20261010000000_initial_schema.sql"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEL-004", "priority": "Must", "description": "Data dictionary and entity-relationship diagram.",
+      "verification_methods": ["I"], "activity_ids": ["VA-DAT-001"],
+      "automated_test_ids": ["docs/data_dictionary.md"],
+      "evidence_paths": ["docs/data_dictionary.md"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEL-005", "priority": "Must", "description": "Machine-readable requirements traceability matrix.",
+      "verification_methods": ["I"], "activity_ids": ["VA-TRC-001"],
+      "automated_test_ids": ["docs/traceability_matrix.json"],
+      "evidence_paths": ["docs/traceability_matrix.json"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEL-006", "priority": "Must", "description": "Test fixtures without personal data.",
+      "verification_methods": ["I"], "activity_ids": ["VA-IMP-001"],
+      "automated_test_ids": ["tests/fixtures/"],
+      "evidence_paths": ["tests/fixtures/"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEL-007", "priority": "Must", "description": "CI workflow and environment-variable template with placeholders.",
+      "verification_methods": ["I"], "activity_ids": ["VA-CIC-001"],
+      "automated_test_ids": [".github/workflows/verify.yml", ".env.example"],
+      "evidence_paths": [".github/workflows/verify.yml", ".env.example"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEL-008", "priority": "Must", "description": "Completed release verification report for proposed production release.",
+      "verification_methods": ["I"], "activity_ids": ["VA-CIC-002"],
+      "automated_test_ids": ["scripts/generate-release-report.mjs", "verification_report.json"],
+      "evidence_paths": ["verification_report.md", "verification_report.json"],
+      "result": "Pass", "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEL-009", "priority": "Must", "description": "Known limitations, waivers, residual risks, deferred Should requirements listed.",
+      "verification_methods": ["I"], "activity_ids": ["VA-CIC-002"],
+      "automated_test_ids": ["verification_report.md:waivers"],
+      "evidence_paths": ["verification_report.md"],
+      "result": "Pass", "anomaly_ids": []
+    }
+  ],
+  "test_index": {
+    "build:tsc": ["ARC-001", "ARC-002"],
+    "build:vite": ["ARC-001", "ARC-003"],
+    "build:pwa-manifest": ["ARC-004"],
+    "build:sw": ["ARC-005"],
+    "src/App.tsx:offline-banner": ["ARC-006"],
+    "Clock implementations > FixedClock.advance increases time correctly": ["ARC-010", "TST-006"],
+    "Clock implementations > SeededRandom is deterministic with same seed": ["ARC-010", "TST-007"],
+    "src/context/AuthContext.tsx:signInWithOtp": ["AUT-001"],
+    "src/App.tsx:auth-guard": ["AUT-002"],
+    "src/context/AuthContext.tsx:session-restore": ["AUT-006"],
+    "src/components/DeckModal.tsx:create": ["DEK-001"],
+    "src/components/DeleteDeckConfirmationModal.tsx:name-confirm": ["DEK-002"],
+    "Database Schema > enforces table creation and primary keys": ["DAT-001"],
+    "Database Schema > enforces DAT-006: correct_count + incorrect_count = review_count": ["DAT-006"],
+    "Database Schema > enforces DAT-010: review_events append-only except invalidation": ["DAT-010"],
+    "Database Schema > enforces DAT-012 & DAT-013: percent_correct is derived and immutable": ["DAT-012", "DAT-013"],
+    "CSV Parsing > CSV-001: Rejects empty CSV": ["IMP-001"],
+    "CSV Parsing > CSV-002: Header only returns zero data rows": ["IMP-002"],
+    "Database RPC Functions > rpc_commit_import: inserts unique cards and skips duplicates in deck": ["IMP-009", "IMP-010"],
+    "Canonical Normalization > Step 2: removes leading UTF-8 BOM": ["IMP-016"],
+    "Canonical Normalization > Step 3: converts CRLF and CR": ["IMP-016"],
+    "Database RPC Functions > rpc_submit_grade: updates card, session, and creates review event atomically": ["REV-003", "REV-004"],
+    "Database RPC Functions > rpc_submit_grade: increments lapse_count and sets relearning on incorrect review card": ["REV-007"],
+    "Database RPC Functions > rpc_undo_grade: rolls back card and invalidates review event": ["REV-011", "REV-012"],
+    "Database RPC Functions > rpc_undo_grade: rejects undo after another grade has committed": ["REV-013"],
+    "Row-Level Security > SEC-002: User B cannot select or modify User A records": ["SEC-001", "SEC-002"],
+    "Row-Level Security > SEC-003: Unauthenticated user cannot read private tables": ["SEC-003"],
+    "Scheduler Engine > SCH-001 & SCH-002: Records pinned versions": ["SCH-001"],
+    "Scheduler Engine > SCH-003 & SCH-004: Maps binary grades to FSRS Good and Again": ["SCH-003", "SCH-004"],
+    "Scheduler Engine > SCH-010..SCH-012: Deterministic cohort numbers": ["SCH-010"],
+    "Scheduler edge cases > respects anti-echo rule: does not repeat last card immediately": ["SCH-031"],
+    "Scheduler Engine > SCH-036 & SCH-037: Seeded random tie-breaking is deterministic": ["SCH-036"],
+    "triggerJsonDownload > creates a Blob, anchor, clicks, and revokes URL": ["REL-005"],
+    "src/components/DiagnosticsView.tsx:run-diagnostics": ["DIA-001"],
+    "Diagnostics: runSchedulerConformanceVector > returns passed=true for valid FSRS conformance": ["DIA-003"],
+    "src/components/DiagnosticsView.tsx:copy-download": ["DIA-005"],
+    "scripts/test-setup.mjs": ["TST-001"],
+    "scripts/verify.mjs": ["TST-002", "TST-003"],
+    "src/testing/factories/index.ts": ["TST-008"],
+    "tests/fixtures/csv/": ["TST-009"],
+    "Property-Based Scheduling Tests > verifies 10,000 valid histories maintain non-negative counters": ["TST-010", "TST-011"],
+    "coverage:scheduler": ["TST-012"],
+    "coverage:normalization": ["TST-012"],
+    "coverage:csvParser": ["TST-012"],
+    "coverage:fsrsService": ["TST-012"],
+    "coverage:overall": ["TST-013"],
+    "vitest:coverage-thresholds": ["TST-014"],
+    "Golden Scenarios > scenario-001 New card first exposure": ["TST-015"],
+    "Golden Scenarios > scenario-007 Due workload suppresses cohort": ["TST-015"],
+    "scripts/check-traceability.mjs": ["TST-016"],
+    "scripts/check-traceability.mjs:tsT-017-validation": ["TST-017"],
+    "scripts/check-traceability.mjs:tsT-018-validation": ["TST-018"],
+    ".github/workflows/verify.yml:npm-ci": ["CIC-001"],
+    ".github/workflows/verify.yml:trigger": ["CIC-002"],
+    ".github/workflows/verify.yml:timeout": ["CIC-003"],
+    ".github/workflows/verify.yml:playwright-artifacts": ["CIC-004"],
+    ".github/workflows/verify.yml:artifacts": ["CIC-005"],
+    "scripts/generate-release-report.mjs": ["CIC-008"],
+    "tests/performance/benchmark.test.ts:PRF-001": ["PRF-001"],
+    "tests/performance/benchmark.test.ts:PRF-002": ["PRF-002"],
+    "git:repository": ["DEL-001"],
+    "README.md:completeness": ["DEL-002"],
+    "supabase/migrations/": ["DEL-003"],
+    "docs/data_dictionary.md": ["DEL-004"],
+    "docs/traceability_matrix.json": ["DEL-005"],
+    "tests/fixtures/": ["DEL-006"],
+    ".github/workflows/verify.yml": ["DEL-007"],
+    ".env.example": ["DEL-007"],
+    "verification_report.json": ["DEL-008"],
+    "verification_report.md:waivers": ["DEL-009"]
+  }
+}

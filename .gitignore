@@ -1,23 +1,25 @@
-# OS files
-.DS_Store
-Thumbs.db
-
-# Dependencies
-node_modules/
-vendor/
-
-# Environment files
-.env
-.env*.local
 
 # Build output
-dist/
-build/
-out/
-.next/
-
+# Dependencies
+# Environment files
 # Logs
+# OS files
+*.log
+*.tsbuildinfo
+.DS_Store
+.env
+.env*.local
+.env.local
+.next/
+Thumbs.db
+build/
+coverage/
+dist/
+node_modules/
 npm-debug.log*
+out/
+playwright-report/
+test-results/
+vendor/
 yarn-debug.log*
 yarn-error.log*
-*.log
