@@ -1,13 +1,38 @@
 -- Supabase Seed Data (DEL-003, DEL-006)
 -- Seed fixtures using non-personal, synthetic academic learning cards.
 
--- Note: user_id references auth.users(id). For local seed testing, we use deterministic UUIDs.
 DO $$
 DECLARE
   v_user_id uuid := '00000000-0000-0000-0000-000000000001';
   v_deck_id uuid := '11111111-1111-1111-1111-111111111111';
 BEGIN
-  -- Insert demo deck
+  -- 0. Insert local seed user in auth.users and public.profiles
+  INSERT INTO auth.users (
+    id, email, raw_app_meta_data, raw_user_meta_data, aud, role, created_at, updated_at
+  ) VALUES (
+    v_user_id,
+    'seed-learner@example.local',
+    '{"provider":"email","providers":["email"]}',
+    '{}',
+    'authenticated',
+    'authenticated',
+    '2026-01-01 00:00:00+00',
+    '2026-01-01 00:00:00+00'
+  ) ON CONFLICT (id) DO NOTHING;
+
+  INSERT INTO public.profiles (
+    id, user_id, default_desired_retention, default_cohort_size, default_new_learning_fraction, created_at, updated_at
+  ) VALUES (
+    v_user_id,
+    v_user_id,
+    0.90,
+    10,
+    0.30,
+    '2026-01-01 00:00:00+00',
+    '2026-01-01 00:00:00+00'
+  ) ON CONFLICT (id) DO NOTHING;
+
+  -- 1. Insert demo deck
   INSERT INTO public.decks (
     id, user_id, name, description, desired_retention, cohort_size, new_learning_fraction,
     min_failed_retry_delay_seconds, min_intervening_cards, is_archived, created_at, updated_at
@@ -26,7 +51,7 @@ BEGIN
     '2026-01-01 00:00:00+00'
   ) ON CONFLICT (id) DO NOTHING;
 
-  -- Insert sample cards
+  -- 2. Insert sample cards
   INSERT INTO public.cards (
     id, user_id, deck_id, source_row_number, question_text, answer_text,
     normalized_question, normalized_answer, content_hash, cohort_number, source_order,

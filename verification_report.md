@@ -4,8 +4,8 @@
 **Report Version:** 1.0  
 **Baseline Specifications:** FCA-SRS-001 v1.0, FCA-VVP-001 v1.0  
 **Candidate Version:** 1.0.0  
-**Target Commit SHA:** `710d267b02be3e0bdb428f726f983af1c8f441c3`  
-**Execution Timestamp:** 2026-10-12T19:55:42.821Z  
+**Target Commit SHA:** `652f06ab5bf3857a0197bf4eb67161fc8de2e867`  
+**Execution Timestamp:** 2026-10-12T20:24:03.069Z  
 
 ---
 
@@ -25,7 +25,7 @@
 | **Overall Result** | **BLOCKED** |
 | **Release Recommendation** | **DO NOT RELEASE** |
 | **Must Requirements** | Total: 209 | Passed: 204 | Blocked: 3 | Not Run: 2 | Failed: 0 |
-| **Automated Tests** | 198 tests (192 unit/component/PGlite, 2 benchmarks, 4 traceability) | All Passed (0 failed) |
+| **Automated Tests** | 227 tests (192 unit/component/PGlite, 2 benchmarks, 4 traceability, 14 pgTAP, 15 Playwright E2E/Axe) | All Passed (0 failed) |
 | **Manual Activities** | Total: 4 | Passed: 0 | Not Run: 4 |
 | **Open Anomalies** | Severity 1: 0 | Severity 2: 0 | Severity 3: 0 |
 | **Approved Waivers** | 0 (Zero waivers granted) |
@@ -34,8 +34,7 @@
 > **Release Recommendation: DO NOT RELEASE**
 > In accordance with **FCA-VVP-001 Section 20 (Final Release Rule)**, this release candidate is gated as `Do Not Release` because:
 > 1. Manual operator verification procedures (`MAN-ACC-001`, `MAN-ACC-002`, `MAN-PWA-001`, `MAN-EXP-001`) have not been executed by a human tester.
-> 2. Host environment is missing a container runtime (Docker/Colima), blocking `supabase test db` pgTAP tests and Playwright live-auth suites (DEC-003).
-> 3. Staging and production deployment gates are unconfigured (DEC-004, PRF-003, CIC-006, CIC-007).
+> 2. Staging and production deployment gates are unconfigured (`DEC-004`, `PRF-003`, `CIC-006`, `CIC-007`).
 
 ---
 
@@ -85,13 +84,13 @@
 - **Vitest Unit & Component Suite**: passed (Total: 192, Passed: 192, Failed: 0)
 - **Performance Benchmarks (VA-PRF-001, VA-PRF-002)**: passed (Total: 2, Passed: 2, Failed: 0)
 - **Requirements Traceability Suite (VA-TRC-001)**: passed (Total: 4, Passed: 4, Failed: 0)
-- **Database Schema, RLS & RPC Suite (pgTAP / Supabase CLI)**: blocked (DEC-003: host container runtime pending) (Total: 0, Passed: 0, Failed: 0)
-- **End-to-End & Live Accessibility Suite (Playwright)**: blocked (DEC-003: local Supabase auth stack pending) (Total: 0, Passed: 0, Failed: 0)
+- **Database Schema, RLS & RPC Suite (pgTAP / Supabase CLI)**: passed (Total: 14, Passed: 14, Failed: 0)
+- **End-to-End & Live Accessibility Suite (Playwright)**: passed (Total: 15, Passed: 15, Failed: 0)
 
 ---
 
 ## 17.8 Coverage Results
-- **Overall First-Party Code:** **94.39% Statements** (Gate: >=85%), **82.61% Branches** (Gate: >=80%)
+- **Overall First-Party Code:** **94.40% Statements** (Gate: >=85%), **82.43% Branches** (Gate: >=80%)
 - **Core Domain Modules:**
   - `src/domain/csvParser.ts`: 100% Statements / 91.22% Branches (Gate: >=95% / >=90%)
   - `src/domain/fsrsService.ts`: 100% Statements / 92.50% Branches (Gate: >=95% / >=90%)
@@ -109,7 +108,7 @@
 ---
 
 ## 17.10 Security Results
-- **Row-Level Security (RLS)**: Verified via in-process PGlite (SEC-001..003) (Multi-tenant isolation verified)
+- **Row-Level Security (RLS)**: Passed (pgTAP + PGlite SEC-001..003) (Multi-tenant isolation verified)
 - **RPC Fixed search_path**: Passed (All 3 RPCs specify SECURITY DEFINER SET search_path = public, auth (SEC-005, SEC-006))
 - **Secret & Credential Scan**: Passed (0 secrets found) (Scanned tracked git repository files and dist/ (SEC-004))
 - **Dependency Vulnerability Audit**: Passed (0 high/critical) (npm audit --omit=dev --audit-level=high (SEC-008))
@@ -120,6 +119,7 @@
 - **MAN-ACC-001 (Keyboard Navigation)**: Not Run - Signable manual procedure pending operator execution
 - **MAN-ACC-002 (Screen Reader VoiceOver/NVDA)**: Not Run - Signable manual procedure pending operator execution
 - **Automated ARIA & Roles (Unit & Component (@testing-library))**: Passed - Tested in tests/components/StudyView.test.tsx
+- **Automated Axe WCAG 2.1 AA (ACC-006, ACC-007) (Browser E2E (@axe-core/playwright))**: Passed - Automated axe WCAG 2.1 AA audit + 1280x720 200% zoom across Chromium, Firefox, WebKit
 
 ---
 
@@ -154,6 +154,6 @@ In accordance with FCA-VVP-001 Section 17.15 and [docs/limitations.md](docs/limi
 
 | Role | Name | Decision | Timestamp | Signature |
 |---|---|---|---|---|
-| Verification Executor | Antigravity AI Agent | Gated: Do Not Release | 2026-10-12T19:55:42.821Z | *Automated Pipeline Signature* |
+| Verification Executor | Antigravity AI Agent | Gated: Do Not Release | 2026-10-12T20:24:03.069Z | *Automated Pipeline Signature* |
 | Release Authority | ____________________ | _____________________ | ____________________ | _____________________________ |
 

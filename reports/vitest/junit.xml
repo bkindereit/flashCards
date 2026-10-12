@@ -1,435 +1,435 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites name="vitest tests" tests="192" failures="0" errors="0" time="15.442188044">
-    <testsuite name="tests/components/App.test.tsx" timestamp="2026-10-12T19:55:31.682Z" hostname="Bastians-MacBook-Air.local" tests="6" failures="0" errors="0" skipped="0" time="0.391160833">
-        <testcase classname="tests/components/App.test.tsx" name="App Shell (ARC-001..ARC-010, AUT-002, ARC-006) &gt; AUT-002: Shows sign-in screen when user is unauthenticated" time="0.031813042">
+<testsuites name="vitest tests" tests="192" failures="0" errors="0" time="27.821899752">
+    <testsuite name="tests/database/rls.test.ts" timestamp="2026-10-12T20:21:52.236Z" hostname="Bastians-MacBook-Air.local" tests="2" failures="0" errors="0" skipped="0" time="3.657633958">
+        <testcase classname="tests/database/rls.test.ts" name="Row-Level Security (RLS) Isolation (SEC-001, SEC-002, SEC-003) &gt; SEC-002: User B cannot select or modify User A records" time="2.547524792">
         </testcase>
-        <testcase classname="tests/components/App.test.tsx" name="App Shell (ARC-001..ARC-010, AUT-002, ARC-006) &gt; ARC-006: Shows offline indicator banner when browser loses network connection" time="0.007984875">
-        </testcase>
-        <testcase classname="tests/components/App.test.tsx" name="App Shell (ARC-001..ARC-010, AUT-002, ARC-006) &gt; AUT-001, DEK-001: Shows deck dashboard when user is authenticated" time="0.177787625">
-        </testcase>
-        <testcase classname="tests/components/App.test.tsx" name="App Shell (ARC-001..ARC-010, AUT-002, ARC-006) &gt; DIA-001: Navigates to diagnostics view when Diagnostics button is clicked" time="0.0515495">
-        </testcase>
-        <testcase classname="tests/components/App.test.tsx" name="App Shell (ARC-001..ARC-010, AUT-002, ARC-006) &gt; AUT-002: Submits login form and displays confirmation message" time="0.022074292">
-        </testcase>
-        <testcase classname="tests/components/App.test.tsx" name="App Shell (ARC-001..ARC-010, AUT-002, ARC-006) &gt; DEK-004..008: Supports deck actions (manage cards, archive, study empty)" time="0.097332125">
+        <testcase classname="tests/database/rls.test.ts" name="Row-Level Security (RLS) Isolation (SEC-001, SEC-002, SEC-003) &gt; SEC-003: Unauthenticated user cannot read private tables" time="1.108743458">
         </testcase>
     </testsuite>
-    <testsuite name="tests/components/AuthContext.test.tsx" timestamp="2026-10-12T19:55:31.683Z" hostname="Bastians-MacBook-Air.local" tests="4" failures="0" errors="0" skipped="0" time="0.0466245">
-        <testcase classname="tests/components/AuthContext.test.tsx" name="AuthContext (AUT-001..AUT-006) &gt; AUT-002: Starts in signed-out state when no session exists" time="0.027759167">
+    <testsuite name="tests/database/rpc.test.ts" timestamp="2026-10-12T20:21:52.237Z" hostname="Bastians-MacBook-Air.local" tests="5" failures="0" errors="0" skipped="0" time="10.786530542">
+        <testcase classname="tests/database/rpc.test.ts" name="Database RPC Functions (submit_grade, undo_grade, commit_import) &gt; rpc_submit_grade: updates card, session, and creates review event atomically (REV-003, REV-005)" time="3.396893625">
         </testcase>
-        <testcase classname="tests/components/AuthContext.test.tsx" name="AuthContext (AUT-001..AUT-006) &gt; AUT-006: Restores session when existing session is found" time="0.005802291">
+        <testcase classname="tests/database/rpc.test.ts" name="Database RPC Functions (submit_grade, undo_grade, commit_import) &gt; rpc_submit_grade: increments lapse_count and sets relearning on incorrect review card (REV-007)" time="2.216515333">
         </testcase>
-        <testcase classname="tests/components/AuthContext.test.tsx" name="AuthContext (AUT-001..AUT-006) &gt; AUT-001: signInWithOtp calls supabase auth with email" time="0.009129041">
+        <testcase classname="tests/database/rpc.test.ts" name="Database RPC Functions (submit_grade, undo_grade, commit_import) &gt; rpc_undo_grade: rolls back card and invalidates review event (REV-011, REV-012)" time="1.482360291">
         </testcase>
-        <testcase classname="tests/components/AuthContext.test.tsx" name="AuthContext (AUT-001..AUT-006) &gt; AUT-005: signOut calls supabase.auth.signOut" time="0.003079042">
+        <testcase classname="tests/database/rpc.test.ts" name="Database RPC Functions (submit_grade, undo_grade, commit_import) &gt; rpc_undo_grade: rejects undo after another grade has committed (REV-013)" time="1.730841708">
         </testcase>
-    </testsuite>
-    <testsuite name="tests/components/CardManagementView.test.tsx" timestamp="2026-10-12T19:55:31.683Z" hostname="Bastians-MacBook-Air.local" tests="4" failures="0" errors="0" skipped="0" time="0.22641525">
-        <testcase classname="tests/components/CardManagementView.test.tsx" name="CardManagementView (MGT-001..MGT-009) &gt; MGT-001: Renders card table with all required fields" time="0.094723667">
-        </testcase>
-        <testcase classname="tests/components/CardManagementView.test.tsx" name="CardManagementView (MGT-001..MGT-009) &gt; MGT-002: Search filters cards by question or answer" time="0.012491209">
-        </testcase>
-        <testcase classname="tests/components/CardManagementView.test.tsx" name="CardManagementView (MGT-001..MGT-009) &gt; MGT-007: Suspend and Restore toggles card suspension state" time="0.058707792">
-        </testcase>
-        <testcase classname="tests/components/CardManagementView.test.tsx" name="CardManagementView (MGT-001..MGT-009) &gt; MGT-004: Inline editing updates card question and answer" time="0.057195875">
+        <testcase classname="tests/database/rpc.test.ts" name="Database RPC Functions (submit_grade, undo_grade, commit_import) &gt; rpc_commit_import: inserts unique cards and skips duplicates in deck (IMP-009..IMP-012)" time="1.958600375">
         </testcase>
     </testsuite>
-    <testsuite name="tests/components/CsvImportModal.test.tsx" timestamp="2026-10-12T19:55:31.684Z" hostname="Bastians-MacBook-Air.local" tests="6" failures="0" errors="0" skipped="0" time="0.230213084">
-        <testcase classname="tests/components/CsvImportModal.test.tsx" name="CsvImportModal Component (IMP-001..IMP-016) &gt; IMP-001: Renders file upload dropzone when opened" time="0.076692208">
+    <testsuite name="tests/database/schema.test.ts" timestamp="2026-10-12T20:21:52.238Z" hostname="Bastians-MacBook-Air.local" tests="4" failures="0" errors="0" skipped="0" time="8.062728042">
+        <testcase classname="tests/database/schema.test.ts" name="Database Schema &amp; RPC Migration (PGlite In-Memory Postgres) &gt; enforces table creation and primary keys" time="3.083747083">
         </testcase>
-        <testcase classname="tests/components/CsvImportModal.test.tsx" name="CsvImportModal Component (IMP-001..IMP-016) &gt; IMP-003, IMP-007: Parses CSV and displays preview with counts and first rows" time="0.050543625">
+        <testcase classname="tests/database/schema.test.ts" name="Database Schema &amp; RPC Migration (PGlite In-Memory Postgres) &gt; enforces DAT-006: correct_count + incorrect_count = review_count" time="1.44583125">
         </testcase>
-        <testcase classname="tests/components/CsvImportModal.test.tsx" name="CsvImportModal Component (IMP-001..IMP-016) &gt; IMP-009: Commits valid preview rows to database" time="0.045935875">
+        <testcase classname="tests/database/schema.test.ts" name="Database Schema &amp; RPC Migration (PGlite In-Memory Postgres) &gt; enforces DAT-012 &amp; DAT-013: percent_correct is derived and immutable" time="1.575153625">
         </testcase>
-        <testcase classname="tests/components/CsvImportModal.test.tsx" name="CsvImportModal Component (IMP-001..IMP-016) &gt; IMP-003: Prompts for column mapping when exact headers question/answer are absent" time="0.026698208">
-        </testcase>
-        <testcase classname="tests/components/CsvImportModal.test.tsx" name="CsvImportModal Component (IMP-001..IMP-016) &gt; IMP-015: Displays rejected rows download action when blank cards exist" time="0.028340625">
-        </testcase>
-        <testcase classname="tests/components/CsvImportModal.test.tsx" name="CsvImportModal Component (IMP-001..IMP-016) &gt; Renders null when isOpen is false" time="0.000641917">
+        <testcase classname="tests/database/schema.test.ts" name="Database Schema &amp; RPC Migration (PGlite In-Memory Postgres) &gt; enforces DAT-010: review_events append-only except invalidation" time="1.956831333">
         </testcase>
     </testsuite>
-    <testsuite name="tests/components/DeckModals.test.tsx" timestamp="2026-10-12T19:55:31.684Z" hostname="Bastians-MacBook-Air.local" tests="6" failures="0" errors="0" skipped="0" time="0.377298542">
-        <testcase classname="tests/components/DeckModals.test.tsx" name="DeckModal &amp; DeleteDeckConfirmationModal (DEK-001..DEK-009) &gt; DEK-001: Renders Create Deck form with required fields and defaults" time="0.223693791">
+    <testsuite name="tests/components/App.test.tsx" timestamp="2026-10-12T20:21:52.239Z" hostname="Bastians-MacBook-Air.local" tests="6" failures="0" errors="0" skipped="0" time="0.541394083">
+        <testcase classname="tests/components/App.test.tsx" name="App Shell (ARC-001..ARC-010, AUT-002, ARC-006) &gt; AUT-002: Shows sign-in screen when user is unauthenticated" time="0.078150583">
         </testcase>
-        <testcase classname="tests/components/DeckModals.test.tsx" name="DeckModal &amp; DeleteDeckConfirmationModal (DEK-001..DEK-009) &gt; DEK-001: Validates required deck name" time="0.056774042">
+        <testcase classname="tests/components/App.test.tsx" name="App Shell (ARC-001..ARC-010, AUT-002, ARC-006) &gt; ARC-006: Shows offline indicator banner when browser loses network connection" time="0.016439">
         </testcase>
-        <testcase classname="tests/components/DeckModals.test.tsx" name="DeckModal &amp; DeleteDeckConfirmationModal (DEK-001..DEK-009) &gt; DEK-001: Submits new deck to supabase and calls onSaved" time="0.039994542">
+        <testcase classname="tests/components/App.test.tsx" name="App Shell (ARC-001..ARC-010, AUT-002, ARC-006) &gt; AUT-001, DEK-001: Shows deck dashboard when user is authenticated" time="0.14853">
         </testcase>
-        <testcase classname="tests/components/DeckModals.test.tsx" name="DeckModal &amp; DeleteDeckConfirmationModal (DEK-001..DEK-009) &gt; DEK-002: DeleteDeckConfirmationModal enforces typing exact deck name to enable delete" time="0.014533291">
+        <testcase classname="tests/components/App.test.tsx" name="App Shell (ARC-001..ARC-010, AUT-002, ARC-006) &gt; DIA-001: Navigates to diagnostics view when Diagnostics button is clicked" time="0.06854925">
         </testcase>
-        <testcase classname="tests/components/DeckModals.test.tsx" name="DeckModal &amp; DeleteDeckConfirmationModal (DEK-001..DEK-009) &gt; DEK-009: Edit existing deck updates fields and submits via update RPC" time="0.038572709">
+        <testcase classname="tests/components/App.test.tsx" name="App Shell (ARC-001..ARC-010, AUT-002, ARC-006) &gt; AUT-002: Submits login form and displays confirmation message" time="0.027687209">
         </testcase>
-        <testcase classname="tests/components/DeckModals.test.tsx" name="DeckModal &amp; DeleteDeckConfirmationModal (DEK-001..DEK-009) &gt; Renders null when isOpen is false" time="0.0010795">
-        </testcase>
-    </testsuite>
-    <testsuite name="tests/components/DiagnosticsView.test.tsx" timestamp="2026-10-12T19:55:31.684Z" hostname="Bastians-MacBook-Air.local" tests="3" failures="0" errors="0" skipped="0" time="0.121867791">
-        <testcase classname="tests/components/DiagnosticsView.test.tsx" name="DiagnosticsView (DIA-001..DIA-006) &gt; DIA-001: Renders initial diagnostics panel with Run Diagnostics action" time="0.068693333">
-        </testcase>
-        <testcase classname="tests/components/DiagnosticsView.test.tsx" name="DiagnosticsView (DIA-001..DIA-006) &gt; DIA-002..004: Executes diagnostic suite and displays individual check results" time="0.032497125">
-        </testcase>
-        <testcase classname="tests/components/DiagnosticsView.test.tsx" name="DiagnosticsView (DIA-001..DIA-006) &gt; DIA-005: Provides Copy Report and Download Report buttons" time="0.019797458">
+        <testcase classname="tests/components/App.test.tsx" name="App Shell (ARC-001..ARC-010, AUT-002, ARC-006) &gt; DEK-004..008: Supports deck actions (manage cards, archive, study empty)" time="0.199670667">
         </testcase>
     </testsuite>
-    <testsuite name="tests/components/SessionDurationModal.test.tsx" timestamp="2026-10-12T19:55:31.685Z" hostname="Bastians-MacBook-Air.local" tests="3" failures="0" errors="0" skipped="0" time="0.188800125">
-        <testcase classname="tests/components/SessionDurationModal.test.tsx" name="SessionDurationModal (SES-001, SES-002) &gt; SES-001: Renders presets (5, 10, 15, 20, 30m) with 15m default" time="0.159141084">
+    <testsuite name="tests/components/AuthContext.test.tsx" timestamp="2026-10-12T20:21:52.240Z" hostname="Bastians-MacBook-Air.local" tests="4" failures="0" errors="0" skipped="0" time="0.128810417">
+        <testcase classname="tests/components/AuthContext.test.tsx" name="AuthContext (AUT-001..AUT-006) &gt; AUT-002: Starts in signed-out state when no session exists" time="0.097811125">
         </testcase>
-        <testcase classname="tests/components/SessionDurationModal.test.tsx" name="SessionDurationModal (SES-001, SES-002) &gt; SES-002: Allows custom duration between 1 and 240 minutes" time="0.016825166">
+        <testcase classname="tests/components/AuthContext.test.tsx" name="AuthContext (AUT-001..AUT-006) &gt; AUT-006: Restores session when existing session is found" time="0.005471">
         </testcase>
-        <testcase classname="tests/components/SessionDurationModal.test.tsx" name="SessionDurationModal (SES-001, SES-002) &gt; SES-002: Validates out-of-range custom duration" time="0.011922792">
+        <testcase classname="tests/components/AuthContext.test.tsx" name="AuthContext (AUT-001..AUT-006) &gt; AUT-001: signInWithOtp calls supabase auth with email" time="0.014248958">
         </testcase>
-    </testsuite>
-    <testsuite name="tests/components/StudyView.test.tsx" timestamp="2026-10-12T19:55:31.685Z" hostname="Bastians-MacBook-Air.local" tests="10" failures="0" errors="0" skipped="0" time="0.448702709">
-        <testcase classname="tests/components/StudyView.test.tsx" name="StudyView Component (UI-001..UI-016, ACC-002) &gt; UI-001: Shows question and Reveal Answer button; answer is hidden initially" time="0.115848459">
-        </testcase>
-        <testcase classname="tests/components/StudyView.test.tsx" name="StudyView Component (UI-001..UI-016, ACC-002) &gt; UI-002, UI-003: Clicking Reveal reveals the answer and displays binary grade buttons" time="0.028595458">
-        </testcase>
-        <testcase classname="tests/components/StudyView.test.tsx" name="StudyView Component (UI-001..UI-016, ACC-002) &gt; UI-011..013: Keyboard Space reveals answer, and 1 grades I got it!" time="0.015023541">
-        </testcase>
-        <testcase classname="tests/components/StudyView.test.tsx" name="StudyView Component (UI-001..UI-016, ACC-002) &gt; UI-011..013: Keyboard 2 grades Dang, I missed it!" time="0.01083775">
-        </testcase>
-        <testcase classname="tests/components/StudyView.test.tsx" name="StudyView Component (UI-001..UI-016, ACC-002) &gt; UI-014: Pause and Resume toggle pauses timer and shows banner" time="0.019663375">
-        </testcase>
-        <testcase classname="tests/components/StudyView.test.tsx" name="StudyView Component (UI-001..UI-016, ACC-002) &gt; UI-007: Undo button triggers undo grade RPC" time="0.099292333">
-        </testcase>
-        <testcase classname="tests/components/StudyView.test.tsx" name="StudyView Component (UI-001..UI-016, ACC-002) &gt; SES-006: End Early button finishes session and calls onFinish" time="0.030682125">
-        </testcase>
-        <testcase classname="tests/components/StudyView.test.tsx" name="StudyView Component (UI-001..UI-016, ACC-002) &gt; UI-009: Renders recoverable error banner with Retry button when RPC fails" time="0.049490834">
-        </testcase>
-        <testcase classname="tests/components/StudyView.test.tsx" name="StudyView Component (UI-001..UI-016, ACC-002) &gt; UI-015: Resume study button in paused overlay resumes study state" time="0.068672708">
-        </testcase>
-        <testcase classname="tests/components/StudyView.test.tsx" name="StudyView Component (UI-001..UI-016, ACC-002) &gt; UI-002: Space key reveals card answer" time="0.008582916">
+        <testcase classname="tests/components/AuthContext.test.tsx" name="AuthContext (AUT-001..AUT-006) &gt; AUT-005: signOut calls supabase.auth.signOut" time="0.0085105">
         </testcase>
     </testsuite>
-    <testsuite name="tests/database/rls.test.ts" timestamp="2026-10-12T19:55:31.685Z" hostname="Bastians-MacBook-Air.local" tests="2" failures="0" errors="0" skipped="0" time="2.129465125">
-        <testcase classname="tests/database/rls.test.ts" name="Row-Level Security (RLS) Isolation (SEC-001, SEC-002, SEC-003) &gt; SEC-002: User B cannot select or modify User A records" time="1.402808625">
+    <testsuite name="tests/components/CardManagementView.test.tsx" timestamp="2026-10-12T20:21:52.240Z" hostname="Bastians-MacBook-Air.local" tests="4" failures="0" errors="0" skipped="0" time="0.426796292">
+        <testcase classname="tests/components/CardManagementView.test.tsx" name="CardManagementView (MGT-001..MGT-009) &gt; MGT-001: Renders card table with all required fields" time="0.176746291">
         </testcase>
-        <testcase classname="tests/database/rls.test.ts" name="Row-Level Security (RLS) Isolation (SEC-001, SEC-002, SEC-003) &gt; SEC-003: Unauthenticated user cannot read private tables" time="0.724955167">
+        <testcase classname="tests/components/CardManagementView.test.tsx" name="CardManagementView (MGT-001..MGT-009) &gt; MGT-002: Search filters cards by question or answer" time="0.031183458">
         </testcase>
-    </testsuite>
-    <testsuite name="tests/database/rpc.test.ts" timestamp="2026-10-12T19:55:31.686Z" hostname="Bastians-MacBook-Air.local" tests="5" failures="0" errors="0" skipped="0" time="5.800887375">
-        <testcase classname="tests/database/rpc.test.ts" name="Database RPC Functions (submit_grade, undo_grade, commit_import) &gt; rpc_submit_grade: updates card, session, and creates review event atomically (REV-003, REV-005)" time="1.676109209">
+        <testcase classname="tests/components/CardManagementView.test.tsx" name="CardManagementView (MGT-001..MGT-009) &gt; MGT-007: Suspend and Restore toggles card suspension state" time="0.120987542">
         </testcase>
-        <testcase classname="tests/database/rpc.test.ts" name="Database RPC Functions (submit_grade, undo_grade, commit_import) &gt; rpc_submit_grade: increments lapse_count and sets relearning on incorrect review card (REV-007)" time="1.266348584">
-        </testcase>
-        <testcase classname="tests/database/rpc.test.ts" name="Database RPC Functions (submit_grade, undo_grade, commit_import) &gt; rpc_undo_grade: rolls back card and invalidates review event (REV-011, REV-012)" time="1.116663708">
-        </testcase>
-        <testcase classname="tests/database/rpc.test.ts" name="Database RPC Functions (submit_grade, undo_grade, commit_import) &gt; rpc_undo_grade: rejects undo after another grade has committed (REV-013)" time="0.765171333">
-        </testcase>
-        <testcase classname="tests/database/rpc.test.ts" name="Database RPC Functions (submit_grade, undo_grade, commit_import) &gt; rpc_commit_import: inserts unique cards and skips duplicates in deck (IMP-009..IMP-012)" time="0.974349208">
+        <testcase classname="tests/components/CardManagementView.test.tsx" name="CardManagementView (MGT-001..MGT-009) &gt; MGT-004: Inline editing updates card question and answer" time="0.09500175">
         </testcase>
     </testsuite>
-    <testsuite name="tests/database/schema.test.ts" timestamp="2026-10-12T19:55:31.686Z" hostname="Bastians-MacBook-Air.local" tests="4" failures="0" errors="0" skipped="0" time="4.40318">
-        <testcase classname="tests/database/schema.test.ts" name="Database Schema &amp; RPC Migration (PGlite In-Memory Postgres) &gt; enforces table creation and primary keys" time="1.694404917">
+    <testsuite name="tests/components/CsvImportModal.test.tsx" timestamp="2026-10-12T20:21:52.241Z" hostname="Bastians-MacBook-Air.local" tests="6" failures="0" errors="0" skipped="0" time="0.500063458">
+        <testcase classname="tests/components/CsvImportModal.test.tsx" name="CsvImportModal Component (IMP-001..IMP-016) &gt; IMP-001: Renders file upload dropzone when opened" time="0.142794959">
         </testcase>
-        <testcase classname="tests/database/schema.test.ts" name="Database Schema &amp; RPC Migration (PGlite In-Memory Postgres) &gt; enforces DAT-006: correct_count + incorrect_count = review_count" time="0.933347583">
+        <testcase classname="tests/components/CsvImportModal.test.tsx" name="CsvImportModal Component (IMP-001..IMP-016) &gt; IMP-003, IMP-007: Parses CSV and displays preview with counts and first rows" time="0.141701459">
         </testcase>
-        <testcase classname="tests/database/schema.test.ts" name="Database Schema &amp; RPC Migration (PGlite In-Memory Postgres) &gt; enforces DAT-012 &amp; DAT-013: percent_correct is derived and immutable" time="0.75425625">
+        <testcase classname="tests/components/CsvImportModal.test.tsx" name="CsvImportModal Component (IMP-001..IMP-016) &gt; IMP-009: Commits valid preview rows to database" time="0.092087375">
         </testcase>
-        <testcase classname="tests/database/schema.test.ts" name="Database Schema &amp; RPC Migration (PGlite In-Memory Postgres) &gt; enforces DAT-010: review_events append-only except invalidation" time="1.020270958">
+        <testcase classname="tests/components/CsvImportModal.test.tsx" name="CsvImportModal Component (IMP-001..IMP-016) &gt; IMP-003: Prompts for column mapping when exact headers question/answer are absent" time="0.053714209">
         </testcase>
-    </testsuite>
-    <testsuite name="tests/unit/branchCoverage.test.ts" timestamp="2026-10-12T19:55:31.686Z" hostname="Bastians-MacBook-Air.local" tests="19" failures="0" errors="0" skipped="0" time="0.01023425">
-        <testcase classname="tests/unit/branchCoverage.test.ts" name="canonicalNormalize edge cases &gt; handles null input via the null-check guard" time="0.000892625">
+        <testcase classname="tests/components/CsvImportModal.test.tsx" name="CsvImportModal Component (IMP-001..IMP-016) &gt; IMP-015: Displays rejected rows download action when blank cards exist" time="0.066587708">
         </testcase>
-        <testcase classname="tests/unit/branchCoverage.test.ts" name="canonicalNormalize edge cases &gt; handles empty string" time="0.00164675">
-        </testcase>
-        <testcase classname="tests/unit/branchCoverage.test.ts" name="canonicalNormalize edge cases &gt; normalizes CR-only line endings" time="0.000080083">
-        </testcase>
-        <testcase classname="tests/unit/branchCoverage.test.ts" name="canonicalNormalize edge cases &gt; preserves internal multiline content with trailing newlines stripped" time="0.000057125">
-        </testcase>
-        <testcase classname="tests/unit/branchCoverage.test.ts" name="canonicalNormalize edge cases &gt; BOM not removed from non-first field position" time="0.000534958">
-        </testcase>
-        <testcase classname="tests/unit/branchCoverage.test.ts" name="canonicalNormalize edge cases &gt; BOM removed when isFirstField=true" time="0.000054334">
-        </testcase>
-        <testcase classname="tests/unit/branchCoverage.test.ts" name="FsrsService edge cases &gt; getRetrievability: returns 1.0 for new card" time="0.001084791">
-        </testcase>
-        <testcase classname="tests/unit/branchCoverage.test.ts" name="FsrsService edge cases &gt; getRetrievability: returns 1.0 for card with stability_days &lt;= 0" time="0.000097583">
-        </testcase>
-        <testcase classname="tests/unit/branchCoverage.test.ts" name="FsrsService edge cases &gt; getRetrievability: returns 1.0 for card with no last_review_at" time="0.000066166">
-        </testcase>
-        <testcase classname="tests/unit/branchCoverage.test.ts" name="FsrsService edge cases &gt; getDesiredRetention returns configured value" time="0.000150709">
-        </testcase>
-        <testcase classname="tests/unit/branchCoverage.test.ts" name="FsrsService edge cases &gt; calculateUtility: uses exam date as horizon when exam is in future" time="0.000837166">
-        </testcase>
-        <testcase classname="tests/unit/branchCoverage.test.ts" name="FsrsService edge cases &gt; calculateUtility: uses 1-year horizon when no exam date" time="0.000182042">
-        </testcase>
-        <testcase classname="tests/unit/branchCoverage.test.ts" name="FsrsService edge cases &gt; calculateUtility: clamps estimated_review_seconds to at least 1" time="0.000109166">
-        </testcase>
-        <testcase classname="tests/unit/branchCoverage.test.ts" name="Scheduler edge cases &gt; returns null when all cards are suspended" time="0.000457375">
-        </testcase>
-        <testcase classname="tests/unit/branchCoverage.test.ts" name="Scheduler edge cases &gt; returns null when no cards in any queue" time="0.00008375">
-        </testcase>
-        <testcase classname="tests/unit/branchCoverage.test.ts" name="Scheduler edge cases &gt; selects relearning card above all others (priority 1)" time="0.000836333">
-        </testcase>
-        <testcase classname="tests/unit/branchCoverage.test.ts" name="Scheduler edge cases &gt; respects anti-echo rule: does not repeat last card immediately (SCH-031)" time="0.0010365">
-        </testcase>
-        <testcase classname="tests/unit/branchCoverage.test.ts" name="Scheduler edge cases &gt; selects mandatory overdue card (priority 2)" time="0.000176625">
-        </testcase>
-        <testcase classname="tests/unit/branchCoverage.test.ts" name="Scheduler edge cases &gt; failed learning card with insufficient intervening count is excluded" time="0.000210167">
+        <testcase classname="tests/components/CsvImportModal.test.tsx" name="CsvImportModal Component (IMP-001..IMP-016) &gt; Renders null when isOpen is false" time="0.000859709">
         </testcase>
     </testsuite>
-    <testsuite name="tests/unit/csvFixtures.test.ts" timestamp="2026-10-12T19:55:31.687Z" hostname="Bastians-MacBook-Air.local" tests="13" failures="0" errors="0" skipped="0" time="0.070865709">
-        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-001: Empty file is rejected with file error" time="0.01000375">
+    <testsuite name="tests/components/DeckModals.test.tsx" timestamp="2026-10-12T20:21:52.242Z" hostname="Bastians-MacBook-Air.local" tests="6" failures="0" errors="0" skipped="0" time="0.422684333">
+        <testcase classname="tests/components/DeckModals.test.tsx" name="DeckModal &amp; DeleteDeckConfirmationModal (DEK-001..DEK-009) &gt; DEK-001: Renders Create Deck form with required fields and defaults" time="0.1891985">
         </testcase>
-        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-002: Header only returns 0 valid rows" time="0.002396083">
+        <testcase classname="tests/components/DeckModals.test.tsx" name="DeckModal &amp; DeleteDeckConfirmationModal (DEK-001..DEK-009) &gt; DEK-001: Validates required deck name" time="0.088176292">
         </testcase>
-        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-003: 100 valid unique rows parse exactly" time="0.029074875">
+        <testcase classname="tests/components/DeckModals.test.tsx" name="DeckModal &amp; DeleteDeckConfirmationModal (DEK-001..DEK-009) &gt; DEK-001: Submits new deck to supabase and calls onSaved" time="0.047014542">
         </testcase>
-        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-004: Reversed exact headers mapped properly" time="0.0024745">
+        <testcase classname="tests/components/DeckModals.test.tsx" name="DeckModal &amp; DeleteDeckConfirmationModal (DEK-001..DEK-009) &gt; DEK-002: DeleteDeckConfirmationModal enforces typing exact deck name to enable delete" time="0.030183958">
         </testcase>
-        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-005: Quoted commas and escaped quotes" time="0.003780958">
+        <testcase classname="tests/components/DeckModals.test.tsx" name="DeckModal &amp; DeleteDeckConfirmationModal (DEK-001..DEK-009) &gt; DEK-009: Edit existing deck updates fields and submits via update RPC" time="0.065491958">
         </testcase>
-        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-006: Embedded LF and CRLF line handling" time="0.003978834">
-        </testcase>
-        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-007: Unicode composed/decomposed forms deduplicated via NFC" time="0.013014291">
-        </testcase>
-        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-008: Leading BOM stripped from first field" time="0.000998125">
-        </testcase>
-        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-009: Blank questions and answers rejected" time="0.000822083">
-        </testcase>
-        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-010: Malformed quoting rejected with error" time="0.000469666">
-        </testcase>
-        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-011: Exact and normalization duplicates identified" time="0.000564791">
-        </testcase>
-        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-012: Existing-card duplicates count potential inserts" time="0.000436791">
-        </testcase>
-        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-013: Case differences preserved and treated as unique" time="0.001382375">
+        <testcase classname="tests/components/DeckModals.test.tsx" name="DeckModal &amp; DeleteDeckConfirmationModal (DEK-001..DEK-009) &gt; Renders null when isOpen is false" time="0.001489833">
         </testcase>
     </testsuite>
-    <testsuite name="tests/unit/csvParser.test.ts" timestamp="2026-10-12T19:55:31.688Z" hostname="Bastians-MacBook-Air.local" tests="12" failures="0" errors="0" skipped="0" time="0.020738083">
-        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; CSV-001: Rejects empty CSV" time="0.00309275">
+    <testsuite name="tests/components/DiagnosticsView.test.tsx" timestamp="2026-10-12T20:21:52.243Z" hostname="Bastians-MacBook-Air.local" tests="3" failures="0" errors="0" skipped="0" time="0.164440792">
+        <testcase classname="tests/components/DiagnosticsView.test.tsx" name="DiagnosticsView (DIA-001..DIA-006) &gt; DIA-001: Renders initial diagnostics panel with Run Diagnostics action" time="0.092675708">
         </testcase>
-        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; CSV-002: Header only returns zero data rows" time="0.001699708">
+        <testcase classname="tests/components/DiagnosticsView.test.tsx" name="DiagnosticsView (DIA-001..DIA-006) &gt; DIA-002..004: Executes diagnostic suite and displays individual check results" time="0.043595791">
         </testcase>
-        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; CSV-003: Parses valid unique rows with exact counts" time="0.003800708">
-        </testcase>
-        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; CSV-004: Recognizes reversed exact headers (answer, question)" time="0.001093375">
-        </testcase>
-        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; CSV-005 &amp; CSV-006: Parses RFC 4180 quotes, escaped quotes, and embedded line breaks" time="0.00127725">
-        </testcase>
-        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; CSV-009: Rejects blank questions or answers with row number and reason" time="0.00164225">
-        </testcase>
-        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; CSV-010: Rejects structurally malformed CSV (unterminated quote)" time="0.000561958">
-        </testcase>
-        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; CSV-011: Detects in-file duplicates and counts them properly" time="0.001102">
-        </testcase>
-        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; Handles custom column mapping when exact headers absent" time="0.001700208">
-        </testcase>
-        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; Parses RFC 4180 lines with escaped quotes and commas" time="0.000414792">
-        </testcase>
-        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; Rejects rows that have fewer columns than mapped" time="0.001077042">
-        </testcase>
-        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; Identifies whether question, answer, or both are blank" time="0.001282">
+        <testcase classname="tests/components/DiagnosticsView.test.tsx" name="DiagnosticsView (DIA-001..DIA-006) &gt; DIA-005: Provides Copy Report and Download Report buttons" time="0.027101">
         </testcase>
     </testsuite>
-    <testsuite name="tests/unit/domainCoverage.test.ts" timestamp="2026-10-12T19:55:31.689Z" hostname="Bastians-MacBook-Air.local" tests="21" failures="0" errors="0" skipped="0" time="0.023441417">
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="Clock implementations &gt; SystemClock returns a Date approximately equal to now" time="0.002350667">
+    <testsuite name="tests/components/SessionDurationModal.test.tsx" timestamp="2026-10-12T20:21:52.243Z" hostname="Bastians-MacBook-Air.local" tests="3" failures="0" errors="0" skipped="0" time="0.174138833">
+        <testcase classname="tests/components/SessionDurationModal.test.tsx" name="SessionDurationModal (SES-001, SES-002) &gt; SES-001: Renders presets (5, 10, 15, 20, 30m) with 15m default" time="0.12884075">
         </testcase>
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="Clock implementations &gt; FixedClock.advance increases time correctly" time="0.000260083">
+        <testcase classname="tests/components/SessionDurationModal.test.tsx" name="SessionDurationModal (SES-001, SES-002) &gt; SES-002: Allows custom duration between 1 and 240 minutes" time="0.02447125">
         </testcase>
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="Clock implementations &gt; FixedClock.setTime changes the time directly" time="0.000214209">
-        </testcase>
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="Clock implementations &gt; FixedClock accepts a number timestamp" time="0.000059042">
-        </testcase>
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="Clock implementations &gt; SystemRandom returns values in [0, 1)" time="0.000513208">
-        </testcase>
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="Clock implementations &gt; SeededRandom is deterministic with same seed" time="0.000551042">
-        </testcase>
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="Clock implementations &gt; SeededRandom getSeed returns original seed" time="0.0000565">
-        </testcase>
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="Clock implementations &gt; SeededRandom produces values in [0, 1)" time="0.0009865">
-        </testcase>
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="Clock implementations &gt; SeededRandom numeric seed produces deterministic sequence" time="0.000057625">
-        </testcase>
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="Diagnostics: runSchedulerConformanceVector (DIA-003) &gt; returns passed=true for valid FSRS conformance" time="0.001933709">
-        </testcase>
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="FsrsService constants &gt; FSRS_PACKAGE_VERSION is a non-empty string" time="0.000086916">
-        </testcase>
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="FsrsService constants &gt; FSRS_PARAMETER_SET_VERSION is defined" time="0.000039458">
-        </testcase>
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="FsrsService constants &gt; SCHEDULING_POLICY_VERSION is defined" time="0.000039208">
-        </testcase>
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="triggerJsonDownload (REL-005) &gt; creates a Blob, anchor, clicks, and revokes URL" time="0.003627291">
-        </testcase>
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="triggerJsonDownload (REL-005) &gt; uses default filename when not specified" time="0.002132791">
-        </testcase>
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="triggerJsonDownload (REL-005) &gt; exportAllUserData fetches all tables and builds export object (REL-005)" time="0.000901792">
-        </testcase>
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="triggerJsonDownload (REL-005) &gt; exportAllUserData throws if any table fetch fails" time="0.002501458">
-        </testcase>
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="triggerJsonDownload (REL-005) &gt; exportAllUserData throws if user is not authenticated" time="0.001175667">
-        </testcase>
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="runDiagnosticsSuite (DIA-001..DIA-006) &gt; runs all checks and returns sanitized report" time="0.003709333">
-        </testcase>
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="runDiagnosticsSuite (DIA-001..DIA-006) &gt; handles network / supabase API exception in diagnostics suite" time="0.000283458">
-        </testcase>
-        <testcase classname="tests/unit/domainCoverage.test.ts" name="runDiagnosticsSuite (DIA-001..DIA-006) &gt; detects different browser families based on navigator.userAgent" time="0.000264084">
+        <testcase classname="tests/components/SessionDurationModal.test.tsx" name="SessionDurationModal (SES-001, SES-002) &gt; SES-002: Validates out-of-range custom duration" time="0.019715292">
         </testcase>
     </testsuite>
-    <testsuite name="tests/unit/fsrsServiceBranches.test.ts" timestamp="2026-10-12T19:55:31.690Z" hostname="Bastians-MacBook-Air.local" tests="11" failures="0" errors="0" skipped="0" time="0.003485583">
-        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="toFsrsState &gt; maps new" time="0.000793125">
+    <testsuite name="tests/components/StudyView.test.tsx" timestamp="2026-10-12T20:21:52.244Z" hostname="Bastians-MacBook-Air.local" tests="10" failures="0" errors="0" skipped="0" time="1.079324042">
+        <testcase classname="tests/components/StudyView.test.tsx" name="StudyView Component (UI-001..UI-016, ACC-002) &gt; UI-001: Shows question and Reveal Answer button; answer is hidden initially" time="0.228319541">
         </testcase>
-        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="toFsrsState &gt; maps learning" time="0.000086708">
+        <testcase classname="tests/components/StudyView.test.tsx" name="StudyView Component (UI-001..UI-016, ACC-002) &gt; UI-002, UI-003: Clicking Reveal reveals the answer and displays binary grade buttons" time="0.037071167">
         </testcase>
-        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="toFsrsState &gt; maps review" time="0.000058375">
+        <testcase classname="tests/components/StudyView.test.tsx" name="StudyView Component (UI-001..UI-016, ACC-002) &gt; UI-011..013: Keyboard Space reveals answer, and 1 grades I got it!" time="0.023034375">
         </testcase>
-        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="toFsrsState &gt; maps relearning" time="0.000059625">
+        <testcase classname="tests/components/StudyView.test.tsx" name="StudyView Component (UI-001..UI-016, ACC-002) &gt; UI-011..013: Keyboard 2 grades Dang, I missed it!" time="0.021613459">
         </testcase>
-        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="toFsrsState &gt; maps unknown to New (0)" time="0.000042458">
+        <testcase classname="tests/components/StudyView.test.tsx" name="StudyView Component (UI-001..UI-016, ACC-002) &gt; UI-014: Pause and Resume toggle pauses timer and shows banner" time="0.123006916">
         </testcase>
-        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="toFsrsCard branches &gt; returns empty card for new card with zero reviews" time="0.000383541">
+        <testcase classname="tests/components/StudyView.test.tsx" name="StudyView Component (UI-001..UI-016, ACC-002) &gt; UI-007: Undo button triggers undo grade RPC" time="0.159753958">
         </testcase>
-        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="toFsrsCard branches &gt; uses derived lastReview when last_review_at is absent but review_count &gt; 0" time="0.000130167">
+        <testcase classname="tests/components/StudyView.test.tsx" name="StudyView Component (UI-001..UI-016, ACC-002) &gt; SES-006: End Early button finishes session and calls onFinish" time="0.028580708">
         </testcase>
-        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="toFsrsCard branches &gt; uses now when next_due_at is absent" time="0.000071459">
+        <testcase classname="tests/components/StudyView.test.tsx" name="StudyView Component (UI-001..UI-016, ACC-002) &gt; UI-009: Renders recoverable error banner with Retry button when RPC fails" time="0.24042575">
         </testcase>
-        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="toFsrsCard branches &gt; sets elapsed_days=0 when lastReview is undefined" time="0.000062292">
+        <testcase classname="tests/components/StudyView.test.tsx" name="StudyView Component (UI-001..UI-016, ACC-002) &gt; UI-015: Resume study button in paused overlay resumes study state" time="0.194223">
         </testcase>
-        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="FsrsService: safeGetR !last_review branch &gt; calculateUtility returns finite result for new card with no history" time="0.000711333">
-        </testcase>
-        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="FsrsService: safeGetR !last_review branch &gt; calculateUtility with past exam date uses 1-year horizon" time="0.000316042">
+        <testcase classname="tests/components/StudyView.test.tsx" name="StudyView Component (UI-001..UI-016, ACC-002) &gt; UI-002: Space key reveals card answer" time="0.0204445">
         </testcase>
     </testsuite>
-    <testsuite name="tests/unit/goldenScenarios.test.ts" timestamp="2026-10-12T19:55:31.691Z" hostname="Bastians-MacBook-Air.local" tests="8" failures="0" errors="0" skipped="0" time="0.010412584">
-        <testcase classname="tests/unit/goldenScenarios.test.ts" name="Versioned Golden Scenarios (TST-015 &amp; VA-SCH-006) &gt; Golden 1 - New Learning: selects from cohort 1 in source order" time="0.003794958">
+    <testsuite name="tests/unit/branchCoverage.test.ts" timestamp="2026-10-12T20:21:52.245Z" hostname="Bastians-MacBook-Air.local" tests="19" failures="0" errors="0" skipped="0" time="0.017535416">
+        <testcase classname="tests/unit/branchCoverage.test.ts" name="canonicalNormalize edge cases &gt; handles null input via the null-check guard" time="0.001960041">
         </testcase>
-        <testcase classname="tests/unit/goldenScenarios.test.ts" name="Versioned Golden Scenarios (TST-015 &amp; VA-SCH-006) &gt; Golden 2 - Success: rating Good updates state and stability" time="0.001791333">
+        <testcase classname="tests/unit/branchCoverage.test.ts" name="canonicalNormalize edge cases &gt; handles empty string" time="0.000347958">
         </testcase>
-        <testcase classname="tests/unit/goldenScenarios.test.ts" name="Versioned Golden Scenarios (TST-015 &amp; VA-SCH-006) &gt; Golden 3 - Lapse: rating Again on review card causes lapse" time="0.000979875">
+        <testcase classname="tests/unit/branchCoverage.test.ts" name="canonicalNormalize edge cases &gt; normalizes CR-only line endings" time="0.00008675">
         </testcase>
-        <testcase classname="tests/unit/goldenScenarios.test.ts" name="Versioned Golden Scenarios (TST-015 &amp; VA-SCH-006) &gt; Golden 4 - Relearning: failed card regains priority after anti-echo delay and intervening count" time="0.001890709">
+        <testcase classname="tests/unit/branchCoverage.test.ts" name="canonicalNormalize edge cases &gt; preserves internal multiline content with trailing newlines stripped" time="0.000073167">
         </testcase>
-        <testcase classname="tests/unit/goldenScenarios.test.ts" name="Versioned Golden Scenarios (TST-015 &amp; VA-SCH-006) &gt; Golden 5 - Overdue Review: cards overdue by &gt; max(7 days, scheduled_interval) become mandatory" time="0.000190083">
+        <testcase classname="tests/unit/branchCoverage.test.ts" name="canonicalNormalize edge cases &gt; BOM not removed from non-first field position" time="0.000507416">
         </testcase>
-        <testcase classname="tests/unit/goldenScenarios.test.ts" name="Versioned Golden Scenarios (TST-015 &amp; VA-SCH-006) &gt; Golden 6 - Exam Imminent Prioritization: prioritizes candidates before exam horizon" time="0.000187958">
+        <testcase classname="tests/unit/branchCoverage.test.ts" name="canonicalNormalize edge cases &gt; BOM removed when isFirstField=true" time="0.000088375">
         </testcase>
-        <testcase classname="tests/unit/goldenScenarios.test.ts" name="Versioned Golden Scenarios (TST-015 &amp; VA-SCH-006) &gt; Golden 7 - Due Backlog Suppression: completely suppresses new cards when due workload &gt;= capacity" time="0.000494709">
+        <testcase classname="tests/unit/branchCoverage.test.ts" name="FsrsService edge cases &gt; getRetrievability: returns 1.0 for new card" time="0.001055958">
         </testcase>
-        <testcase classname="tests/unit/goldenScenarios.test.ts" name="Versioned Golden Scenarios (TST-015 &amp; VA-SCH-006) &gt; VA-SCH-006: Utility formula conformance against independent calculation" time="0.000255125">
+        <testcase classname="tests/unit/branchCoverage.test.ts" name="FsrsService edge cases &gt; getRetrievability: returns 1.0 for card with stability_days &lt;= 0" time="0.000121375">
         </testcase>
-    </testsuite>
-    <testsuite name="tests/unit/normalization.test.ts" timestamp="2026-10-12T19:55:31.692Z" hostname="Bastians-MacBook-Air.local" tests="8" failures="0" errors="0" skipped="0" time="0.011830584">
-        <testcase classname="tests/unit/normalization.test.ts" name="Canonical Normalization (Section 8.5.1, IMP-001..IMP-016) &gt; Step 2: removes leading UTF-8 BOM only from the first field" time="0.002692625">
+        <testcase classname="tests/unit/branchCoverage.test.ts" name="FsrsService edge cases &gt; getRetrievability: returns 1.0 for card with no last_review_at" time="0.000082583">
         </testcase>
-        <testcase classname="tests/unit/normalization.test.ts" name="Canonical Normalization (Section 8.5.1, IMP-001..IMP-016) &gt; Step 3: converts CRLF and CR to LF" time="0.000335458">
+        <testcase classname="tests/unit/branchCoverage.test.ts" name="FsrsService edge cases &gt; getDesiredRetention returns configured value" time="0.000504375">
         </testcase>
-        <testcase classname="tests/unit/normalization.test.ts" name="Canonical Normalization (Section 8.5.1, IMP-001..IMP-016) &gt; Step 4: normalizes Unicode to NFC" time="0.000162">
+        <testcase classname="tests/unit/branchCoverage.test.ts" name="FsrsService edge cases &gt; calculateUtility: uses exam date as horizon when exam is in future" time="0.002522375">
         </testcase>
-        <testcase classname="tests/unit/normalization.test.ts" name="Canonical Normalization (Section 8.5.1, IMP-001..IMP-016) &gt; Step 5 &amp; 6: collapses tabs and multiple spaces to single space and trims around LF" time="0.0001475">
+        <testcase classname="tests/unit/branchCoverage.test.ts" name="FsrsService edge cases &gt; calculateUtility: uses 1-year horizon when no exam date" time="0.000565166">
         </testcase>
-        <testcase classname="tests/unit/normalization.test.ts" name="Canonical Normalization (Section 8.5.1, IMP-001..IMP-016) &gt; Step 7: preserves letter case and punctuation" time="0.000141625">
+        <testcase classname="tests/unit/branchCoverage.test.ts" name="FsrsService edge cases &gt; calculateUtility: clamps estimated_review_seconds to at least 1" time="0.000348625">
         </testcase>
-        <testcase classname="tests/unit/normalization.test.ts" name="Canonical Normalization (Section 8.5.1, IMP-001..IMP-016) &gt; computeContentHash: produces deterministic SHA-256 with 0x1F unit separator" time="0.005284">
+        <testcase classname="tests/unit/branchCoverage.test.ts" name="Scheduler edge cases &gt; returns null when all cards are suspended" time="0.001329125">
         </testcase>
-        <testcase classname="tests/unit/normalization.test.ts" name="Canonical Normalization (Section 8.5.1, IMP-001..IMP-016) &gt; canonicalNormalize handles null or undefined safely" time="0.000222542">
+        <testcase classname="tests/unit/branchCoverage.test.ts" name="Scheduler edge cases &gt; returns null when no cards in any queue" time="0.000157375">
         </testcase>
-        <testcase classname="tests/unit/normalization.test.ts" name="Canonical Normalization (Section 8.5.1, IMP-001..IMP-016) &gt; computeContentHash throws error when Web Crypto API is unavailable" time="0.001501417">
+        <testcase classname="tests/unit/branchCoverage.test.ts" name="Scheduler edge cases &gt; selects relearning card above all others (priority 1)" time="0.001695167">
         </testcase>
-    </testsuite>
-    <testsuite name="tests/unit/property.test.ts" timestamp="2026-10-12T19:55:31.692Z" hostname="Bastians-MacBook-Air.local" tests="1" failures="0" errors="0" skipped="0" time="0.572798333">
-        <testcase classname="tests/unit/property.test.ts" name="Property-Based Scheduling Tests (TST-010, TST-011) &gt; verifies 10,000 valid histories maintain non-negative counters and valid probabilities" time="0.571326917">
+        <testcase classname="tests/unit/branchCoverage.test.ts" name="Scheduler edge cases &gt; respects anti-echo rule: does not repeat last card immediately (SCH-031)" time="0.003230125">
         </testcase>
-    </testsuite>
-    <testsuite name="tests/unit/scheduler.test.ts" timestamp="2026-10-12T19:55:31.693Z" hostname="Bastians-MacBook-Air.local" tests="13" failures="0" errors="0" skipped="0" time="0.013501417">
-        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; SCH-001 &amp; SCH-002: Records pinned versions" time="0.002280167">
+        <testcase classname="tests/unit/branchCoverage.test.ts" name="Scheduler edge cases &gt; selects mandatory overdue card (priority 2)" time="0.000615542">
         </testcase>
-        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; SCH-003 &amp; SCH-004: Maps binary grades to FSRS Good and Again" time="0.00098625">
-        </testcase>
-        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; SCH-010..SCH-012: Deterministic cohort numbers and 1 active cohort at a time" time="0.001357042">
-        </testcase>
-        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; SCH-016 &amp; SCH-017: Failed card is not repeated until delay &amp; intervening count met" time="0.00318725">
-        </testcase>
-        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; SCH-024: Enforces new-learning time fraction ceiling" time="0.000334125">
-        </testcase>
-        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; SCH-027: Due workload backlog suppresses introduction of unseen cards" time="0.000662791">
-        </testcase>
-        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; SCH-030: Suspended cards are excluded from all pools" time="0.000124166">
-        </testcase>
-        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; SCH-031: Anti-echo excludes immediately preceding card when &gt;= 2 other cards exist" time="0.000677125">
-        </testcase>
-        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; SCH-036 &amp; SCH-037: Deterministic selection with seeded random tie-breaker" time="0.000372084">
-        </testcase>
-        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; Puts review card without next_due_at into due_review queue" time="0.000179834">
-        </testcase>
-        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; Suppresses new cohort introduction when remaining session time cannot fit one exposure per card (SCH-020)" time="0.000139042">
-        </testcase>
-        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; Allows retry of failed card when total other eligible cards is less than 2 (SCH-017)" time="0.000175291">
-        </testcase>
-        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; Anti-echo does not filter lastCardId when activeCards.length is less than 3 (SCH-031)" time="0.000173333">
+        <testcase classname="tests/unit/branchCoverage.test.ts" name="Scheduler edge cases &gt; failed learning card with insufficient intervening count is excluded" time="0.000738542">
         </testcase>
     </testsuite>
-    <testsuite name="tests/unit/schedulerFixtures.test.ts" timestamp="2026-10-12T19:55:31.693Z" hostname="Bastians-MacBook-Air.local" tests="12" failures="0" errors="0" skipped="0" time="0.009299083">
-        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-001: Ten unseen cards, selects from active cohort" time="0.004071833">
+    <testsuite name="tests/unit/csvFixtures.test.ts" timestamp="2026-10-12T20:21:52.246Z" hostname="Bastians-MacBook-Air.local" tests="13" failures="0" errors="0" skipped="0" time="0.056223042">
+        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-001: Empty file is rejected with file error" time="0.010548125">
         </testcase>
-        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-002: Failed learning card excluded because delay not met" time="0.000308083">
+        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-002: Header only returns 0 valid rows" time="0.002050416">
         </testcase>
-        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-003: Failed learning card selected when delay and intervening met" time="0.00039575">
+        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-003: 100 valid unique rows parse exactly" time="0.020158375">
         </testcase>
-        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-004: Acquisition ceiling reached blocks new cohort cards" time="0.000897209">
+        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-004: Reversed exact headers mapped properly" time="0.004331958">
         </testcase>
-        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-005: Manageable due pool prioritizes due review card" time="0.000217583">
+        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-005: Quoted commas and escaped quotes" time="0.001287208">
         </testcase>
-        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-006: Due workload equal to remaining session selects due cards" time="0.000397541">
+        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-006: Embedded LF and CRLF line handling" time="0.002023709">
         </testcase>
-        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-007: Due workload suppresses new cards introduction" time="0.000526042">
+        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-007: Unicode composed/decomposed forms deduplicated via NFC" time="0.003264416">
         </testcase>
-        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-008: Mandatory overdue card takes priority over regular due card" time="0.00016875">
+        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-008: Leading BOM stripped from first field" time="0.002054625">
         </testcase>
-        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-009: Equal utility tie candidates resolved deterministically with seed" time="0.000310584">
+        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-009: Blank questions and answers rejected" time="0.001911541">
         </testcase>
-        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-010: Exam in seven days selects card with highest retention benefit" time="0.000155">
+        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-010: Malformed quoting rejected with error" time="0.000892875">
         </testcase>
-        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-011: Suspended card excluded despite high utility" time="0.000171833">
+        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-011: Exact and normalization duplicates identified" time="0.001124708">
         </testcase>
-        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-012: Relearning card takes highest priority above regular review" time="0.000167375">
+        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-012: Existing-card duplicates count potential inserts" time="0.002229042">
         </testcase>
-    </testsuite>
-    <testsuite name="tests/unit/supabaseClient.test.ts" timestamp="2026-10-12T19:55:31.694Z" hostname="Bastians-MacBook-Air.local" tests="1" failures="0" errors="0" skipped="0" time="0.001678625">
-        <testcase classname="tests/unit/supabaseClient.test.ts" name="Supabase Client (src/lib/supabase.ts) &gt; exports an initialized supabase client with auth and data query methods" time="0.001006792">
+        <testcase classname="tests/unit/csvFixtures.test.ts" name="Canonical CSV Fixtures (FCA-VVP §10.1, CSV-001..CSV-013) &gt; CSV-013: Case differences preserved and treated as unique" time="0.002373625">
         </testcase>
     </testsuite>
-    <testsuite name="tests/unit/traceabilityChecker.test.ts" timestamp="2026-10-12T19:55:31.694Z" hostname="Bastians-MacBook-Air.local" tests="4" failures="0" errors="0" skipped="0" time="0.2384785">
-        <testcase classname="tests/unit/traceabilityChecker.test.ts" name="Traceability Checker (VA-TRC-001, TST-016..TST-018) &gt; fails with location when a Must requirement is missing from the matrix (TST-017)" time="0.068203625">
+    <testsuite name="tests/unit/csvParser.test.ts" timestamp="2026-10-12T20:21:52.248Z" hostname="Bastians-MacBook-Air.local" tests="12" failures="0" errors="0" skipped="0" time="0.02192775">
+        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; CSV-001: Rejects empty CSV" time="0.002609">
         </testcase>
-        <testcase classname="tests/unit/traceabilityChecker.test.ts" name="Traceability Checker (VA-TRC-001, TST-016..TST-018) &gt; fails with location when duplicate requirement IDs exist (TST-018)" time="0.054882792">
+        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; CSV-002: Header only returns zero data rows" time="0.001110542">
         </testcase>
-        <testcase classname="tests/unit/traceabilityChecker.test.ts" name="Traceability Checker (VA-TRC-001, TST-016..TST-018) &gt; fails with location when an orphan requirement ID is present (TST-018)" time="0.05373675">
+        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; CSV-003: Parses valid unique rows with exact counts" time="0.0038785">
         </testcase>
-        <testcase classname="tests/unit/traceabilityChecker.test.ts" name="Traceability Checker (VA-TRC-001, TST-016..TST-018) &gt; fails with location when test index references a nonexistent requirement ID (TST-018)" time="0.060317417">
+        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; CSV-004: Recognizes reversed exact headers (answer, question)" time="0.003120292">
+        </testcase>
+        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; CSV-005 &amp; CSV-006: Parses RFC 4180 quotes, escaped quotes, and embedded line breaks" time="0.000848916">
+        </testcase>
+        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; CSV-009: Rejects blank questions or answers with row number and reason" time="0.001395875">
+        </testcase>
+        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; CSV-010: Rejects structurally malformed CSV (unterminated quote)" time="0.000604833">
+        </testcase>
+        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; CSV-011: Detects in-file duplicates and counts them properly" time="0.001301">
+        </testcase>
+        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; Handles custom column mapping when exact headers absent" time="0.003243625">
+        </testcase>
+        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; Parses RFC 4180 lines with escaped quotes and commas" time="0.000448666">
+        </testcase>
+        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; Rejects rows that have fewer columns than mapped" time="0.001093917">
+        </testcase>
+        <testcase classname="tests/unit/csvParser.test.ts" name="CSV Parsing &amp; Preview (IMP-001..IMP-012) &gt; Identifies whether question, answer, or both are blank" time="0.000702917">
         </testcase>
     </testsuite>
-    <testsuite name="tests/unit/useStudySession.test.ts" timestamp="2026-10-12T19:55:31.695Z" hostname="Bastians-MacBook-Air.local" tests="16" failures="0" errors="0" skipped="0" time="0.090808542">
-        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; UI-001: Initializes session with first card selected and unrevealed" time="0.024690083">
+    <testsuite name="tests/unit/domainCoverage.test.ts" timestamp="2026-10-12T20:21:52.249Z" hostname="Bastians-MacBook-Air.local" tests="21" failures="0" errors="0" skipped="0" time="0.037326917">
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="Clock implementations &gt; SystemClock returns a Date approximately equal to now" time="0.004416584">
         </testcase>
-        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; SES-010: Updates EWMA review time when review duration is between 0 and 120 seconds" time="0.003199875">
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="Clock implementations &gt; FixedClock.advance increases time correctly" time="0.000542083">
         </testcase>
-        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; SES-010: Excludes review time outlier (&gt;120s) from EWMA calculation" time="0.004950417">
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="Clock implementations &gt; FixedClock.setTime changes the time directly" time="0.000548875">
         </testcase>
-        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; UI-002: revealAnswer reveals the answer and ignores subsequent calls" time="0.001431084">
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="Clock implementations &gt; FixedClock accepts a number timestamp" time="0.000147083">
         </testcase>
-        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; UI-004..006: submitGrade submits correct grade and advances to next card" time="0.013222042">
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="Clock implementations &gt; SystemRandom returns values in [0, 1)" time="0.000780834">
         </testcase>
-        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; UI-004..006: submitGrade submits incorrect grade and updates metrics" time="0.002464291">
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="Clock implementations &gt; SeededRandom is deterministic with same seed" time="0.003330667">
         </testcase>
-        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; UI-007, REV-011: undoLastGrade rolls back last grade submission" time="0.00332975">
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="Clock implementations &gt; SeededRandom getSeed returns original seed" time="0.000337541">
         </testcase>
-        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; UI-014, UI-015: togglePause pauses and resumes timer and marks interruption" time="0.001516833">
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="Clock implementations &gt; SeededRandom produces values in [0, 1)" time="0.004013625">
         </testcase>
-        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; SES-006: endSessionEarly stops session and calls onFinishSession with summary" time="0.005986">
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="Clock implementations &gt; SeededRandom numeric seed produces deterministic sequence" time="0.000963333">
         </testcase>
-        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; REL-004: Handles RPC grade submission error with recoverable retry banner" time="0.004474375">
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="Diagnostics: runSchedulerConformanceVector (DIA-003) &gt; returns passed=true for valid FSRS conformance" time="0.003658708">
         </testcase>
-        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; Updates intervening_cards_since_failure for existing failed cards upon next grade" time="0.012706666">
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="FsrsService constants &gt; FSRS_PACKAGE_VERSION is a non-empty string" time="0.000116542">
         </testcase>
-        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; Increments dueCardsCompleted when a review card is reviewed" time="0.002171541">
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="FsrsService constants &gt; FSRS_PARAMETER_SET_VERSION is defined" time="0.000048916">
         </testcase>
-        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; Handles RPC undo error with recoverable error banner" time="0.003235792">
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="FsrsService constants &gt; SCHEDULING_POLICY_VERSION is defined" time="0.004137542">
         </testcase>
-        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; Handles session timer expiration" time="0.002155167">
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="triggerJsonDownload (REL-005) &gt; creates a Blob, anchor, clicks, and revokes URL" time="0.007269166">
         </testcase>
-        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; SES-005: Ends session when timer expires and selectNext is invoked" time="0.002326708">
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="triggerJsonDownload (REL-005) &gt; uses default filename when not specified" time="0.000908959">
         </testcase>
-        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; Ends session when all cards in pool are suspended and none eligible" time="0.000963">
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="triggerJsonDownload (REL-005) &gt; exportAllUserData fetches all tables and builds export object (REL-005)" time="0.000491709">
+        </testcase>
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="triggerJsonDownload (REL-005) &gt; exportAllUserData throws if any table fetch fails" time="0.000649917">
+        </testcase>
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="triggerJsonDownload (REL-005) &gt; exportAllUserData throws if user is not authenticated" time="0.000200625">
+        </testcase>
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="runDiagnosticsSuite (DIA-001..DIA-006) &gt; runs all checks and returns sanitized report" time="0.001079333">
+        </testcase>
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="runDiagnosticsSuite (DIA-001..DIA-006) &gt; handles network / supabase API exception in diagnostics suite" time="0.000339084">
+        </testcase>
+        <testcase classname="tests/unit/domainCoverage.test.ts" name="runDiagnosticsSuite (DIA-001..DIA-006) &gt; detects different browser families based on navigator.userAgent" time="0.000297291">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/fsrsServiceBranches.test.ts" timestamp="2026-10-12T20:21:52.251Z" hostname="Bastians-MacBook-Air.local" tests="11" failures="0" errors="0" skipped="0" time="0.017049959">
+        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="toFsrsState &gt; maps new" time="0.001205625">
+        </testcase>
+        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="toFsrsState &gt; maps learning" time="0.000156667">
+        </testcase>
+        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="toFsrsState &gt; maps review" time="0.000074208">
+        </testcase>
+        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="toFsrsState &gt; maps relearning" time="0.00007275">
+        </testcase>
+        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="toFsrsState &gt; maps unknown to New (0)" time="0.000059584">
+        </testcase>
+        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="toFsrsCard branches &gt; returns empty card for new card with zero reviews" time="0.002317917">
+        </testcase>
+        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="toFsrsCard branches &gt; uses derived lastReview when last_review_at is absent but review_count &gt; 0" time="0.001252333">
+        </testcase>
+        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="toFsrsCard branches &gt; uses now when next_due_at is absent" time="0.000444333">
+        </testcase>
+        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="toFsrsCard branches &gt; sets elapsed_days=0 when lastReview is undefined" time="0.000103959">
+        </testcase>
+        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="FsrsService: safeGetR !last_review branch &gt; calculateUtility returns finite result for new card with no history" time="0.001785583">
+        </testcase>
+        <testcase classname="tests/unit/fsrsServiceBranches.test.ts" name="FsrsService: safeGetR !last_review branch &gt; calculateUtility with past exam date uses 1-year horizon" time="0.006865708">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/goldenScenarios.test.ts" timestamp="2026-10-12T20:21:52.252Z" hostname="Bastians-MacBook-Air.local" tests="8" failures="0" errors="0" skipped="0" time="0.013235">
+        <testcase classname="tests/unit/goldenScenarios.test.ts" name="Versioned Golden Scenarios (TST-015 &amp; VA-SCH-006) &gt; Golden 1 - New Learning: selects from cohort 1 in source order" time="0.005730167">
+        </testcase>
+        <testcase classname="tests/unit/goldenScenarios.test.ts" name="Versioned Golden Scenarios (TST-015 &amp; VA-SCH-006) &gt; Golden 2 - Success: rating Good updates state and stability" time="0.000837417">
+        </testcase>
+        <testcase classname="tests/unit/goldenScenarios.test.ts" name="Versioned Golden Scenarios (TST-015 &amp; VA-SCH-006) &gt; Golden 3 - Lapse: rating Again on review card causes lapse" time="0.000531875">
+        </testcase>
+        <testcase classname="tests/unit/goldenScenarios.test.ts" name="Versioned Golden Scenarios (TST-015 &amp; VA-SCH-006) &gt; Golden 4 - Relearning: failed card regains priority after anti-echo delay and intervening count" time="0.003299333">
+        </testcase>
+        <testcase classname="tests/unit/goldenScenarios.test.ts" name="Versioned Golden Scenarios (TST-015 &amp; VA-SCH-006) &gt; Golden 5 - Overdue Review: cards overdue by &gt; max(7 days, scheduled_interval) become mandatory" time="0.000265833">
+        </testcase>
+        <testcase classname="tests/unit/goldenScenarios.test.ts" name="Versioned Golden Scenarios (TST-015 &amp; VA-SCH-006) &gt; Golden 6 - Exam Imminent Prioritization: prioritizes candidates before exam horizon" time="0.000230333">
+        </testcase>
+        <testcase classname="tests/unit/goldenScenarios.test.ts" name="Versioned Golden Scenarios (TST-015 &amp; VA-SCH-006) &gt; Golden 7 - Due Backlog Suppression: completely suppresses new cards when due workload &gt;= capacity" time="0.000477167">
+        </testcase>
+        <testcase classname="tests/unit/goldenScenarios.test.ts" name="Versioned Golden Scenarios (TST-015 &amp; VA-SCH-006) &gt; VA-SCH-006: Utility formula conformance against independent calculation" time="0.000186792">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/normalization.test.ts" timestamp="2026-10-12T20:21:52.252Z" hostname="Bastians-MacBook-Air.local" tests="8" failures="0" errors="0" skipped="0" time="0.022795125">
+        <testcase classname="tests/unit/normalization.test.ts" name="Canonical Normalization (Section 8.5.1, IMP-001..IMP-016) &gt; Step 2: removes leading UTF-8 BOM only from the first field" time="0.002731625">
+        </testcase>
+        <testcase classname="tests/unit/normalization.test.ts" name="Canonical Normalization (Section 8.5.1, IMP-001..IMP-016) &gt; Step 3: converts CRLF and CR to LF" time="0.000417083">
+        </testcase>
+        <testcase classname="tests/unit/normalization.test.ts" name="Canonical Normalization (Section 8.5.1, IMP-001..IMP-016) &gt; Step 4: normalizes Unicode to NFC" time="0.000187041">
+        </testcase>
+        <testcase classname="tests/unit/normalization.test.ts" name="Canonical Normalization (Section 8.5.1, IMP-001..IMP-016) &gt; Step 5 &amp; 6: collapses tabs and multiple spaces to single space and trims around LF" time="0.000148334">
+        </testcase>
+        <testcase classname="tests/unit/normalization.test.ts" name="Canonical Normalization (Section 8.5.1, IMP-001..IMP-016) &gt; Step 7: preserves letter case and punctuation" time="0.000130875">
+        </testcase>
+        <testcase classname="tests/unit/normalization.test.ts" name="Canonical Normalization (Section 8.5.1, IMP-001..IMP-016) &gt; computeContentHash: produces deterministic SHA-256 with 0x1F unit separator" time="0.014948125">
+        </testcase>
+        <testcase classname="tests/unit/normalization.test.ts" name="Canonical Normalization (Section 8.5.1, IMP-001..IMP-016) &gt; canonicalNormalize handles null or undefined safely" time="0.000125916">
+        </testcase>
+        <testcase classname="tests/unit/normalization.test.ts" name="Canonical Normalization (Section 8.5.1, IMP-001..IMP-016) &gt; computeContentHash throws error when Web Crypto API is unavailable" time="0.002636125">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/property.test.ts" timestamp="2026-10-12T20:21:52.253Z" hostname="Bastians-MacBook-Air.local" tests="1" failures="0" errors="0" skipped="0" time="1.047258042">
+        <testcase classname="tests/unit/property.test.ts" name="Property-Based Scheduling Tests (TST-010, TST-011) &gt; verifies 10,000 valid histories maintain non-negative counters and valid probabilities" time="1.045950542">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/scheduler.test.ts" timestamp="2026-10-12T20:21:52.253Z" hostname="Bastians-MacBook-Air.local" tests="13" failures="0" errors="0" skipped="0" time="0.02615875">
+        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; SCH-001 &amp; SCH-002: Records pinned versions" time="0.00216225">
+        </testcase>
+        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; SCH-003 &amp; SCH-004: Maps binary grades to FSRS Good and Again" time="0.001667709">
+        </testcase>
+        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; SCH-010..SCH-012: Deterministic cohort numbers and 1 active cohort at a time" time="0.004565958">
+        </testcase>
+        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; SCH-016 &amp; SCH-017: Failed card is not repeated until delay &amp; intervening count met" time="0.002292708">
+        </testcase>
+        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; SCH-024: Enforces new-learning time fraction ceiling" time="0.003165667">
+        </testcase>
+        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; SCH-027: Due workload backlog suppresses introduction of unseen cards" time="0.001180625">
+        </testcase>
+        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; SCH-030: Suspended cards are excluded from all pools" time="0.000346334">
+        </testcase>
+        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; SCH-031: Anti-echo excludes immediately preceding card when &gt;= 2 other cards exist" time="0.005045417">
+        </testcase>
+        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; SCH-036 &amp; SCH-037: Deterministic selection with seeded random tie-breaker" time="0.001297416">
+        </testcase>
+        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; Puts review card without next_due_at into due_review queue" time="0.000644333">
+        </testcase>
+        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; Suppresses new cohort introduction when remaining session time cannot fit one exposure per card (SCH-020)" time="0.000419">
+        </testcase>
+        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; Allows retry of failed card when total other eligible cards is less than 2 (SCH-017)" time="0.000584166">
+        </testcase>
+        <testcase classname="tests/unit/scheduler.test.ts" name="Scheduler Engine &amp; FSRS Integration (SCH-001..SCH-040) &gt; Anti-echo does not filter lastCardId when activeCards.length is less than 3 (SCH-031)" time="0.000975208">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/schedulerFixtures.test.ts" timestamp="2026-10-12T20:21:52.254Z" hostname="Bastians-MacBook-Air.local" tests="12" failures="0" errors="0" skipped="0" time="0.014422292">
+        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-001: Ten unseen cards, selects from active cohort" time="0.007700542">
+        </testcase>
+        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-002: Failed learning card excluded because delay not met" time="0.000316417">
+        </testcase>
+        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-003: Failed learning card selected when delay and intervening met" time="0.000503666">
+        </testcase>
+        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-004: Acquisition ceiling reached blocks new cohort cards" time="0.001260542">
+        </testcase>
+        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-005: Manageable due pool prioritizes due review card" time="0.000310917">
+        </testcase>
+        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-006: Due workload equal to remaining session selects due cards" time="0.00056">
+        </testcase>
+        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-007: Due workload suppresses new cards introduction" time="0.0007615">
+        </testcase>
+        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-008: Mandatory overdue card takes priority over regular due card" time="0.000225833">
+        </testcase>
+        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-009: Equal utility tie candidates resolved deterministically with seed" time="0.000464417">
+        </testcase>
+        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-010: Exam in seven days selects card with highest retention benefit" time="0.00021575">
+        </testcase>
+        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-011: Suspended card excluded despite high utility" time="0.000185917">
+        </testcase>
+        <testcase classname="tests/unit/schedulerFixtures.test.ts" name="Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012) &gt; SCHF-012: Relearning card takes highest priority above regular review" time="0.000229792">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/supabaseClient.test.ts" timestamp="2026-10-12T20:21:52.255Z" hostname="Bastians-MacBook-Air.local" tests="1" failures="0" errors="0" skipped="0" time="0.002695709">
+        <testcase classname="tests/unit/supabaseClient.test.ts" name="Supabase Client (src/lib/supabase.ts) &gt; exports an initialized supabase client with auth and data query methods" time="0.001612417">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/traceabilityChecker.test.ts" timestamp="2026-10-12T20:21:52.255Z" hostname="Bastians-MacBook-Air.local" tests="4" failures="0" errors="0" skipped="0" time="0.3896345">
+        <testcase classname="tests/unit/traceabilityChecker.test.ts" name="Traceability Checker (VA-TRC-001, TST-016..TST-018) &gt; fails with location when a Must requirement is missing from the matrix (TST-017)" time="0.0853735">
+        </testcase>
+        <testcase classname="tests/unit/traceabilityChecker.test.ts" name="Traceability Checker (VA-TRC-001, TST-016..TST-018) &gt; fails with location when duplicate requirement IDs exist (TST-018)" time="0.073593541">
+        </testcase>
+        <testcase classname="tests/unit/traceabilityChecker.test.ts" name="Traceability Checker (VA-TRC-001, TST-016..TST-018) &gt; fails with location when an orphan requirement ID is present (TST-018)" time="0.112050541">
+        </testcase>
+        <testcase classname="tests/unit/traceabilityChecker.test.ts" name="Traceability Checker (VA-TRC-001, TST-016..TST-018) &gt; fails with location when test index references a nonexistent requirement ID (TST-018)" time="0.1175035">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/unit/useStudySession.test.ts" timestamp="2026-10-12T20:21:52.256Z" hostname="Bastians-MacBook-Air.local" tests="16" failures="0" errors="0" skipped="0" time="0.211092458">
+        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; UI-001: Initializes session with first card selected and unrevealed" time="0.035180833">
+        </testcase>
+        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; SES-010: Updates EWMA review time when review duration is between 0 and 120 seconds" time="0.040449292">
+        </testcase>
+        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; SES-010: Excludes review time outlier (&gt;120s) from EWMA calculation" time="0.007707666">
+        </testcase>
+        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; UI-002: revealAnswer reveals the answer and ignores subsequent calls" time="0.013174334">
+        </testcase>
+        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; UI-004..006: submitGrade submits correct grade and advances to next card" time="0.012597417">
+        </testcase>
+        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; UI-004..006: submitGrade submits incorrect grade and updates metrics" time="0.005563167">
+        </testcase>
+        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; UI-007, REV-011: undoLastGrade rolls back last grade submission" time="0.004975458">
+        </testcase>
+        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; UI-014, UI-015: togglePause pauses and resumes timer and marks interruption" time="0.005585458">
+        </testcase>
+        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; SES-006: endSessionEarly stops session and calls onFinishSession with summary" time="0.001844083">
+        </testcase>
+        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; REL-004: Handles RPC grade submission error with recoverable retry banner" time="0.059538458">
+        </testcase>
+        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; Updates intervening_cards_since_failure for existing failed cards upon next grade" time="0.007202">
+        </testcase>
+        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; Increments dueCardsCompleted when a review card is reviewed" time="0.002400667">
+        </testcase>
+        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; Handles RPC undo error with recoverable error banner" time="0.002882292">
+        </testcase>
+        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; Handles session timer expiration" time="0.005420208">
+        </testcase>
+        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; SES-005: Ends session when timer expires and selectNext is invoked" time="0.002578167">
+        </testcase>
+        <testcase classname="tests/unit/useStudySession.test.ts" name="useStudySession Hook (UI-001..UI-016, SES-001..SES-010) &gt; Ends session when all cards in pool are suspended and none eligible" time="0.001448791">
         </testcase>
     </testsuite>
 </testsuites>

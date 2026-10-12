@@ -1,7 +1,7 @@
 {
   "reportVersion": "1.0",
   "specificationVersion": "1.0",
-  "commitSha": "710d267b02be3e0bdb428f726f983af1c8f441c3",
+  "commitSha": "652f06ab5bf3857a0197bf4eb67161fc8de2e867",
   "applicationVersion": "1.0.0",
   "overallResult": "blocked",
   "releaseRecommendation": "do-not-release",
@@ -2148,27 +2148,27 @@
     {
       "suiteName": "Database Schema, RLS & RPC Suite (pgTAP / Supabase CLI)",
       "tool": "supabase test db",
-      "total": 0,
-      "passed": 0,
+      "total": 14,
+      "passed": 14,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 0,
-      "status": "blocked (DEC-003: host container runtime pending)"
+      "durationMs": 1238,
+      "status": "passed"
     },
     {
       "suiteName": "End-to-End & Live Accessibility Suite (Playwright)",
       "tool": "@playwright/test v1.50.1",
-      "total": 0,
-      "passed": 0,
+      "total": 15,
+      "passed": 15,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 0,
-      "status": "blocked (DEC-003: local Supabase auth stack pending)"
+      "durationMs": 16064,
+      "status": "passed"
     }
   ],
   "coverage": {
-    "overallStatements": 94.39,
-    "overallBranches": 82.61,
+    "overallStatements": 94.4,
+    "overallBranches": 82.43,
     "modules": {},
     "thresholdMet": true
   },
@@ -2204,7 +2204,7 @@
   "security": [
     {
       "category": "Row-Level Security (RLS)",
-      "status": "Verified via in-process PGlite (SEC-001..003)",
+      "status": "Passed (pgTAP + PGlite SEC-001..003)",
       "details": "Multi-tenant isolation verified"
     },
     {
@@ -2241,14 +2241,20 @@
       "type": "Unit & Component (@testing-library)",
       "status": "Passed",
       "details": "Tested in tests/components/StudyView.test.tsx"
+    },
+    {
+      "procedure": "Automated Axe WCAG 2.1 AA (ACC-006, ACC-007)",
+      "type": "Browser E2E (@axe-core/playwright)",
+      "status": "Passed",
+      "details": "Automated axe WCAG 2.1 AA audit + 1280x720 200% zoom across Chromium, Firefox, WebKit"
     }
   ],
   "anomalies": [],
   "waivers": [],
   "artifacts": [
     {
-      "path": "dist/assets/browser-afYbBRMd.js",
-      "sha256": "734fb9aff056812fb1d6150cce6257ed14a8846dd38c7d24912959d11b96b9a2",
+      "path": "dist/assets/browser-BwRHEtsn.js",
+      "sha256": "7695ce6ce3885019cc285c37c75c95d001df09cf1e71ae23e23524cbb13ea4eb",
       "description": "Static distribution asset (615 bytes)"
     },
     {
@@ -2257,9 +2263,9 @@
       "description": "Static distribution asset (24360 bytes)"
     },
     {
-      "path": "dist/assets/index-Coo2rzKQ.js",
-      "sha256": "c07c1c03b95867c91c164bdd251a202747b07437f73210db84ed7423932d427c",
-      "description": "Static distribution asset (353704 bytes)"
+      "path": "dist/assets/index-NdChBE5C.js",
+      "sha256": "aa24412c238fe057d0cecc86477a0e6543fe8eadc26ce3e2e45b54bff1d37c6d",
+      "description": "Static distribution asset (353751 bytes)"
     },
     {
       "path": "dist/favicon.svg",
@@ -2278,7 +2284,7 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "40f6f5aa34e7e6b390283d3b21eb38cc44ee2931d2139fb3cbf7f6f5b2550f96",
+      "sha256": "e3331f8114ad75473d6c69f1887b13d172dbcfad24b08310b75e9c949b8f825a",
       "description": "Static distribution asset (851 bytes)"
     },
     {
@@ -2293,7 +2299,7 @@
     },
     {
       "path": "dist/sw.js",
-      "sha256": "715387f1f24f9ce7332ee6edd5471085a28bce83cbb426ef697ca6668d8d7bd2",
+      "sha256": "1326fe7312fa8d83db1b5bb108ce099e8dcd4e9e0a43ecdb7499b05be54d7a38",
       "description": "Static distribution asset (1507 bytes)"
     },
     {
@@ -2307,7 +2313,7 @@
       "role": "Verification Executor",
       "name": "Antigravity Automated Agent",
       "decision": "Verified Automated Baseline; Recommends Do Not Release pending operator signatures",
-      "timestamp": "2026-10-12T19:55:42.819Z"
+      "timestamp": "2026-10-12T20:24:03.066Z"
     },
     {
       "role": "Release Authority",

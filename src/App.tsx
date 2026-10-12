@@ -161,7 +161,7 @@ export const App: React.FC = () => {
             <span>You are currently offline. Study actions require an active connection.</span>
           </div>
         )}
-        <div className="max-w-md w-full bg-slate-800 border border-slate-700 rounded-2xl p-8 shadow-2xl text-center">
+        <main className="max-w-md w-full bg-slate-800 border border-slate-700 rounded-2xl p-8 shadow-2xl text-center">
           <div className="w-16 h-16 bg-blue-600/20 text-blue-400 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-blue-500/30">
             <BookOpen className="w-8 h-8" />
           </div>
@@ -176,6 +176,7 @@ export const App: React.FC = () => {
               value={emailInput}
               onChange={e => setEmailInput(e.target.value)}
               placeholder="Enter your email address"
+              aria-label="Email address"
               className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
               required
             />
@@ -195,7 +196,7 @@ export const App: React.FC = () => {
               {authMsg.text}
             </div>
           )}
-        </div>
+        </main>
       </div>
     );
   }
