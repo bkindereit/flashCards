@@ -137,10 +137,6 @@ export async function parseAndPreviewCsv(
     throw new Error(`CSV structure error: ${message}`);
   }
 
-  if (rawRows.length === 0) {
-    throw new Error('CSV input has no data');
-  }
-
   const headerRow = rawRows[0] || [];
   // Normalize header names to check for 'question' and 'answer'
   const cleanHeaders = headerRow.map((h, idx) => canonicalNormalize(h, idx === 0).toLowerCase());

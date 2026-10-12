@@ -1,0 +1,3 @@
+﻿question,answer
+"What is BOM?","Byte Order Mark"
+"Is BOM stripped?","Yes from first field"

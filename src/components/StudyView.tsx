@@ -299,21 +299,21 @@ export const StudyView: React.FC<StudyViewProps> = ({
                   <kbd className="text-xs font-mono font-normal ml-auto px-2 py-0.5 bg-rose-700/80 rounded border border-rose-500">2</kbd>
                 </button>
               </div>
+            </div>
+          )}
 
-              {/* Undo Last Grade Control (UI-007) */}
-              {canUndo && (
-                <div className="mt-6 flex justify-end">
-                  <button
-                    onClick={undoLastGrade}
-                    disabled={isPending}
-                    className="flex items-center gap-2 px-4 py-2 bg-slate-700/80 hover:bg-slate-600 text-slate-300 text-sm font-medium rounded-lg transition-colors focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                    aria-label="Undo last grade"
-                  >
-                    <RotateCcw className="w-4 h-4 text-slate-400" />
-                    <span>Undo last grade</span>
-                  </button>
-                </div>
-              )}
+          {/* Undo Last Grade Control (UI-007) */}
+          {canUndo && (
+            <div className="mt-6 pt-4 border-t border-slate-700/40 flex justify-end">
+              <button
+                onClick={undoLastGrade}
+                disabled={isPending}
+                className="flex items-center gap-2 px-4 py-2 bg-slate-700/80 hover:bg-slate-600 text-slate-300 text-sm font-medium rounded-lg transition-colors focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                aria-label="Undo last grade"
+              >
+                <RotateCcw className="w-4 h-4 text-slate-400" />
+                <span>Undo last grade</span>
+              </button>
             </div>
           )}
         </main>

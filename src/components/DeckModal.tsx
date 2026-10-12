@@ -135,8 +135,9 @@ export const DeckModal: React.FC<DeckModalProps> = ({
 
         <form onSubmit={handleSave} className="space-y-4">
           <div>
-            <label className="block text-xs uppercase font-bold text-slate-300 mb-1">Deck Name</label>
+            <label htmlFor="deck-name" className="block text-xs uppercase font-bold text-slate-300 mb-1">Deck Name</label>
             <input
+              id="deck-name"
               type="text"
               value={name}
               onChange={e => setName(e.target.value)}
@@ -147,8 +148,9 @@ export const DeckModal: React.FC<DeckModalProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs uppercase font-bold text-slate-300 mb-1">Description (Optional)</label>
+            <label htmlFor="deck-description" className="block text-xs uppercase font-bold text-slate-300 mb-1">Description (Optional)</label>
             <textarea
+              id="deck-description"
               value={description}
               onChange={e => setDescription(e.target.value)}
               placeholder="Topic summary or study notes..."
@@ -158,10 +160,11 @@ export const DeckModal: React.FC<DeckModalProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs uppercase font-bold text-slate-300 mb-1 flex items-center gap-1.5">
+            <label htmlFor="deck-exam-date" className="block text-xs uppercase font-bold text-slate-300 mb-1 flex items-center gap-1.5">
               <Calendar className="w-4 h-4 text-slate-400" /> Optional Exam Date (DEK-003)
             </label>
             <input
+              id="deck-exam-date"
               type="date"
               value={examDate}
               onChange={e => setExamDate(e.target.value)}
@@ -176,10 +179,11 @@ export const DeckModal: React.FC<DeckModalProps> = ({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
               <div>
-                <label className="block font-semibold text-slate-300 mb-1">
+                <label htmlFor="deck-retention" className="block font-semibold text-slate-300 mb-1">
                   Desired Retention (0.70 - 0.97): {desiredRetention}
                 </label>
                 <input
+                  id="deck-retention"
                   type="range"
                   min="0.70"
                   max="0.97"
@@ -191,10 +195,11 @@ export const DeckModal: React.FC<DeckModalProps> = ({
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-300 mb-1">
+                <label htmlFor="deck-cohort-size" className="block font-semibold text-slate-300 mb-1">
                   Cohort Size (5 - 20): {cohortSize}
                 </label>
                 <input
+                  id="deck-cohort-size"
                   type="number"
                   min="5"
                   max="20"
@@ -205,10 +210,11 @@ export const DeckModal: React.FC<DeckModalProps> = ({
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-300 mb-1">
+                <label htmlFor="deck-new-learning-fraction" className="block font-semibold text-slate-300 mb-1">
                   New-Learning Fraction (0.0 - 0.5): {newLearningFraction}
                 </label>
                 <input
+                  id="deck-new-learning-fraction"
                   type="range"
                   min="0.0"
                   max="0.50"

@@ -1,0 +1,66 @@
+{
+  "generatedAt": "2026-10-12T19:50:19.520Z",
+  "prf001": {
+    "requirement": "PRF-001",
+    "activity": "VA-PRF-001",
+    "description": "Next-card selection within 500 ms at p95 over >= 1,000 measured selections",
+    "environment": {
+      "os": "darwin 25.5.0 (arm64)",
+      "cpus": "Apple M1",
+      "totalMemoryBytes": 8589934592,
+      "nodeVersion": "v24.11.1"
+    },
+    "workload": {
+      "cardsCount": 10000,
+      "simulatedReviewsCount": 100000,
+      "warmupIterations": 50,
+      "measuredIterations": 1000
+    },
+    "thresholdMs": 500,
+    "statistics": {
+      "minMs": 2.3869,
+      "medianMs": 2.519,
+      "p95Ms": 3.7719,
+      "p99Ms": 7.2093,
+      "maxMs": 32.2465,
+      "avgMs": 2.8361
+    },
+    "passed": true
+  },
+  "prf002": {
+    "requirement": "PRF-002",
+    "activity": "VA-PRF-002",
+    "description": "Preview and commit of valid 10,000-row CSV-014 each <= 30 seconds",
+    "environment": {
+      "os": "darwin 25.5.0 (arm64)",
+      "cpus": "Apple M1",
+      "totalMemoryBytes": 8589934592,
+      "nodeVersion": "v24.11.1"
+    },
+    "previewSeconds": {
+      "samples": [
+        0.172,
+        0.154,
+        0.154,
+        0.163,
+        0.165
+      ],
+      "min": 0.154,
+      "median": 0.163,
+      "p95": 0.172,
+      "max": 0.172,
+      "thresholdSeconds": 30,
+      "passed": true
+    },
+    "commitSeconds": {
+      "samples": [
+        12.642
+      ],
+      "durationSeconds": 12.642,
+      "thresholdSeconds": 30,
+      "rowsCommitted": 10000,
+      "passed": true
+    },
+    "passed": true
+  }
+}

@@ -47,16 +47,14 @@ export function toFsrsCard(card: Card, now: Date): FSRSCard {
   const due = card.next_due_at ? new Date(card.next_due_at) : now;
   const lastReview = card.last_review_at 
     ? new Date(card.last_review_at) 
-    : (card.learning_state === 'new' && card.review_count === 0 
-        ? undefined 
-        : new Date(due.getTime() - Math.max(1, card.stability_days || 1) * 86400000));
-  const elapsedDays = lastReview ? Math.max(0, (now.getTime() - lastReview.getTime()) / 86400000) : 0;
+    : new Date(due.getTime() - Math.max(1, card.stability_days || 1) * 86400000);
+  const elapsedDays = (now.getTime() - lastReview.getTime()) / 86400000;
 
   return {
     due,
     stability: card.stability_days,
     difficulty: card.difficulty,
-    elapsed_days: elapsedDays,
+    elapsed_days: Math.max(0, elapsedDays),
     scheduled_days: 0,
     reps: card.review_count,
     lapses: card.lapse_count,
@@ -93,14 +91,8 @@ export class FsrsService {
     }
 
     const fsrsCard = toFsrsCard(card, atTime);
-    // Use fsrs library retrievability calculator (returns 0..1 number)
-    try {
-      const rawR = this.f.get_retrievability(fsrsCard, atTime, false);
-      const r = typeof rawR === 'number' ? rawR : parseFloat(String(rawR).replace('%', '')) / 100;
-      return Math.min(1.0, Math.max(0.0, r));
-    } catch {
-      return 1.0;
-    }
+    const r = this.f.get_retrievability(fsrsCard, atTime, false) as number;
+    return Math.min(1.0, Math.max(0.0, r));
   }
 
   /**
@@ -149,14 +141,10 @@ export class FsrsService {
     // 2. R_now
     const r_now = this.getRetrievability(card, now);
 
-    const safeGetR = (fCard: FSRSCard, date: Date) => {
-      try {
-        if (!fCard.last_review) return 1.0;
-        const raw = this.f.get_retrievability(fCard, date, false);
-        return typeof raw === 'number' ? raw : parseFloat(String(raw).replace('%', '')) / 100;
-      } catch {
-        return 1.0;
-      }
+    const safeGetR = (fCard: FSRSCard, date: Date): number => {
+      if (!fCard.last_review) return 1.0;
+      const r = this.f.get_retrievability(fCard, date, false) as number;
+      return Math.min(1.0, Math.max(0.0, r));
     };
 
     // 3. P0: Retrievability at H with no review at now

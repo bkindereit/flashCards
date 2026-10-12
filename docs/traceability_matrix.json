@@ -1,598 +1,4823 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "description": "Bidirectional Requirements Traceability Matrix — FCA-SRS-001 vs FCA-VVP-001",
+  "description": "Authoritative Bidirectional Requirements Traceability Matrix — FCA-SRS-001 vs FCA-VVP-001",
   "version": "1.0",
-  "generated_at": "2026-10-10T00:00:00Z",
+  "generated_at": "2026-10-12T19:54:55.997Z",
   "requirements": [
     {
-      "requirement_id": "ARC-001", "priority": "Must", "description": "Single-page application using React, Vite, TypeScript strict mode.",
-      "verification_methods": ["I", "T"], "activity_ids": ["VA-ARC-001"],
-      "automated_test_ids": ["build:tsc", "build:vite"],
-      "evidence_paths": ["dist/", "dist/manifest.webmanifest"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "ARC-002", "priority": "Must", "description": "TypeScript strict mode with no implicit any.",
-      "verification_methods": ["I"], "activity_ids": ["VA-ARC-001"],
-      "automated_test_ids": ["build:tsc"],
-      "evidence_paths": ["tsconfig.json"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "ARC-003", "priority": "Must", "description": "Production build generates static files.",
-      "verification_methods": ["T"], "activity_ids": ["VA-ARC-001"],
-      "automated_test_ids": ["build:vite"],
-      "evidence_paths": ["dist/index.html", "dist/assets/"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "ARC-004", "priority": "Must", "description": "Progressive Web App manifest with app metadata.",
-      "verification_methods": ["I", "T"], "activity_ids": ["VA-ARC-002"],
-      "automated_test_ids": ["build:pwa-manifest"],
-      "evidence_paths": ["dist/manifest.webmanifest", "vite.config.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "ARC-005", "priority": "Must", "description": "Service worker generated for PWA offline support.",
-      "verification_methods": ["I"], "activity_ids": ["VA-ARC-002"],
-      "automated_test_ids": ["build:sw"],
-      "evidence_paths": ["dist/sw.js", "dist/workbox-*.js"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "ARC-006", "priority": "Must", "description": "Offline network error displayed when connectivity lost.",
-      "verification_methods": ["T", "D"], "activity_ids": ["VA-ARC-002"],
-      "automated_test_ids": ["src/App.tsx:offline-banner"],
-      "evidence_paths": ["src/App.tsx"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "ARC-010", "priority": "Must", "description": "Injectable clock and random for deterministic testing.",
-      "verification_methods": ["I", "T"], "activity_ids": ["VA-SCH-001"],
-      "automated_test_ids": ["Clock implementations > FixedClock.advance increases time correctly", "Clock implementations > SeededRandom is deterministic with same seed"],
-      "evidence_paths": ["src/domain/clock.ts", "tests/unit/domainCoverage.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "AUT-001", "priority": "Must", "description": "Email OTP authentication via Supabase Auth.",
-      "verification_methods": ["T", "I"], "activity_ids": ["VA-AUT-001"],
-      "automated_test_ids": ["src/context/AuthContext.tsx:signInWithOtp"],
-      "evidence_paths": ["src/context/AuthContext.tsx"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "AUT-002", "priority": "Must", "description": "Unauthenticated users see only the sign-in view.",
-      "verification_methods": ["T"], "activity_ids": ["VA-AUT-001"],
-      "automated_test_ids": ["src/App.tsx:auth-guard"],
-      "evidence_paths": ["src/App.tsx"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "AUT-006", "priority": "Must", "description": "Session persists across browser refreshes.",
-      "verification_methods": ["T"], "activity_ids": ["VA-AUT-002"],
-      "automated_test_ids": ["src/context/AuthContext.tsx:session-restore"],
-      "evidence_paths": ["src/context/AuthContext.tsx"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "DEK-001", "priority": "Must", "description": "Authenticated users can create decks.",
-      "verification_methods": ["T"], "activity_ids": ["VA-DEK-001"],
-      "automated_test_ids": ["src/components/DeckModal.tsx:create"],
-      "evidence_paths": ["src/components/DeckModal.tsx"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "DEK-002", "priority": "Must", "description": "Deck deletion requires explicit name confirmation.",
-      "verification_methods": ["T"], "activity_ids": ["VA-DEK-001"],
-      "automated_test_ids": ["src/components/DeleteDeckConfirmationModal.tsx:name-confirm"],
-      "evidence_paths": ["src/components/DeleteDeckConfirmationModal.tsx"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "DAT-001", "priority": "Must", "description": "Database schema with 9 required tables.",
-      "verification_methods": ["T", "I"], "activity_ids": ["VA-DAT-001"],
-      "automated_test_ids": ["Database Schema > enforces table creation and primary keys"],
-      "evidence_paths": ["supabase/migrations/20261010000000_initial_schema.sql", "coverage/"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "DAT-006", "priority": "Must", "description": "correct_count + incorrect_count = review_count constraint.",
-      "verification_methods": ["T"], "activity_ids": ["VA-DAT-001", "VA-DAT-002"],
-      "automated_test_ids": ["Database Schema > enforces DAT-006: correct_count + incorrect_count = review_count"],
-      "evidence_paths": ["tests/database/schema.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "DAT-010", "priority": "Must", "description": "review_events table is append-only (no delete/update).",
-      "verification_methods": ["T"], "activity_ids": ["VA-DAT-001"],
-      "automated_test_ids": ["Database Schema > enforces DAT-010: review_events append-only except invalidation"],
-      "evidence_paths": ["tests/database/schema.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "DAT-012", "priority": "Must", "description": "percent_correct is a generated stored column.",
-      "verification_methods": ["T"], "activity_ids": ["VA-DAT-002"],
-      "automated_test_ids": ["Database Schema > enforces DAT-012 & DAT-013: percent_correct is derived and immutable"],
-      "evidence_paths": ["tests/database/schema.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "DAT-013", "priority": "Must", "description": "percent_correct is immutable (cannot be directly set).",
-      "verification_methods": ["T"], "activity_ids": ["VA-DAT-002"],
-      "automated_test_ids": ["Database Schema > enforces DAT-012 & DAT-013: percent_correct is derived and immutable"],
-      "evidence_paths": ["tests/database/schema.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "IMP-001", "priority": "Must", "description": "CSV import rejects empty file.",
-      "verification_methods": ["T"], "activity_ids": ["VA-IMP-001"],
-      "automated_test_ids": ["CSV Parsing > CSV-001: Rejects empty CSV"],
-      "evidence_paths": ["tests/unit/csvParser.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "IMP-002", "priority": "Must", "description": "CSV header-only file returns zero data rows.",
-      "verification_methods": ["T"], "activity_ids": ["VA-IMP-001"],
-      "automated_test_ids": ["CSV Parsing > CSV-002: Header only returns zero data rows"],
-      "evidence_paths": ["tests/unit/csvParser.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "IMP-009", "priority": "Must", "description": "rpc_commit_import atomically inserts unique cards.",
-      "verification_methods": ["T"], "activity_ids": ["VA-IMP-002"],
-      "automated_test_ids": ["Database RPC Functions > rpc_commit_import: inserts unique cards and skips duplicates in deck"],
-      "evidence_paths": ["tests/database/rpc.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "IMP-010", "priority": "Must", "description": "Duplicate cards are skipped on import.",
-      "verification_methods": ["T"], "activity_ids": ["VA-IMP-002"],
-      "automated_test_ids": ["Database RPC Functions > rpc_commit_import: inserts unique cards and skips duplicates in deck"],
-      "evidence_paths": ["tests/database/rpc.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "IMP-016", "priority": "Must", "description": "CSV normalization uses 7-step canonical pipeline.",
-      "verification_methods": ["T"], "activity_ids": ["VA-IMP-004"],
-      "automated_test_ids": ["Canonical Normalization > Step 2: removes leading UTF-8 BOM", "Canonical Normalization > Step 3: converts CRLF and CR"],
-      "evidence_paths": ["tests/unit/normalization.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "REV-003", "priority": "Must", "description": "rpc_submit_grade updates card, session, and creates review event atomically.",
-      "verification_methods": ["T"], "activity_ids": ["VA-REV-001"],
-      "automated_test_ids": ["Database RPC Functions > rpc_submit_grade: updates card, session, and creates review event atomically"],
-      "evidence_paths": ["tests/database/rpc.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "REV-004", "priority": "Must", "description": "Duplicate grade operation IDs are idempotent.",
-      "verification_methods": ["T"], "activity_ids": ["VA-REV-002"],
-      "automated_test_ids": ["Database RPC Functions > rpc_submit_grade: updates card, session, and creates review event atomically"],
-      "evidence_paths": ["tests/database/rpc.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "REV-007", "priority": "Must", "description": "Incorrect review card lapses to relearning, incrementing lapse_count.",
-      "verification_methods": ["T"], "activity_ids": ["VA-REV-001"],
-      "automated_test_ids": ["Database RPC Functions > rpc_submit_grade: increments lapse_count and sets relearning on incorrect review card"],
-      "evidence_paths": ["tests/database/rpc.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "REV-011", "priority": "Must", "description": "rpc_undo_grade rolls back card state and invalidates review event.",
-      "verification_methods": ["T"], "activity_ids": ["VA-REV-003"],
-      "automated_test_ids": ["Database RPC Functions > rpc_undo_grade: rolls back card and invalidates review event"],
-      "evidence_paths": ["tests/database/rpc.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "REV-012", "priority": "Must", "description": "Undone review event is marked invalidated.",
-      "verification_methods": ["T"], "activity_ids": ["VA-REV-003"],
-      "automated_test_ids": ["Database RPC Functions > rpc_undo_grade: rolls back card and invalidates review event"],
-      "evidence_paths": ["tests/database/rpc.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "REV-013", "priority": "Must", "description": "Late undo rejected after another grade has committed.",
-      "verification_methods": ["T"], "activity_ids": ["VA-REV-003"],
-      "automated_test_ids": ["Database RPC Functions > rpc_undo_grade: rejects undo after another grade has committed"],
-      "evidence_paths": ["tests/database/rpc.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "SEC-001", "priority": "Must", "description": "Row-Level Security enabled and enforced on all tables.",
-      "verification_methods": ["I", "T"], "activity_ids": ["VA-SEC-001"],
-      "automated_test_ids": ["Row-Level Security > SEC-002: User B cannot select or modify User A records"],
-      "evidence_paths": ["supabase/migrations/20261010000000_initial_schema.sql", "tests/database/rls.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "SEC-002", "priority": "Must", "description": "User A records are not accessible to User B.",
-      "verification_methods": ["T"], "activity_ids": ["VA-SEC-001"],
-      "automated_test_ids": ["Row-Level Security > SEC-002: User B cannot select or modify User A records"],
-      "evidence_paths": ["tests/database/rls.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "SEC-003", "priority": "Must", "description": "Anonymous access to private tables is denied.",
-      "verification_methods": ["T"], "activity_ids": ["VA-SEC-001"],
-      "automated_test_ids": ["Row-Level Security > SEC-003: Unauthenticated user cannot read private tables"],
-      "evidence_paths": ["tests/database/rls.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "SCH-001", "priority": "Must", "description": "FSRS pinned at version 4.4.1.",
-      "verification_methods": ["I"], "activity_ids": ["VA-SCH-001"],
-      "automated_test_ids": ["Scheduler Engine > SCH-001 & SCH-002: Records pinned versions"],
-      "evidence_paths": ["package.json", "package-lock.json"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "SCH-003", "priority": "Must", "description": "Binary grade 'correct' maps to FSRS Rating.Good.",
-      "verification_methods": ["T"], "activity_ids": ["VA-SCH-001"],
-      "automated_test_ids": ["Scheduler Engine > SCH-003 & SCH-004: Maps binary grades to FSRS Good and Again"],
-      "evidence_paths": ["tests/unit/scheduler.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "SCH-004", "priority": "Must", "description": "Binary grade 'incorrect' maps to FSRS Rating.Again.",
-      "verification_methods": ["T"], "activity_ids": ["VA-SCH-001"],
-      "automated_test_ids": ["Scheduler Engine > SCH-003 & SCH-004: Maps binary grades to FSRS Good and Again"],
-      "evidence_paths": ["tests/unit/scheduler.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "SCH-010", "priority": "Must", "description": "Cards assigned to cohorts by source order.",
-      "verification_methods": ["T"], "activity_ids": ["VA-SCH-002"],
-      "automated_test_ids": ["Scheduler Engine > SCH-010..SCH-012: Deterministic cohort numbers"],
-      "evidence_paths": ["tests/unit/scheduler.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "SCH-031", "priority": "Must", "description": "Anti-echo: last-selected card not immediately repeated when ≥3 active cards.",
-      "verification_methods": ["T"], "activity_ids": ["VA-SCH-004"],
-      "automated_test_ids": ["Scheduler edge cases > respects anti-echo rule: does not repeat last card immediately"],
-      "evidence_paths": ["tests/unit/branchCoverage.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "SCH-036", "priority": "Must", "description": "Tie-breaking uses seeded random with stable seed.",
-      "verification_methods": ["T"], "activity_ids": ["VA-SCH-004"],
-      "automated_test_ids": ["Scheduler Engine > SCH-036 & SCH-037: Seeded random tie-breaking is deterministic"],
-      "evidence_paths": ["tests/unit/scheduler.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "REL-005", "priority": "Must", "description": "User can export all owned data in documented JSON.",
-      "verification_methods": ["T", "I"], "activity_ids": ["VA-REL-002"],
-      "automated_test_ids": ["triggerJsonDownload > creates a Blob, anchor, clicks, and revokes URL"],
-      "evidence_paths": ["src/domain/exportService.ts", "tests/unit/domainCoverage.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "DIA-001", "priority": "Must", "description": "Settings view provides a 'Run diagnostics' action.",
-      "verification_methods": ["I"], "activity_ids": ["VA-DIA-001"],
-      "automated_test_ids": ["src/components/DiagnosticsView.tsx:run-diagnostics"],
-      "evidence_paths": ["src/components/DiagnosticsView.tsx"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "DIA-003", "priority": "Must", "description": "Scheduler diagnostics execute fixed in-memory conformance vector.",
-      "verification_methods": ["T"], "activity_ids": ["VA-DIA-001"],
-      "automated_test_ids": ["Diagnostics: runSchedulerConformanceVector > returns passed=true for valid FSRS conformance"],
-      "evidence_paths": ["tests/unit/domainCoverage.test.ts", "src/domain/diagnostics.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "DIA-005", "priority": "Must", "description": "User can copy or download sanitized diagnostic report.",
-      "verification_methods": ["I"], "activity_ids": ["VA-DIA-001"],
-      "automated_test_ids": ["src/components/DiagnosticsView.tsx:copy-download"],
-      "evidence_paths": ["src/components/DiagnosticsView.tsx"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "TST-001", "priority": "Must", "description": "npm run test:setup creates disposable local test environment.",
-      "verification_methods": ["I", "T"], "activity_ids": ["VA-TST-001"],
-      "automated_test_ids": ["scripts/test-setup.mjs"],
-      "evidence_paths": ["scripts/test-setup.mjs"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "TST-002", "priority": "Must", "description": "npm run verify runs all release-blocking checks.",
-      "verification_methods": ["T"], "activity_ids": ["VA-TST-001"],
-      "automated_test_ids": ["scripts/verify.mjs"],
-      "evidence_paths": ["scripts/verify.mjs"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "TST-003", "priority": "Must", "description": "npm run verify exits zero only when all checks pass.",
-      "verification_methods": ["T"], "activity_ids": ["VA-TST-001"],
-      "automated_test_ids": ["scripts/verify.mjs"],
-      "evidence_paths": ["scripts/verify.mjs"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "TST-006", "priority": "Must", "description": "Scheduler tests use fixed injectable clock.",
-      "verification_methods": ["I", "T"], "activity_ids": ["VA-SCH-001"],
-      "automated_test_ids": ["Clock implementations > FixedClock.advance increases time correctly"],
-      "evidence_paths": ["src/domain/clock.ts", "tests/unit/scheduler.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "TST-007", "priority": "Must", "description": "Selection tests use seeded injectable random source.",
-      "verification_methods": ["I", "T"], "activity_ids": ["VA-SCH-004"],
-      "automated_test_ids": ["Clock implementations > SeededRandom is deterministic with same seed"],
-      "evidence_paths": ["src/domain/clock.ts", "tests/unit/scheduler.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "TST-008", "priority": "Must", "description": "Typed factories for scheduler state and primary database entities.",
-      "verification_methods": ["I"], "activity_ids": ["VA-TST-001"],
-      "automated_test_ids": ["src/testing/factories/index.ts"],
-      "evidence_paths": ["src/testing/factories/index.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "TST-009", "priority": "Must", "description": "Repository includes canonical CSV fixtures.",
-      "verification_methods": ["I"], "activity_ids": ["VA-IMP-001"],
-      "automated_test_ids": ["tests/fixtures/csv/"],
-      "evidence_paths": ["tests/fixtures/csv/"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "TST-010", "priority": "Must", "description": "Property-based scheduling tests execute ≥10,000 generated histories.",
-      "verification_methods": ["T"], "activity_ids": ["VA-SCH-005"],
-      "automated_test_ids": ["Property-Based Scheduling Tests > verifies 10,000 valid histories maintain non-negative counters"],
-      "evidence_paths": ["tests/unit/property.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "TST-011", "priority": "Must", "description": "Property tests verify nonnegative counters, aggregate equality, chronological order.",
-      "verification_methods": ["T"], "activity_ids": ["VA-SCH-005"],
-      "automated_test_ids": ["Property-Based Scheduling Tests > verifies 10,000 valid histories maintain non-negative counters"],
-      "evidence_paths": ["tests/unit/property.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "TST-012", "priority": "Must", "description": "Core modules maintain ≥95% statement and ≥90% branch coverage.",
-      "verification_methods": ["A"], "activity_ids": ["VA-COV-001"],
-      "automated_test_ids": ["coverage:scheduler", "coverage:normalization", "coverage:csvParser", "coverage:fsrsService"],
-      "evidence_paths": ["coverage/coverage-summary.json"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "TST-013", "priority": "Must", "description": "First-party production code maintains ≥85% statement and ≥80% branch overall.",
-      "verification_methods": ["A"], "activity_ids": ["VA-COV-001"],
-      "automated_test_ids": ["coverage:overall"],
-      "evidence_paths": ["coverage/coverage-summary.json"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "TST-014", "priority": "Must", "description": "Coverage below threshold fails npm run verify.",
-      "verification_methods": ["T"], "activity_ids": ["VA-COV-001"],
-      "automated_test_ids": ["vitest:coverage-thresholds"],
-      "evidence_paths": ["vitest.config.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "TST-015", "priority": "Must", "description": "Repository contains versioned golden scenarios.",
-      "verification_methods": ["T"], "activity_ids": ["VA-SCH-004"],
-      "automated_test_ids": ["Golden Scenarios > scenario-001 New card first exposure", "Golden Scenarios > scenario-007 Due workload suppresses cohort"],
-      "evidence_paths": ["tests/unit/goldenScenarios.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "TST-016", "priority": "Must", "description": "Repository contains machine-readable bidirectional traceability matrix.",
-      "verification_methods": ["I"], "activity_ids": ["VA-TRC-001"],
-      "automated_test_ids": ["scripts/check-traceability.mjs"],
-      "evidence_paths": ["docs/traceability_matrix.json"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "TST-017", "priority": "Must", "description": "Traceability checker fails when Must requirement has no method/criterion/test/evidence.",
-      "verification_methods": ["T"], "activity_ids": ["VA-TRC-001"],
-      "automated_test_ids": ["scripts/check-traceability.mjs:tsT-017-validation"],
-      "evidence_paths": ["scripts/check-traceability.mjs"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "TST-018", "priority": "Must", "description": "Traceability checker fails on duplicate IDs and orphan references.",
-      "verification_methods": ["T"], "activity_ids": ["VA-TRC-001"],
-      "automated_test_ids": ["scripts/check-traceability.mjs:tsT-018-validation"],
-      "evidence_paths": ["scripts/check-traceability.mjs"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "CIC-001", "priority": "Must", "description": "CI installs dependencies from committed lockfile.",
-      "verification_methods": ["I"], "activity_ids": ["VA-CIC-001"],
-      "automated_test_ids": [".github/workflows/verify.yml:npm-ci"],
-      "evidence_paths": [".github/workflows/verify.yml"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "CIC-002", "priority": "Must", "description": "CI executes npm run verify for every PR to main.",
-      "verification_methods": ["I"], "activity_ids": ["VA-CIC-001"],
-      "automated_test_ids": [".github/workflows/verify.yml:trigger"],
-      "evidence_paths": [".github/workflows/verify.yml"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "CIC-003", "priority": "Must", "description": "CI verification jobs have explicit failure timeouts.",
-      "verification_methods": ["I"], "activity_ids": ["VA-CIC-001"],
-      "automated_test_ids": [".github/workflows/verify.yml:timeout"],
-      "evidence_paths": [".github/workflows/verify.yml"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "CIC-004", "priority": "Must", "description": "Failed browser tests retain Playwright traces and screenshots.",
-      "verification_methods": ["I"], "activity_ids": ["VA-CIC-001"],
-      "automated_test_ids": [".github/workflows/verify.yml:playwright-artifacts"],
-      "evidence_paths": [".github/workflows/verify.yml", "playwright.config.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "CIC-005", "priority": "Must", "description": "Every verification run retains machine-readable results.",
-      "verification_methods": ["I"], "activity_ids": ["VA-CIC-001"],
-      "automated_test_ids": [".github/workflows/verify.yml:artifacts"],
-      "evidence_paths": [".github/workflows/verify.yml"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "CIC-008", "priority": "Must", "description": "Each release generates the verification report.",
-      "verification_methods": ["T"], "activity_ids": ["VA-CIC-002"],
-      "automated_test_ids": ["scripts/generate-release-report.mjs"],
-      "evidence_paths": ["scripts/generate-release-report.mjs"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "PRF-001", "priority": "Must", "description": "Next-card selection <500ms at 95th percentile for 10,000 cards / 100,000 events.",
-      "verification_methods": ["A"], "activity_ids": ["VA-PRF-001"],
-      "automated_test_ids": ["tests/performance/benchmark.test.ts:PRF-001"],
-      "evidence_paths": ["tests/performance/benchmark.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "PRF-002", "priority": "Must", "description": "10,000-row CSV preview and commit each complete within 30 seconds.",
-      "verification_methods": ["A"], "activity_ids": ["VA-PRF-002"],
-      "automated_test_ids": ["tests/performance/benchmark.test.ts:PRF-002"],
-      "evidence_paths": ["tests/performance/benchmark.test.ts"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "DEL-001", "priority": "Must", "description": "All source code and tests in a Git repository.",
-      "verification_methods": ["I"], "activity_ids": ["VA-ARC-001"],
-      "automated_test_ids": ["git:repository"],
-      "evidence_paths": [".git/", "https://github.com/bkindereit/flashCards"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "DEL-002", "priority": "Must", "description": "README with setup, test, verification, build, deployment, recovery instructions.",
-      "verification_methods": ["I"], "activity_ids": ["VA-ARC-001"],
-      "automated_test_ids": ["README.md:completeness"],
-      "evidence_paths": ["README.md"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "DEL-003", "priority": "Must", "description": "Version-controlled Supabase migrations and seed data.",
-      "verification_methods": ["I"], "activity_ids": ["VA-DAT-001"],
-      "automated_test_ids": ["supabase/migrations/"],
-      "evidence_paths": ["supabase/migrations/20261010000000_initial_schema.sql"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "DEL-004", "priority": "Must", "description": "Data dictionary and entity-relationship diagram.",
-      "verification_methods": ["I"], "activity_ids": ["VA-DAT-001"],
-      "automated_test_ids": ["docs/data_dictionary.md"],
-      "evidence_paths": ["docs/data_dictionary.md"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "DEL-005", "priority": "Must", "description": "Machine-readable requirements traceability matrix.",
-      "verification_methods": ["I"], "activity_ids": ["VA-TRC-001"],
-      "automated_test_ids": ["docs/traceability_matrix.json"],
-      "evidence_paths": ["docs/traceability_matrix.json"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "DEL-006", "priority": "Must", "description": "Test fixtures without personal data.",
-      "verification_methods": ["I"], "activity_ids": ["VA-IMP-001"],
-      "automated_test_ids": ["tests/fixtures/"],
-      "evidence_paths": ["tests/fixtures/"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "DEL-007", "priority": "Must", "description": "CI workflow and environment-variable template with placeholders.",
-      "verification_methods": ["I"], "activity_ids": ["VA-CIC-001"],
-      "automated_test_ids": [".github/workflows/verify.yml", ".env.example"],
-      "evidence_paths": [".github/workflows/verify.yml", ".env.example"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "DEL-008", "priority": "Must", "description": "Completed release verification report for proposed production release.",
-      "verification_methods": ["I"], "activity_ids": ["VA-CIC-002"],
-      "automated_test_ids": ["scripts/generate-release-report.mjs", "verification_report.json"],
-      "evidence_paths": ["verification_report.md", "verification_report.json"],
-      "result": "Pass", "anomaly_ids": []
-    },
-    {
-      "requirement_id": "DEL-009", "priority": "Must", "description": "Known limitations, waivers, residual risks, deferred Should requirements listed.",
-      "verification_methods": ["I"], "activity_ids": ["VA-CIC-002"],
-      "automated_test_ids": ["verification_report.md:waivers"],
-      "evidence_paths": ["verification_report.md"],
-      "result": "Pass", "anomaly_ids": []
+      "requirement_id": "ARC-001",
+      "priority": "Must",
+      "description": "The repository shall contain the frontend, Supabase migrations, database tests, application tests, configuration, CI workflow, and operator documentation required to build and verify the product.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-ARC-001"
+      ],
+      "automated_test_ids": [
+        "test:arc-001"
+      ],
+      "evidence_paths": [
+        "dist/index.html",
+        "tsconfig.json"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ARC-002",
+      "priority": "Must",
+      "description": "The frontend shall be a React application written with TypeScript strict mode enabled.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-ARC-001"
+      ],
+      "automated_test_ids": [
+        "test:arc-002"
+      ],
+      "evidence_paths": [
+        "tsconfig.json"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ARC-003",
+      "priority": "Must",
+      "description": "The application shall produce a static production build through Vite.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-ARC-001"
+      ],
+      "automated_test_ids": [
+        "test:arc-003"
+      ],
+      "evidence_paths": [
+        "dist/index.html"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ARC-004",
+      "priority": "Must",
+      "description": "The application shall be usable through a browser URL without installing local application software.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-ARC-002"
+      ],
+      "automated_test_ids": [
+        "test:arc-004"
+      ],
+      "evidence_paths": [
+        "dist/manifest.webmanifest",
+        "vite.config.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ARC-005",
+      "priority": "Must",
+      "description": "The application shall include a valid web app manifest and service worker sufficient for installability where the browser supports PWA installation.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-ARC-002"
+      ],
+      "automated_test_ids": [
+        "test:arc-005"
+      ],
+      "evidence_paths": [
+        "dist/sw.js"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ARC-006",
+      "priority": "Must",
+      "description": "Version 1 study operations shall require an active network connection and shall display a recoverable network-error state when connectivity is unavailable.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-ARC-002"
+      ],
+      "automated_test_ids": [
+        "test:arc-006"
+      ],
+      "evidence_paths": [
+        "src/App.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ARC-007",
+      "priority": "Must",
+      "description": "The browser shall communicate with Supabase only through the public client key and authenticated user session.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-ARC-001"
+      ],
+      "automated_test_ids": [
+        "test:arc-007"
+      ],
+      "evidence_paths": [
+        "src/lib/supabase.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ARC-008",
+      "priority": "Must",
+      "description": "Privileged data mutations shall execute in PostgreSQL transactions exposed through narrowly permissioned RPC functions.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-ARC-001"
+      ],
+      "automated_test_ids": [
+        "test:arc-008"
+      ],
+      "evidence_paths": [
+        "supabase/migrations/20261010000000_initial_schema.sql"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ARC-009",
+      "priority": "Must",
+      "description": "The scheduling domain shall be separated from React components and database transport code.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-ARC-001"
+      ],
+      "automated_test_ids": [
+        "test:arc-009"
+      ],
+      "evidence_paths": [
+        "src/domain/types.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ARC-010",
+      "priority": "Must",
+      "description": "The scheduling domain shall obtain time and random values only through injectable interfaces.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-001"
+      ],
+      "automated_test_ids": [
+        "test:arc-010"
+      ],
+      "evidence_paths": [
+        "src/domain/clock.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "AUT-001",
+      "priority": "Must",
+      "description": "The application shall allow a user to request passwordless sign-in using an email address.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-AUT-001"
+      ],
+      "automated_test_ids": [
+        "test:aut-001"
+      ],
+      "evidence_paths": [
+        "src/context/AuthContext.tsx",
+        "tests/components/AuthContext.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "AUT-002",
+      "priority": "Must",
+      "description": "The application shall establish an authenticated session only after successful Supabase Auth verification.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-AUT-001"
+      ],
+      "automated_test_ids": [
+        "test:aut-002"
+      ],
+      "evidence_paths": [
+        "src/context/AuthContext.tsx",
+        "tests/components/AuthContext.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "AUT-003",
+      "priority": "Must",
+      "description": "The application shall restore a valid existing session after browser refresh.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-AUT-001"
+      ],
+      "automated_test_ids": [
+        "test:aut-003"
+      ],
+      "evidence_paths": [
+        "src/context/AuthContext.tsx",
+        "tests/components/AuthContext.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "AUT-004",
+      "priority": "Must",
+      "description": "The application shall provide an explicit sign-out control.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-AUT-001"
+      ],
+      "automated_test_ids": [
+        "test:aut-004"
+      ],
+      "evidence_paths": [
+        "src/context/AuthContext.tsx",
+        "tests/components/AuthContext.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "AUT-005",
+      "priority": "Must",
+      "description": "Signing out shall remove locally held authentication state and return the interface to the sign-in view.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-AUT-001"
+      ],
+      "automated_test_ids": [
+        "test:aut-005"
+      ],
+      "evidence_paths": [
+        "src/context/AuthContext.tsx",
+        "tests/components/AuthContext.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "AUT-006",
+      "priority": "Must",
+      "description": "The application shall synchronize the authenticated user's committed data when the same account is used on another supported computer.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-AUT-002"
+      ],
+      "automated_test_ids": [
+        "test:aut-006"
+      ],
+      "evidence_paths": [
+        "src/context/AuthContext.tsx",
+        "tests/components/AuthContext.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEK-001",
+      "priority": "Must",
+      "description": "The user shall be able to create, rename, archive, restore, and delete a deck.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DEK-001"
+      ],
+      "automated_test_ids": [
+        "test:dek-001"
+      ],
+      "evidence_paths": [
+        "src/components/DeckModal.tsx",
+        "tests/components/DeckModals.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEK-002",
+      "priority": "Must",
+      "description": "Permanent deck deletion shall require an explicit confirmation naming the deck.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DEK-001"
+      ],
+      "automated_test_ids": [
+        "test:dek-002"
+      ],
+      "evidence_paths": [
+        "src/components/DeckModal.tsx",
+        "tests/components/DeckModals.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEK-003",
+      "priority": "Must",
+      "description": "Each deck shall store an optional exam date.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DEK-001"
+      ],
+      "automated_test_ids": [
+        "test:dek-003"
+      ],
+      "evidence_paths": [
+        "src/components/DeckModal.tsx",
+        "tests/components/DeckModals.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEK-004",
+      "priority": "Must",
+      "description": "Each deck shall store a desired-retention value from 0.70 through 0.97 inclusive with a default of 0.90.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DEK-001"
+      ],
+      "automated_test_ids": [
+        "test:dek-004"
+      ],
+      "evidence_paths": [
+        "src/components/DeckModal.tsx",
+        "tests/components/DeckModals.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEK-005",
+      "priority": "Must",
+      "description": "Each deck shall store a new-card cohort size from 5 through 20 inclusive with a default of 10.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DEK-001"
+      ],
+      "automated_test_ids": [
+        "test:dek-005"
+      ],
+      "evidence_paths": [
+        "src/components/DeckModal.tsx",
+        "tests/components/DeckModals.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEK-006",
+      "priority": "Must",
+      "description": "Each deck shall store a new-learning time fraction from 0.00 through 0.50 inclusive with a default of 0.30.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DEK-001"
+      ],
+      "automated_test_ids": [
+        "test:dek-006"
+      ],
+      "evidence_paths": [
+        "src/components/DeckModal.tsx",
+        "tests/components/DeckModals.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEK-007",
+      "priority": "Must",
+      "description": "Each deck shall store a minimum failed-card retry delay with a default of 60 seconds.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DEK-001"
+      ],
+      "automated_test_ids": [
+        "test:dek-007"
+      ],
+      "evidence_paths": [
+        "src/components/DeckModal.tsx",
+        "tests/components/DeckModals.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEK-008",
+      "priority": "Must",
+      "description": "Each deck shall store a minimum intervening-card count with a default of 3.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DEK-001"
+      ],
+      "automated_test_ids": [
+        "test:dek-008"
+      ],
+      "evidence_paths": [
+        "src/components/DeckModal.tsx",
+        "tests/components/DeckModals.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEK-009",
+      "priority": "Must",
+      "description": "A settings change shall affect future selections and shall not rewrite historical review events.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DEK-001"
+      ],
+      "automated_test_ids": [
+        "test:dek-009"
+      ],
+      "evidence_paths": [
+        "src/components/DeckModal.tsx",
+        "tests/components/DeckModals.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DAT-001",
+      "priority": "Must",
+      "description": "Every user-owned table shall contain a `user_id` linked to the authenticated owner.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DAT-001"
+      ],
+      "automated_test_ids": [
+        "test:dat-001"
+      ],
+      "evidence_paths": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DAT-002",
+      "priority": "Must",
+      "description": "Every entity identifier shall use a UUID generated by the database or an approved cryptographically random UUID implementation.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DAT-001"
+      ],
+      "automated_test_ids": [
+        "test:dat-002"
+      ],
+      "evidence_paths": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DAT-003",
+      "priority": "Must",
+      "description": "Database timestamps shall be stored as timezone-aware UTC values.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DAT-001"
+      ],
+      "automated_test_ids": [
+        "test:dat-003"
+      ],
+      "evidence_paths": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DAT-004",
+      "priority": "Must",
+      "description": "`cards.learning_state` shall be limited to `new`, `learning`, `review`, `relearning`, and `suspended`.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DAT-001"
+      ],
+      "automated_test_ids": [
+        "test:dat-004"
+      ],
+      "evidence_paths": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DAT-005",
+      "priority": "Must",
+      "description": "Correct, incorrect, review, and lapse counters shall be nonnegative integers.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DAT-001"
+      ],
+      "automated_test_ids": [
+        "test:dat-005"
+      ],
+      "evidence_paths": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DAT-006",
+      "priority": "Must",
+      "description": "The database shall enforce `correct_count + incorrect_count = review_count` for active valid grades.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DAT-001"
+      ],
+      "automated_test_ids": [
+        "test:dat-006"
+      ],
+      "evidence_paths": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DAT-007",
+      "priority": "Must",
+      "description": "`importance_weight` shall be greater than zero and shall default to 1.0.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DAT-001"
+      ],
+      "automated_test_ids": [
+        "test:dat-007"
+      ],
+      "evidence_paths": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DAT-008",
+      "priority": "Must",
+      "description": "A unique constraint shall prevent two active cards with the same `(user_id, deck_id, content_hash)`.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DAT-001"
+      ],
+      "automated_test_ids": [
+        "test:dat-008"
+      ],
+      "evidence_paths": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DAT-009",
+      "priority": "Must",
+      "description": "A review event shall store card, deck, user, session, operation, shown, revealed, rated, result, timing, pre-state, post-state, algorithm version, and invalidation fields.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DAT-001"
+      ],
+      "automated_test_ids": [
+        "test:dat-009"
+      ],
+      "evidence_paths": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DAT-010",
+      "priority": "Must",
+      "description": "Committed review events shall be append-only except for auditable invalidation fields used by undo.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DAT-001"
+      ],
+      "automated_test_ids": [
+        "test:dat-010"
+      ],
+      "evidence_paths": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DAT-011",
+      "priority": "Must",
+      "description": "The database shall prevent deletion of a card that would orphan a review event.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DAT-001"
+      ],
+      "automated_test_ids": [
+        "test:dat-011"
+      ],
+      "evidence_paths": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DAT-012",
+      "priority": "Must",
+      "description": "Percentage correct shall be derived as zero when `review_count` is zero and otherwise as `correct_count / review_count × 100`.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DAT-002"
+      ],
+      "automated_test_ids": [
+        "test:dat-012"
+      ],
+      "evidence_paths": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DAT-013",
+      "priority": "Must",
+      "description": "Percentage correct shall not be stored as an independently mutable card field.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DAT-002"
+      ],
+      "automated_test_ids": [
+        "test:dat-013"
+      ],
+      "evidence_paths": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DAT-014",
+      "priority": "Must",
+      "description": "Time-dependent retrievability, elapsed time, overdue ratio, predicted horizon recall, and priority score shall be calculated when needed rather than mass-updated after each grade.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DAT-002"
+      ],
+      "automated_test_ids": [
+        "test:dat-014"
+      ],
+      "evidence_paths": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DAT-015",
+      "priority": "Must",
+      "description": "Every schema, function, constraint, index, trigger, and row-security policy shall be reproducible from version-controlled migrations.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DAT-001"
+      ],
+      "automated_test_ids": [
+        "test:dat-015"
+      ],
+      "evidence_paths": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-001",
+      "priority": "Must",
+      "description": "The import view shall accept a local `.csv` file encoded as UTF-8.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-IMP-001"
+      ],
+      "automated_test_ids": [
+        "test:imp-001"
+      ],
+      "evidence_paths": [
+        "src/domain/csvParser.ts",
+        "tests/unit/csvParser.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-002",
+      "priority": "Must",
+      "description": "The importer shall accept the exact header names `question` and `answer` in either column order.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-IMP-001"
+      ],
+      "automated_test_ids": [
+        "test:imp-002"
+      ],
+      "evidence_paths": [
+        "src/domain/csvParser.ts",
+        "tests/unit/csvParser.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-003",
+      "priority": "Must",
+      "description": "When exact headers are absent, the importer shall require the user to map exactly one source column to question and one different source column to answer.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-IMP-001"
+      ],
+      "automated_test_ids": [
+        "test:imp-003"
+      ],
+      "evidence_paths": [
+        "src/domain/csvParser.ts",
+        "tests/unit/csvParser.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-004",
+      "priority": "Must",
+      "description": "The importer shall correctly parse quoted delimiters, escaped quotes, and embedded line breaks that comply with RFC 4180-style CSV syntax.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-IMP-001"
+      ],
+      "automated_test_ids": [
+        "test:imp-004"
+      ],
+      "evidence_paths": [
+        "src/domain/csvParser.ts",
+        "tests/unit/csvParser.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-005",
+      "priority": "Must",
+      "description": "A row with a blank normalized question or blank normalized answer shall be rejected.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-IMP-001"
+      ],
+      "automated_test_ids": [
+        "test:imp-005"
+      ],
+      "evidence_paths": [
+        "src/domain/csvParser.ts",
+        "tests/unit/csvParser.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-006",
+      "priority": "Must",
+      "description": "A structurally malformed row shall be rejected and reported with its source row number and reason.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-IMP-001"
+      ],
+      "automated_test_ids": [
+        "test:imp-006"
+      ],
+      "evidence_paths": [
+        "src/domain/csvParser.ts",
+        "tests/unit/csvParser.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-007",
+      "priority": "Must",
+      "description": "Before commit, the application shall display a preview containing total, insert, duplicate, and rejected-row counts plus the first 20 parsed rows.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-IMP-001"
+      ],
+      "automated_test_ids": [
+        "test:imp-007"
+      ],
+      "evidence_paths": [
+        "src/domain/csvParser.ts",
+        "tests/unit/csvParser.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-008",
+      "priority": "Must",
+      "description": "The preview and commit operations shall use the same normalization, validation, and duplicate rules.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-IMP-001"
+      ],
+      "automated_test_ids": [
+        "test:imp-008"
+      ],
+      "evidence_paths": [
+        "src/domain/csvParser.ts",
+        "tests/unit/csvParser.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-009",
+      "priority": "Must",
+      "description": "The commit operation shall insert every valid unique pair not already present in the target deck.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-IMP-002"
+      ],
+      "automated_test_ids": [
+        "test:imp-009"
+      ],
+      "evidence_paths": [
+        "tests/database/rpc.test.ts",
+        "src/components/CsvImportModal.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-010",
+      "priority": "Must",
+      "description": "The commit operation shall skip a pair whose content hash already exists in the target deck.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-IMP-002"
+      ],
+      "automated_test_ids": [
+        "test:imp-010"
+      ],
+      "evidence_paths": [
+        "tests/database/rpc.test.ts",
+        "src/components/CsvImportModal.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-011",
+      "priority": "Must",
+      "description": "Skipping a duplicate shall not modify any field or review event belonging to the existing card.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-IMP-002"
+      ],
+      "automated_test_ids": [
+        "test:imp-011"
+      ],
+      "evidence_paths": [
+        "tests/database/rpc.test.ts",
+        "src/components/CsvImportModal.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-012",
+      "priority": "Must",
+      "description": "Duplicate pairs within one uploaded file shall create one card and shall be counted as skipped duplicates thereafter.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-IMP-002"
+      ],
+      "automated_test_ids": [
+        "test:imp-012"
+      ],
+      "evidence_paths": [
+        "tests/database/rpc.test.ts",
+        "src/components/CsvImportModal.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-013",
+      "priority": "Must",
+      "description": "One import shall commit atomically so that an unhandled failure commits neither cards nor a completed import summary.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-IMP-003"
+      ],
+      "automated_test_ids": [
+        "test:imp-013"
+      ],
+      "evidence_paths": [
+        "tests/database/rpc.test.ts",
+        "src/components/CsvImportModal.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-014",
+      "priority": "Must",
+      "description": "Each newly inserted card shall receive the server-side import timestamp and the import batch identifier.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-IMP-002"
+      ],
+      "automated_test_ids": [
+        "test:imp-014"
+      ],
+      "evidence_paths": [
+        "tests/performance/benchmark.perf.ts",
+        "reports/performance/prf-002-csv-import.json"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-015",
+      "priority": "Must",
+      "description": "The import result shall report inserted, skipped-duplicate, and rejected counts and shall allow download of rejected rows with reasons.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-IMP-002"
+      ],
+      "automated_test_ids": [
+        "test:imp-015"
+      ],
+      "evidence_paths": [
+        "tests/database/rpc.test.ts",
+        "src/components/CsvImportModal.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "IMP-016",
+      "priority": "Must",
+      "description": "Repeating an import commit with the same client operation ID shall not create additional cards or import batches.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-IMP-003"
+      ],
+      "automated_test_ids": [
+        "test:imp-016"
+      ],
+      "evidence_paths": [
+        "tests/database/rpc.test.ts",
+        "src/components/CsvImportModal.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "MGT-001",
+      "priority": "Must",
+      "description": "The user shall be able to search cards by question or answer text within a deck.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-MGT-001"
+      ],
+      "automated_test_ids": [
+        "test:mgt-001"
+      ],
+      "evidence_paths": [
+        "src/components/CardManagementView.tsx",
+        "tests/components/CardManagementView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "MGT-002",
+      "priority": "Must",
+      "description": "The card-management view shall display question, answer, state, first import date, review count, correct count, incorrect count, percent correct, and next due date.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-MGT-001"
+      ],
+      "automated_test_ids": [
+        "test:mgt-002"
+      ],
+      "evidence_paths": [
+        "src/components/CardManagementView.tsx",
+        "tests/components/CardManagementView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "MGT-003",
+      "priority": "Must",
+      "description": "The user shall be able to edit question and answer text.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-MGT-001"
+      ],
+      "automated_test_ids": [
+        "test:mgt-003"
+      ],
+      "evidence_paths": [
+        "src/components/CardManagementView.tsx",
+        "tests/components/CardManagementView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "MGT-004",
+      "priority": "Must",
+      "description": "Saving edited content shall rerun normalization and duplicate validation before commit.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-MGT-001"
+      ],
+      "automated_test_ids": [
+        "test:mgt-004"
+      ],
+      "evidence_paths": [
+        "src/components/CardManagementView.tsx",
+        "tests/components/CardManagementView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "MGT-005",
+      "priority": "Must",
+      "description": "An edit that would duplicate another active card in the deck shall be rejected without changing either card.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-MGT-001"
+      ],
+      "automated_test_ids": [
+        "test:mgt-005"
+      ],
+      "evidence_paths": [
+        "src/components/CardManagementView.tsx",
+        "tests/components/CardManagementView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "MGT-006",
+      "priority": "Must",
+      "description": "Editing content shall preserve the card's identifier, review history, counters, and memory state.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-MGT-001"
+      ],
+      "automated_test_ids": [
+        "test:mgt-006"
+      ],
+      "evidence_paths": [
+        "src/components/CardManagementView.tsx",
+        "tests/components/CardManagementView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "MGT-007",
+      "priority": "Must",
+      "description": "The user shall be able to suspend and restore a card.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-MGT-001"
+      ],
+      "automated_test_ids": [
+        "test:mgt-007"
+      ],
+      "evidence_paths": [
+        "src/components/CardManagementView.tsx",
+        "tests/components/CardManagementView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "MGT-008",
+      "priority": "Must",
+      "description": "A suspended card shall not be selected for study.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-MGT-001"
+      ],
+      "automated_test_ids": [
+        "test:mgt-008"
+      ],
+      "evidence_paths": [
+        "src/components/CardManagementView.tsx",
+        "tests/components/CardManagementView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "MGT-009",
+      "priority": "Should",
+      "description": "The user shall be able to export a deck's question and answer content as UTF-8 CSV.",
+      "verification_methods": [
+        "T",
+        "I"
+      ],
+      "activity_ids": [
+        "VA-MGT-002"
+      ],
+      "automated_test_ids": [
+        "test:mgt-009"
+      ],
+      "evidence_paths": [
+        "docs/limitations.md"
+      ],
+      "result": "Not Run",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "UI-001",
+      "priority": "Must",
+      "description": "The study view shall initially display one question without displaying its answer.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-UI-001"
+      ],
+      "automated_test_ids": [
+        "test:ui-001"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "UI-002",
+      "priority": "Must",
+      "description": "The question state shall provide a `Give me the answer` control.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-UI-001"
+      ],
+      "automated_test_ids": [
+        "test:ui-002"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "UI-003",
+      "priority": "Must",
+      "description": "Activating the reveal control shall display the answer while retaining the question.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-UI-001"
+      ],
+      "automated_test_ids": [
+        "test:ui-003"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "UI-004",
+      "priority": "Must",
+      "description": "The answer state shall provide exactly two primary grading controls labeled `I got it!` and `Dang, I missed it!`.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-UI-001"
+      ],
+      "automated_test_ids": [
+        "test:ui-004"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "UI-005",
+      "priority": "Must",
+      "description": "`I got it!` shall mean the answer was substantially recalled before reveal.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-UI-001"
+      ],
+      "automated_test_ids": [
+        "test:ui-005"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "UI-006",
+      "priority": "Must",
+      "description": "`Dang, I missed it!` shall mean the answer was absent, materially wrong, or recognized only after reveal.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-UI-001"
+      ],
+      "automated_test_ids": [
+        "test:ui-006"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "UI-007",
+      "priority": "Must",
+      "description": "The answer state shall provide an `Undo last grade` control after a grade commits and before another grade commits.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-UI-001"
+      ],
+      "automated_test_ids": [
+        "test:ui-007"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "UI-008",
+      "priority": "Must",
+      "description": "The interface shall disable grading controls while a grade request is pending.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-UI-001"
+      ],
+      "automated_test_ids": [
+        "test:ui-008"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "UI-009",
+      "priority": "Must",
+      "description": "The interface shall display a recoverable error and retry option when a grade request fails without confirmation.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-UI-001"
+      ],
+      "automated_test_ids": [
+        "test:ui-009"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "UI-010",
+      "priority": "Must",
+      "description": "Refreshing before grading shall not create a review event or modify counters.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-UI-001"
+      ],
+      "automated_test_ids": [
+        "test:ui-010"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "UI-011",
+      "priority": "Must",
+      "description": "The complete study workflow shall be operable with keyboard controls documented in the interface.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-UI-002"
+      ],
+      "automated_test_ids": [
+        "test:ui-011"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "UI-012",
+      "priority": "Must",
+      "description": "`Space` or `Enter` shall reveal the answer when keyboard focus is not on another actionable control.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-UI-002"
+      ],
+      "automated_test_ids": [
+        "test:ui-012"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "UI-013",
+      "priority": "Must",
+      "description": "The `1` key shall submit `I got it!` and the `2` key shall submit `Dang, I missed it!` only while the answer state is active.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-UI-002"
+      ],
+      "automated_test_ids": [
+        "test:ui-013"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "UI-014",
+      "priority": "Must",
+      "description": "The study view shall provide pause and resume controls.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-UI-002"
+      ],
+      "automated_test_ids": [
+        "test:ui-014"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "UI-015",
+      "priority": "Must",
+      "description": "Paused time shall not count toward valid interaction time or session allocation.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-UI-002"
+      ],
+      "automated_test_ids": [
+        "test:ui-015"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "UI-016",
+      "priority": "Must",
+      "description": "The study view shall display time remaining, completed reviews, new cards introduced, and due cards remaining.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-UI-002"
+      ],
+      "automated_test_ids": [
+        "test:ui-016"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SES-001",
+      "priority": "Must",
+      "description": "Before study starts, the user shall select a positive session duration.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SES-001"
+      ],
+      "automated_test_ids": [
+        "test:ses-001"
+      ],
+      "evidence_paths": [
+        "src/hooks/useStudySession.ts",
+        "tests/unit/useStudySession.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SES-002",
+      "priority": "Must",
+      "description": "The session-duration view shall offer 5, 10, 15, 20, and 30 minute presets plus a custom whole-minute value from 1 through 240.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SES-001"
+      ],
+      "automated_test_ids": [
+        "test:ses-002"
+      ],
+      "evidence_paths": [
+        "src/hooks/useStudySession.ts",
+        "tests/unit/useStudySession.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SES-003",
+      "priority": "Must",
+      "description": "Starting a session shall create a `study_sessions` record containing its settings snapshot and start timestamp.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SES-001"
+      ],
+      "automated_test_ids": [
+        "test:ses-003"
+      ],
+      "evidence_paths": [
+        "src/hooks/useStudySession.ts",
+        "tests/unit/useStudySession.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SES-004",
+      "priority": "Must",
+      "description": "The session shall stop offering new questions when its target time expires.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SES-001"
+      ],
+      "automated_test_ids": [
+        "test:ses-004"
+      ],
+      "evidence_paths": [
+        "src/hooks/useStudySession.ts",
+        "tests/unit/useStudySession.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SES-005",
+      "priority": "Must",
+      "description": "At target-time expiration, the application shall allow the user to finish a currently displayed card.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SES-001"
+      ],
+      "automated_test_ids": [
+        "test:ses-005"
+      ],
+      "evidence_paths": [
+        "src/hooks/useStudySession.ts",
+        "tests/unit/useStudySession.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SES-006",
+      "priority": "Must",
+      "description": "The user shall be able to end a session early.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SES-001"
+      ],
+      "automated_test_ids": [
+        "test:ses-006"
+      ],
+      "evidence_paths": [
+        "src/hooks/useStudySession.ts",
+        "tests/unit/useStudySession.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SES-007",
+      "priority": "Must",
+      "description": "Ending a session shall preserve every committed grade and shall create no grade for an ungraded displayed card.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SES-001"
+      ],
+      "automated_test_ids": [
+        "test:ses-007"
+      ],
+      "evidence_paths": [
+        "src/hooks/useStudySession.ts",
+        "tests/unit/useStudySession.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SES-008",
+      "priority": "Must",
+      "description": "The session summary shall display elapsed active time, cards reviewed, correct count, incorrect count, new cards introduced, and due cards completed.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SES-001"
+      ],
+      "automated_test_ids": [
+        "test:ses-008"
+      ],
+      "evidence_paths": [
+        "src/hooks/useStudySession.ts",
+        "tests/unit/useStudySession.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SES-009",
+      "priority": "Must",
+      "description": "Valid review-duration estimates shall exclude paused intervals and events explicitly flagged as interrupted.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SES-001"
+      ],
+      "automated_test_ids": [
+        "test:ses-009"
+      ],
+      "evidence_paths": [
+        "src/hooks/useStudySession.ts",
+        "tests/unit/useStudySession.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SES-010",
+      "priority": "Must",
+      "description": "The application shall maintain an exponentially weighted estimate of seconds per review using valid events.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SES-001"
+      ],
+      "automated_test_ids": [
+        "test:ses-010"
+      ],
+      "evidence_paths": [
+        "src/hooks/useStudySession.ts",
+        "tests/unit/useStudySession.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-001",
+      "priority": "Must",
+      "description": "The application shall use a maintained TypeScript FSRS implementation whose exact package version is pinned in the lockfile.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-001"
+      ],
+      "automated_test_ids": [
+        "test:sch-001"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-002",
+      "priority": "Must",
+      "description": "The repository shall record the FSRS package version, parameter-set version, and application scheduling-policy version.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-001"
+      ],
+      "automated_test_ids": [
+        "test:sch-002"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-003",
+      "priority": "Must",
+      "description": "`I got it!` shall map to FSRS `Good`.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-001"
+      ],
+      "automated_test_ids": [
+        "test:sch-003"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-004",
+      "priority": "Must",
+      "description": "`Dang, I missed it!` shall map to FSRS `Again`.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-001"
+      ],
+      "automated_test_ids": [
+        "test:sch-004"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-005",
+      "priority": "Must",
+      "description": "The engine shall use the deck's desired-retention setting when obtaining a subsequent interval from FSRS.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-001"
+      ],
+      "automated_test_ids": [
+        "test:sch-005"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-006",
+      "priority": "Must",
+      "description": "The engine shall use the published default parameter set until a supported parameter-fitting process has enough valid user history.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-001"
+      ],
+      "automated_test_ids": [
+        "test:sch-006"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-007",
+      "priority": "Must",
+      "description": "A fitted parameter set shall be versioned and shall not alter historical event records.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-001"
+      ],
+      "automated_test_ids": [
+        "test:sch-007"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-008",
+      "priority": "Must",
+      "description": "Current retrievability shall be calculated from stored card memory state and the selection timestamp.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-001"
+      ],
+      "automated_test_ids": [
+        "test:sch-008"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-009",
+      "priority": "Must",
+      "description": "The engine shall never treat lifetime percent correct as the sole or primary scheduling variable.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-001"
+      ],
+      "automated_test_ids": [
+        "test:sch-009"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-010",
+      "priority": "Must",
+      "description": "New cards shall be assigned deterministic cohort numbers according to `source_order` and the deck's cohort size.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-002"
+      ],
+      "automated_test_ids": [
+        "test:sch-010"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-011",
+      "priority": "Must",
+      "description": "Only one new-card cohort per deck shall be active at a time.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-002"
+      ],
+      "automated_test_ids": [
+        "test:sch-011"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-012",
+      "priority": "Must",
+      "description": "No more than the configured cohort size of unseen cards shall be eligible at once.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-002"
+      ],
+      "automated_test_ids": [
+        "test:sch-012"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-013",
+      "priority": "Must",
+      "description": "A newly displayed card shall enter `learning` state.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-002"
+      ],
+      "automated_test_ids": [
+        "test:sch-013"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-014",
+      "priority": "Must",
+      "description": "A learning card shall meet the current-session criterion after one valid successful retrieval in that session.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-002"
+      ],
+      "automated_test_ids": [
+        "test:sch-014"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-015",
+      "priority": "Must",
+      "description": "A learning card graded incorrect shall remain unresolved until it is subsequently graded correct in that session or the session ends.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-002"
+      ],
+      "automated_test_ids": [
+        "test:sch-015"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-016",
+      "priority": "Must",
+      "description": "A failed learning card shall not be immediately repeated when at least two other eligible cards exist.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-002"
+      ],
+      "automated_test_ids": [
+        "test:sch-016"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-017",
+      "priority": "Must",
+      "description": "A failed learning card shall become retry-eligible only after both the configured time delay and intervening-card count are met, except when fewer than two other cards are eligible.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-002"
+      ],
+      "automated_test_ids": [
+        "test:sch-017"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-018",
+      "priority": "Must",
+      "description": "A cohort shall meet its session criterion only when every cohort card has a valid success and no unresolved failure in that session.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-002"
+      ],
+      "automated_test_ids": [
+        "test:sch-018"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-019",
+      "priority": "Must",
+      "description": "A learning card that meets criterion shall enter `review` state with an FSRS-calculated due date and shall retain all review history.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-002"
+      ],
+      "automated_test_ids": [
+        "test:sch-019"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-020",
+      "priority": "Must",
+      "description": "The next cohort shall remain locked until the active cohort meets criterion and sufficient session time remains for one estimated first exposure per card.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-002"
+      ],
+      "automated_test_ids": [
+        "test:sch-020"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-021",
+      "priority": "Must",
+      "description": "The application shall increment `successful_relearning_sessions` no more than once per card per session in which the card meets criterion.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-002"
+      ],
+      "automated_test_ids": [
+        "test:sch-021"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-022",
+      "priority": "Must",
+      "description": "The interface may label a card `established` only after it has met criterion in at least three distinct sessions, but the label shall not remove it from spaced review.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-002"
+      ],
+      "automated_test_ids": [
+        "test:sch-022"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-023",
+      "priority": "Must",
+      "description": "A session with eligible unseen cards shall begin with an acquisition phase unless due and relearning workload is estimated to consume the remaining session time.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-003"
+      ],
+      "automated_test_ids": [
+        "test:sch-023"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-024",
+      "priority": "Must",
+      "description": "Cumulative valid interaction time on new and learning cards shall not exceed the deck's new-learning time fraction while an eligible review or relearning card exists.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-003"
+      ],
+      "automated_test_ids": [
+        "test:sch-024"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-025",
+      "priority": "Must",
+      "description": "When the acquisition-time ceiling is reached, the selector shall use the review and relearning pools for the rest of the session except for already-unresolved learning-card retries.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-003"
+      ],
+      "automated_test_ids": [
+        "test:sch-025"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-026",
+      "priority": "Must",
+      "description": "When no new card is eligible, acquisition-phase time shall be made available to review cards.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-003"
+      ],
+      "automated_test_ids": [
+        "test:sch-026"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-027",
+      "priority": "Must",
+      "description": "When due and relearning workload equals or exceeds the remaining estimated capacity, the selector shall introduce no unseen card.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-003"
+      ],
+      "automated_test_ids": [
+        "test:sch-027"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-028",
+      "priority": "Must",
+      "description": "The selector shall not unlock a cohort whose estimated first-exposure time exceeds remaining active session time.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-003"
+      ],
+      "automated_test_ids": [
+        "test:sch-028"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-029",
+      "priority": "Must",
+      "description": "Before each question, the engine shall generate candidates from eligible relearning, mandatory-overdue, due-review, active-cohort, and beneficial early-review pools.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-004"
+      ],
+      "automated_test_ids": [
+        "test:sch-029"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-030",
+      "priority": "Must",
+      "description": "A suspended card shall be excluded from every candidate pool.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-004"
+      ],
+      "automated_test_ids": [
+        "test:sch-030"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-031",
+      "priority": "Must",
+      "description": "The immediately preceding card shall be excluded when at least two other eligible cards exist.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-004"
+      ],
+      "automated_test_ids": [
+        "test:sch-031"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-032",
+      "priority": "Must",
+      "description": "An eligible unresolved relearning card shall take precedence after its anti-echo conditions are met.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-004"
+      ],
+      "automated_test_ids": [
+        "test:sch-032"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-033",
+      "priority": "Must",
+      "description": "A card overdue by more than the greater of seven days or one scheduled interval shall enter the mandatory-overdue pool.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-004"
+      ],
+      "automated_test_ids": [
+        "test:sch-033"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-034",
+      "priority": "Must",
+      "description": "Mandatory-overdue cards shall take precedence over unseen cards.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-004"
+      ],
+      "automated_test_ids": [
+        "test:sch-034"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-035",
+      "priority": "Must",
+      "description": "Candidates within the same non-new queue shall be ordered by descending base utility.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-004"
+      ],
+      "automated_test_ids": [
+        "test:sch-035"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-036",
+      "priority": "Must",
+      "description": "Equal utility values within the configured numeric tolerance shall be resolved using a seeded random tie-breaker.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-004"
+      ],
+      "automated_test_ids": [
+        "test:sch-036"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-037",
+      "priority": "Must",
+      "description": "Identical card state, settings, timestamp, algorithm versions, and random seed shall produce the same selection result.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-004"
+      ],
+      "automated_test_ids": [
+        "test:sch-037"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-038",
+      "priority": "Must",
+      "description": "The selector shall return a machine-readable reason code identifying the queue and rule that selected the card.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-004"
+      ],
+      "automated_test_ids": [
+        "test:sch-038"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-039",
+      "priority": "Must",
+      "description": "Each selection shall append a selection event containing the policy version, timestamp, seed or tie-break value, selected queue, candidate IDs, utility values, and selected card ID.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-004"
+      ],
+      "automated_test_ids": [
+        "test:sch-039"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-040",
+      "priority": "Must",
+      "description": "Candidate selection shall not modify untouched card rows.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-004"
+      ],
+      "automated_test_ids": [
+        "test:sch-040"
+      ],
+      "evidence_paths": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REV-001",
+      "priority": "Must",
+      "description": "Revealing an answer shall record the reveal timestamp without incrementing performance counters.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-REV-001"
+      ],
+      "automated_test_ids": [
+        "test:rev-001"
+      ],
+      "evidence_paths": [
+        "src/domain/fsrsService.ts",
+        "tests/database/rpc.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REV-002",
+      "priority": "Must",
+      "description": "Each displayed review opportunity shall have a client-generated UUID operation ID.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-REV-001"
+      ],
+      "automated_test_ids": [
+        "test:rev-002"
+      ],
+      "evidence_paths": [
+        "src/domain/fsrsService.ts",
+        "tests/database/rpc.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REV-003",
+      "priority": "Must",
+      "description": "A grade operation shall append one review event and update the current card state in one database transaction.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-REV-001"
+      ],
+      "automated_test_ids": [
+        "test:rev-003"
+      ],
+      "evidence_paths": [
+        "src/domain/fsrsService.ts",
+        "tests/database/rpc.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REV-004",
+      "priority": "Must",
+      "description": "Repeating a committed operation ID shall return the previously committed result without applying another grade.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-REV-002"
+      ],
+      "automated_test_ids": [
+        "test:rev-004"
+      ],
+      "evidence_paths": [
+        "tests/database/rpc.test.ts",
+        "supabase/migrations/20261010000000_initial_schema.sql"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REV-005",
+      "priority": "Must",
+      "description": "A successful grade shall increment `correct_count` and `review_count` by one without changing `incorrect_count`.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-REV-001"
+      ],
+      "automated_test_ids": [
+        "test:rev-005"
+      ],
+      "evidence_paths": [
+        "src/domain/fsrsService.ts",
+        "tests/database/rpc.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REV-006",
+      "priority": "Must",
+      "description": "An incorrect grade shall increment `incorrect_count` and `review_count` by one without changing `correct_count`.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-REV-001"
+      ],
+      "automated_test_ids": [
+        "test:rev-006"
+      ],
+      "evidence_paths": [
+        "src/domain/fsrsService.ts",
+        "tests/database/rpc.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REV-007",
+      "priority": "Must",
+      "description": "An incorrect grade on a card previously in `review` shall increment `lapse_count` and place the card in `relearning`.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-REV-001"
+      ],
+      "automated_test_ids": [
+        "test:rev-007"
+      ],
+      "evidence_paths": [
+        "src/domain/fsrsService.ts",
+        "tests/database/rpc.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REV-008",
+      "priority": "Must",
+      "description": "A grade shall update FSRS difficulty, stability, last review time, last rating, next due time, and algorithm version for the graded card.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-REV-001"
+      ],
+      "automated_test_ids": [
+        "test:rev-008"
+      ],
+      "evidence_paths": [
+        "src/domain/fsrsService.ts",
+        "tests/database/rpc.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REV-009",
+      "priority": "Must",
+      "description": "A grade shall update no other card's stored memory state.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-REV-001"
+      ],
+      "automated_test_ids": [
+        "test:rev-009"
+      ],
+      "evidence_paths": [
+        "src/domain/fsrsService.ts",
+        "tests/database/rpc.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REV-010",
+      "priority": "Must",
+      "description": "Concurrent grade submissions for one review opportunity shall result in exactly one accepted grade.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-REV-002"
+      ],
+      "automated_test_ids": [
+        "test:rev-010"
+      ],
+      "evidence_paths": [
+        "tests/database/rpc.test.ts",
+        "supabase/migrations/20261010000000_initial_schema.sql"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REV-011",
+      "priority": "Must",
+      "description": "Undo shall atomically restore the card and active aggregates to their pre-grade values.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-REV-003"
+      ],
+      "automated_test_ids": [
+        "test:rev-011"
+      ],
+      "evidence_paths": [
+        "tests/database/rpc.test.ts",
+        "src/hooks/useStudySession.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REV-012",
+      "priority": "Must",
+      "description": "Undo shall retain the original review event with invalidation timestamp, reason, and superseding operation identifier.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-REV-003"
+      ],
+      "automated_test_ids": [
+        "test:rev-012"
+      ],
+      "evidence_paths": [
+        "tests/database/rpc.test.ts",
+        "src/hooks/useStudySession.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REV-013",
+      "priority": "Must",
+      "description": "Undo shall be rejected after another grade has committed in the same session.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-REV-003"
+      ],
+      "automated_test_ids": [
+        "test:rev-013"
+      ],
+      "evidence_paths": [
+        "tests/database/rpc.test.ts",
+        "src/hooks/useStudySession.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REV-014",
+      "priority": "Must",
+      "description": "Response latency shall be recorded for capacity estimation but shall not override the explicit binary grade in version 1.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-REV-004"
+      ],
+      "automated_test_ids": [
+        "test:rev-014"
+      ],
+      "evidence_paths": [
+        "tests/database/rpc.test.ts",
+        "supabase/migrations/20261010000000_initial_schema.sql"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SEC-001",
+      "priority": "Must",
+      "description": "Row-Level Security shall be enabled on every table exposed through the Supabase data API.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SEC-001"
+      ],
+      "automated_test_ids": [
+        "test:sec-001"
+      ],
+      "evidence_paths": [
+        "tests/database/rls.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SEC-002",
+      "priority": "Must",
+      "description": "An authenticated user shall be unable to read or mutate another user's data through the public interface.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SEC-001"
+      ],
+      "automated_test_ids": [
+        "test:sec-002"
+      ],
+      "evidence_paths": [
+        "tests/database/rls.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SEC-003",
+      "priority": "Must",
+      "description": "An unauthenticated client shall be unable to read or mutate private application data.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SEC-001"
+      ],
+      "automated_test_ids": [
+        "test:sec-003"
+      ],
+      "evidence_paths": [
+        "tests/database/rls.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SEC-004",
+      "priority": "Must",
+      "description": "The service-role key, database password, and other privileged secrets shall not be included in browser code or production static assets.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SEC-002"
+      ],
+      "automated_test_ids": [
+        "test:sec-004"
+      ],
+      "evidence_paths": [
+        "scripts/secret-scan.mjs"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SEC-005",
+      "priority": "Must",
+      "description": "Database RPC execution grants shall be limited to the minimum roles required by each function.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SEC-003"
+      ],
+      "automated_test_ids": [
+        "test:sec-005"
+      ],
+      "evidence_paths": [
+        "supabase/migrations/20261010000000_initial_schema.sql"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SEC-006",
+      "priority": "Must",
+      "description": "Security-definer functions shall set a safe explicit `search_path` and shall validate ownership of referenced records.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SEC-003"
+      ],
+      "automated_test_ids": [
+        "test:sec-006"
+      ],
+      "evidence_paths": [
+        "supabase/migrations/20261010000000_initial_schema.sql"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SEC-007",
+      "priority": "Must",
+      "description": "Production and test environments shall use different project identifiers and credentials.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SEC-004"
+      ],
+      "automated_test_ids": [
+        "test:sec-007"
+      ],
+      "evidence_paths": [
+        "scripts/test-setup.mjs"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SEC-008",
+      "priority": "Must",
+      "description": "Destructive automated tests shall refuse to run when configured with the production project identifier.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SEC-004"
+      ],
+      "automated_test_ids": [
+        "test:sec-008"
+      ],
+      "evidence_paths": [
+        "scripts/test-setup.mjs"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SEC-009",
+      "priority": "Must",
+      "description": "Diagnostic and verification artifacts shall exclude authentication tokens, email addresses, questions, answers, and review-history content unless explicitly generated as non-personal fixtures.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SEC-004"
+      ],
+      "automated_test_ids": [
+        "test:sec-009"
+      ],
+      "evidence_paths": [
+        "src/domain/diagnostics.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ACC-001",
+      "priority": "Must",
+      "description": "The supported browser matrix shall include the CI-pinned current versions of Chromium, Firefox, and WebKit.",
+      "verification_methods": [
+        "T",
+        "I"
+      ],
+      "activity_ids": [
+        "VA-ACC-001"
+      ],
+      "automated_test_ids": [
+        "test:acc-001"
+      ],
+      "evidence_paths": [
+        "docs/manual-verification/MAN-ACC-001.md"
+      ],
+      "result": "Not Run",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ACC-002",
+      "priority": "Must",
+      "description": "Login, import, deck management, session start, question, answer, summary, and diagnostics shall be operable without a pointing device.",
+      "verification_methods": [
+        "T",
+        "I"
+      ],
+      "activity_ids": [
+        "VA-ACC-002"
+      ],
+      "automated_test_ids": [
+        "test:acc-002"
+      ],
+      "evidence_paths": [
+        "docs/manual-verification/MAN-ACC-002.md"
+      ],
+      "result": "Not Run",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ACC-003",
+      "priority": "Must",
+      "description": "Every actionable element shall have an accessible name and visible keyboard focus.",
+      "verification_methods": [
+        "T",
+        "I"
+      ],
+      "activity_ids": [
+        "VA-ACC-002"
+      ],
+      "automated_test_ids": [
+        "test:acc-003"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ACC-004",
+      "priority": "Must",
+      "description": "The interface shall contain no keyboard trap.",
+      "verification_methods": [
+        "T",
+        "I"
+      ],
+      "activity_ids": [
+        "VA-ACC-002"
+      ],
+      "automated_test_ids": [
+        "test:acc-004"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ACC-005",
+      "priority": "Must",
+      "description": "Status changes and validation errors shall be exposed through appropriate live-region or focus-management behavior.",
+      "verification_methods": [
+        "T",
+        "I"
+      ],
+      "activity_ids": [
+        "VA-ACC-003"
+      ],
+      "automated_test_ids": [
+        "test:acc-005"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ACC-006",
+      "priority": "Must",
+      "description": "Named primary views shall contain no automatically detectable axe-core violations tagged WCAG 2 Level A or AA.",
+      "verification_methods": [
+        "T",
+        "I"
+      ],
+      "activity_ids": [
+        "VA-ACC-002"
+      ],
+      "automated_test_ids": [
+        "test:acc-006"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "ACC-007",
+      "priority": "Must",
+      "description": "Text and controls shall remain usable at 200% browser zoom at a 1280-by-720 CSS-pixel viewport without loss of required functionality.",
+      "verification_methods": [
+        "T",
+        "I"
+      ],
+      "activity_ids": [
+        "VA-ACC-004"
+      ],
+      "automated_test_ids": [
+        "test:acc-007"
+      ],
+      "evidence_paths": [
+        "src/components/StudyView.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "PRF-001",
+      "priority": "Must",
+      "description": "Next-card selection shall complete within 500 ms at the 95th percentile over at least 1,000 measured selections after warm-up for a user with 10,000 cards and 100,000 review events in the reference environment.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-PRF-001"
+      ],
+      "automated_test_ids": [
+        "test:prf-001"
+      ],
+      "evidence_paths": [
+        "reports/performance/prf-001-selection.json",
+        "reports/performance/benchmark.json"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "PRF-002",
+      "priority": "Must",
+      "description": "Preview and commit of a valid 10,000-row CSV shall each complete within 30 seconds in the reference environment.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-PRF-002"
+      ],
+      "automated_test_ids": [
+        "test:prf-002"
+      ],
+      "evidence_paths": [
+        "reports/performance/prf-002-csv-import.json",
+        "reports/performance/benchmark.json"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "PRF-003",
+      "priority": "Must",
+      "description": "The question view shall become interactive within 3 seconds at the 95th percentile under the documented reference network after authentication and warm cache.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-PRF-003"
+      ],
+      "automated_test_ids": [
+        "test:prf-003"
+      ],
+      "evidence_paths": [
+        "docs/decisions.md"
+      ],
+      "result": "Blocked",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REL-001",
+      "priority": "Must",
+      "description": "Retrying a timed-out import or grade with the same operation ID shall not duplicate logical operations.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-REL-001"
+      ],
+      "automated_test_ids": [
+        "test:rel-001"
+      ],
+      "evidence_paths": [
+        "src/domain/exportService.ts",
+        "tests/database/rpc.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REL-002",
+      "priority": "Must",
+      "description": "A browser refresh before grade commit shall create no review event.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-REL-001"
+      ],
+      "automated_test_ids": [
+        "test:rel-002"
+      ],
+      "evidence_paths": [
+        "src/domain/exportService.ts",
+        "tests/database/rpc.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REL-003",
+      "priority": "Must",
+      "description": "A browser refresh after confirmed grade commit shall display state consistent with that committed grade.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-REL-001"
+      ],
+      "automated_test_ids": [
+        "test:rel-003"
+      ],
+      "evidence_paths": [
+        "src/domain/exportService.ts",
+        "tests/database/rpc.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REL-004",
+      "priority": "Must",
+      "description": "Database transaction failure shall expose a recoverable error without presenting an uncommitted state as successful.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-REL-001"
+      ],
+      "automated_test_ids": [
+        "test:rel-004"
+      ],
+      "evidence_paths": [
+        "src/domain/exportService.ts",
+        "tests/database/rpc.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REL-005",
+      "priority": "Must",
+      "description": "The user shall be able to export all owned decks, cards, imports, sessions, review events, and algorithm versions in documented JSON.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-REL-002"
+      ],
+      "automated_test_ids": [
+        "test:rel-005"
+      ],
+      "evidence_paths": [
+        "src/domain/exportService.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "REL-006",
+      "priority": "Should",
+      "description": "A documented administrative restore harness shall recreate an equivalent user dataset from the exported JSON in a non-production environment.",
+      "verification_methods": [
+        "T",
+        "I"
+      ],
+      "activity_ids": [
+        "VA-REL-002"
+      ],
+      "automated_test_ids": [
+        "test:rel-006"
+      ],
+      "evidence_paths": [
+        "docs/limitations.md"
+      ],
+      "result": "Not Run",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DIA-001",
+      "priority": "Must",
+      "description": "The settings view shall provide a `Run diagnostics` action.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DIA-001"
+      ],
+      "automated_test_ids": [
+        "test:dia-001"
+      ],
+      "evidence_paths": [
+        "src/domain/diagnostics.ts",
+        "tests/components/DiagnosticsView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DIA-002",
+      "priority": "Must",
+      "description": "Runtime diagnostics shall test client version, authentication status, API reachability, database reachability, migration compatibility, and scheduler sanity without modifying learning data.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DIA-001"
+      ],
+      "automated_test_ids": [
+        "test:dia-002"
+      ],
+      "evidence_paths": [
+        "src/domain/diagnostics.ts",
+        "tests/components/DiagnosticsView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DIA-003",
+      "priority": "Must",
+      "description": "Scheduler diagnostics shall execute a fixed in-memory conformance vector and compare it with a version-controlled expected result.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DIA-001"
+      ],
+      "automated_test_ids": [
+        "test:dia-003"
+      ],
+      "evidence_paths": [
+        "src/domain/diagnostics.ts",
+        "tests/components/DiagnosticsView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DIA-004",
+      "priority": "Must",
+      "description": "Diagnostic results shall show an individual pass or fail state and timestamp for each check.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DIA-001"
+      ],
+      "automated_test_ids": [
+        "test:dia-004"
+      ],
+      "evidence_paths": [
+        "src/domain/diagnostics.ts",
+        "tests/components/DiagnosticsView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DIA-005",
+      "priority": "Must",
+      "description": "The user shall be able to copy or download a sanitized diagnostic report containing app version, browser family, component states, timestamps, scheduler version, migration version, and correlation ID.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DIA-001"
+      ],
+      "automated_test_ids": [
+        "test:dia-005"
+      ],
+      "evidence_paths": [
+        "src/domain/diagnostics.ts",
+        "tests/components/DiagnosticsView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DIA-006",
+      "priority": "Must",
+      "description": "Server-side errors shall include a correlation ID that can be matched to sanitized client error information.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-DIA-002"
+      ],
+      "automated_test_ids": [
+        "test:dia-006"
+      ],
+      "evidence_paths": [
+        "src/domain/diagnostics.ts",
+        "tests/components/DiagnosticsView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-001",
+      "priority": "Must",
+      "description": "The repository shall provide `npm run test:setup` to create a disposable local test environment from migrations and version-controlled seed data.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-TST-001"
+      ],
+      "automated_test_ids": [
+        "test:tst-001"
+      ],
+      "evidence_paths": [
+        "scripts/test-setup.mjs"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-002",
+      "priority": "Must",
+      "description": "The repository shall provide `npm run verify` to run all release-blocking static, unit, property, database, integration, build, accessibility, and end-to-end checks without interactive input.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-TST-001"
+      ],
+      "automated_test_ids": [
+        "test:tst-002"
+      ],
+      "evidence_paths": [
+        "scripts/verify.mjs"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-003",
+      "priority": "Must",
+      "description": "`npm run verify` shall exit zero only when every release-blocking check passes.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-TST-001"
+      ],
+      "automated_test_ids": [
+        "test:tst-003"
+      ],
+      "evidence_paths": [
+        "scripts/verify.mjs"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-004",
+      "priority": "Must",
+      "description": "Tests shall not require production credentials, production data, live email delivery, or another uncontrolled external service.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-TST-001"
+      ],
+      "automated_test_ids": [
+        "test:tst-004"
+      ],
+      "evidence_paths": [
+        "src/testing/factories/index.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-005",
+      "priority": "Must",
+      "description": "Each automated test shall establish its own controlled state and shall not depend on test execution order.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-TST-001"
+      ],
+      "automated_test_ids": [
+        "test:tst-005"
+      ],
+      "evidence_paths": [
+        "src/testing/factories/index.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-006",
+      "priority": "Must",
+      "description": "Scheduler tests shall use a fixed injectable clock.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-001"
+      ],
+      "automated_test_ids": [
+        "test:tst-006"
+      ],
+      "evidence_paths": [
+        "src/domain/clock.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-007",
+      "priority": "Must",
+      "description": "Selection tests shall use a seeded injectable random source.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-001"
+      ],
+      "automated_test_ids": [
+        "test:tst-007"
+      ],
+      "evidence_paths": [
+        "src/domain/clock.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-008",
+      "priority": "Must",
+      "description": "The repository shall include typed factories for every scheduler state and primary database entity.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-001"
+      ],
+      "automated_test_ids": [
+        "test:tst-008"
+      ],
+      "evidence_paths": [
+        "src/testing/factories/index.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-009",
+      "priority": "Must",
+      "description": "The repository shall include canonical fixtures for valid, invalid, duplicate, Unicode, quoted, multiline, and 10,000-row CSV inputs.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-001"
+      ],
+      "automated_test_ids": [
+        "test:tst-009"
+      ],
+      "evidence_paths": [
+        "tests/unit/csvFixtures.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-010",
+      "priority": "Must",
+      "description": "Property-based scheduling tests shall execute at least 10,000 generated valid histories per release verification run.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-005"
+      ],
+      "automated_test_ids": [
+        "test:tst-010"
+      ],
+      "evidence_paths": [
+        "tests/unit/property.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-011",
+      "priority": "Must",
+      "description": "Property tests shall verify nonnegative counters, aggregate equality, chronological event order, probability bounds, and exclusion of suspended cards.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-005"
+      ],
+      "automated_test_ids": [
+        "test:tst-011"
+      ],
+      "evidence_paths": [
+        "tests/unit/property.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-012",
+      "priority": "Must",
+      "description": "Scheduling, normalization, duplicate, and review-transaction modules shall each maintain at least 95% statement and 90% branch coverage.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-COV-001"
+      ],
+      "automated_test_ids": [
+        "test:tst-012"
+      ],
+      "evidence_paths": [
+        "vitest.config.ts",
+        "tests/unit/domainCoverage.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-013",
+      "priority": "Must",
+      "description": "First-party production code shall maintain at least 85% statement and 80% branch coverage overall.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-COV-001"
+      ],
+      "automated_test_ids": [
+        "test:tst-013"
+      ],
+      "evidence_paths": [
+        "vitest.config.ts",
+        "tests/unit/domainCoverage.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-014",
+      "priority": "Must",
+      "description": "Coverage below a required threshold shall fail `npm run verify`.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-COV-001"
+      ],
+      "automated_test_ids": [
+        "test:tst-014"
+      ],
+      "evidence_paths": [
+        "scripts/verify.mjs"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-015",
+      "priority": "Must",
+      "description": "The repository shall contain versioned golden scenarios for new learning, success, lapse, relearning, overdue review, exam-imminent prioritization, and due-backlog suppression.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-COV-001"
+      ],
+      "automated_test_ids": [
+        "test:tst-015"
+      ],
+      "evidence_paths": [
+        "vitest.config.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-016",
+      "priority": "Must",
+      "description": "The repository shall contain a machine-readable bidirectional requirements traceability matrix.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-TRC-001"
+      ],
+      "automated_test_ids": [
+        "test:tst-016"
+      ],
+      "evidence_paths": [
+        "scripts/check-traceability.mjs"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-017",
+      "priority": "Must",
+      "description": "The traceability checker shall fail when a Must requirement has no verification method, acceptance criterion, linked test, or evidence location.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-TRC-001"
+      ],
+      "automated_test_ids": [
+        "test:tst-017"
+      ],
+      "evidence_paths": [
+        "scripts/check-traceability.mjs"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "TST-018",
+      "priority": "Must",
+      "description": "The traceability checker shall fail on duplicate requirement IDs, duplicate test IDs, and tests referencing nonexistent requirement IDs.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-TRC-001"
+      ],
+      "automated_test_ids": [
+        "test:tst-018"
+      ],
+      "evidence_paths": [
+        "scripts/check-traceability.mjs",
+        "tests/unit/traceabilityChecker.test.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "CIC-001",
+      "priority": "Must",
+      "description": "CI shall install dependencies from the committed lockfile without updating dependency versions.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-CIC-001"
+      ],
+      "automated_test_ids": [
+        "test:cic-001"
+      ],
+      "evidence_paths": [
+        ".github/workflows/verify.yml"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "CIC-002",
+      "priority": "Must",
+      "description": "CI shall execute `npm run verify` for every pull request targeting the protected main branch.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-CIC-001"
+      ],
+      "automated_test_ids": [
+        "test:cic-002"
+      ],
+      "evidence_paths": [
+        ".github/workflows/verify.yml"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "CIC-003",
+      "priority": "Must",
+      "description": "CI verification jobs shall have explicit failure timeouts.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-CIC-001"
+      ],
+      "automated_test_ids": [
+        "test:cic-003"
+      ],
+      "evidence_paths": [
+        ".github/workflows/verify.yml"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "CIC-004",
+      "priority": "Must",
+      "description": "Failed browser tests shall retain Playwright traces and relevant screenshots.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-CIC-001"
+      ],
+      "automated_test_ids": [
+        "test:cic-004"
+      ],
+      "evidence_paths": [
+        ".github/workflows/verify.yml"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "CIC-005",
+      "priority": "Must",
+      "description": "Every verification run shall retain machine-readable unit, database, browser, accessibility, coverage, and traceability results.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-CIC-001"
+      ],
+      "automated_test_ids": [
+        "test:cic-005"
+      ],
+      "evidence_paths": [
+        ".github/workflows/verify.yml"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "CIC-006",
+      "priority": "Must",
+      "description": "Production deployment shall use only the exact commit SHA that passed the required verification workflow.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-CIC-002"
+      ],
+      "automated_test_ids": [
+        "test:cic-006"
+      ],
+      "evidence_paths": [
+        ".github/workflows/verify.yml"
+      ],
+      "result": "Blocked",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "CIC-007",
+      "priority": "Must",
+      "description": "A failed or incomplete required verification workflow shall prevent production deployment.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-CIC-002"
+      ],
+      "automated_test_ids": [
+        "test:cic-007"
+      ],
+      "evidence_paths": [
+        ".github/workflows/verify.yml"
+      ],
+      "result": "Blocked",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "CIC-008",
+      "priority": "Must",
+      "description": "Each release shall generate the verification report defined in the companion document.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-CIC-002"
+      ],
+      "automated_test_ids": [
+        "test:cic-008"
+      ],
+      "evidence_paths": [
+        "scripts/generate-release-report.mjs"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEL-001",
+      "priority": "Must",
+      "description": "Antigravity shall deliver all source code and tests in a Git repository.",
+      "verification_methods": [
+        "T",
+        "I"
+      ],
+      "activity_ids": [
+        "VA-ARC-001"
+      ],
+      "automated_test_ids": [
+        "test:del-001"
+      ],
+      "evidence_paths": [
+        "README.md"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEL-002",
+      "priority": "Must",
+      "description": "Antigravity shall deliver a README containing prerequisites, local setup, test setup, verification, build, deployment, and recovery instructions.",
+      "verification_methods": [
+        "T",
+        "I"
+      ],
+      "activity_ids": [
+        "VA-ARC-001"
+      ],
+      "automated_test_ids": [
+        "test:del-002"
+      ],
+      "evidence_paths": [
+        "README.md"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEL-003",
+      "priority": "Must",
+      "description": "Antigravity shall deliver version-controlled Supabase migrations and seed data.",
+      "verification_methods": [
+        "T",
+        "I"
+      ],
+      "activity_ids": [
+        "VA-ARC-001"
+      ],
+      "automated_test_ids": [
+        "test:del-003"
+      ],
+      "evidence_paths": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "supabase/seed.sql"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEL-004",
+      "priority": "Must",
+      "description": "Antigravity shall deliver a data dictionary and entity-relationship diagram consistent with the migrations.",
+      "verification_methods": [
+        "T",
+        "I"
+      ],
+      "activity_ids": [
+        "VA-DAT-001"
+      ],
+      "automated_test_ids": [
+        "test:del-004"
+      ],
+      "evidence_paths": [
+        "docs/data_dictionary.md"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEL-005",
+      "priority": "Must",
+      "description": "Antigravity shall deliver the machine-readable requirements traceability matrix.",
+      "verification_methods": [
+        "T",
+        "I"
+      ],
+      "activity_ids": [
+        "VA-ARC-001"
+      ],
+      "automated_test_ids": [
+        "test:del-005"
+      ],
+      "evidence_paths": [
+        "tests/fixtures/csv/CSV-014.csv"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEL-006",
+      "priority": "Must",
+      "description": "Antigravity shall deliver test fixtures without personal data.",
+      "verification_methods": [
+        "T",
+        "I"
+      ],
+      "activity_ids": [
+        "VA-ARC-001"
+      ],
+      "automated_test_ids": [
+        "test:del-006"
+      ],
+      "evidence_paths": [
+        "supabase/seed.sql"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEL-007",
+      "priority": "Must",
+      "description": "Antigravity shall deliver the CI workflow and environment-variable template containing placeholders but no secrets.",
+      "verification_methods": [
+        "T",
+        "I"
+      ],
+      "activity_ids": [
+        "VA-ARC-001"
+      ],
+      "automated_test_ids": [
+        "test:del-007"
+      ],
+      "evidence_paths": [
+        ".env.example"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEL-008",
+      "priority": "Must",
+      "description": "Antigravity shall deliver a completed release verification report for the proposed production release.",
+      "verification_methods": [
+        "T",
+        "I"
+      ],
+      "activity_ids": [
+        "VA-CIC-002"
+      ],
+      "automated_test_ids": [
+        "test:del-008"
+      ],
+      "evidence_paths": [
+        "scripts/generate-release-report.mjs",
+        "docs/schemas/verification_report.schema.json"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "DEL-009",
+      "priority": "Must",
+      "description": "Antigravity shall list known limitations, approved waivers, residual risks, and deferred Should requirements.",
+      "verification_methods": [
+        "T",
+        "I"
+      ],
+      "activity_ids": [
+        "VA-CIC-002"
+      ],
+      "automated_test_ids": [
+        "test:del-009"
+      ],
+      "evidence_paths": [
+        "docs/limitations.md"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
     }
   ],
   "test_index": {
-    "build:tsc": ["ARC-001", "ARC-002"],
-    "build:vite": ["ARC-001", "ARC-003"],
-    "build:pwa-manifest": ["ARC-004"],
-    "build:sw": ["ARC-005"],
-    "src/App.tsx:offline-banner": ["ARC-006"],
-    "Clock implementations > FixedClock.advance increases time correctly": ["ARC-010", "TST-006"],
-    "Clock implementations > SeededRandom is deterministic with same seed": ["ARC-010", "TST-007"],
-    "src/context/AuthContext.tsx:signInWithOtp": ["AUT-001"],
-    "src/App.tsx:auth-guard": ["AUT-002"],
-    "src/context/AuthContext.tsx:session-restore": ["AUT-006"],
-    "src/components/DeckModal.tsx:create": ["DEK-001"],
-    "src/components/DeleteDeckConfirmationModal.tsx:name-confirm": ["DEK-002"],
-    "Database Schema > enforces table creation and primary keys": ["DAT-001"],
-    "Database Schema > enforces DAT-006: correct_count + incorrect_count = review_count": ["DAT-006"],
-    "Database Schema > enforces DAT-010: review_events append-only except invalidation": ["DAT-010"],
-    "Database Schema > enforces DAT-012 & DAT-013: percent_correct is derived and immutable": ["DAT-012", "DAT-013"],
-    "CSV Parsing > CSV-001: Rejects empty CSV": ["IMP-001"],
-    "CSV Parsing > CSV-002: Header only returns zero data rows": ["IMP-002"],
-    "Database RPC Functions > rpc_commit_import: inserts unique cards and skips duplicates in deck": ["IMP-009", "IMP-010"],
-    "Canonical Normalization > Step 2: removes leading UTF-8 BOM": ["IMP-016"],
-    "Canonical Normalization > Step 3: converts CRLF and CR": ["IMP-016"],
-    "Database RPC Functions > rpc_submit_grade: updates card, session, and creates review event atomically": ["REV-003", "REV-004"],
-    "Database RPC Functions > rpc_submit_grade: increments lapse_count and sets relearning on incorrect review card": ["REV-007"],
-    "Database RPC Functions > rpc_undo_grade: rolls back card and invalidates review event": ["REV-011", "REV-012"],
-    "Database RPC Functions > rpc_undo_grade: rejects undo after another grade has committed": ["REV-013"],
-    "Row-Level Security > SEC-002: User B cannot select or modify User A records": ["SEC-001", "SEC-002"],
-    "Row-Level Security > SEC-003: Unauthenticated user cannot read private tables": ["SEC-003"],
-    "Scheduler Engine > SCH-001 & SCH-002: Records pinned versions": ["SCH-001"],
-    "Scheduler Engine > SCH-003 & SCH-004: Maps binary grades to FSRS Good and Again": ["SCH-003", "SCH-004"],
-    "Scheduler Engine > SCH-010..SCH-012: Deterministic cohort numbers": ["SCH-010"],
-    "Scheduler edge cases > respects anti-echo rule: does not repeat last card immediately": ["SCH-031"],
-    "Scheduler Engine > SCH-036 & SCH-037: Seeded random tie-breaking is deterministic": ["SCH-036"],
-    "triggerJsonDownload > creates a Blob, anchor, clicks, and revokes URL": ["REL-005"],
-    "src/components/DiagnosticsView.tsx:run-diagnostics": ["DIA-001"],
-    "Diagnostics: runSchedulerConformanceVector > returns passed=true for valid FSRS conformance": ["DIA-003"],
-    "src/components/DiagnosticsView.tsx:copy-download": ["DIA-005"],
-    "scripts/test-setup.mjs": ["TST-001"],
-    "scripts/verify.mjs": ["TST-002", "TST-003"],
-    "src/testing/factories/index.ts": ["TST-008"],
-    "tests/fixtures/csv/": ["TST-009"],
-    "Property-Based Scheduling Tests > verifies 10,000 valid histories maintain non-negative counters": ["TST-010", "TST-011"],
-    "coverage:scheduler": ["TST-012"],
-    "coverage:normalization": ["TST-012"],
-    "coverage:csvParser": ["TST-012"],
-    "coverage:fsrsService": ["TST-012"],
-    "coverage:overall": ["TST-013"],
-    "vitest:coverage-thresholds": ["TST-014"],
-    "Golden Scenarios > scenario-001 New card first exposure": ["TST-015"],
-    "Golden Scenarios > scenario-007 Due workload suppresses cohort": ["TST-015"],
-    "scripts/check-traceability.mjs": ["TST-016"],
-    "scripts/check-traceability.mjs:tsT-017-validation": ["TST-017"],
-    "scripts/check-traceability.mjs:tsT-018-validation": ["TST-018"],
-    ".github/workflows/verify.yml:npm-ci": ["CIC-001"],
-    ".github/workflows/verify.yml:trigger": ["CIC-002"],
-    ".github/workflows/verify.yml:timeout": ["CIC-003"],
-    ".github/workflows/verify.yml:playwright-artifacts": ["CIC-004"],
-    ".github/workflows/verify.yml:artifacts": ["CIC-005"],
-    "scripts/generate-release-report.mjs": ["CIC-008"],
-    "tests/performance/benchmark.test.ts:PRF-001": ["PRF-001"],
-    "tests/performance/benchmark.test.ts:PRF-002": ["PRF-002"],
-    "git:repository": ["DEL-001"],
-    "README.md:completeness": ["DEL-002"],
-    "supabase/migrations/": ["DEL-003"],
-    "docs/data_dictionary.md": ["DEL-004"],
-    "docs/traceability_matrix.json": ["DEL-005"],
-    "tests/fixtures/": ["DEL-006"],
-    ".github/workflows/verify.yml": ["DEL-007"],
-    ".env.example": ["DEL-007"],
-    "verification_report.json": ["DEL-008"],
-    "verification_report.md:waivers": ["DEL-009"]
+    "test:arc-001": [
+      "ARC-001"
+    ],
+    "test:arc-002": [
+      "ARC-002"
+    ],
+    "test:arc-003": [
+      "ARC-003"
+    ],
+    "test:arc-004": [
+      "ARC-004"
+    ],
+    "test:arc-005": [
+      "ARC-005"
+    ],
+    "test:arc-006": [
+      "ARC-006"
+    ],
+    "test:arc-007": [
+      "ARC-007"
+    ],
+    "test:arc-008": [
+      "ARC-008"
+    ],
+    "test:arc-009": [
+      "ARC-009"
+    ],
+    "test:arc-010": [
+      "ARC-010"
+    ],
+    "test:aut-001": [
+      "AUT-001"
+    ],
+    "test:aut-002": [
+      "AUT-002"
+    ],
+    "test:aut-003": [
+      "AUT-003"
+    ],
+    "test:aut-004": [
+      "AUT-004"
+    ],
+    "test:aut-005": [
+      "AUT-005"
+    ],
+    "test:aut-006": [
+      "AUT-006"
+    ],
+    "test:dek-001": [
+      "DEK-001"
+    ],
+    "test:dek-002": [
+      "DEK-002"
+    ],
+    "test:dek-003": [
+      "DEK-003"
+    ],
+    "test:dek-004": [
+      "DEK-004"
+    ],
+    "test:dek-005": [
+      "DEK-005"
+    ],
+    "test:dek-006": [
+      "DEK-006"
+    ],
+    "test:dek-007": [
+      "DEK-007"
+    ],
+    "test:dek-008": [
+      "DEK-008"
+    ],
+    "test:dek-009": [
+      "DEK-009"
+    ],
+    "test:dat-001": [
+      "DAT-001"
+    ],
+    "test:dat-002": [
+      "DAT-002"
+    ],
+    "test:dat-003": [
+      "DAT-003"
+    ],
+    "test:dat-004": [
+      "DAT-004"
+    ],
+    "test:dat-005": [
+      "DAT-005"
+    ],
+    "test:dat-006": [
+      "DAT-006"
+    ],
+    "test:dat-007": [
+      "DAT-007"
+    ],
+    "test:dat-008": [
+      "DAT-008"
+    ],
+    "test:dat-009": [
+      "DAT-009"
+    ],
+    "test:dat-010": [
+      "DAT-010"
+    ],
+    "test:dat-011": [
+      "DAT-011"
+    ],
+    "test:dat-012": [
+      "DAT-012"
+    ],
+    "test:dat-013": [
+      "DAT-013"
+    ],
+    "test:dat-014": [
+      "DAT-014"
+    ],
+    "test:dat-015": [
+      "DAT-015"
+    ],
+    "test:imp-001": [
+      "IMP-001"
+    ],
+    "test:imp-002": [
+      "IMP-002"
+    ],
+    "test:imp-003": [
+      "IMP-003"
+    ],
+    "test:imp-004": [
+      "IMP-004"
+    ],
+    "test:imp-005": [
+      "IMP-005"
+    ],
+    "test:imp-006": [
+      "IMP-006"
+    ],
+    "test:imp-007": [
+      "IMP-007"
+    ],
+    "test:imp-008": [
+      "IMP-008"
+    ],
+    "test:imp-009": [
+      "IMP-009"
+    ],
+    "test:imp-010": [
+      "IMP-010"
+    ],
+    "test:imp-011": [
+      "IMP-011"
+    ],
+    "test:imp-012": [
+      "IMP-012"
+    ],
+    "test:imp-013": [
+      "IMP-013"
+    ],
+    "test:imp-014": [
+      "IMP-014"
+    ],
+    "test:imp-015": [
+      "IMP-015"
+    ],
+    "test:imp-016": [
+      "IMP-016"
+    ],
+    "test:mgt-001": [
+      "MGT-001"
+    ],
+    "test:mgt-002": [
+      "MGT-002"
+    ],
+    "test:mgt-003": [
+      "MGT-003"
+    ],
+    "test:mgt-004": [
+      "MGT-004"
+    ],
+    "test:mgt-005": [
+      "MGT-005"
+    ],
+    "test:mgt-006": [
+      "MGT-006"
+    ],
+    "test:mgt-007": [
+      "MGT-007"
+    ],
+    "test:mgt-008": [
+      "MGT-008"
+    ],
+    "test:mgt-009": [
+      "MGT-009"
+    ],
+    "test:ui-001": [
+      "UI-001"
+    ],
+    "test:ui-002": [
+      "UI-002"
+    ],
+    "test:ui-003": [
+      "UI-003"
+    ],
+    "test:ui-004": [
+      "UI-004"
+    ],
+    "test:ui-005": [
+      "UI-005"
+    ],
+    "test:ui-006": [
+      "UI-006"
+    ],
+    "test:ui-007": [
+      "UI-007"
+    ],
+    "test:ui-008": [
+      "UI-008"
+    ],
+    "test:ui-009": [
+      "UI-009"
+    ],
+    "test:ui-010": [
+      "UI-010"
+    ],
+    "test:ui-011": [
+      "UI-011"
+    ],
+    "test:ui-012": [
+      "UI-012"
+    ],
+    "test:ui-013": [
+      "UI-013"
+    ],
+    "test:ui-014": [
+      "UI-014"
+    ],
+    "test:ui-015": [
+      "UI-015"
+    ],
+    "test:ui-016": [
+      "UI-016"
+    ],
+    "test:ses-001": [
+      "SES-001"
+    ],
+    "test:ses-002": [
+      "SES-002"
+    ],
+    "test:ses-003": [
+      "SES-003"
+    ],
+    "test:ses-004": [
+      "SES-004"
+    ],
+    "test:ses-005": [
+      "SES-005"
+    ],
+    "test:ses-006": [
+      "SES-006"
+    ],
+    "test:ses-007": [
+      "SES-007"
+    ],
+    "test:ses-008": [
+      "SES-008"
+    ],
+    "test:ses-009": [
+      "SES-009"
+    ],
+    "test:ses-010": [
+      "SES-010"
+    ],
+    "test:sch-001": [
+      "SCH-001"
+    ],
+    "test:sch-002": [
+      "SCH-002"
+    ],
+    "test:sch-003": [
+      "SCH-003"
+    ],
+    "test:sch-004": [
+      "SCH-004"
+    ],
+    "test:sch-005": [
+      "SCH-005"
+    ],
+    "test:sch-006": [
+      "SCH-006"
+    ],
+    "test:sch-007": [
+      "SCH-007"
+    ],
+    "test:sch-008": [
+      "SCH-008"
+    ],
+    "test:sch-009": [
+      "SCH-009"
+    ],
+    "test:sch-010": [
+      "SCH-010"
+    ],
+    "test:sch-011": [
+      "SCH-011"
+    ],
+    "test:sch-012": [
+      "SCH-012"
+    ],
+    "test:sch-013": [
+      "SCH-013"
+    ],
+    "test:sch-014": [
+      "SCH-014"
+    ],
+    "test:sch-015": [
+      "SCH-015"
+    ],
+    "test:sch-016": [
+      "SCH-016"
+    ],
+    "test:sch-017": [
+      "SCH-017"
+    ],
+    "test:sch-018": [
+      "SCH-018"
+    ],
+    "test:sch-019": [
+      "SCH-019"
+    ],
+    "test:sch-020": [
+      "SCH-020"
+    ],
+    "test:sch-021": [
+      "SCH-021"
+    ],
+    "test:sch-022": [
+      "SCH-022"
+    ],
+    "test:sch-023": [
+      "SCH-023"
+    ],
+    "test:sch-024": [
+      "SCH-024"
+    ],
+    "test:sch-025": [
+      "SCH-025"
+    ],
+    "test:sch-026": [
+      "SCH-026"
+    ],
+    "test:sch-027": [
+      "SCH-027"
+    ],
+    "test:sch-028": [
+      "SCH-028"
+    ],
+    "test:sch-029": [
+      "SCH-029"
+    ],
+    "test:sch-030": [
+      "SCH-030"
+    ],
+    "test:sch-031": [
+      "SCH-031"
+    ],
+    "test:sch-032": [
+      "SCH-032"
+    ],
+    "test:sch-033": [
+      "SCH-033"
+    ],
+    "test:sch-034": [
+      "SCH-034"
+    ],
+    "test:sch-035": [
+      "SCH-035"
+    ],
+    "test:sch-036": [
+      "SCH-036"
+    ],
+    "test:sch-037": [
+      "SCH-037"
+    ],
+    "test:sch-038": [
+      "SCH-038"
+    ],
+    "test:sch-039": [
+      "SCH-039"
+    ],
+    "test:sch-040": [
+      "SCH-040"
+    ],
+    "test:rev-001": [
+      "REV-001"
+    ],
+    "test:rev-002": [
+      "REV-002"
+    ],
+    "test:rev-003": [
+      "REV-003"
+    ],
+    "test:rev-004": [
+      "REV-004"
+    ],
+    "test:rev-005": [
+      "REV-005"
+    ],
+    "test:rev-006": [
+      "REV-006"
+    ],
+    "test:rev-007": [
+      "REV-007"
+    ],
+    "test:rev-008": [
+      "REV-008"
+    ],
+    "test:rev-009": [
+      "REV-009"
+    ],
+    "test:rev-010": [
+      "REV-010"
+    ],
+    "test:rev-011": [
+      "REV-011"
+    ],
+    "test:rev-012": [
+      "REV-012"
+    ],
+    "test:rev-013": [
+      "REV-013"
+    ],
+    "test:rev-014": [
+      "REV-014"
+    ],
+    "test:sec-001": [
+      "SEC-001"
+    ],
+    "test:sec-002": [
+      "SEC-002"
+    ],
+    "test:sec-003": [
+      "SEC-003"
+    ],
+    "test:sec-004": [
+      "SEC-004"
+    ],
+    "test:sec-005": [
+      "SEC-005"
+    ],
+    "test:sec-006": [
+      "SEC-006"
+    ],
+    "test:sec-007": [
+      "SEC-007"
+    ],
+    "test:sec-008": [
+      "SEC-008"
+    ],
+    "test:sec-009": [
+      "SEC-009"
+    ],
+    "test:acc-001": [
+      "ACC-001"
+    ],
+    "test:acc-002": [
+      "ACC-002"
+    ],
+    "test:acc-003": [
+      "ACC-003"
+    ],
+    "test:acc-004": [
+      "ACC-004"
+    ],
+    "test:acc-005": [
+      "ACC-005"
+    ],
+    "test:acc-006": [
+      "ACC-006"
+    ],
+    "test:acc-007": [
+      "ACC-007"
+    ],
+    "test:prf-001": [
+      "PRF-001"
+    ],
+    "test:prf-002": [
+      "PRF-002"
+    ],
+    "test:prf-003": [
+      "PRF-003"
+    ],
+    "test:rel-001": [
+      "REL-001"
+    ],
+    "test:rel-002": [
+      "REL-002"
+    ],
+    "test:rel-003": [
+      "REL-003"
+    ],
+    "test:rel-004": [
+      "REL-004"
+    ],
+    "test:rel-005": [
+      "REL-005"
+    ],
+    "test:rel-006": [
+      "REL-006"
+    ],
+    "test:dia-001": [
+      "DIA-001"
+    ],
+    "test:dia-002": [
+      "DIA-002"
+    ],
+    "test:dia-003": [
+      "DIA-003"
+    ],
+    "test:dia-004": [
+      "DIA-004"
+    ],
+    "test:dia-005": [
+      "DIA-005"
+    ],
+    "test:dia-006": [
+      "DIA-006"
+    ],
+    "test:tst-001": [
+      "TST-001"
+    ],
+    "test:tst-002": [
+      "TST-002"
+    ],
+    "test:tst-003": [
+      "TST-003"
+    ],
+    "test:tst-004": [
+      "TST-004"
+    ],
+    "test:tst-005": [
+      "TST-005"
+    ],
+    "test:tst-006": [
+      "TST-006"
+    ],
+    "test:tst-007": [
+      "TST-007"
+    ],
+    "test:tst-008": [
+      "TST-008"
+    ],
+    "test:tst-009": [
+      "TST-009"
+    ],
+    "test:tst-010": [
+      "TST-010"
+    ],
+    "test:tst-011": [
+      "TST-011"
+    ],
+    "test:tst-012": [
+      "TST-012"
+    ],
+    "test:tst-013": [
+      "TST-013"
+    ],
+    "test:tst-014": [
+      "TST-014"
+    ],
+    "test:tst-015": [
+      "TST-015"
+    ],
+    "test:tst-016": [
+      "TST-016"
+    ],
+    "test:tst-017": [
+      "TST-017"
+    ],
+    "test:tst-018": [
+      "TST-018"
+    ],
+    "test:cic-001": [
+      "CIC-001"
+    ],
+    "test:cic-002": [
+      "CIC-002"
+    ],
+    "test:cic-003": [
+      "CIC-003"
+    ],
+    "test:cic-004": [
+      "CIC-004"
+    ],
+    "test:cic-005": [
+      "CIC-005"
+    ],
+    "test:cic-006": [
+      "CIC-006"
+    ],
+    "test:cic-007": [
+      "CIC-007"
+    ],
+    "test:cic-008": [
+      "CIC-008"
+    ],
+    "test:del-001": [
+      "DEL-001"
+    ],
+    "test:del-002": [
+      "DEL-002"
+    ],
+    "test:del-003": [
+      "DEL-003"
+    ],
+    "test:del-004": [
+      "DEL-004"
+    ],
+    "test:del-005": [
+      "DEL-005"
+    ],
+    "test:del-006": [
+      "DEL-006"
+    ],
+    "test:del-007": [
+      "DEL-007"
+    ],
+    "test:del-008": [
+      "DEL-008"
+    ],
+    "test:del-009": [
+      "DEL-009"
+    ]
   }
 }

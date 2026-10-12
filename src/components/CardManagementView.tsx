@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from 'react';
-import { Card, Deck } from '@/domain/types';
+import { Card, Deck, LearningState } from '@/domain/types';
 import { canonicalNormalize, computeContentHash } from '@/domain/normalization';
 import { Search, Edit2, PauseCircle, PlayCircle, Download, Check, X, AlertCircle } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
@@ -52,27 +52,27 @@ export const CardManagementView: React.FC<CardManagementViewProps> = ({
 
   // MGT-003..MGT-006: Save edited content with normalization & duplicate check
   const saveEdit = async (card: Card) => {
-    const normQ = canonicalNormalize(editQuestion);
-    const normA = canonicalNormalize(editAnswer);
-
-    if (!normQ || !normA) {
-      setError('Question and answer cannot be blank.');
-      return;
-    }
-
-    const newHash = await computeContentHash(normQ, normA);
-
-    // MGT-005: Reject edit that duplicates another active card in deck
-    const isDuplicate = cards.some(
-      c => c.id !== card.id && !c.archived_at && c.content_hash === newHash
-    );
-
-    if (isDuplicate) {
-      setError('A card with this exact question and answer already exists in the deck.');
-      return;
-    }
-
     try {
+      const normQ = canonicalNormalize(editQuestion);
+      const normA = canonicalNormalize(editAnswer);
+
+      if (!normQ || !normA) {
+        setError('Question and answer cannot be blank.');
+        return;
+      }
+
+      const newHash = await computeContentHash(normQ, normA);
+
+      // MGT-005: Reject edit that duplicates another active card in deck
+      const isDuplicate = cards.some(
+        c => c.id !== card.id && !c.archived_at && c.content_hash === newHash
+      );
+
+      if (isDuplicate) {
+        setError('A card with this exact question and answer already exists in the deck.');
+        return;
+      }
+
       const { error: dbError } = await supabase
         .from('cards')
         .update({
@@ -113,7 +113,7 @@ export const CardManagementView: React.FC<CardManagementViewProps> = ({
   // MGT-007, MGT-008: Suspend and restore card
   const toggleSuspend = async (card: Card) => {
     const newSuspendedAt = card.suspended_at ? null : new Date().toISOString();
-    const newLearningState = newSuspendedAt ? 'suspended' : (card.review_count > 0 ? 'review' : 'new');
+    const newLearningState: LearningState = newSuspendedAt ? 'suspended' : (card.review_count > 0 ? 'review' : 'new');
 
     try {
       const { error: dbError } = await supabase
@@ -132,7 +132,7 @@ export const CardManagementView: React.FC<CardManagementViewProps> = ({
           ? {
               ...c,
               suspended_at: newSuspendedAt,
-              learning_state: newLearningState as any,
+              learning_state: newLearningState,
               updated_at: new Date().toISOString()
             }
           : c

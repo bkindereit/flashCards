@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Card, Deck, StudySession, SessionCardState, SelectionResult } from '@/domain/types';
+import { Card, Deck, StudySession, SessionCardState, SelectionResult, LearningState } from '@/domain/types';
 import { SchedulerEngine } from '@/domain/scheduler';
 import { FsrsService } from '@/domain/fsrsService';
 import { supabase } from '@/lib/supabase';
@@ -221,6 +221,7 @@ export function useStudySession({
         }
 
         // Commit local state updates
+        setErrorState(null);
         setLastCommittedOpId(opId);
         setCanUndo(true);
 
@@ -236,7 +237,7 @@ export function useStudySession({
         // Update card in cards state
         const updatedCard: Card = {
           ...card,
-          learning_state: postState.learning_state as any,
+          learning_state: postState.learning_state as LearningState,
           difficulty: postState.difficulty,
           stability_days: postState.stability_days,
           next_due_at: postState.next_due_at,
@@ -315,7 +316,6 @@ export function useStudySession({
     currentSelection,
     sessionId,
     deck.user_id,
-    deck.id,
     cards,
     sessionStates,
     selectNext

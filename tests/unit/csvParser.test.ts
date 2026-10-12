@@ -115,4 +115,25 @@ Goodbye,Au revoir,farewell`;
       ['1', '2', '3']
     ]);
   });
+
+  it('Rejects rows that have fewer columns than mapped', async () => {
+    const csv = `question,answer,notes\nQ1,A1,N1\nOnlyOneColumn`;
+    const preview = await parseAndPreviewCsv(csv, {
+      questionColumnIndex: 0,
+      answerColumnIndex: 1
+    });
+    expect(preview.validRows).toHaveLength(1);
+    expect(preview.rejectedRows).toHaveLength(1);
+    expect(preview.rejectedRows[0]?.reason).toContain('Row contains 1 columns, but expected at least 2');
+  });
+
+  it('Identifies whether question, answer, or both are blank', async () => {
+    const csv = `question,answer\nQ1,\n,A2\n,\nQ3,A3`;
+    const preview = await parseAndPreviewCsv(csv);
+    expect(preview.validRows).toHaveLength(1);
+    expect(preview.rejectedRows).toHaveLength(3);
+    expect(preview.rejectedRows[0]?.reason).toBe('Normalized answer is blank');
+    expect(preview.rejectedRows[1]?.reason).toBe('Normalized question is blank');
+    expect(preview.rejectedRows[2]?.reason).toBe('Both normalized question and answer are blank');
+  });
 });

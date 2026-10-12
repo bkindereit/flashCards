@@ -15,9 +15,7 @@ import { createCard, createDeck, createStudySession, createSessionCardState } fr
 describe('canonicalNormalize edge cases', () => {
   it('handles null input via the null-check guard', () => {
     // TypeScript guard: cast to any to exercise null/undefined branch at runtime
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect(canonicalNormalize(null as any)).toBe('');
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect(canonicalNormalize(undefined as any)).toBe('');
   });
 

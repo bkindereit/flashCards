@@ -272,4 +272,146 @@ describe('Scheduler Engine & FSRS Integration (SCH-001..SCH-040)', () => {
     expect(sel1?.selectedCard.id).toBe(sel2?.selectedCard.id);
     expect(sel1?.reasonCode).toBe(sel2?.reasonCode);
   });
+
+  it('Puts review card without next_due_at into due_review queue', () => {
+    const deck = createDeck();
+    const session = createStudySession(deck.id);
+    const clock = new FixedClock(baseTime);
+    const engine = new SchedulerEngine(deck.desired_retention, clock);
+
+    const cardNoDue = createCard({
+      deck_id: deck.id,
+      learning_state: 'review',
+      next_due_at: undefined,
+      stability_days: 3.0,
+      last_review_at: new Date(baseTime.getTime() - 86400000).toISOString()
+    });
+
+    const ctx: SchedulerContext = {
+      deck,
+      session,
+      allCards: [cardNoDue],
+      sessionStates: new Map(),
+      cumulativeNewLearningSeconds: 0,
+      estimatedReviewSeconds: 15.0,
+      clock
+    };
+
+    const sel = engine.selectNextCard(ctx);
+    expect(sel).not.toBeNull();
+    expect(sel?.queue).toBe('due_review');
+    expect(sel?.selectedCard.id).toBe(cardNoDue.id);
+  });
+
+  it('Suppresses new cohort introduction when remaining session time cannot fit one exposure per card (SCH-020)', () => {
+    const deck = createDeck({ cohort_size: 10 });
+    // 60 seconds remaining, 10 cards * 15s = 150s needed > 60s
+    const session = createStudySession(deck.id, { duration_seconds: 900, active_duration_seconds: 840 });
+    const clock = new FixedClock(baseTime);
+    const engine = new SchedulerEngine(deck.desired_retention, clock);
+
+    const newCards = Array.from({ length: 10 }, (_, i) =>
+      createCard({
+        deck_id: deck.id,
+        learning_state: 'new',
+        source_order: i + 1,
+        cohort_number: 1
+      })
+    );
+
+    const ctx: SchedulerContext = {
+      deck,
+      session,
+      allCards: newCards,
+      sessionStates: new Map(),
+      cumulativeNewLearningSeconds: 0,
+      estimatedReviewSeconds: 15.0,
+      clock
+    };
+
+    const sel = engine.selectNextCard(ctx);
+    expect(sel).toBeNull();
+  });
+
+  it('Allows retry of failed card when total other eligible cards is less than 2 (SCH-017)', () => {
+    const deck = createDeck();
+    const session = createStudySession(deck.id);
+    const clock = new FixedClock(baseTime);
+    const engine = new SchedulerEngine(deck.desired_retention, clock);
+
+    const failedCard = createCard({
+      deck_id: deck.id,
+      learning_state: 'learning',
+      source_order: 1
+    });
+
+    const sState = createSessionCardState(session.id, failedCard.id, {
+      has_met_criterion: false,
+      has_unresolved_failure: true,
+      last_failure_at: new Date(baseTime.getTime() - 5000).toISOString(), // 5s ago (< 60s delay)
+      intervening_cards_since_failure: 0 // < 3 intervening
+    });
+
+    // Only 1 other card in the deck (totalOtherEligible = 1 < 2)
+    const otherCard = createCard({ deck_id: deck.id, learning_state: 'new', source_order: 2 });
+
+    const ctx: SchedulerContext = {
+      deck,
+      session,
+      allCards: [failedCard, otherCard],
+      sessionStates: new Map([[failedCard.id, sState]]),
+      cumulativeNewLearningSeconds: 0,
+      estimatedReviewSeconds: 15.0,
+      clock
+    };
+
+    const sel = engine.selectNextCard(ctx);
+    expect(sel).not.toBeNull();
+    // Failed card was eligible under exception SCH-017
+    expect(sel?.selectedCard.id).toBe(failedCard.id);
+  });
+
+  it('Anti-echo does not filter lastCardId when activeCards.length is less than 3 (SCH-031)', () => {
+    const deck = createDeck();
+    const session = createStudySession(deck.id);
+    const clock = new FixedClock(baseTime);
+    const engine = new SchedulerEngine(deck.desired_retention, clock);
+
+    // Only 2 cards total, both due review
+    const cardA = createCard({
+      deck_id: deck.id,
+      learning_state: 'review',
+      stability_days: 5.0,
+      importance_weight: 10.0, // Higher utility
+      last_review_at: new Date(baseTime.getTime() - 5 * 86400000).toISOString(),
+      next_due_at: baseTime.toISOString(),
+      source_order: 1
+    });
+
+    const cardB = createCard({
+      deck_id: deck.id,
+      learning_state: 'review',
+      stability_days: 5.0,
+      importance_weight: 1.0,
+      last_review_at: new Date(baseTime.getTime() - 5 * 86400000).toISOString(),
+      next_due_at: baseTime.toISOString(),
+      source_order: 2
+    });
+
+    const ctx: SchedulerContext = {
+      deck,
+      session,
+      allCards: [cardA, cardB],
+      sessionStates: new Map(),
+      cumulativeNewLearningSeconds: 0,
+      estimatedReviewSeconds: 15.0,
+      lastCardId: cardA.id, // was last card, but activeCards.length = 2 < 3
+      clock
+    };
+
+    const sel = engine.selectNextCard(ctx);
+    expect(sel).not.toBeNull();
+    // cardA has much higher utility, and anti-echo did not engage because only 2 active cards
+    expect(sel?.selectedCard.id).toBe(cardA.id);
+  });
 });

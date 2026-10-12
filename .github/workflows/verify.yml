@@ -1,0 +1,89 @@
+name: CI Verification and Release Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify (CIC-001..CIC-005)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout Code (DEL-001)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install Dependencies from Frozen Lockfile (CIC-001)
+        run: npm ci
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: 1.200.0
+
+      - name: Start Local Supabase Stack
+        run: |
+          supabase start
+          supabase db reset
+
+      - name: Install Playwright Browsers with Dependencies (CIC-004)
+        run: npx playwright install --with-deps
+
+      - name: Run Full Verification Suite (CIC-002, TST-002, TST-003)
+        run: npm run verify
+
+      - name: Generate Release Verification Report (CIC-008, VR-008)
+        if: always()
+        run: npm run report:release || true
+
+      - name: Retain Machine-Readable Verification & Traceability Evidence (CIC-004, CIC-005)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verification-evidence-${{ github.sha }}
+          path: |
+            reports/
+            coverage/
+            playwright-report/
+            test-results/
+            verification_report.md
+            verification_report.json
+          retention-days: 90
+
+  deploy:
+    name: Production Deployment Gate (CIC-006, CIC-007)
+    needs: verify
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout Verified Commit (CIC-006)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+
+      - name: Verify Exact Commit SHA Target
+        run: |
+          echo "Target commit SHA: ${{ github.sha }}"
+          test -n "${{ github.sha }}"
+
+      - name: Deployment Placeholder
+        run: |
+          echo "Deployment gate passed for verified SHA ${{ github.sha }}."
+          echo "Production deployment requires manual release approval sign-off in verification_report.md."

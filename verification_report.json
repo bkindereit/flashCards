@@ -1,0 +1,2319 @@
+{
+  "reportVersion": "1.0",
+  "specificationVersion": "1.0",
+  "commitSha": "710d267b02be3e0bdb428f726f983af1c8f441c3",
+  "applicationVersion": "1.0.0",
+  "overallResult": "blocked",
+  "releaseRecommendation": "do-not-release",
+  "configuration": {
+    "repository": "https://github.com/BastianKindereit/flashCards",
+    "branch": "main",
+    "isDirty": true,
+    "nodeVersion": "v24.11.1",
+    "npmVersion": "11.6.2",
+    "lockfileSha256": "f10b3b955e1c3a6da67b5104897c59865fbed2ddbf54fd234c08bf72a7f7c575",
+    "fsrsVersion": "4.4.1",
+    "fsrsParameters": {
+      "defaultDesiredRetention": 0.9,
+      "retentionBounds": [
+        0.7,
+        0.97
+      ],
+      "cohortBounds": [
+        5,
+        20
+      ]
+    },
+    "migrations": [
+      {
+        "name": "20261010000000_initial_schema.sql",
+        "sha256": "4dca314a9d62299dcd2b2eb17c2dd41d27d330bdbaa96aa83062ec1ac351c91d"
+      }
+    ]
+  },
+  "environments": [
+    {
+      "name": "Local Verification Environment",
+      "type": "host",
+      "status": "active",
+      "details": {
+        "os": "darwin 25.5.0 (arm64)",
+        "cpus": "Apple M1",
+        "totalRamBytes": 8589934592
+      }
+    },
+    {
+      "name": "CI Environment",
+      "type": "github-actions",
+      "status": "configured",
+      "details": {
+        "runner": "ubuntu-24.04",
+        "workflow": ".github/workflows/verify.yml"
+      }
+    },
+    {
+      "name": "Staging Environment",
+      "type": "cloud-supabase",
+      "status": "blocked",
+      "details": {
+        "reason": "DEC-004: Staging deployment target pending"
+      }
+    }
+  ],
+  "requirements": [
+    {
+      "requirementId": "ARC-001",
+      "priority": "Must",
+      "activityId": "VA-ARC-001",
+      "result": "Pass",
+      "evidence": [
+        "dist/index.html",
+        "tsconfig.json"
+      ]
+    },
+    {
+      "requirementId": "ARC-002",
+      "priority": "Must",
+      "activityId": "VA-ARC-001",
+      "result": "Pass",
+      "evidence": [
+        "tsconfig.json"
+      ]
+    },
+    {
+      "requirementId": "ARC-003",
+      "priority": "Must",
+      "activityId": "VA-ARC-001",
+      "result": "Pass",
+      "evidence": [
+        "dist/index.html"
+      ]
+    },
+    {
+      "requirementId": "ARC-004",
+      "priority": "Must",
+      "activityId": "VA-ARC-002",
+      "result": "Pass",
+      "evidence": [
+        "dist/manifest.webmanifest",
+        "vite.config.ts"
+      ]
+    },
+    {
+      "requirementId": "ARC-005",
+      "priority": "Must",
+      "activityId": "VA-ARC-002",
+      "result": "Pass",
+      "evidence": [
+        "dist/sw.js"
+      ]
+    },
+    {
+      "requirementId": "ARC-006",
+      "priority": "Must",
+      "activityId": "VA-ARC-002",
+      "result": "Pass",
+      "evidence": [
+        "src/App.tsx"
+      ]
+    },
+    {
+      "requirementId": "ARC-007",
+      "priority": "Must",
+      "activityId": "VA-ARC-001",
+      "result": "Pass",
+      "evidence": [
+        "src/lib/supabase.ts"
+      ]
+    },
+    {
+      "requirementId": "ARC-008",
+      "priority": "Must",
+      "activityId": "VA-ARC-001",
+      "result": "Pass",
+      "evidence": [
+        "supabase/migrations/20261010000000_initial_schema.sql"
+      ]
+    },
+    {
+      "requirementId": "ARC-009",
+      "priority": "Must",
+      "activityId": "VA-ARC-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/types.ts"
+      ]
+    },
+    {
+      "requirementId": "ARC-010",
+      "priority": "Must",
+      "activityId": "VA-SCH-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/clock.ts"
+      ]
+    },
+    {
+      "requirementId": "AUT-001",
+      "priority": "Must",
+      "activityId": "VA-AUT-001",
+      "result": "Pass",
+      "evidence": [
+        "src/context/AuthContext.tsx",
+        "tests/components/AuthContext.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "AUT-002",
+      "priority": "Must",
+      "activityId": "VA-AUT-001",
+      "result": "Pass",
+      "evidence": [
+        "src/context/AuthContext.tsx",
+        "tests/components/AuthContext.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "AUT-003",
+      "priority": "Must",
+      "activityId": "VA-AUT-001",
+      "result": "Pass",
+      "evidence": [
+        "src/context/AuthContext.tsx",
+        "tests/components/AuthContext.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "AUT-004",
+      "priority": "Must",
+      "activityId": "VA-AUT-001",
+      "result": "Pass",
+      "evidence": [
+        "src/context/AuthContext.tsx",
+        "tests/components/AuthContext.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "AUT-005",
+      "priority": "Must",
+      "activityId": "VA-AUT-001",
+      "result": "Pass",
+      "evidence": [
+        "src/context/AuthContext.tsx",
+        "tests/components/AuthContext.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "AUT-006",
+      "priority": "Must",
+      "activityId": "VA-AUT-002",
+      "result": "Pass",
+      "evidence": [
+        "src/context/AuthContext.tsx",
+        "tests/components/AuthContext.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "DEK-001",
+      "priority": "Must",
+      "activityId": "VA-DEK-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/DeckModal.tsx",
+        "tests/components/DeckModals.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "DEK-002",
+      "priority": "Must",
+      "activityId": "VA-DEK-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/DeckModal.tsx",
+        "tests/components/DeckModals.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "DEK-003",
+      "priority": "Must",
+      "activityId": "VA-DEK-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/DeckModal.tsx",
+        "tests/components/DeckModals.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "DEK-004",
+      "priority": "Must",
+      "activityId": "VA-DEK-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/DeckModal.tsx",
+        "tests/components/DeckModals.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "DEK-005",
+      "priority": "Must",
+      "activityId": "VA-DEK-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/DeckModal.tsx",
+        "tests/components/DeckModals.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "DEK-006",
+      "priority": "Must",
+      "activityId": "VA-DEK-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/DeckModal.tsx",
+        "tests/components/DeckModals.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "DEK-007",
+      "priority": "Must",
+      "activityId": "VA-DEK-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/DeckModal.tsx",
+        "tests/components/DeckModals.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "DEK-008",
+      "priority": "Must",
+      "activityId": "VA-DEK-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/DeckModal.tsx",
+        "tests/components/DeckModals.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "DEK-009",
+      "priority": "Must",
+      "activityId": "VA-DEK-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/DeckModal.tsx",
+        "tests/components/DeckModals.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "DAT-001",
+      "priority": "Must",
+      "activityId": "VA-DAT-001",
+      "result": "Pass",
+      "evidence": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ]
+    },
+    {
+      "requirementId": "DAT-002",
+      "priority": "Must",
+      "activityId": "VA-DAT-001",
+      "result": "Pass",
+      "evidence": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ]
+    },
+    {
+      "requirementId": "DAT-003",
+      "priority": "Must",
+      "activityId": "VA-DAT-001",
+      "result": "Pass",
+      "evidence": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ]
+    },
+    {
+      "requirementId": "DAT-004",
+      "priority": "Must",
+      "activityId": "VA-DAT-001",
+      "result": "Pass",
+      "evidence": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ]
+    },
+    {
+      "requirementId": "DAT-005",
+      "priority": "Must",
+      "activityId": "VA-DAT-001",
+      "result": "Pass",
+      "evidence": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ]
+    },
+    {
+      "requirementId": "DAT-006",
+      "priority": "Must",
+      "activityId": "VA-DAT-001",
+      "result": "Pass",
+      "evidence": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ]
+    },
+    {
+      "requirementId": "DAT-007",
+      "priority": "Must",
+      "activityId": "VA-DAT-001",
+      "result": "Pass",
+      "evidence": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ]
+    },
+    {
+      "requirementId": "DAT-008",
+      "priority": "Must",
+      "activityId": "VA-DAT-001",
+      "result": "Pass",
+      "evidence": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ]
+    },
+    {
+      "requirementId": "DAT-009",
+      "priority": "Must",
+      "activityId": "VA-DAT-001",
+      "result": "Pass",
+      "evidence": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ]
+    },
+    {
+      "requirementId": "DAT-010",
+      "priority": "Must",
+      "activityId": "VA-DAT-001",
+      "result": "Pass",
+      "evidence": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ]
+    },
+    {
+      "requirementId": "DAT-011",
+      "priority": "Must",
+      "activityId": "VA-DAT-001",
+      "result": "Pass",
+      "evidence": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ]
+    },
+    {
+      "requirementId": "DAT-012",
+      "priority": "Must",
+      "activityId": "VA-DAT-002",
+      "result": "Pass",
+      "evidence": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ]
+    },
+    {
+      "requirementId": "DAT-013",
+      "priority": "Must",
+      "activityId": "VA-DAT-002",
+      "result": "Pass",
+      "evidence": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ]
+    },
+    {
+      "requirementId": "DAT-014",
+      "priority": "Must",
+      "activityId": "VA-DAT-002",
+      "result": "Pass",
+      "evidence": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ]
+    },
+    {
+      "requirementId": "DAT-015",
+      "priority": "Must",
+      "activityId": "VA-DAT-001",
+      "result": "Pass",
+      "evidence": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "tests/database/schema.test.ts"
+      ]
+    },
+    {
+      "requirementId": "IMP-001",
+      "priority": "Must",
+      "activityId": "VA-IMP-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/csvParser.ts",
+        "tests/unit/csvParser.test.ts"
+      ]
+    },
+    {
+      "requirementId": "IMP-002",
+      "priority": "Must",
+      "activityId": "VA-IMP-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/csvParser.ts",
+        "tests/unit/csvParser.test.ts"
+      ]
+    },
+    {
+      "requirementId": "IMP-003",
+      "priority": "Must",
+      "activityId": "VA-IMP-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/csvParser.ts",
+        "tests/unit/csvParser.test.ts"
+      ]
+    },
+    {
+      "requirementId": "IMP-004",
+      "priority": "Must",
+      "activityId": "VA-IMP-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/csvParser.ts",
+        "tests/unit/csvParser.test.ts"
+      ]
+    },
+    {
+      "requirementId": "IMP-005",
+      "priority": "Must",
+      "activityId": "VA-IMP-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/csvParser.ts",
+        "tests/unit/csvParser.test.ts"
+      ]
+    },
+    {
+      "requirementId": "IMP-006",
+      "priority": "Must",
+      "activityId": "VA-IMP-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/csvParser.ts",
+        "tests/unit/csvParser.test.ts"
+      ]
+    },
+    {
+      "requirementId": "IMP-007",
+      "priority": "Must",
+      "activityId": "VA-IMP-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/csvParser.ts",
+        "tests/unit/csvParser.test.ts"
+      ]
+    },
+    {
+      "requirementId": "IMP-008",
+      "priority": "Must",
+      "activityId": "VA-IMP-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/csvParser.ts",
+        "tests/unit/csvParser.test.ts"
+      ]
+    },
+    {
+      "requirementId": "IMP-009",
+      "priority": "Must",
+      "activityId": "VA-IMP-002",
+      "result": "Pass",
+      "evidence": [
+        "tests/database/rpc.test.ts",
+        "src/components/CsvImportModal.tsx"
+      ]
+    },
+    {
+      "requirementId": "IMP-010",
+      "priority": "Must",
+      "activityId": "VA-IMP-002",
+      "result": "Pass",
+      "evidence": [
+        "tests/database/rpc.test.ts",
+        "src/components/CsvImportModal.tsx"
+      ]
+    },
+    {
+      "requirementId": "IMP-011",
+      "priority": "Must",
+      "activityId": "VA-IMP-002",
+      "result": "Pass",
+      "evidence": [
+        "tests/database/rpc.test.ts",
+        "src/components/CsvImportModal.tsx"
+      ]
+    },
+    {
+      "requirementId": "IMP-012",
+      "priority": "Must",
+      "activityId": "VA-IMP-002",
+      "result": "Pass",
+      "evidence": [
+        "tests/database/rpc.test.ts",
+        "src/components/CsvImportModal.tsx"
+      ]
+    },
+    {
+      "requirementId": "IMP-013",
+      "priority": "Must",
+      "activityId": "VA-IMP-003",
+      "result": "Pass",
+      "evidence": [
+        "tests/database/rpc.test.ts",
+        "src/components/CsvImportModal.tsx"
+      ]
+    },
+    {
+      "requirementId": "IMP-014",
+      "priority": "Must",
+      "activityId": "VA-IMP-002",
+      "result": "Pass",
+      "evidence": [
+        "tests/performance/benchmark.perf.ts",
+        "reports/performance/prf-002-csv-import.json"
+      ]
+    },
+    {
+      "requirementId": "IMP-015",
+      "priority": "Must",
+      "activityId": "VA-IMP-002",
+      "result": "Pass",
+      "evidence": [
+        "tests/database/rpc.test.ts",
+        "src/components/CsvImportModal.tsx"
+      ]
+    },
+    {
+      "requirementId": "IMP-016",
+      "priority": "Must",
+      "activityId": "VA-IMP-003",
+      "result": "Pass",
+      "evidence": [
+        "tests/database/rpc.test.ts",
+        "src/components/CsvImportModal.tsx"
+      ]
+    },
+    {
+      "requirementId": "MGT-001",
+      "priority": "Must",
+      "activityId": "VA-MGT-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/CardManagementView.tsx",
+        "tests/components/CardManagementView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "MGT-002",
+      "priority": "Must",
+      "activityId": "VA-MGT-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/CardManagementView.tsx",
+        "tests/components/CardManagementView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "MGT-003",
+      "priority": "Must",
+      "activityId": "VA-MGT-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/CardManagementView.tsx",
+        "tests/components/CardManagementView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "MGT-004",
+      "priority": "Must",
+      "activityId": "VA-MGT-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/CardManagementView.tsx",
+        "tests/components/CardManagementView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "MGT-005",
+      "priority": "Must",
+      "activityId": "VA-MGT-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/CardManagementView.tsx",
+        "tests/components/CardManagementView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "MGT-006",
+      "priority": "Must",
+      "activityId": "VA-MGT-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/CardManagementView.tsx",
+        "tests/components/CardManagementView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "MGT-007",
+      "priority": "Must",
+      "activityId": "VA-MGT-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/CardManagementView.tsx",
+        "tests/components/CardManagementView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "MGT-008",
+      "priority": "Must",
+      "activityId": "VA-MGT-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/CardManagementView.tsx",
+        "tests/components/CardManagementView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "MGT-009",
+      "priority": "Should",
+      "activityId": "VA-MGT-002",
+      "result": "Not Run",
+      "evidence": [
+        "docs/limitations.md"
+      ]
+    },
+    {
+      "requirementId": "UI-001",
+      "priority": "Must",
+      "activityId": "VA-UI-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "UI-002",
+      "priority": "Must",
+      "activityId": "VA-UI-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "UI-003",
+      "priority": "Must",
+      "activityId": "VA-UI-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "UI-004",
+      "priority": "Must",
+      "activityId": "VA-UI-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "UI-005",
+      "priority": "Must",
+      "activityId": "VA-UI-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "UI-006",
+      "priority": "Must",
+      "activityId": "VA-UI-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "UI-007",
+      "priority": "Must",
+      "activityId": "VA-UI-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "UI-008",
+      "priority": "Must",
+      "activityId": "VA-UI-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "UI-009",
+      "priority": "Must",
+      "activityId": "VA-UI-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "UI-010",
+      "priority": "Must",
+      "activityId": "VA-UI-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "UI-011",
+      "priority": "Must",
+      "activityId": "VA-UI-002",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "UI-012",
+      "priority": "Must",
+      "activityId": "VA-UI-002",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "UI-013",
+      "priority": "Must",
+      "activityId": "VA-UI-002",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "UI-014",
+      "priority": "Must",
+      "activityId": "VA-UI-002",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "UI-015",
+      "priority": "Must",
+      "activityId": "VA-UI-002",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "UI-016",
+      "priority": "Must",
+      "activityId": "VA-UI-002",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx",
+        "tests/components/StudyView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "SES-001",
+      "priority": "Must",
+      "activityId": "VA-SES-001",
+      "result": "Pass",
+      "evidence": [
+        "src/hooks/useStudySession.ts",
+        "tests/unit/useStudySession.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SES-002",
+      "priority": "Must",
+      "activityId": "VA-SES-001",
+      "result": "Pass",
+      "evidence": [
+        "src/hooks/useStudySession.ts",
+        "tests/unit/useStudySession.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SES-003",
+      "priority": "Must",
+      "activityId": "VA-SES-001",
+      "result": "Pass",
+      "evidence": [
+        "src/hooks/useStudySession.ts",
+        "tests/unit/useStudySession.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SES-004",
+      "priority": "Must",
+      "activityId": "VA-SES-001",
+      "result": "Pass",
+      "evidence": [
+        "src/hooks/useStudySession.ts",
+        "tests/unit/useStudySession.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SES-005",
+      "priority": "Must",
+      "activityId": "VA-SES-001",
+      "result": "Pass",
+      "evidence": [
+        "src/hooks/useStudySession.ts",
+        "tests/unit/useStudySession.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SES-006",
+      "priority": "Must",
+      "activityId": "VA-SES-001",
+      "result": "Pass",
+      "evidence": [
+        "src/hooks/useStudySession.ts",
+        "tests/unit/useStudySession.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SES-007",
+      "priority": "Must",
+      "activityId": "VA-SES-001",
+      "result": "Pass",
+      "evidence": [
+        "src/hooks/useStudySession.ts",
+        "tests/unit/useStudySession.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SES-008",
+      "priority": "Must",
+      "activityId": "VA-SES-001",
+      "result": "Pass",
+      "evidence": [
+        "src/hooks/useStudySession.ts",
+        "tests/unit/useStudySession.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SES-009",
+      "priority": "Must",
+      "activityId": "VA-SES-001",
+      "result": "Pass",
+      "evidence": [
+        "src/hooks/useStudySession.ts",
+        "tests/unit/useStudySession.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SES-010",
+      "priority": "Must",
+      "activityId": "VA-SES-001",
+      "result": "Pass",
+      "evidence": [
+        "src/hooks/useStudySession.ts",
+        "tests/unit/useStudySession.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-001",
+      "priority": "Must",
+      "activityId": "VA-SCH-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-002",
+      "priority": "Must",
+      "activityId": "VA-SCH-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-003",
+      "priority": "Must",
+      "activityId": "VA-SCH-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-004",
+      "priority": "Must",
+      "activityId": "VA-SCH-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-005",
+      "priority": "Must",
+      "activityId": "VA-SCH-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-006",
+      "priority": "Must",
+      "activityId": "VA-SCH-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-007",
+      "priority": "Must",
+      "activityId": "VA-SCH-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-008",
+      "priority": "Must",
+      "activityId": "VA-SCH-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-009",
+      "priority": "Must",
+      "activityId": "VA-SCH-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-010",
+      "priority": "Must",
+      "activityId": "VA-SCH-002",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-011",
+      "priority": "Must",
+      "activityId": "VA-SCH-002",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-012",
+      "priority": "Must",
+      "activityId": "VA-SCH-002",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-013",
+      "priority": "Must",
+      "activityId": "VA-SCH-002",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-014",
+      "priority": "Must",
+      "activityId": "VA-SCH-002",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-015",
+      "priority": "Must",
+      "activityId": "VA-SCH-002",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-016",
+      "priority": "Must",
+      "activityId": "VA-SCH-002",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-017",
+      "priority": "Must",
+      "activityId": "VA-SCH-002",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-018",
+      "priority": "Must",
+      "activityId": "VA-SCH-002",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-019",
+      "priority": "Must",
+      "activityId": "VA-SCH-002",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-020",
+      "priority": "Must",
+      "activityId": "VA-SCH-002",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-021",
+      "priority": "Must",
+      "activityId": "VA-SCH-002",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-022",
+      "priority": "Must",
+      "activityId": "VA-SCH-002",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-023",
+      "priority": "Must",
+      "activityId": "VA-SCH-003",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-024",
+      "priority": "Must",
+      "activityId": "VA-SCH-003",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-025",
+      "priority": "Must",
+      "activityId": "VA-SCH-003",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-026",
+      "priority": "Must",
+      "activityId": "VA-SCH-003",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-027",
+      "priority": "Must",
+      "activityId": "VA-SCH-003",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-028",
+      "priority": "Must",
+      "activityId": "VA-SCH-003",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-029",
+      "priority": "Must",
+      "activityId": "VA-SCH-004",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-030",
+      "priority": "Must",
+      "activityId": "VA-SCH-004",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-031",
+      "priority": "Must",
+      "activityId": "VA-SCH-004",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-032",
+      "priority": "Must",
+      "activityId": "VA-SCH-004",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-033",
+      "priority": "Must",
+      "activityId": "VA-SCH-004",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-034",
+      "priority": "Must",
+      "activityId": "VA-SCH-004",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-035",
+      "priority": "Must",
+      "activityId": "VA-SCH-004",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-036",
+      "priority": "Must",
+      "activityId": "VA-SCH-004",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-037",
+      "priority": "Must",
+      "activityId": "VA-SCH-004",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-038",
+      "priority": "Must",
+      "activityId": "VA-SCH-004",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-039",
+      "priority": "Must",
+      "activityId": "VA-SCH-004",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SCH-040",
+      "priority": "Must",
+      "activityId": "VA-SCH-004",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/scheduler.ts",
+        "tests/unit/scheduler.test.ts"
+      ]
+    },
+    {
+      "requirementId": "REV-001",
+      "priority": "Must",
+      "activityId": "VA-REV-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/fsrsService.ts",
+        "tests/database/rpc.test.ts"
+      ]
+    },
+    {
+      "requirementId": "REV-002",
+      "priority": "Must",
+      "activityId": "VA-REV-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/fsrsService.ts",
+        "tests/database/rpc.test.ts"
+      ]
+    },
+    {
+      "requirementId": "REV-003",
+      "priority": "Must",
+      "activityId": "VA-REV-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/fsrsService.ts",
+        "tests/database/rpc.test.ts"
+      ]
+    },
+    {
+      "requirementId": "REV-004",
+      "priority": "Must",
+      "activityId": "VA-REV-002",
+      "result": "Pass",
+      "evidence": [
+        "tests/database/rpc.test.ts",
+        "supabase/migrations/20261010000000_initial_schema.sql"
+      ]
+    },
+    {
+      "requirementId": "REV-005",
+      "priority": "Must",
+      "activityId": "VA-REV-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/fsrsService.ts",
+        "tests/database/rpc.test.ts"
+      ]
+    },
+    {
+      "requirementId": "REV-006",
+      "priority": "Must",
+      "activityId": "VA-REV-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/fsrsService.ts",
+        "tests/database/rpc.test.ts"
+      ]
+    },
+    {
+      "requirementId": "REV-007",
+      "priority": "Must",
+      "activityId": "VA-REV-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/fsrsService.ts",
+        "tests/database/rpc.test.ts"
+      ]
+    },
+    {
+      "requirementId": "REV-008",
+      "priority": "Must",
+      "activityId": "VA-REV-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/fsrsService.ts",
+        "tests/database/rpc.test.ts"
+      ]
+    },
+    {
+      "requirementId": "REV-009",
+      "priority": "Must",
+      "activityId": "VA-REV-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/fsrsService.ts",
+        "tests/database/rpc.test.ts"
+      ]
+    },
+    {
+      "requirementId": "REV-010",
+      "priority": "Must",
+      "activityId": "VA-REV-002",
+      "result": "Pass",
+      "evidence": [
+        "tests/database/rpc.test.ts",
+        "supabase/migrations/20261010000000_initial_schema.sql"
+      ]
+    },
+    {
+      "requirementId": "REV-011",
+      "priority": "Must",
+      "activityId": "VA-REV-003",
+      "result": "Pass",
+      "evidence": [
+        "tests/database/rpc.test.ts",
+        "src/hooks/useStudySession.ts"
+      ]
+    },
+    {
+      "requirementId": "REV-012",
+      "priority": "Must",
+      "activityId": "VA-REV-003",
+      "result": "Pass",
+      "evidence": [
+        "tests/database/rpc.test.ts",
+        "src/hooks/useStudySession.ts"
+      ]
+    },
+    {
+      "requirementId": "REV-013",
+      "priority": "Must",
+      "activityId": "VA-REV-003",
+      "result": "Pass",
+      "evidence": [
+        "tests/database/rpc.test.ts",
+        "src/hooks/useStudySession.ts"
+      ]
+    },
+    {
+      "requirementId": "REV-014",
+      "priority": "Must",
+      "activityId": "VA-REV-004",
+      "result": "Pass",
+      "evidence": [
+        "tests/database/rpc.test.ts",
+        "supabase/migrations/20261010000000_initial_schema.sql"
+      ]
+    },
+    {
+      "requirementId": "SEC-001",
+      "priority": "Must",
+      "activityId": "VA-SEC-001",
+      "result": "Pass",
+      "evidence": [
+        "tests/database/rls.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SEC-002",
+      "priority": "Must",
+      "activityId": "VA-SEC-001",
+      "result": "Pass",
+      "evidence": [
+        "tests/database/rls.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SEC-003",
+      "priority": "Must",
+      "activityId": "VA-SEC-001",
+      "result": "Pass",
+      "evidence": [
+        "tests/database/rls.test.ts"
+      ]
+    },
+    {
+      "requirementId": "SEC-004",
+      "priority": "Must",
+      "activityId": "VA-SEC-002",
+      "result": "Pass",
+      "evidence": [
+        "scripts/secret-scan.mjs"
+      ]
+    },
+    {
+      "requirementId": "SEC-005",
+      "priority": "Must",
+      "activityId": "VA-SEC-003",
+      "result": "Pass",
+      "evidence": [
+        "supabase/migrations/20261010000000_initial_schema.sql"
+      ]
+    },
+    {
+      "requirementId": "SEC-006",
+      "priority": "Must",
+      "activityId": "VA-SEC-003",
+      "result": "Pass",
+      "evidence": [
+        "supabase/migrations/20261010000000_initial_schema.sql"
+      ]
+    },
+    {
+      "requirementId": "SEC-007",
+      "priority": "Must",
+      "activityId": "VA-SEC-004",
+      "result": "Pass",
+      "evidence": [
+        "scripts/test-setup.mjs"
+      ]
+    },
+    {
+      "requirementId": "SEC-008",
+      "priority": "Must",
+      "activityId": "VA-SEC-004",
+      "result": "Pass",
+      "evidence": [
+        "scripts/test-setup.mjs"
+      ]
+    },
+    {
+      "requirementId": "SEC-009",
+      "priority": "Must",
+      "activityId": "VA-SEC-004",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/diagnostics.ts"
+      ]
+    },
+    {
+      "requirementId": "ACC-001",
+      "priority": "Must",
+      "activityId": "VA-ACC-001",
+      "result": "Not Run",
+      "evidence": [
+        "docs/manual-verification/MAN-ACC-001.md"
+      ]
+    },
+    {
+      "requirementId": "ACC-002",
+      "priority": "Must",
+      "activityId": "VA-ACC-002",
+      "result": "Not Run",
+      "evidence": [
+        "docs/manual-verification/MAN-ACC-002.md"
+      ]
+    },
+    {
+      "requirementId": "ACC-003",
+      "priority": "Must",
+      "activityId": "VA-ACC-002",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx"
+      ]
+    },
+    {
+      "requirementId": "ACC-004",
+      "priority": "Must",
+      "activityId": "VA-ACC-002",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx"
+      ]
+    },
+    {
+      "requirementId": "ACC-005",
+      "priority": "Must",
+      "activityId": "VA-ACC-003",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx"
+      ]
+    },
+    {
+      "requirementId": "ACC-006",
+      "priority": "Must",
+      "activityId": "VA-ACC-002",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx"
+      ]
+    },
+    {
+      "requirementId": "ACC-007",
+      "priority": "Must",
+      "activityId": "VA-ACC-004",
+      "result": "Pass",
+      "evidence": [
+        "src/components/StudyView.tsx"
+      ]
+    },
+    {
+      "requirementId": "PRF-001",
+      "priority": "Must",
+      "activityId": "VA-PRF-001",
+      "result": "Pass",
+      "evidence": [
+        "reports/performance/prf-001-selection.json",
+        "reports/performance/benchmark.json"
+      ]
+    },
+    {
+      "requirementId": "PRF-002",
+      "priority": "Must",
+      "activityId": "VA-PRF-002",
+      "result": "Pass",
+      "evidence": [
+        "reports/performance/prf-002-csv-import.json",
+        "reports/performance/benchmark.json"
+      ]
+    },
+    {
+      "requirementId": "PRF-003",
+      "priority": "Must",
+      "activityId": "VA-PRF-003",
+      "result": "Blocked",
+      "evidence": [
+        "docs/decisions.md"
+      ]
+    },
+    {
+      "requirementId": "REL-001",
+      "priority": "Must",
+      "activityId": "VA-REL-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/exportService.ts",
+        "tests/database/rpc.test.ts"
+      ]
+    },
+    {
+      "requirementId": "REL-002",
+      "priority": "Must",
+      "activityId": "VA-REL-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/exportService.ts",
+        "tests/database/rpc.test.ts"
+      ]
+    },
+    {
+      "requirementId": "REL-003",
+      "priority": "Must",
+      "activityId": "VA-REL-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/exportService.ts",
+        "tests/database/rpc.test.ts"
+      ]
+    },
+    {
+      "requirementId": "REL-004",
+      "priority": "Must",
+      "activityId": "VA-REL-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/exportService.ts",
+        "tests/database/rpc.test.ts"
+      ]
+    },
+    {
+      "requirementId": "REL-005",
+      "priority": "Must",
+      "activityId": "VA-REL-002",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/exportService.ts"
+      ]
+    },
+    {
+      "requirementId": "REL-006",
+      "priority": "Should",
+      "activityId": "VA-REL-002",
+      "result": "Not Run",
+      "evidence": [
+        "docs/limitations.md"
+      ]
+    },
+    {
+      "requirementId": "DIA-001",
+      "priority": "Must",
+      "activityId": "VA-DIA-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/diagnostics.ts",
+        "tests/components/DiagnosticsView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "DIA-002",
+      "priority": "Must",
+      "activityId": "VA-DIA-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/diagnostics.ts",
+        "tests/components/DiagnosticsView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "DIA-003",
+      "priority": "Must",
+      "activityId": "VA-DIA-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/diagnostics.ts",
+        "tests/components/DiagnosticsView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "DIA-004",
+      "priority": "Must",
+      "activityId": "VA-DIA-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/diagnostics.ts",
+        "tests/components/DiagnosticsView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "DIA-005",
+      "priority": "Must",
+      "activityId": "VA-DIA-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/diagnostics.ts",
+        "tests/components/DiagnosticsView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "DIA-006",
+      "priority": "Must",
+      "activityId": "VA-DIA-002",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/diagnostics.ts",
+        "tests/components/DiagnosticsView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "TST-001",
+      "priority": "Must",
+      "activityId": "VA-TST-001",
+      "result": "Pass",
+      "evidence": [
+        "scripts/test-setup.mjs"
+      ]
+    },
+    {
+      "requirementId": "TST-002",
+      "priority": "Must",
+      "activityId": "VA-TST-001",
+      "result": "Pass",
+      "evidence": [
+        "scripts/verify.mjs"
+      ]
+    },
+    {
+      "requirementId": "TST-003",
+      "priority": "Must",
+      "activityId": "VA-TST-001",
+      "result": "Pass",
+      "evidence": [
+        "scripts/verify.mjs"
+      ]
+    },
+    {
+      "requirementId": "TST-004",
+      "priority": "Must",
+      "activityId": "VA-TST-001",
+      "result": "Pass",
+      "evidence": [
+        "src/testing/factories/index.ts"
+      ]
+    },
+    {
+      "requirementId": "TST-005",
+      "priority": "Must",
+      "activityId": "VA-TST-001",
+      "result": "Pass",
+      "evidence": [
+        "src/testing/factories/index.ts"
+      ]
+    },
+    {
+      "requirementId": "TST-006",
+      "priority": "Must",
+      "activityId": "VA-SCH-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/clock.ts"
+      ]
+    },
+    {
+      "requirementId": "TST-007",
+      "priority": "Must",
+      "activityId": "VA-SCH-001",
+      "result": "Pass",
+      "evidence": [
+        "src/domain/clock.ts"
+      ]
+    },
+    {
+      "requirementId": "TST-008",
+      "priority": "Must",
+      "activityId": "VA-SCH-001",
+      "result": "Pass",
+      "evidence": [
+        "src/testing/factories/index.ts"
+      ]
+    },
+    {
+      "requirementId": "TST-009",
+      "priority": "Must",
+      "activityId": "VA-SCH-001",
+      "result": "Pass",
+      "evidence": [
+        "tests/unit/csvFixtures.test.ts"
+      ]
+    },
+    {
+      "requirementId": "TST-010",
+      "priority": "Must",
+      "activityId": "VA-SCH-005",
+      "result": "Pass",
+      "evidence": [
+        "tests/unit/property.test.ts"
+      ]
+    },
+    {
+      "requirementId": "TST-011",
+      "priority": "Must",
+      "activityId": "VA-SCH-005",
+      "result": "Pass",
+      "evidence": [
+        "tests/unit/property.test.ts"
+      ]
+    },
+    {
+      "requirementId": "TST-012",
+      "priority": "Must",
+      "activityId": "VA-COV-001",
+      "result": "Pass",
+      "evidence": [
+        "vitest.config.ts",
+        "tests/unit/domainCoverage.test.ts"
+      ]
+    },
+    {
+      "requirementId": "TST-013",
+      "priority": "Must",
+      "activityId": "VA-COV-001",
+      "result": "Pass",
+      "evidence": [
+        "vitest.config.ts",
+        "tests/unit/domainCoverage.test.ts"
+      ]
+    },
+    {
+      "requirementId": "TST-014",
+      "priority": "Must",
+      "activityId": "VA-COV-001",
+      "result": "Pass",
+      "evidence": [
+        "scripts/verify.mjs"
+      ]
+    },
+    {
+      "requirementId": "TST-015",
+      "priority": "Must",
+      "activityId": "VA-COV-001",
+      "result": "Pass",
+      "evidence": [
+        "vitest.config.ts"
+      ]
+    },
+    {
+      "requirementId": "TST-016",
+      "priority": "Must",
+      "activityId": "VA-TRC-001",
+      "result": "Pass",
+      "evidence": [
+        "scripts/check-traceability.mjs"
+      ]
+    },
+    {
+      "requirementId": "TST-017",
+      "priority": "Must",
+      "activityId": "VA-TRC-001",
+      "result": "Pass",
+      "evidence": [
+        "scripts/check-traceability.mjs"
+      ]
+    },
+    {
+      "requirementId": "TST-018",
+      "priority": "Must",
+      "activityId": "VA-TRC-001",
+      "result": "Pass",
+      "evidence": [
+        "scripts/check-traceability.mjs",
+        "tests/unit/traceabilityChecker.test.ts"
+      ]
+    },
+    {
+      "requirementId": "CIC-001",
+      "priority": "Must",
+      "activityId": "VA-CIC-001",
+      "result": "Pass",
+      "evidence": [
+        ".github/workflows/verify.yml"
+      ]
+    },
+    {
+      "requirementId": "CIC-002",
+      "priority": "Must",
+      "activityId": "VA-CIC-001",
+      "result": "Pass",
+      "evidence": [
+        ".github/workflows/verify.yml"
+      ]
+    },
+    {
+      "requirementId": "CIC-003",
+      "priority": "Must",
+      "activityId": "VA-CIC-001",
+      "result": "Pass",
+      "evidence": [
+        ".github/workflows/verify.yml"
+      ]
+    },
+    {
+      "requirementId": "CIC-004",
+      "priority": "Must",
+      "activityId": "VA-CIC-001",
+      "result": "Pass",
+      "evidence": [
+        ".github/workflows/verify.yml"
+      ]
+    },
+    {
+      "requirementId": "CIC-005",
+      "priority": "Must",
+      "activityId": "VA-CIC-001",
+      "result": "Pass",
+      "evidence": [
+        ".github/workflows/verify.yml"
+      ]
+    },
+    {
+      "requirementId": "CIC-006",
+      "priority": "Must",
+      "activityId": "VA-CIC-002",
+      "result": "Blocked",
+      "evidence": [
+        ".github/workflows/verify.yml"
+      ]
+    },
+    {
+      "requirementId": "CIC-007",
+      "priority": "Must",
+      "activityId": "VA-CIC-002",
+      "result": "Blocked",
+      "evidence": [
+        ".github/workflows/verify.yml"
+      ]
+    },
+    {
+      "requirementId": "CIC-008",
+      "priority": "Must",
+      "activityId": "VA-CIC-002",
+      "result": "Pass",
+      "evidence": [
+        "scripts/generate-release-report.mjs"
+      ]
+    },
+    {
+      "requirementId": "DEL-001",
+      "priority": "Must",
+      "activityId": "VA-ARC-001",
+      "result": "Pass",
+      "evidence": [
+        "README.md"
+      ]
+    },
+    {
+      "requirementId": "DEL-002",
+      "priority": "Must",
+      "activityId": "VA-ARC-001",
+      "result": "Pass",
+      "evidence": [
+        "README.md"
+      ]
+    },
+    {
+      "requirementId": "DEL-003",
+      "priority": "Must",
+      "activityId": "VA-ARC-001",
+      "result": "Pass",
+      "evidence": [
+        "supabase/migrations/20261010000000_initial_schema.sql",
+        "supabase/seed.sql"
+      ]
+    },
+    {
+      "requirementId": "DEL-004",
+      "priority": "Must",
+      "activityId": "VA-DAT-001",
+      "result": "Pass",
+      "evidence": [
+        "docs/data_dictionary.md"
+      ]
+    },
+    {
+      "requirementId": "DEL-005",
+      "priority": "Must",
+      "activityId": "VA-ARC-001",
+      "result": "Pass",
+      "evidence": [
+        "tests/fixtures/csv/CSV-014.csv"
+      ]
+    },
+    {
+      "requirementId": "DEL-006",
+      "priority": "Must",
+      "activityId": "VA-ARC-001",
+      "result": "Pass",
+      "evidence": [
+        "supabase/seed.sql"
+      ]
+    },
+    {
+      "requirementId": "DEL-007",
+      "priority": "Must",
+      "activityId": "VA-ARC-001",
+      "result": "Pass",
+      "evidence": [
+        ".env.example"
+      ]
+    },
+    {
+      "requirementId": "DEL-008",
+      "priority": "Must",
+      "activityId": "VA-CIC-002",
+      "result": "Pass",
+      "evidence": [
+        "scripts/generate-release-report.mjs",
+        "docs/schemas/verification_report.schema.json"
+      ]
+    },
+    {
+      "requirementId": "DEL-009",
+      "priority": "Must",
+      "activityId": "VA-CIC-002",
+      "result": "Pass",
+      "evidence": [
+        "docs/limitations.md"
+      ]
+    }
+  ],
+  "testSuites": [
+    {
+      "suiteName": "Vitest Unit & Component Suite",
+      "tool": "vitest v3.0.5",
+      "total": 192,
+      "passed": 192,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 10520,
+      "status": "passed"
+    },
+    {
+      "suiteName": "Performance Benchmarks (VA-PRF-001, VA-PRF-002)",
+      "tool": "vitest v3.0.5",
+      "total": 2,
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 17563,
+      "status": "passed"
+    },
+    {
+      "suiteName": "Requirements Traceability Suite (VA-TRC-001)",
+      "tool": "node scripts/check-traceability.mjs",
+      "total": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 350,
+      "status": "passed"
+    },
+    {
+      "suiteName": "Database Schema, RLS & RPC Suite (pgTAP / Supabase CLI)",
+      "tool": "supabase test db",
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 0,
+      "status": "blocked (DEC-003: host container runtime pending)"
+    },
+    {
+      "suiteName": "End-to-End & Live Accessibility Suite (Playwright)",
+      "tool": "@playwright/test v1.50.1",
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 0,
+      "status": "blocked (DEC-003: local Supabase auth stack pending)"
+    }
+  ],
+  "coverage": {
+    "overallStatements": 94.39,
+    "overallBranches": 82.61,
+    "modules": {},
+    "thresholdMet": true
+  },
+  "performance": [
+    {
+      "id": "PRF-001",
+      "name": "Card Selection Latency (p95)",
+      "metric": "p95_ms",
+      "value": 3.7719,
+      "threshold": 500,
+      "unit": "ms",
+      "passed": true
+    },
+    {
+      "id": "PRF-002-Preview",
+      "name": "CSV 10k Preview Latency (max)",
+      "metric": "preview_max_sec",
+      "value": 0.172,
+      "threshold": 30,
+      "unit": "s",
+      "passed": true
+    },
+    {
+      "id": "PRF-002-Commit",
+      "name": "CSV 10k DB Commit Latency",
+      "metric": "commit_sec",
+      "value": 12.642,
+      "threshold": 30,
+      "unit": "s",
+      "passed": true
+    }
+  ],
+  "security": [
+    {
+      "category": "Row-Level Security (RLS)",
+      "status": "Verified via in-process PGlite (SEC-001..003)",
+      "details": "Multi-tenant isolation verified"
+    },
+    {
+      "category": "RPC Fixed search_path",
+      "status": "Passed",
+      "details": "All 3 RPCs specify SECURITY DEFINER SET search_path = public, auth (SEC-005, SEC-006)"
+    },
+    {
+      "category": "Secret & Credential Scan",
+      "status": "Passed (0 secrets found)",
+      "details": "Scanned tracked git repository files and dist/ (SEC-004)"
+    },
+    {
+      "category": "Dependency Vulnerability Audit",
+      "status": "Passed (0 high/critical)",
+      "details": "npm audit --omit=dev --audit-level=high (SEC-008)"
+    }
+  ],
+  "accessibility": [
+    {
+      "procedure": "MAN-ACC-001",
+      "type": "Keyboard Navigation",
+      "status": "Not Run",
+      "details": "Signable manual procedure pending operator execution"
+    },
+    {
+      "procedure": "MAN-ACC-002",
+      "type": "Screen Reader VoiceOver/NVDA",
+      "status": "Not Run",
+      "details": "Signable manual procedure pending operator execution"
+    },
+    {
+      "procedure": "Automated ARIA & Roles",
+      "type": "Unit & Component (@testing-library)",
+      "status": "Passed",
+      "details": "Tested in tests/components/StudyView.test.tsx"
+    }
+  ],
+  "anomalies": [],
+  "waivers": [],
+  "artifacts": [
+    {
+      "path": "dist/assets/browser-afYbBRMd.js",
+      "sha256": "734fb9aff056812fb1d6150cce6257ed14a8846dd38c7d24912959d11b96b9a2",
+      "description": "Static distribution asset (615 bytes)"
+    },
+    {
+      "path": "dist/assets/index-BTF6qW95.css",
+      "sha256": "572b7b29596ee090d9e4bba69ea8613d0e372d01f8dbea7a584f51a1c477d230",
+      "description": "Static distribution asset (24360 bytes)"
+    },
+    {
+      "path": "dist/assets/index-Coo2rzKQ.js",
+      "sha256": "c07c1c03b95867c91c164bdd251a202747b07437f73210db84ed7423932d427c",
+      "description": "Static distribution asset (353704 bytes)"
+    },
+    {
+      "path": "dist/favicon.svg",
+      "sha256": "7701aff0d89b5b069f238244ed86d79d2947348d767670088291a2d4b2ee673b",
+      "description": "Static distribution asset (370 bytes)"
+    },
+    {
+      "path": "dist/icons/icon-192x192.png",
+      "sha256": "6b7fa434f92a8b80aab02d9bf1a12e49ffcae424e4013a1c4f68b67e3d2bbcd0",
+      "description": "Static distribution asset (70 bytes)"
+    },
+    {
+      "path": "dist/icons/icon-512x512.png",
+      "sha256": "6b7fa434f92a8b80aab02d9bf1a12e49ffcae424e4013a1c4f68b67e3d2bbcd0",
+      "description": "Static distribution asset (70 bytes)"
+    },
+    {
+      "path": "dist/index.html",
+      "sha256": "40f6f5aa34e7e6b390283d3b21eb38cc44ee2931d2139fb3cbf7f6f5b2550f96",
+      "description": "Static distribution asset (851 bytes)"
+    },
+    {
+      "path": "dist/manifest.webmanifest",
+      "sha256": "b06b150457cce571e7831c6ada677b3070ebdc541d67516e88751b0c888f8b08",
+      "description": "Static distribution asset (546 bytes)"
+    },
+    {
+      "path": "dist/registerSW.js",
+      "sha256": "9742073ef7fc795e7673d98f272992843298426a0ffd8cb3507784df5143608b",
+      "description": "Static distribution asset (134 bytes)"
+    },
+    {
+      "path": "dist/sw.js",
+      "sha256": "715387f1f24f9ce7332ee6edd5471085a28bce83cbb426ef697ca6668d8d7bd2",
+      "description": "Static distribution asset (1507 bytes)"
+    },
+    {
+      "path": "dist/workbox-9c191d2f.js",
+      "sha256": "04b086f1b2f4215ee4b659a7bc9c76162894abdb43fa876247bc7c0bd6fd1c37",
+      "description": "Static distribution asset (15112 bytes)"
+    }
+  ],
+  "approvals": [
+    {
+      "role": "Verification Executor",
+      "name": "Antigravity Automated Agent",
+      "decision": "Verified Automated Baseline; Recommends Do Not Release pending operator signatures",
+      "timestamp": "2026-10-12T19:55:42.819Z"
+    },
+    {
+      "role": "Release Authority",
+      "name": "Pending Operator Sign-off",
+      "decision": "Pending",
+      "timestamp": ""
+    }
+  ]
+}

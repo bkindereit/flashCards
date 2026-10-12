@@ -8,6 +8,21 @@ import { runSchedulerConformanceVector } from '@/domain/diagnostics';
 import { triggerJsonDownload, UserDataExport } from '@/domain/exportService';
 import { FSRS_PACKAGE_VERSION, FSRS_PARAMETER_SET_VERSION, SCHEDULING_POLICY_VERSION } from '@/domain/fsrsService';
 import { SystemClock, FixedClock, SystemRandom, SeededRandom } from '@/domain/clock';
+import { supabase } from '@/lib/supabase';
+
+vi.mock('@/lib/supabase', () => ({
+  supabase: {
+    auth: {
+      getUser: vi.fn(),
+      getSession: vi.fn()
+    },
+    from: vi.fn(() => ({
+      select: vi.fn(() => ({
+        limit: vi.fn(() => Promise.resolve({ data: [], error: null }))
+      }))
+    }))
+  }
+}));
 
 // ── Clock Tests (clock.ts lines 12-13, 32-33) ─────────────────────────────
 
@@ -162,5 +177,100 @@ describe('triggerJsonDownload (REL-005)', () => {
 
     // Should not throw
     expect(() => triggerJsonDownload(data)).not.toThrow();
+  });
+
+  it('exportAllUserData fetches all tables and builds export object (REL-005)', async () => {
+    vi.mocked(supabase.auth.getUser).mockResolvedValueOnce({
+      data: { user: { id: 'test-user-id' } as any },
+      error: null
+    });
+    vi.mocked(supabase.from).mockReturnValue({
+      select: vi.fn(() => Promise.resolve({ data: [], error: null }))
+    } as any);
+
+    const { exportAllUserData } = await import('@/domain/exportService');
+    const result = await exportAllUserData();
+
+    expect(result.exportVersion).toBe('1.0');
+    expect(result.userId).toBe('test-user-id');
+    expect(result.algorithm.name).toBe('FSRS');
+  });
+
+  it('exportAllUserData throws if any table fetch fails', async () => {
+    vi.mocked(supabase.auth.getUser).mockResolvedValueOnce({
+      data: { user: { id: 'test-user-id' } as any },
+      error: null
+    });
+    vi.mocked(supabase.from).mockReturnValue({
+      select: vi.fn(() => Promise.resolve({ data: null, error: new Error('Failed to fetch table') }))
+    } as any);
+
+    const { exportAllUserData } = await import('@/domain/exportService');
+    await expect(exportAllUserData()).rejects.toThrow('Failed to fetch table');
+  });
+
+  it('exportAllUserData throws if user is not authenticated', async () => {
+    vi.mocked(supabase.auth.getUser).mockResolvedValueOnce({
+      data: { user: null } as any,
+      error: null
+    });
+
+    const { exportAllUserData } = await import('@/domain/exportService');
+    await expect(exportAllUserData()).rejects.toThrow('User must be authenticated to export data');
+  });
+});
+
+describe('runDiagnosticsSuite (DIA-001..DIA-006)', () => {
+  it('runs all checks and returns sanitized report', async () => {
+    vi.mocked(supabase.auth.getSession).mockResolvedValueOnce({
+      data: { session: null },
+      error: null
+    } as any);
+    vi.mocked(supabase.from).mockReturnValue({
+      select: vi.fn(() => ({
+        limit: vi.fn(() => Promise.resolve({ data: [], error: null }))
+      }))
+    } as any);
+
+    const { runDiagnosticsSuite } = await import('@/domain/diagnostics');
+    const report = await runDiagnosticsSuite();
+
+    expect(report.applicationVersion).toBe('1.0.0');
+    expect(report.checks.length).toBeGreaterThanOrEqual(4);
+    expect(report.scheduler.packageVersion).toBe('4.4.1');
+    expect(report.scheduler.conformancePassed).toBe(true);
+  });
+
+  it('handles network / supabase API exception in diagnostics suite', async () => {
+    vi.mocked(supabase.auth.getSession).mockRejectedValueOnce(new Error('Network disconnected'));
+
+    const { runDiagnosticsSuite } = await import('@/domain/diagnostics');
+    const report = await runDiagnosticsSuite();
+
+    const netCheck = report.checks.find(c => c.id === 'chk_network_reachability');
+    expect(netCheck).toBeDefined();
+    expect(netCheck?.passed).toBe(false);
+  });
+
+  it('detects different browser families based on navigator.userAgent', async () => {
+    const originalUA = navigator.userAgent;
+
+    // Test Firefox
+    Object.defineProperty(navigator, 'userAgent', { value: 'Mozilla/5.0 (Windows NT 10.0; rv:109.0) Gecko/20100101 Firefox/115.0', configurable: true });
+    vi.mocked(supabase.auth.getSession).mockResolvedValueOnce({ data: { session: null }, error: null } as any);
+    vi.mocked(supabase.from).mockReturnValue({ select: vi.fn(() => ({ limit: vi.fn(() => Promise.resolve({ data: [], error: null })) })) } as any);
+
+    const { runDiagnosticsSuite } = await import('@/domain/diagnostics');
+    let report = await runDiagnosticsSuite();
+    expect(report.browserFamily).toBe('Firefox');
+
+    // Test Safari / WebKit
+    Object.defineProperty(navigator, 'userAgent', { value: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 Version/17.0 Safari/605.1.15', configurable: true });
+    vi.mocked(supabase.auth.getSession).mockResolvedValueOnce({ data: { session: null }, error: null } as any);
+    report = await runDiagnosticsSuite();
+    expect(report.browserFamily).toBe('WebKit');
+
+    // Reset UA
+    Object.defineProperty(navigator, 'userAgent', { value: originalUA, configurable: true });
   });
 });

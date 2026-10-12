@@ -1,0 +1,74 @@
+{
+  "CSV-001": {
+    "error": "CSV input is empty",
+    "validRows": 0,
+    "rejectedRows": 0
+  },
+  "CSV-002": {
+    "validRows": 0,
+    "rejectedRows": 0,
+    "totalInputRows": 0
+  },
+  "CSV-003": {
+    "validRows": 100,
+    "rejectedRows": 0,
+    "inFileInputDuplicates": 0,
+    "potentialInserts": 100
+  },
+  "CSV-004": {
+    "validRows": 10,
+    "rejectedRows": 0,
+    "potentialInserts": 10
+  },
+  "CSV-005": {
+    "validRows": 3,
+    "rejectedRows": 0,
+    "potentialInserts": 3
+  },
+  "CSV-006": {
+    "validRows": 2,
+    "rejectedRows": 0,
+    "potentialInserts": 2
+  },
+  "CSV-007": {
+    "validRows": 2,
+    "rejectedRows": 0,
+    "inFileInputDuplicates": 2,
+    "potentialInserts": 2
+  },
+  "CSV-008": {
+    "validRows": 2,
+    "rejectedRows": 0,
+    "potentialInserts": 2
+  },
+  "CSV-009": {
+    "validRows": 2,
+    "rejectedRows": 3,
+    "potentialInserts": 2
+  },
+  "CSV-010": {
+    "error": "Malformed CSV quote",
+    "validRows": 0
+  },
+  "CSV-011": {
+    "validRows": 2,
+    "inFileInputDuplicates": 2,
+    "potentialInserts": 2
+  },
+  "CSV-012": {
+    "validRows": 3,
+    "rejectedRows": 0,
+    "potentialInserts": 3
+  },
+  "CSV-013": {
+    "validRows": 3,
+    "inFileInputDuplicates": 0,
+    "potentialInserts": 3
+  },
+  "CSV-014": {
+    "validRows": 10000,
+    "rejectedRows": 0,
+    "inFileInputDuplicates": 0,
+    "potentialInserts": 10000
+  }
+}

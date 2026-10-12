@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { canonicalNormalize, computeContentHash } from '@/domain/normalization';
 
 describe('Canonical Normalization (Section 8.5.1, IMP-001..IMP-016)', () => {
@@ -42,5 +42,19 @@ describe('Canonical Normalization (Section 8.5.1, IMP-001..IMP-016)', () => {
     // Case difference produces different hash (case is preserved)
     const hashCase = await computeContentHash(q, 'paris');
     expect(hashCase).not.toBe(hash1);
+  });
+
+  it('canonicalNormalize handles null or undefined safely', () => {
+    expect(canonicalNormalize(null as any)).toBe('');
+    expect(canonicalNormalize(undefined as any)).toBe('');
+  });
+
+  it('computeContentHash throws error when Web Crypto API is unavailable', async () => {
+    const spy = vi.spyOn(globalThis.crypto, 'subtle', 'get').mockReturnValue(undefined as any);
+    try {
+      await expect(computeContentHash('Q', 'A')).rejects.toThrow('Web Cryptography API (crypto.subtle) is not available');
+    } finally {
+      spy.mockRestore();
+    }
   });
 });

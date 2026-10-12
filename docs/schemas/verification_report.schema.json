@@ -1,0 +1,203 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Adaptive Flashcard Application Verification Report Schema",
+  "description": "FCA-VVP-001 Section 18 Machine-Readable Release Verification Report",
+  "type": "object",
+  "required": [
+    "reportVersion",
+    "specificationVersion",
+    "commitSha",
+    "applicationVersion",
+    "overallResult",
+    "releaseRecommendation",
+    "configuration",
+    "environments",
+    "requirements",
+    "testSuites",
+    "coverage",
+    "performance",
+    "security",
+    "accessibility",
+    "anomalies",
+    "waivers",
+    "artifacts",
+    "approvals"
+  ],
+  "properties": {
+    "reportVersion": { "type": "string" },
+    "specificationVersion": { "type": "string" },
+    "commitSha": { "type": "string" },
+    "applicationVersion": { "type": "string" },
+    "overallResult": {
+      "type": "string",
+      "enum": ["pass", "fail", "blocked"]
+    },
+    "releaseRecommendation": {
+      "type": "string",
+      "enum": ["release", "do-not-release"]
+    },
+    "configuration": {
+      "type": "object",
+      "properties": {
+        "repository": { "type": "string" },
+        "branch": { "type": "string" },
+        "nodeVersion": { "type": "string" },
+        "npmVersion": { "type": "string" },
+        "lockfileSha256": { "type": "string" },
+        "fsrsVersion": { "type": "string" },
+        "fsrsParameters": { "type": "object" },
+        "migrations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "sha256": { "type": "string" }
+            },
+            "required": ["name", "sha256"]
+          }
+        }
+      },
+      "required": ["nodeVersion", "lockfileSha256", "fsrsVersion"]
+    },
+    "environments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string" },
+          "status": { "type": "string" },
+          "details": { "type": "object" }
+        },
+        "required": ["name", "type", "status"]
+      }
+    },
+    "requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "requirementId": { "type": "string" },
+          "priority": { "type": "string", "enum": ["Must", "Should"] },
+          "activityId": { "type": "string" },
+          "result": { "type": "string", "enum": ["Pass", "Fail", "Blocked", "Waived", "Not Run"] },
+          "evidence": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["requirementId", "priority", "result"]
+      }
+    },
+    "testSuites": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "suiteName": { "type": "string" },
+          "tool": { "type": "string" },
+          "total": { "type": "integer" },
+          "passed": { "type": "integer" },
+          "failed": { "type": "integer" },
+          "skipped": { "type": "integer" },
+          "durationMs": { "type": "number" },
+          "status": { "type": "string" }
+        },
+        "required": ["suiteName", "tool", "total", "passed", "failed", "status"]
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "properties": {
+        "overallStatements": { "type": "number" },
+        "overallBranches": { "type": "number" },
+        "modules": { "type": "object" },
+        "thresholdMet": { "type": "boolean" }
+      },
+      "required": ["overallStatements", "overallBranches", "thresholdMet"]
+    },
+    "performance": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "metric": { "type": "string" },
+          "value": { "type": "number" },
+          "threshold": { "type": "number" },
+          "unit": { "type": "string" },
+          "passed": { "type": "boolean" }
+        },
+        "required": ["id", "metric", "value", "threshold", "passed"]
+      }
+    },
+    "security": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "category": { "type": "string" },
+          "status": { "type": "string" },
+          "details": { "type": "string" }
+        },
+        "required": ["category", "status"]
+      }
+    },
+    "accessibility": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "procedure": { "type": "string" },
+          "type": { "type": "string" },
+          "status": { "type": "string" },
+          "details": { "type": "string" }
+        },
+        "required": ["procedure", "status"]
+      }
+    },
+    "anomalies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "severity": { "type": "string" },
+          "description": { "type": "string" },
+          "status": { "type": "string" }
+        },
+        "required": ["id", "severity", "status"]
+      }
+    },
+    "waivers": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": { "type": "string" },
+          "sha256": { "type": "string" },
+          "description": { "type": "string" }
+        },
+        "required": ["path", "sha256"]
+      }
+    },
+    "approvals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "role": { "type": "string" },
+          "name": { "type": "string" },
+          "decision": { "type": "string" },
+          "timestamp": { "type": "string" }
+        },
+        "required": ["role", "decision"]
+      }
+    }
+  }
+}

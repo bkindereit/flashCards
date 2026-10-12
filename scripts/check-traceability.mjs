@@ -15,7 +15,16 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const matrixPath = path.join(__dirname, '../docs/traceability_matrix.json');
+let matrixPath = path.join(__dirname, '../docs/traceability_matrix.json');
+let srsPath = path.join(__dirname, '../Instructions/flashcard-srs.md');
+
+for (let i = 2; i < process.argv.length; i++) {
+  if (process.argv[i] === '--matrix' && process.argv[i + 1]) {
+    matrixPath = path.resolve(process.argv[++i]);
+  } else if (process.argv[i] === '--srs' && process.argv[i + 1]) {
+    srsPath = path.resolve(process.argv[++i]);
+  }
+}
 
 let exitCode = 0;
 const errors = [];
@@ -110,11 +119,10 @@ for (const [testId, reqIdList] of Object.entries(testIndex)) {
 }
 
 // ── TST-017: Every Must requirement in the authoritative SRS must be in the matrix ──
-const srsPath = path.join(__dirname, '../Instructions/flashcard-srs.md');
 try {
   const srs = readFileSync(srsPath, 'utf8');
   const srsReqs = new Map();
-  for (const m of srs.matchAll(/^\| ([A-Z]{3}-\d{3}) \| (Must|Should) \|/gm)) {
+  for (const m of srs.matchAll(/^\| ([A-Z]{2,3}-\d{3}) \| (Must|Should) \|/gm)) {
     srsReqs.set(m[1], m[2]);
   }
   for (const [id, prio] of srsReqs) {

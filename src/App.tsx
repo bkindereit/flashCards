@@ -3,7 +3,7 @@
  * Implements ARC-001..ARC-010, AUT-001..AUT-006, DEK-001..DEK-009, DIA-001..DIA-006, REL-005
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { Deck, Card } from '@/domain/types';
 import { supabase } from '@/lib/supabase';
@@ -58,19 +58,19 @@ export const App: React.FC = () => {
   }, []);
 
   // Fetch decks on user login
-  const loadDecks = async () => {
+  const loadDecks = useCallback(async () => {
     if (!user) return;
     const { data, error } = await supabase.from('decks').select('*').order('created_at', { ascending: false });
     if (!error && data) {
       setDecks(data);
     }
-  };
+  }, [user]);
 
   useEffect(() => {
     if (user) {
       loadDecks();
     }
-  }, [user]);
+  }, [user, loadDecks]);
 
   // Load cards for active deck
   const loadCardsForDeck = async (deckId: string) => {
@@ -154,7 +154,13 @@ export const App: React.FC = () => {
   // Unauthenticated Sign-in View (AUT-001)
   if (!user) {
     return (
-      <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center p-4 relative">
+        {!isOnline && (
+          <div role="alert" className="absolute top-0 left-0 right-0 bg-amber-600 text-slate-950 px-4 py-2 text-center text-xs font-bold flex items-center justify-center gap-2">
+            <WifiOff className="w-4 h-4" />
+            <span>You are currently offline. Study actions require an active connection.</span>
+          </div>
+        )}
         <div className="max-w-md w-full bg-slate-800 border border-slate-700 rounded-2xl p-8 shadow-2xl text-center">
           <div className="w-16 h-16 bg-blue-600/20 text-blue-400 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-blue-500/30">
             <BookOpen className="w-8 h-8" />

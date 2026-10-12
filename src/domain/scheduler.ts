@@ -100,9 +100,7 @@ export class SchedulerEngine {
         unseenCards.push(card);
       } else if (card.learning_state === 'learning') {
         // If in session state, check if unresolved failure or pending criterion
-        if (sState && !sState.has_met_criterion) {
-          activeLearningCards.push(card);
-        } else if (!sState) {
+        if (!sState || !sState.has_met_criterion) {
           activeLearningCards.push(card);
         }
       }
@@ -200,8 +198,6 @@ export class SchedulerEngine {
         }
       }
 
-      if (candidates.length === 0) continue;
-
       // Calculate utility for candidates (SCH-035)
       const scored: SelectionCandidate[] = candidates.map(card => {
         const u = this.fsrsService.calculateUtility(card, now, examDate, estimatedSecs);
@@ -219,14 +215,9 @@ export class SchedulerEngine {
       });
 
       // SCH-035: Candidates within the same non-new queue shall be ordered by descending base utility.
-      // For active_cohort, cards are ordered by source_order ascending (SCH-010) with learning cards prioritized.
+      // For active_cohort, cards are ordered by source_order ascending (SCH-010).
       if (pool.queue === 'active_cohort') {
-        scored.sort((a, b) => {
-          // Learning cards before new cards
-          if (a.card.learning_state === 'learning' && b.card.learning_state === 'new') return -1;
-          if (a.card.learning_state === 'new' && b.card.learning_state === 'learning') return 1;
-          return a.card.source_order - b.card.source_order;
-        });
+        scored.sort((a, b) => a.card.source_order - b.card.source_order);
       } else {
         // Sort non-new queues by descending base_utility (SCH-035)
         scored.sort((a, b) => b.base_utility - a.base_utility);
@@ -247,7 +238,7 @@ export class SchedulerEngine {
         } else {
           // Seeded random pick among ties
           const idx = Math.floor(rng.next() * tiedCandidates.length);
-          chosenCandidate = tiedCandidates[idx] ?? tiedCandidates[0]!;
+          chosenCandidate = tiedCandidates[idx]!;
         }
       }
 
