@@ -48,6 +48,7 @@ If you created your flashcards in **Excel**, **Google Sheets**, or **Apple Numbe
 ## Step 3: Upload the `.csv` File from Your Computer
 1. Look at your new deck box on the home screen. Along the bottom of that box, right next to the blue **▶ Study** button, click the **Upload button** (the gray square icon with an **upward-pointing arrow ↑**).
 2. A window titled **"Import CSV Flashcards"** will open:
+   - **CSV Delimiter:** The app automatically detects whether your file uses commas (`,`), semicolons (`;`), tabs (`\t`), or pipes (`|`). If your CSV was generated in Europe or Excel with semicolons, the dropdown automatically switches to **Semicolon (;)**, or you can change it manually at any time.
    - Click in the middle of the big dashed box that says **"Choose a UTF-8 .csv file"**.
    - A file window will open showing the folders on your computer.
    - Click the folder where your file is saved (such as *Desktop*, *Downloads*, or *Documents*), click on your **`.csv` file**, and click **"Open"**.
