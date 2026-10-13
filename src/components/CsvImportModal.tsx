@@ -5,7 +5,7 @@
 
 import React, { useState } from 'react';
 import { Upload, FileText, AlertCircle, Download, X } from 'lucide-react';
-import { parseAndPreviewCsv, CsvPreviewResult, ColumnMapping } from '@/domain/csvParser';
+import { parseAndPreviewCsv, CsvPreviewResult, ColumnMapping, detectDelimiter } from '@/domain/csvParser';
 import { supabase } from '@/lib/supabase';
 
 interface CsvImportModalProps {
@@ -26,6 +26,7 @@ export const CsvImportModal: React.FC<CsvImportModalProps> = ({
   const [preview, setPreview] = useState<CsvPreviewResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isCommitting, setIsCommitting] = useState<boolean>(false);
+  const [selectedDelimiter, setSelectedDelimiter] = useState<string>(',');
   const [columnMapping, setColumnMapping] = useState<ColumnMapping>({
     questionColumnIndex: 0,
     answerColumnIndex: 1
@@ -43,7 +44,9 @@ export const CsvImportModal: React.FC<CsvImportModalProps> = ({
     try {
       const text = await selected.text();
       setCsvContent(text);
-      const res = await parseAndPreviewCsv(text);
+      const autoDelim = detectDelimiter(text);
+      setSelectedDelimiter(autoDelim);
+      const res = await parseAndPreviewCsv(text, { delimiter: autoDelim });
       setPreview(res);
       if (res.requiresMapping && res.detectedHeaders.length >= 2) {
         setColumnMapping({
@@ -57,10 +60,33 @@ export const CsvImportModal: React.FC<CsvImportModalProps> = ({
     }
   };
 
+  const handleDelimiterChange = async (newDelimiter: string) => {
+    setSelectedDelimiter(newDelimiter);
+    if (!csvContent) return;
+    setError(null);
+    try {
+      const res = await parseAndPreviewCsv(csvContent, {
+        delimiter: newDelimiter
+      });
+      setPreview(res);
+      if (res.requiresMapping && res.detectedHeaders.length >= 2) {
+        setColumnMapping({
+          questionColumnIndex: 0,
+          answerColumnIndex: 1
+        });
+      }
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Error parsing CSV with selected delimiter');
+    }
+  };
+
   const handleApplyMapping = async () => {
     if (!csvContent) return;
     try {
-      const res = await parseAndPreviewCsv(csvContent, columnMapping);
+      const res = await parseAndPreviewCsv(csvContent, {
+        mapping: columnMapping,
+        delimiter: selectedDelimiter
+      });
       setPreview(res);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Mapping validation error');
@@ -151,8 +177,32 @@ export const CsvImportModal: React.FC<CsvImportModalProps> = ({
           </button>
         </div>
 
+        {/* Delimiter Selection Control */}
+        <div className="flex items-center justify-between bg-slate-900/60 border border-slate-700/80 rounded-xl p-3 mt-5 mb-4">
+          <div>
+            <label htmlFor="csv-delimiter-select" className="text-xs font-semibold text-slate-300 block">
+              CSV Delimiter
+            </label>
+            <span className="text-[11px] text-slate-400">
+              Auto-detected. Switch to Semicolon (;) if exported from European Excel.
+            </span>
+          </div>
+          <select
+            id="csv-delimiter-select"
+            aria-label="CSV Delimiter"
+            value={selectedDelimiter}
+            onChange={e => handleDelimiterChange(e.target.value)}
+            className="bg-slate-800 border border-slate-600 rounded-lg px-3 py-1.5 text-xs text-white focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          >
+            <option value=",">Comma (,)</option>
+            <option value=";">Semicolon (;)</option>
+            <option value="&#9;">Tab (\t)</option>
+            <option value="|">Pipe (|)</option>
+          </select>
+        </div>
+
         {/* File upload area */}
-        <div className="my-6">
+        <div className="mb-6">
           <label className="block p-6 border-2 border-dashed border-slate-600 hover:border-blue-400 rounded-xl cursor-pointer bg-slate-900/40 text-center transition-colors">
             <FileText className="w-10 h-10 text-slate-400 mx-auto mb-2" />
             <span className="text-sm font-medium text-slate-200 block mb-1">

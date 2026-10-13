@@ -31,12 +31,62 @@ export interface CsvPreviewResult {
   detectedHeaders: string[];
   hasExactHeaders: boolean;
   requiresMapping: boolean;
+  detectedDelimiter: string;
+}
+
+export type Delimiter = ',' | ';' | '\t' | '|';
+
+/**
+ * Automatically detects whether comma, semicolon, tab, or pipe is the primary delimiter
+ * by inspecting the first line outside of quoted strings.
+ */
+export function detectDelimiter(csvText: string): Delimiter {
+  let firstLine = '';
+  let insideQuotes = false;
+  for (let i = 0; i < csvText.length; i++) {
+    const char = csvText[i];
+    if (char === '"') {
+      insideQuotes = !insideQuotes;
+    } else if (!insideQuotes && (char === '\r' || char === '\n')) {
+      firstLine = csvText.slice(0, i);
+      break;
+    }
+  }
+  if (!firstLine) {
+    firstLine = csvText;
+  }
+
+  const counts: Record<Delimiter, number> = {
+    ',': 0,
+    ';': 0,
+    '\t': 0,
+    '|': 0
+  };
+
+  insideQuotes = false;
+  for (let i = 0; i < firstLine.length; i++) {
+    const char = firstLine[i];
+    if (char === '"') {
+      insideQuotes = !insideQuotes;
+    } else if (!insideQuotes) {
+      if (char === ',') counts[',']++;
+      else if (char === ';') counts[';']++;
+      else if (char === '\t') counts['\t']++;
+      else if (char === '|') counts['|']++;
+    }
+  }
+
+  if (counts[';'] > counts[',']) return ';';
+  if (counts['\t'] > counts[','] && counts['\t'] > counts[';']) return '\t';
+  if (counts['|'] > counts[','] && counts['|'] > counts[';']) return '|';
+  return ',';
 }
 
 /**
- * Robust RFC 4180 tokenizer that handles quotes, escaped quotes (""), and embedded linebreaks.
+ * Robust RFC 4180 tokenizer that handles quotes, escaped quotes (""), embedded linebreaks,
+ * and custom/regional delimiters (such as ';' in Europe).
  */
-export function parseRfc4180Csv(csvText: string): string[][] {
+export function parseRfc4180Csv(csvText: string, delimiter: string = ','): string[][] {
   const rows: string[][] = [];
   let currentRow: string[] = [];
   let currentField = '';
@@ -70,7 +120,7 @@ export function parseRfc4180Csv(csvText: string): string[][] {
         insideQuotes = true;
         i++;
         continue;
-      } else if (char === ',') {
+      } else if (char === delimiter) {
         currentRow.push(currentField);
         currentField = '';
         i++;
@@ -118,20 +168,34 @@ export interface ColumnMapping {
   answerColumnIndex: number;
 }
 
+export interface CsvParseOptions {
+  mapping?: ColumnMapping;
+  delimiter?: string;
+}
+
 /**
  * Validates, normalizes, detects in-file duplicates and prepares CSV preview.
  */
 export async function parseAndPreviewCsv(
   csvText: string,
-  mappingOverride?: ColumnMapping
+  optionsOrMapping?: ColumnMapping | CsvParseOptions
 ): Promise<CsvPreviewResult> {
   if (!csvText || csvText.trim() === '') {
     throw new Error('CSV input is empty');
   }
 
+  const options: CsvParseOptions = optionsOrMapping
+    ? ('questionColumnIndex' in optionsOrMapping
+        ? { mapping: optionsOrMapping }
+        : optionsOrMapping)
+    : {};
+
+  const delimiter = options.delimiter ?? detectDelimiter(csvText);
+  const mappingOverride = options.mapping;
+
   let rawRows: string[][];
   try {
-    rawRows = parseRfc4180Csv(csvText);
+    rawRows = parseRfc4180Csv(csvText, delimiter);
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);
     throw new Error(`CSV structure error: ${message}`);
@@ -166,7 +230,8 @@ export async function parseAndPreviewCsv(
       inFileInputDuplicates: 0,
       detectedHeaders: headerRow,
       hasExactHeaders: false,
-      requiresMapping: true
+      requiresMapping: true,
+      detectedDelimiter: delimiter
     };
   }
 
@@ -243,6 +308,7 @@ export async function parseAndPreviewCsv(
     inFileInputDuplicates,
     detectedHeaders: headerRow,
     hasExactHeaders: true,
-    requiresMapping: false
+    requiresMapping: false,
+    detectedDelimiter: delimiter
   };
 }

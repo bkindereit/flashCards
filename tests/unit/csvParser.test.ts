@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseAndPreviewCsv, parseRfc4180Csv } from '@/domain/csvParser';
+import { parseAndPreviewCsv, parseRfc4180Csv, detectDelimiter } from '@/domain/csvParser';
 
 describe('CSV Parsing & Preview (IMP-001..IMP-012)', () => {
   it('CSV-001: Rejects empty CSV', async () => {
@@ -135,5 +135,33 @@ Goodbye,Au revoir,farewell`;
     expect(preview.rejectedRows[0]?.reason).toBe('Normalized answer is blank');
     expect(preview.rejectedRows[1]?.reason).toBe('Normalized question is blank');
     expect(preview.rejectedRows[2]?.reason).toBe('Both normalized question and answer are blank');
+  });
+
+  it('detectDelimiter: correctly identifies comma, semicolon, tab, and pipe', () => {
+    expect(detectDelimiter('question,answer\nQ,A')).toBe(',');
+    expect(detectDelimiter('question;answer\nQ;A')).toBe(';');
+    expect(detectDelimiter('question\tanswer\nQ\tA')).toBe('\t');
+    expect(detectDelimiter('question|answer\nQ|A')).toBe('|');
+    // Ignores delimiters inside quotes on the first line
+    expect(detectDelimiter('"question;1";"answer;2"\nQ;A')).toBe(';');
+  });
+
+  it('Parses semicolon-delimited CSVs automatically and with explicit options', async () => {
+    const csv = `question;answer
+Was ist 2+2?;4
+Was ist die Hauptstadt von Deutschland?;Berlin`;
+
+    // Auto-detects semicolon
+    const autoPreview = await parseAndPreviewCsv(csv);
+    expect(autoPreview.detectedDelimiter).toBe(';');
+    expect(autoPreview.validRows).toHaveLength(2);
+    expect(autoPreview.validRows[0]?.normalizedQuestion).toBe('Was ist 2+2?');
+    expect(autoPreview.validRows[0]?.normalizedAnswer).toBe('4');
+    expect(autoPreview.validRows[1]?.normalizedQuestion).toBe('Was ist die Hauptstadt von Deutschland?');
+    expect(autoPreview.validRows[1]?.normalizedAnswer).toBe('Berlin');
+
+    // Explicit options
+    const explicitPreview = await parseAndPreviewCsv(csv, { delimiter: ';' });
+    expect(explicitPreview.validRows).toHaveLength(2);
   });
 });

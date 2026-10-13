@@ -166,4 +166,41 @@ describe('CsvImportModal Component (IMP-001..IMP-016)', () => {
     );
     expect(container.firstChild).toBeNull();
   });
+
+  it('Supports delimiter selection and auto-detects semicolon-delimited CSVs', async () => {
+    render(
+      <CsvImportModal
+        isOpen={true}
+        deckId="deck-1"
+        onClose={onClose}
+        onImportSuccess={onSuccess}
+      />
+    );
+
+    const delimSelect = screen.getByLabelText(/csv delimiter/i) as HTMLSelectElement;
+    expect(delimSelect).toBeInTheDocument();
+    expect(delimSelect.value).toBe(',');
+
+    // Upload a semicolon CSV
+    const csvContent = 'question;answer\nFrage 1;Antwort 1\nFrage 2;Antwort 2';
+    const file = new File([csvContent], 'german.csv', { type: 'text/csv' });
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
+
+    await act(async () => {
+      fireEvent.change(input, { target: { files: [file] } });
+    });
+
+    // Wait for async parsing to finish
+    expect(await screen.findByText('Frage 1')).toBeInTheDocument();
+    expect(screen.getByText('Antwort 1')).toBeInTheDocument();
+
+    // Delimiter should auto-switch to semicolon
+    expect(delimSelect.value).toBe(';');
+
+    // User can manually change delimiter
+    await act(async () => {
+      fireEvent.change(delimSelect, { target: { value: ',' } });
+    });
+    expect(delimSelect.value).toBe(',');
+  });
 });
