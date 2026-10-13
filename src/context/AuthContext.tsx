@@ -38,10 +38,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithOtp = async (email: string) => {
     try {
+      const redirectUrl =
+        window.location.pathname && window.location.pathname !== '/'
+          ? `${window.location.origin}${window.location.pathname}`
+          : window.location.origin;
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: window.location.origin
+          emailRedirectTo: redirectUrl
         }
       });
       return { error };

@@ -1,9 +1,8 @@
 # Adaptive Flashcards — User Manual (No GitHub Account Required)
 
-> **Important Note Before Sharing This Manual:**
-> Right now, this application has not been published to a public website link yet.
-> - **Completed Once by the App Owner:** Follow **Appendix A** at the bottom of this document **one time** (~10 minutes, free, email-only—no GitHub account needed) to create your live Web Address (e.g., `https://my-flashcards.netlify.app`) and paste that link into **Step 1** below.
-> - **For Every End User After That:** Once that link is created, **End Users only follow Steps 1–5 below**. They do **not** need a GitHub account, do **not** need to install any software, and do **not** need to set up any database.
+> **Ready to Use Anywhere:**
+> This application is live on the web at **[https://bkindereit.github.io/flashCards/](https://bkindereit.github.io/flashCards/)**.
+> You do **not** need a GitHub account, do **not** need to install any software, and do **not** need to set up any database. Simply follow **Steps 1–5** below on any computer or phone.
 
 ---
 
@@ -22,7 +21,7 @@ If you created your flashcards in **Excel**, **Google Sheets**, or **Apple Numbe
 
 ## Step 1: Open the Website & Sign In with Your Email
 1. Open your web browser (Chrome, Safari, Edge, or Firefox) and click or type this web address into the top address bar:
-   > **Web Address (URL):** `https://YOUR-FLASHCARDS-LINK-HERE.netlify.app` *(Replace with your live link once Appendix A is completed once)*
+   > **Web Address (URL):** **[https://bkindereit.github.io/flashCards/](https://bkindereit.github.io/flashCards/)**
 2. You will see the **Adaptive Flashcards** sign-in screen in the center of the page:
    - Click inside the box that says **"Enter your email address"** and type your email address.
    - Click the blue **"Send Magic Sign-In Link"** button.
