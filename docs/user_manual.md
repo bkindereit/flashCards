@@ -107,7 +107,9 @@ If you created your flashcards in **Excel**, **Google Sheets**, or **Apple Numbe
    - **Database Password:** Click **Generate a password**
    - Click **Create new project** and wait ~60 seconds for it to finish setting up.
 5. Set up the database tables:
-   - Open the file `supabase/migrations/20261010000000_initial_schema.sql` located in your `flashCards` project folder (in TextEdit, Notepad, or Antigravity), select everything (**Ctrl+A** on Windows / **Cmd+A** on Mac), and copy it (**Ctrl+C** / **Cmd+C**).
+   - Open a new browser tab and go to this public link (no login or GitHub account needed):
+     **[https://raw.githubusercontent.com/bkindereit/flashCards/main/supabase/migrations/20261010000000_initial_schema.sql](https://raw.githubusercontent.com/bkindereit/flashCards/main/supabase/migrations/20261010000000_initial_schema.sql)**
+   - Select everything on the page (**Ctrl+A** on Windows / **Cmd+A** on Mac) and Copy it (**Ctrl+C** / **Cmd+C**).
    - Switch back to your Supabase browser tab, click **SQL Editor** (`>_` icon on the left menu), **Paste** (**Ctrl+V** / **Cmd+V**) into the text box, and click the green **Run** button (bottom right). It will say `Success. No rows returned`.
 6. Find your two database keys:
    - In Supabase, click **Project Settings** (the **Gear icon ⚙️** at the bottom of the left menu) → click **API** (or **Data API**).
