@@ -94,28 +94,32 @@ If you created your flashcards in **Excel**, **Google Sheets**, or **Apple Numbe
 ---
 ---
 
-# Appendix A: One-Time Setup to Create the Live Web Address (No GitHub Account Required)
+# Appendix: Cloud Database Setup & Sign-In Troubleshooting
 
-*Because this application was just built, it does not have a live website address on the internet yet. Complete the steps below **one time** using only an email address (no GitHub account required) to create the free database and live website link.*
+### 1. Active Deployment Details
+* **Live Website URL:** **[https://bkindereit.github.io/flashCards/](https://bkindereit.github.io/flashCards/)**
+* **Database Backend:** Supabase PostgreSQL with FSRS adaptive memory, Row-Level Security, and RPCs.
+* **Security & Privacy:** Every learner who signs in with their email has their own completely isolated, private database space. Nobody else can view or edit your decks or cards.
 
-### 1. Create a Free Supabase Database Using Email & Password
-1. In your web browser, go to **[https://supabase.com/dashboard/sign-up](https://supabase.com/dashboard/sign-up)**.
-2. Enter your **Email address** and choose a **Password**, then click **Sign up** *(do **not** click Continue with GitHub)*.
-3. Open your email inbox, click the confirmation link from Supabase, and sign in.
-4. Click **New project**:
-   - **Name:** `FlashCards`
-   - **Database Password:** Click **Generate a password**
-   - Click **Create new project** and wait ~60 seconds for it to finish setting up.
-5. Set up the database tables:
-   - Open a new browser tab and go to this public link (no login or GitHub account needed):
-     **[https://raw.githubusercontent.com/bkindereit/flashCards/main/supabase/migrations/20261010000000_initial_schema.sql](https://raw.githubusercontent.com/bkindereit/flashCards/main/supabase/migrations/20261010000000_initial_schema.sql)**
-   - Select everything on the page (**Ctrl+A** on Windows / **Cmd+A** on Mac) and Copy it (**Ctrl+C** / **Cmd+C**).
-   - Switch back to your Supabase browser tab, click **SQL Editor** (`>_` icon on the left menu), **Paste** (**Ctrl+V** / **Cmd+V**) into the text box, and click the green **Run** button (bottom right). It will say `Success. No rows returned`.
-6. Find your two database keys:
-   - In Supabase, click **Project Settings** (the **Gear icon ⚙️** at the bottom of the left menu) → click **API** (or **Data API**).
-   - Keep this page open so you can copy:
-     1. **Project URL** (looks like `https://abcdefghijklm.supabase.co`)
-     2. **`anon` `public` Key** (long code starting with `eyJ...`)
+### 2. Troubleshooting Magic Sign-In Links
+If clicking the email sign-in link opens `localhost:3000` or says `Email link is invalid or has expired`:
+1. **Check Site URL in Supabase:**
+   * Go to **[https://supabase.com/dashboard/project/fuqghjkscijbxrdkkdlv/auth/url-configuration](https://supabase.com/dashboard/project/fuqghjkscijbxrdkkdlv/auth/url-configuration)**.
+   * Under **Site URL**, ensure it is set to:
+     ```text
+     https://bkindereit.github.io/flashCards/
+     ```
+   * Click **Save changes**.
+   * Under **Redirect URLs**, click **Add URL**, enter `https://bkindereit.github.io/flashCards/**`, and click **Add URL**.
+2. **Request a Brand-New Sign-In Link:**
+   * Old sign-in emails contain the old redirect link and will expire.
+   * Go back to **[https://bkindereit.github.io/flashCards/](https://bkindereit.github.io/flashCards/)**, enter your email address again, click **Send Magic Sign-In Link**, and click **Log In** in the newest email.
 
-### 2. Publish Your Live Website Link for Free
-Once your Project URL and `anon` `public` key are ready, we can build your ready-to-upload `dist` website folder right here on your Mac so you can drag-and-drop it onto **[https://app.netlify.com/drop](https://app.netlify.com/drop)** (which only asks for an email address and password—no GitHub account needed) and immediately get your permanent `https://...netlify.app` web address!
+### 3. Setting Up a New Independent Database (Self-Hosters Only)
+If you ever want to connect your own independent Supabase database project from scratch:
+1. Create a free account at **[https://supabase.com/dashboard/sign-up](https://supabase.com/dashboard/sign-up)** (email and password, no GitHub account required).
+2. Create a new project named `FlashCards`.
+3. In **SQL Editor**, paste the database schema from:
+   **[https://raw.githubusercontent.com/bkindereit/flashCards/main/supabase/migrations/20261010000000_initial_schema.sql](https://raw.githubusercontent.com/bkindereit/flashCards/main/supabase/migrations/20261010000000_initial_schema.sql)**
+   and click **Run**.
+4. In **Authentication → URL Configuration**, set **Site URL** to `https://bkindereit.github.io/flashCards/` (or your custom domain) and add `https://bkindereit.github.io/flashCards/**` to **Redirect URLs**.
