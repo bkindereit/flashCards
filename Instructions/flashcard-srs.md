@@ -222,6 +222,7 @@ The content hash shall be SHA-256 over the UTF-8 bytes of `normalized_question`,
 | IMP-014 | Must | Each newly inserted card shall receive the server-side import timestamp and the import batch identifier. |
 | IMP-015 | Must | The import result shall report inserted, skipped-duplicate, and rejected counts and shall allow download of rejected rows with reasons. |
 | IMP-016 | Must | Repeating an import commit with the same client operation ID shall not create additional cards or import batches. |
+| IMP-017 | Must | The importer shall support custom delimiters (comma, semicolon, tab, pipe) and shall automatically detect semicolon-delimited CSV files generated in regional spreadsheet locales. |
 
 ### 8.6 Card management
 

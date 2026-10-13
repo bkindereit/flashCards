@@ -240,7 +240,7 @@ Release verification passes only when:
 
 | Activity ID | Requirements | Procedure | Pass criteria | Evidence |
 |---|---|---|---|---|
-| VA-IMP-001 | IMP-001–008 | Preview CSV-001 through CSV-011 and mapping variants. | Counts, first 20 rows, mapping, and rejection reasons match fixture expectations. | Unit/E2E reports and snapshots. |
+| VA-IMP-001 | IMP-001–008, IMP-017 | Preview CSV-001 through CSV-011, delimiter variations (semicolon, tab, pipe), and mapping variants. | Counts, delimiter detection, first 20 rows, mapping, and rejection reasons match fixture expectations. | Unit/E2E reports and snapshots. |
 | VA-IMP-002 | IMP-009–015 | Commit CSV-003, CSV-011, CSV-012, and Unicode fixtures. | Exact insert/skip/reject counts; existing state byte-equivalent; timestamps in transaction bounds. | Database snapshots and report. |
 | VA-IMP-003 | IMP-013, IMP-016, REL-001 | Inject precommit failure and response loss; retry same operation ID. | Rollback leaves no partial commit; committed retry produces one logical operation. | Fault-injection log. |
 | VA-IMP-004 | IMP normalization basis | Run canonical pairs through normalization and SHA-256 vector tests. | Exact normalized strings and hashes equal checked-in golden values. | Golden-vector output. |

@@ -167,7 +167,7 @@ describe('CsvImportModal Component (IMP-001..IMP-016)', () => {
     expect(container.firstChild).toBeNull();
   });
 
-  it('Supports delimiter selection and auto-detects semicolon-delimited CSVs', async () => {
+  it('IMP-017: Supports delimiter selection and auto-detects semicolon-delimited CSVs', async () => {
     render(
       <CsvImportModal
         isOpen={true}

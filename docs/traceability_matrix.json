@@ -1117,6 +1117,28 @@
       "anomaly_ids": []
     },
     {
+      "requirement_id": "IMP-017",
+      "priority": "Must",
+      "description": "The importer shall support custom delimiters (comma, semicolon, tab, pipe) and shall automatically detect semicolon-delimited CSV files generated in regional spreadsheet locales.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-IMP-001"
+      ],
+      "automated_test_ids": [
+        "test:imp-017"
+      ],
+      "evidence_paths": [
+        "tests/unit/csvParser.test.ts",
+        "tests/components/CsvImportModal.test.tsx",
+        "src/domain/csvParser.ts",
+        "src/components/CsvImportModal.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
       "requirement_id": "MGT-001",
       "priority": "Must",
       "description": "The user shall be able to search cards by question or answer text within a deck.",
@@ -4818,6 +4840,9 @@
     ],
     "test:del-009": [
       "DEL-009"
+    ],
+    "test:imp-017": [
+      "IMP-017"
     ]
   }
 }

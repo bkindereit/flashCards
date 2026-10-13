@@ -137,7 +137,7 @@ Goodbye,Au revoir,farewell`;
     expect(preview.rejectedRows[2]?.reason).toBe('Both normalized question and answer are blank');
   });
 
-  it('detectDelimiter: correctly identifies comma, semicolon, tab, and pipe', () => {
+  it('IMP-017: detectDelimiter correctly identifies comma, semicolon, tab, and pipe', () => {
     expect(detectDelimiter('question,answer\nQ,A')).toBe(',');
     expect(detectDelimiter('question;answer\nQ;A')).toBe(';');
     expect(detectDelimiter('question\tanswer\nQ\tA')).toBe('\t');
@@ -146,7 +146,7 @@ Goodbye,Au revoir,farewell`;
     expect(detectDelimiter('"question;1";"answer;2"\nQ;A')).toBe(';');
   });
 
-  it('Parses semicolon-delimited CSVs automatically and with explicit options', async () => {
+  it('IMP-017: Parses semicolon-delimited CSVs automatically and with explicit options', async () => {
     const csv = `question;answer
 Was ist 2+2?;4
 Was ist die Hauptstadt von Deutschland?;Berlin`;
