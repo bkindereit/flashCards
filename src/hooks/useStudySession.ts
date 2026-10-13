@@ -71,10 +71,37 @@ export function useStudySession({
   const schedulerEngineRef = useRef<SchedulerEngine>(new SchedulerEngine(deck.desired_retention));
   const fsrsServiceRef = useRef<FsrsService>(new FsrsService(deck.desired_retention));
 
-  // Initialize session record
+  // Initialize session record (SES-003)
   useEffect(() => {
     shownAtRef.current = new Date();
-  }, []);
+
+    void supabase.from('study_sessions').insert({
+      id: sessionId,
+      user_id: deck.user_id,
+      deck_id: deck.id,
+      duration_seconds: durationSeconds,
+      status: 'active',
+      started_at: new Date().toISOString(),
+      active_duration_seconds: 0,
+      settings_snapshot: {
+        cohort_size: deck.cohort_size,
+        desired_retention: deck.desired_retention,
+        new_learning_fraction: deck.new_learning_fraction,
+        min_failed_retry_delay_seconds: deck.min_failed_retry_delay_seconds,
+        min_intervening_cards: deck.min_intervening_cards,
+        exam_date: deck.exam_date
+      },
+      cards_reviewed: 0,
+      correct_count: 0,
+      incorrect_count: 0,
+      new_cards_introduced: 0,
+      due_cards_completed: 0
+    }).then(({ error }) => {
+      if (error) {
+        console.error('Failed to create study_sessions record:', error);
+      }
+    });
+  }, [sessionId, deck, durationSeconds]);
 
   // Tick timer
   useEffect(() => {
@@ -301,6 +328,7 @@ export function useStudySession({
         selectNext(nextCards, nextStates, card.id);
       } catch (err: unknown) {
         setIsPending(false);
+        console.error('Error submitting grade:', err);
         const msg = err instanceof Error ? err.message : 'Network error submitting grade';
         setErrorState({
           message: msg,
@@ -351,6 +379,7 @@ export function useStudySession({
       selectNext(cards, sessionStates);
     } catch (err: unknown) {
       setIsPending(false);
+      console.error('Error undoing grade:', err);
       const msg = err instanceof Error ? err.message : 'Failed to undo grade';
       setErrorState({
         message: msg,

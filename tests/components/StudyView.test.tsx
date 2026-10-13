@@ -13,6 +13,7 @@ vi.mock('@/lib/supabase', () => ({
   supabase: {
     rpc: vi.fn(),
     from: vi.fn(() => ({
+      insert: vi.fn(() => Promise.resolve({ data: null, error: null })),
       select: vi.fn(() => ({
         eq: vi.fn(() => ({
           order: vi.fn(() => Promise.resolve({ data: [], error: null }))
