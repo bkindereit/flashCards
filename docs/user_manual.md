@@ -24,6 +24,16 @@ If you created your flashcards in **Excel**, **Google Sheets**, or **Apple Numbe
    > **Web Address (URL):** **[https://bkindereit.github.io/flashCards/](https://bkindereit.github.io/flashCards/)**
 2. You will see the **Adaptive Flashcards** sign-in screen in the center of the page:
 
+### Creating a New Account
+If you are a new user without an account:
+1. Click the blue link at the bottom: **"Create an account"**.
+2. Type your email address in the **"Enter your email address"** box.
+3. Type a secure password (minimum 6 characters) in the **"Create a password"** box.
+4. Click the green **"Create Account"** button.
+5. If your project has email confirmation enabled, check your email inbox to confirm your address, then sign in!
+
+---
+
 ### Method 1: Password Sign-In (Instant — No Email Waiting)
 1. In the first box (**"Enter your email address"**), type your email address (e.g. `bastiankindereit@gmail.com`).
 2. In the second box (**"Enter your password"**), type your password.

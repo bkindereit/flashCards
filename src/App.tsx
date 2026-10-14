@@ -17,11 +17,11 @@ import { DeckModal } from '@/components/DeckModal';
 import { DeleteDeckConfirmationModal } from '@/components/DeleteDeckConfirmationModal';
 import {
   Layers, Plus, Play, Settings, Upload, Activity,
-  Download, LogOut, WifiOff, Archive, Trash2, BookOpen
+  Download, LogOut, WifiOff, Archive, Trash2, BookOpen, UserPlus
 } from 'lucide-react';
 
 export const App: React.FC = () => {
-  const { user, isLoading, signInWithOtp, verifyOtp, signInWithPassword, signOut } = useAuth();
+  const { user, isLoading, signInWithOtp, verifyOtp, signInWithPassword, signUp, signOut } = useAuth();
 
   // Navigation state
   const [currentView, setCurrentView] = useState<'decks' | 'study' | 'cards' | 'diagnostics'>('decks');
@@ -43,6 +43,7 @@ export const App: React.FC = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
   // Auth form
+  const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
   const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
   const [otpCodeInput, setOtpCodeInput] = useState('');
@@ -91,6 +92,26 @@ export const App: React.FC = () => {
     const { error } = await signInWithPassword(emailInput.trim(), passwordInput);
     if (error) {
       setAuthMsg({ text: error.message, error: true });
+    }
+  };
+
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!emailInput.trim() || !passwordInput) return;
+    if (passwordInput.length < 6) {
+      setAuthMsg({ text: 'Password must be at least 6 characters long.', error: true });
+      return;
+    }
+    const { error, data } = await signUp(emailInput.trim(), passwordInput);
+    if (error) {
+      setAuthMsg({ text: error.message, error: true });
+    } else if (data?.user && !data?.session) {
+      setAuthMsg({
+        text: 'Account created! Please check your email inbox to confirm your email before signing in.',
+        error: false
+      });
+    } else {
+      setAuthMsg({ text: 'Account created successfully!', error: false });
     }
   };
 
@@ -188,84 +209,147 @@ export const App: React.FC = () => {
         )}
         <main className="max-w-md w-full bg-slate-800 border border-slate-700 rounded-2xl p-8 shadow-2xl text-center">
           <div className="w-16 h-16 bg-blue-600/20 text-blue-400 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-blue-500/30">
-            <BookOpen className="w-8 h-8" />
+            {authMode === 'signup' ? <UserPlus className="w-8 h-8" /> : <BookOpen className="w-8 h-8" />}
           </div>
-          <h1 className="text-2xl font-bold text-white mb-2">Adaptive Flashcards</h1>
+          <h1 className="text-2xl font-bold text-white mb-2">
+            {authMode === 'signup' ? 'Create an Account' : 'Adaptive Flashcards'}
+          </h1>
           <p className="text-sm text-slate-400 mb-6">
-            Sign in with your email to access your synchronized study decks and FSRS memory model.
+            {authMode === 'signup'
+              ? 'Sign up with your email and password to start creating and studying flashcard decks.'
+              : 'Sign in with your email to access your synchronized study decks and FSRS memory model.'}
           </p>
 
-          <form onSubmit={handlePasswordLogin} className="space-y-4">
-            <input
-              type="email"
-              value={emailInput}
-              onChange={e => setEmailInput(e.target.value)}
-              placeholder="Enter your email address"
-              aria-label="Email address"
-              className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
-              required
-            />
-            <input
-              type="password"
-              value={passwordInput}
-              onChange={e => setPasswordInput(e.target.value)}
-              placeholder="Enter your password"
-              aria-label="Password"
-              className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
-              required
-            />
-            <button
-              type="submit"
-              className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl shadow-lg transition-colors focus:ring-2 focus:ring-blue-400 focus:outline-none"
-            >
-              Sign In with Password
-            </button>
-          </form>
-
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-slate-700"></div>
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-slate-800 px-3 text-slate-400 font-semibold tracking-wider">Or</span>
-            </div>
-          </div>
-
-          <form onSubmit={handleLogin} className="space-y-4">
-            <button
-              type="submit"
-              className="w-full py-2.5 bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium rounded-xl border border-slate-600 transition-colors focus:ring-2 focus:ring-blue-400 focus:outline-none text-sm"
-            >
-              Send Magic Sign-In Link / Code
-            </button>
-          </form>
-
-          {/* Direct 6-digit OTP code verification */}
-          {(showOtpInput || authMsg) && (
-            <div className="mt-6 pt-6 border-t border-slate-700/80">
-              <p className="text-xs text-slate-400 mb-3">
-                Received a 6-digit verification code in your email? Enter it below:
-              </p>
-              <form onSubmit={handleVerifyOtp} className="space-y-3">
+          {authMode === 'signup' ? (
+            <form onSubmit={handleSignUp} className="space-y-4">
+              <input
+                type="email"
+                value={emailInput}
+                onChange={e => setEmailInput(e.target.value)}
+                placeholder="Enter your email address"
+                aria-label="Email address"
+                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                required
+              />
+              <input
+                type="password"
+                value={passwordInput}
+                onChange={e => setPasswordInput(e.target.value)}
+                placeholder="Create a password (min. 6 characters)"
+                aria-label="Password"
+                minLength={6}
+                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                required
+              />
+              <button
+                type="submit"
+                className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl shadow-lg transition-colors focus:ring-2 focus:ring-emerald-400 focus:outline-none"
+              >
+                Create Account
+              </button>
+            </form>
+          ) : (
+            <>
+              <form onSubmit={handlePasswordLogin} className="space-y-4">
                 <input
-                  type="text"
-                  maxLength={6}
-                  value={otpCodeInput}
-                  onChange={e => setOtpCodeInput(e.target.value.trim())}
-                  placeholder="Enter 6-digit code (e.g. 123456)"
-                  aria-label="Verification code"
-                  className="w-full text-center tracking-widest font-mono text-lg bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                  type="email"
+                  value={emailInput}
+                  onChange={e => setEmailInput(e.target.value)}
+                  placeholder="Enter your email address"
+                  aria-label="Email address"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                  required
+                />
+                <input
+                  type="password"
+                  value={passwordInput}
+                  onChange={e => setPasswordInput(e.target.value)}
+                  placeholder="Enter your password"
+                  aria-label="Password"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                  required
                 />
                 <button
                   type="submit"
-                  disabled={otpCodeInput.length < 6}
-                  className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white font-semibold rounded-xl shadow transition-colors focus:ring-2 focus:ring-emerald-400 focus:outline-none text-sm"
+                  className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl shadow-lg transition-colors focus:ring-2 focus:ring-blue-400 focus:outline-none"
                 >
-                  Verify Code & Sign In
+                  Sign In with Password
                 </button>
               </form>
-            </div>
+
+              <div className="relative my-6">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-slate-700"></div>
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-slate-800 px-3 text-slate-400 font-semibold tracking-wider">Or</span>
+                </div>
+              </div>
+
+              <form onSubmit={handleLogin} className="space-y-4">
+                <button
+                  type="submit"
+                  className="w-full py-2.5 bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium rounded-xl border border-slate-600 transition-colors focus:ring-2 focus:ring-blue-400 focus:outline-none text-sm"
+                >
+                  Send Magic Sign-In Link / Code
+                </button>
+              </form>
+
+              {/* Direct 6-digit OTP code verification */}
+              {(showOtpInput || authMsg) && (
+                <div className="mt-6 pt-6 border-t border-slate-700/80">
+                  <p className="text-xs text-slate-400 mb-3">
+                    Received a 6-digit verification code in your email? Enter it below:
+                  </p>
+                  <form onSubmit={handleVerifyOtp} className="space-y-3">
+                    <input
+                      type="text"
+                      maxLength={6}
+                      value={otpCodeInput}
+                      onChange={e => setOtpCodeInput(e.target.value.trim())}
+                      placeholder="Enter 6-digit code (e.g. 123456)"
+                      aria-label="Verification code"
+                      className="w-full text-center tracking-widest font-mono text-lg bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                    />
+                    <button
+                      type="submit"
+                      disabled={otpCodeInput.length < 6}
+                      className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white font-semibold rounded-xl shadow transition-colors focus:ring-2 focus:ring-emerald-400 focus:outline-none text-sm"
+                    >
+                      Verify Code & Sign In
+                    </button>
+                  </form>
+                </div>
+              )}
+            </>
           )}
+
+          {/* Toggle between Sign In and Sign Up */}
+          <div className="mt-6 pt-4 border-t border-slate-700/60 text-center">
+            {authMode === 'signup' ? (
+              <p className="text-xs text-slate-400">
+                Already have an account?{' '}
+                <button
+                  type="button"
+                  onClick={() => { setAuthMode('signin'); setAuthMsg(null); }}
+                  className="text-blue-400 hover:text-blue-300 font-semibold underline underline-offset-2 ml-1"
+                >
+                  Sign In
+                </button>
+              </p>
+            ) : (
+              <p className="text-xs text-slate-400">
+                New user?{' '}
+                <button
+                  type="button"
+                  onClick={() => { setAuthMode('signup'); setAuthMsg(null); }}
+                  className="text-blue-400 hover:text-blue-300 font-semibold underline underline-offset-2 ml-1"
+                >
+                  Create an account
+                </button>
+              </p>
+            )}
+          </div>
 
           {authMsg && (
             <div

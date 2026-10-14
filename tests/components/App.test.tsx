@@ -17,6 +17,7 @@ vi.mock('@/lib/supabase', () => ({
       signInWithOtp: vi.fn(),
       verifyOtp: vi.fn(),
       signInWithPassword: vi.fn(),
+      signUp: vi.fn(),
       signOut: vi.fn(),
       onAuthStateChange: vi.fn(() => ({
         data: { subscription: { unsubscribe: vi.fn() } }
@@ -211,6 +212,49 @@ describe('App Shell (ARC-001..ARC-010, AUT-002, ARC-006)', () => {
       email: 'learner@example.com',
       password: 'mypassword123'
     });
+  });
+
+  it('AUT-001: Switches to Create Account view, submits sign up form and calls signUp', async () => {
+    vi.mocked(supabase.auth.getSession).mockResolvedValue({
+      data: { session: null },
+      error: null
+    } as any);
+    vi.mocked(supabase.auth.signUp).mockResolvedValue({ data: { user: { id: 'new-u' }, session: null }, error: null } as any);
+
+    await act(async () => {
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      );
+    });
+
+    // Click "Create an account" toggle
+    const toggleToSignUp = screen.getByRole('button', { name: /create an account/i });
+    fireEvent.click(toggleToSignUp);
+
+    expect(screen.getByRole('heading', { name: 'Create an Account' })).toBeInTheDocument();
+
+    const emailInput = screen.getByPlaceholderText('Enter your email address');
+    const passwordInput = screen.getByPlaceholderText('Create a password (min. 6 characters)');
+    fireEvent.change(emailInput, { target: { value: 'newuser@example.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'securePass123' } });
+
+    const submitBtn = screen.getByRole('button', { name: 'Create Account' });
+    await act(async () => {
+      fireEvent.click(submitBtn);
+    });
+
+    expect(supabase.auth.signUp).toHaveBeenCalledWith({
+      email: 'newuser@example.com',
+      password: 'securePass123'
+    });
+    expect(screen.getByText(/account created!/i)).toBeInTheDocument();
+
+    // Click "Sign In" toggle to return to sign in
+    const toggleToSignIn = screen.getByRole('button', { name: 'Sign In' });
+    fireEvent.click(toggleToSignIn);
+    expect(screen.getByRole('heading', { name: 'Adaptive Flashcards' })).toBeInTheDocument();
   });
 
   it('DEK-004..008: Supports deck actions (manage cards, archive, study empty)', async () => {
