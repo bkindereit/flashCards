@@ -3230,6 +3230,27 @@
       "anomaly_ids": []
     },
     {
+      "requirement_id": "ACC-008",
+      "priority": "Must",
+      "description": "The interface shall be responsive and fully functional on mobile phone browsers (minimum viewport width 360 CSS-pixels) and tablet browsers (minimum viewport width 768 CSS-pixels), with touch targets meeting minimum dimensions of 44 by 44 CSS-pixels for primary controls.",
+      "verification_methods": [
+        "T",
+        "I"
+      ],
+      "activity_ids": [
+        "VA-ACC-005"
+      ],
+      "automated_test_ids": [
+        "test:acc-008"
+      ],
+      "evidence_paths": [
+        "tests/e2e/accessibility.spec.ts",
+        "src/components/StudyView.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
       "requirement_id": "PRF-001",
       "priority": "Must",
       "description": "Next-card selection shall complete within 500 ms at the 95th percentile over at least 1,000 measured selections after warm-up for a user with 10,000 cards and 100,000 review events in the reference environment.",
@@ -4690,6 +4711,9 @@
     ],
     "test:acc-007": [
       "ACC-007"
+    ],
+    "test:acc-008": [
+      "ACC-008"
     ],
     "test:prf-001": [
       "PRF-001"

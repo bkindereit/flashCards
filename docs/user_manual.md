@@ -121,7 +121,16 @@ If you prefer passwordless sign-in or have not set a password:
 * **Database Backend:** Supabase PostgreSQL with FSRS adaptive memory, Row-Level Security, and RPCs.
 * **Security & Privacy:** Every learner who signs in with their email has their own completely isolated, private database space. Nobody else can view or edit your decks or cards.
 
-### 2. Troubleshooting Magic Sign-In Links & 6-Digit Codes
+### 2. Using on Mobile Phones & Tablets (iOS & Android)
+Adaptive Flashcards is responsive and touch-optimized for smartphones (iPhone, Android) and tablets (iPad, Android tablets):
+* **Touch-Friendly Targets:** All primary buttons (Reveal Answer, Grade buttons, Create Deck, Upload) are sized to at least 44×44 pixels for easy one-handed tapping.
+* **Input Zoom Prevention:** Text fields are calibrated to avoid automatic iOS Safari zoom when typing.
+* **Add to Home Screen (PWA App Mode):**
+  * **On iPhone / iPad (Safari):** Tap the **Share** button (box with upward arrow) at the bottom/top of Safari, scroll down, and tap **"Add to Home Screen"**.
+  * **On Android (Chrome):** Tap the **three-dots menu** at the top right and select **"Add to Home screen"** or **"Install app"**.
+  * The app will now launch directly from your home screen in distraction-free, full-screen mode!
+
+### 3. Troubleshooting Magic Sign-In Links & 6-Digit Codes
 * **If the Email Link Opens and Returns to Sign-In:**
   Use **Option A**! Simply copy the **6-digit verification code** printed inside the email message, enter it into the **"Enter 6-digit code"** box on the screen, and click **"Verify Code & Sign In"**. This signs you in immediately without depending on link redirects.
 * **If You See "Email rate limit exceeded":**

@@ -375,46 +375,49 @@ export const App: React.FC = () => {
       )}
 
       {/* Top Navbar */}
-      <header className="bg-slate-800 border-b border-slate-700 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3 cursor-pointer" onClick={() => setCurrentView('decks')}>
-          <div className="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-md">
-            <BookOpen className="w-5 h-5" />
+      <header className="bg-slate-800 border-b border-slate-700 px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2.5 sm:gap-3 cursor-pointer shrink-0" onClick={() => setCurrentView('decks')}>
+          <div className="w-8 h-8 sm:w-9 sm:h-9 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-md shrink-0">
+            <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-white leading-tight">FlashCards</h1>
-            <span className="text-[11px] text-slate-400">FSRS Adaptive Memory</span>
+            <h1 className="text-base sm:text-lg font-bold text-white leading-tight">FlashCards</h1>
+            <span className="hidden sm:inline text-[11px] text-slate-400">FSRS Adaptive Memory</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3">
           <button
             onClick={() => setCurrentView('diagnostics')}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-300 text-xs font-semibold rounded-lg transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-2 sm:px-3 sm:py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-300 text-xs font-semibold rounded-lg transition-colors min-h-[36px] sm:min-h-0"
             aria-label="Run diagnostics"
           >
-            <Activity className="w-3.5 h-3.5 text-blue-400" /> Diagnostics
+            <Activity className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-blue-400" />
+            <span className="hidden sm:inline">Diagnostics</span>
           </button>
 
           <button
             onClick={handleExportAll}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-300 text-xs font-semibold rounded-lg transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-2 sm:px-3 sm:py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-300 text-xs font-semibold rounded-lg transition-colors min-h-[36px] sm:min-h-0"
             aria-label="Export all data in JSON"
           >
-            <Download className="w-3.5 h-3.5 text-cyan-400" /> Export JSON
+            <Download className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-cyan-400" />
+            <span className="hidden sm:inline">Export JSON</span>
           </button>
 
           <button
             onClick={signOut}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-750 text-slate-400 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-700"
+            className="flex items-center gap-1.5 px-2.5 py-2 sm:px-3 sm:py-1.5 bg-slate-800 hover:bg-slate-750 text-slate-400 hover:text-white text-xs font-medium rounded-lg transition-colors border border-slate-700 min-h-[36px] sm:min-h-0"
             aria-label="Sign out"
           >
-            <LogOut className="w-3.5 h-3.5" /> Sign Out
+            <LogOut className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
+            <span className="hidden sm:inline">Sign Out</span>
           </button>
         </div>
       </header>
 
       {/* Main View Router */}
-      <main className="flex-1 p-6">
+      <main className="flex-1 p-4 sm:p-6">
         {currentView === 'diagnostics' && (
           <DiagnosticsView onBack={() => setCurrentView('decks')} />
         )}
@@ -446,10 +449,10 @@ export const App: React.FC = () => {
 
         {currentView === 'decks' && (
           <div className="max-w-6xl mx-auto">
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8">
               <div>
-                <h2 className="text-2xl font-bold text-white">Your Flashcard Decks</h2>
-                <p className="text-sm text-slate-400">Select a deck to begin your timed adaptive recall session.</p>
+                <h2 className="text-xl sm:text-2xl font-bold text-white">Your Flashcard Decks</h2>
+                <p className="text-xs sm:text-sm text-slate-400">Select a deck to begin your timed adaptive recall session.</p>
               </div>
 
               <button
@@ -457,42 +460,42 @@ export const App: React.FC = () => {
                   setDeckToEdit(null);
                   setIsDeckModalOpen(true);
                 }}
-                className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold rounded-xl shadow-lg transition-all focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold rounded-xl shadow-lg transition-all focus:ring-2 focus:ring-blue-400 focus:outline-none min-h-[44px]"
               >
                 <Plus className="w-4 h-4" /> Create Deck
               </button>
             </div>
 
             {decks.length === 0 ? (
-              <div className="p-12 text-center bg-slate-800/50 border border-slate-700 rounded-2xl max-w-lg mx-auto">
+              <div className="p-8 sm:p-12 text-center bg-slate-800/50 border border-slate-700 rounded-2xl max-w-lg mx-auto">
                 <Layers className="w-12 h-12 text-slate-500 mx-auto mb-3" />
                 <h3 className="text-lg font-bold text-white mb-1">No Decks Found</h3>
                 <p className="text-sm text-slate-400 mb-6">Create your first deck to start importing questions and answers.</p>
                 <button
                   onClick={() => setIsDeckModalOpen(true)}
-                  className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl"
+                  className="w-full sm:w-auto px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl min-h-[44px]"
                 >
                   Create Deck
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {decks.map(deck => (
                   <div
                     key={deck.id}
-                    className={`bg-slate-800 border rounded-2xl p-6 flex flex-col justify-between shadow-xl transition-all ${deck.is_archived ? 'border-slate-700/40 opacity-70' : 'border-slate-700 hover:border-slate-600'}`}
+                    className={`bg-slate-800 border rounded-2xl p-5 sm:p-6 flex flex-col justify-between shadow-xl transition-all ${deck.is_archived ? 'border-slate-700/40 opacity-70' : 'border-slate-700 hover:border-slate-600'}`}
                   >
                     <div>
                       <div className="flex items-start justify-between gap-3 mb-2">
-                        <h3 className="text-lg font-bold text-white leading-snug">{deck.name}</h3>
+                        <h3 className="text-base sm:text-lg font-bold text-white leading-snug break-words">{deck.name}</h3>
                         {deck.is_archived && (
-                          <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 bg-slate-700 text-slate-400 rounded">
+                          <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 bg-slate-700 text-slate-400 rounded shrink-0">
                             Archived
                           </span>
                         )}
                       </div>
                       {deck.description && (
-                        <p className="text-xs text-slate-400 line-clamp-2 mb-4">{deck.description}</p>
+                        <p className="text-xs text-slate-400 line-clamp-2 mb-4 break-words">{deck.description}</p>
                       )}
                       {deck.exam_date && (
                         <div className="text-xs text-amber-400 font-medium mb-4">
@@ -501,11 +504,11 @@ export const App: React.FC = () => {
                       )}
                     </div>
 
-                    <div className="pt-4 border-t border-slate-700/60 flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-1.5">
+                    <div className="pt-4 border-t border-slate-700/60 flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap">
+                      <div className="flex items-center gap-1.5 flex-wrap sm:flex-nowrap">
                         <button
                           onClick={() => handleStartStudy(deck)}
-                          className="flex items-center gap-1 px-3.5 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg shadow-md transition-colors"
+                          className="flex items-center gap-1 px-3.5 py-2 min-h-[40px] bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg shadow-md transition-colors"
                           aria-label={`Study ${deck.name}`}
                         >
                           <Play className="w-3.5 h-3.5" /> Study
@@ -515,7 +518,7 @@ export const App: React.FC = () => {
                             setActiveDeck(deck);
                             setIsImportModalOpen(true);
                           }}
-                          className="p-2 bg-slate-700 hover:bg-slate-650 text-slate-300 rounded-lg text-xs"
+                          className="p-2 min-h-[40px] min-w-[40px] flex items-center justify-center bg-slate-700 hover:bg-slate-650 text-slate-300 rounded-lg text-xs"
                           title="Import CSV"
                           aria-label="Import CSV"
                         >
@@ -523,7 +526,7 @@ export const App: React.FC = () => {
                         </button>
                         <button
                           onClick={() => handleOpenCardManagement(deck)}
-                          className="p-2 bg-slate-700 hover:bg-slate-650 text-slate-300 rounded-lg text-xs"
+                          className="p-2 min-h-[40px] min-w-[40px] flex items-center justify-center bg-slate-700 hover:bg-slate-650 text-slate-300 rounded-lg text-xs"
                           title="Manage Cards"
                           aria-label="Manage cards"
                         >
@@ -537,7 +540,7 @@ export const App: React.FC = () => {
                             setDeckToEdit(deck);
                             setIsDeckModalOpen(true);
                           }}
-                          className="p-2 text-slate-400 hover:text-white rounded-lg"
+                          className="p-2 min-h-[40px] min-w-[40px] flex items-center justify-center text-slate-400 hover:text-white rounded-lg"
                           title="Deck Settings"
                           aria-label="Deck settings"
                         >
@@ -545,7 +548,7 @@ export const App: React.FC = () => {
                         </button>
                         <button
                           onClick={() => handleToggleArchive(deck)}
-                          className="p-2 text-slate-400 hover:text-white rounded-lg"
+                          className="p-2 min-h-[40px] min-w-[40px] flex items-center justify-center text-slate-400 hover:text-white rounded-lg"
                           title={deck.is_archived ? 'Restore Deck' : 'Archive Deck'}
                           aria-label="Archive or restore deck"
                         >
@@ -553,7 +556,7 @@ export const App: React.FC = () => {
                         </button>
                         <button
                           onClick={() => setDeckToDelete(deck)}
-                          className="p-2 text-red-400 hover:text-red-300 rounded-lg"
+                          className="p-2 min-h-[40px] min-w-[40px] flex items-center justify-center text-red-400 hover:text-red-300 rounded-lg"
                           title="Delete Deck"
                           aria-label="Delete deck"
                         >

@@ -1,7 +1,7 @@
 {
   "reportVersion": "1.0",
   "specificationVersion": "1.0",
-  "commitSha": "cb747bb8f8ec4779723a0859b6394dcebdd9d3c5",
+  "commitSha": "d1b480bf0f6e9e75819183f6d07793227a55a55b",
   "applicationVersion": "1.0.0",
   "overallResult": "blocked",
   "releaseRecommendation": "do-not-release",
@@ -1659,6 +1659,16 @@
       ]
     },
     {
+      "requirementId": "ACC-008",
+      "priority": "Must",
+      "activityId": "VA-ACC-005",
+      "result": "Pass",
+      "evidence": [
+        "tests/e2e/accessibility.spec.ts",
+        "src/components/StudyView.tsx"
+      ]
+    },
+    {
       "requirementId": "PRF-001",
       "priority": "Must",
       "activityId": "VA-PRF-001",
@@ -2164,7 +2174,7 @@
       "passed": 14,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 2557,
+      "durationMs": 2187,
       "status": "passed"
     },
     {
@@ -2174,13 +2184,13 @@
       "passed": 15,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 18494,
+      "durationMs": 20726,
       "status": "passed"
     }
   ],
   "coverage": {
-    "overallStatements": 94.3,
-    "overallBranches": 82.87,
+    "overallStatements": 93.84,
+    "overallBranches": 82.12,
     "modules": {},
     "thresholdMet": true
   },
@@ -2265,19 +2275,19 @@
   "waivers": [],
   "artifacts": [
     {
-      "path": "dist/assets/browser-CdKWyDa5.js",
-      "sha256": "b10769eecaaf45d311bc5edf06768f7ce39006647cc80d7a1eb33b4cc1f3e3f9",
+      "path": "dist/assets/browser-xTDl_0NA.js",
+      "sha256": "713664ca617f4ae518badcded7dd5397bd99008421202d45b8350ae6d8b3f5be",
       "description": "Static distribution asset (615 bytes)"
     },
     {
-      "path": "dist/assets/index-BcJSD-K6.css",
-      "sha256": "95981e72f007971e4d176c625d31dec9b9070ae348e513167984157aa31ca6d2",
-      "description": "Static distribution asset (24430 bytes)"
+      "path": "dist/assets/index-BHVcNlI_.css",
+      "sha256": "cf5801fb9907d8103a44aa0cec5eb567b21fb0e6c5fd18252d2a690b2e84455f",
+      "description": "Static distribution asset (26908 bytes)"
     },
     {
-      "path": "dist/assets/index-hx8l2nbP.js",
-      "sha256": "b70c259a46079c382383906604108d908b69f3de1601c61e684a2cddd8000585",
-      "description": "Static distribution asset (355721 bytes)"
+      "path": "dist/assets/index-yhl_5lVx.js",
+      "sha256": "49204d9a450e6206285b314b337db42931293a3a7de3233ae600dacef414d4bd",
+      "description": "Static distribution asset (365097 bytes)"
     },
     {
       "path": "dist/favicon.svg",
@@ -2296,7 +2306,7 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "b143ccbe382365c24e7b498cb88e5967cb6f82dddb795a688569d58743dc89ac",
+      "sha256": "7256af117ad69e76ed8f90f4137d1ff95ec08f31728566d75bdccd5c44220535",
       "description": "Static distribution asset (851 bytes)"
     },
     {
@@ -2311,7 +2321,7 @@
     },
     {
       "path": "dist/sw.js",
-      "sha256": "e4b56911a87a1521298567904330a5413f6ecee47220fddf83ed9760d8ff6e72",
+      "sha256": "9dc5558e4dd159b2159398baddac76bad9a47872bfdc71b81b3dedbe0b025684",
       "description": "Static distribution asset (1507 bytes)"
     },
     {
@@ -2325,7 +2335,7 @@
       "role": "Verification Executor",
       "name": "Antigravity Automated Agent",
       "decision": "Verified Automated Baseline; Recommends Do Not Release pending operator signatures",
-      "timestamp": "2026-10-13T18:46:30.237Z"
+      "timestamp": "2026-10-14T20:53:52.206Z"
     },
     {
       "role": "Release Authority",

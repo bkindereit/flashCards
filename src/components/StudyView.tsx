@@ -139,46 +139,46 @@ export const StudyView: React.FC<StudyViewProps> = ({
   return (
     <div className="max-w-3xl mx-auto p-4 sm:p-6" role="region" aria-label="Flashcard Study Session">
       {/* Session Metrics Bar (UI-016) */}
-      <header className="flex flex-wrap items-center justify-between gap-4 p-4 bg-slate-800 rounded-xl border border-slate-700 shadow-md mb-6">
-        <div className="flex items-center gap-6">
-          <div>
-            <span className="text-xs text-slate-400 uppercase font-semibold block">Time Left</span>
+      <header className="p-3 sm:p-4 bg-slate-800 rounded-xl border border-slate-700 shadow-md mb-4 sm:mb-6 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 text-center sm:text-left">
+          <div className="bg-slate-900/50 sm:bg-transparent p-2 sm:p-0 rounded-lg">
+            <span className="text-[11px] sm:text-xs text-slate-400 uppercase font-semibold block">Time Left</span>
             <span
-              className={`text-xl font-mono font-bold ${timeRemainingSeconds < 60 ? 'text-red-400 animate-pulse' : 'text-slate-200'}`}
+              className={`text-lg sm:text-xl font-mono font-bold ${timeRemainingSeconds < 60 ? 'text-red-400 animate-pulse' : 'text-slate-200'}`}
               aria-live="polite"
             >
               {formattedTime}
             </span>
           </div>
-          <div>
-            <span className="text-xs text-slate-400 uppercase font-semibold block">Reviewed</span>
-            <span className="text-lg font-bold text-blue-400">{completedReviews}</span>
+          <div className="bg-slate-900/50 sm:bg-transparent p-2 sm:p-0 rounded-lg">
+            <span className="text-[11px] sm:text-xs text-slate-400 uppercase font-semibold block">Reviewed</span>
+            <span className="text-base sm:text-lg font-bold text-blue-400">{completedReviews}</span>
           </div>
-          <div>
-            <span className="text-xs text-slate-400 uppercase font-semibold block">New Introduced</span>
-            <span className="text-lg font-bold text-purple-400">{newCardsIntroduced}</span>
+          <div className="bg-slate-900/50 sm:bg-transparent p-2 sm:p-0 rounded-lg">
+            <span className="text-[11px] sm:text-xs text-slate-400 uppercase font-semibold block">New Introduced</span>
+            <span className="text-base sm:text-lg font-bold text-purple-400">{newCardsIntroduced}</span>
           </div>
-          <div>
-            <span className="text-xs text-slate-400 uppercase font-semibold block">Due Remaining</span>
-            <span className="text-lg font-bold text-amber-400">{dueCardsRemaining}</span>
+          <div className="bg-slate-900/50 sm:bg-transparent p-2 sm:p-0 rounded-lg">
+            <span className="text-[11px] sm:text-xs text-slate-400 uppercase font-semibold block">Due Remaining</span>
+            <span className="text-base sm:text-lg font-bold text-amber-400">{dueCardsRemaining}</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-end gap-2 pt-2 md:pt-0 border-t md:border-t-0 border-slate-700/60">
           {/* UI-014: Pause/Resume Control */}
           <button
             onClick={togglePause}
-            className="flex items-center gap-1 px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-200 text-sm font-medium rounded-lg transition-colors focus:ring-2 focus:ring-blue-400 focus:outline-none"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 text-sm font-medium rounded-lg transition-colors focus:ring-2 focus:ring-blue-400 focus:outline-none min-h-[44px]"
             aria-label={isPaused ? 'Resume study session' : 'Pause study session'}
           >
             {isPaused ? <Play className="w-4 h-4 text-green-400" /> : <Pause className="w-4 h-4 text-amber-400" />}
-            {isPaused ? 'Resume' : 'Pause'}
+            <span>{isPaused ? 'Resume' : 'Pause'}</span>
           </button>
 
           {/* SES-006: End Early Control */}
           <button
             onClick={endSessionEarly}
-            className="px-3 py-1.5 bg-red-900/40 hover:bg-red-800/60 border border-red-700 text-red-200 text-sm font-medium rounded-lg transition-colors focus:ring-2 focus:ring-red-400 focus:outline-none"
+            className="flex-1 sm:flex-none px-4 py-2 bg-red-900/40 hover:bg-red-800/60 border border-red-700 text-red-200 text-sm font-medium rounded-lg transition-colors focus:ring-2 focus:ring-red-400 focus:outline-none min-h-[44px] text-center"
             aria-label="End session early"
           >
             End Session
@@ -225,7 +225,7 @@ export const StudyView: React.FC<StudyViewProps> = ({
       {!isPaused && currentCard && (
         <main
           ref={cardContainerRef}
-          className="bg-slate-800 border border-slate-700 rounded-2xl shadow-2xl p-6 sm:p-10 transition-all"
+          className="bg-slate-800 border border-slate-700 rounded-2xl shadow-2xl p-5 sm:p-8 md:p-10 transition-all"
         >
           {/* Card Meta & Queue Badge */}
           <div className="flex items-center justify-between text-xs text-slate-400 border-b border-slate-700/60 pb-3 mb-6">
@@ -240,9 +240,9 @@ export const StudyView: React.FC<StudyViewProps> = ({
           </div>
 
           {/* Question Text (UI-001) */}
-          <div className="mb-8">
+          <div className="mb-6 sm:mb-8">
             <h2 className="text-xs uppercase tracking-wider font-bold text-slate-400 mb-2">Question</h2>
-            <div className="text-xl sm:text-2xl font-medium text-slate-100 whitespace-pre-wrap leading-relaxed">
+            <div className="text-lg sm:text-xl md:text-2xl font-medium text-slate-100 whitespace-pre-wrap leading-relaxed break-words">
               {currentCard.question_text}
             </div>
           </div>
@@ -254,7 +254,7 @@ export const StudyView: React.FC<StudyViewProps> = ({
                 ref={revealButtonRef}
                 onClick={revealAnswer}
                 disabled={isPending}
-                className="w-full sm:w-auto px-8 py-3.5 bg-blue-600 hover:bg-blue-500 text-white text-lg font-semibold rounded-xl shadow-lg hover:shadow-blue-500/20 transition-all focus:ring-4 focus:ring-blue-400/50 focus:outline-none"
+                className="w-full sm:w-auto px-8 py-3.5 min-h-[48px] bg-blue-600 hover:bg-blue-500 text-white text-base sm:text-lg font-semibold rounded-xl shadow-lg hover:shadow-blue-500/20 transition-all focus:ring-4 focus:ring-blue-400/50 focus:outline-none"
                 aria-label="Give me the answer"
               >
                 Give me the answer
@@ -268,22 +268,22 @@ export const StudyView: React.FC<StudyViewProps> = ({
           {/* Answer State & Grading Controls (UI-003..UI-008, UI-013) */}
           {isRevealed && (
             <div className="pt-6 border-t border-slate-700/60 transition-opacity animate-in fade-in duration-200">
-              <div className="mb-8">
+              <div className="mb-6 sm:mb-8">
                 <h3 className="text-xs uppercase tracking-wider font-bold text-emerald-400 mb-2">Answer</h3>
-                <div className="text-xl sm:text-2xl font-medium text-slate-100 whitespace-pre-wrap leading-relaxed">
+                <div className="text-lg sm:text-xl md:text-2xl font-medium text-slate-100 whitespace-pre-wrap leading-relaxed break-words">
                   {currentCard.answer_text}
                 </div>
               </div>
 
               {/* Exactly two primary grading controls (UI-004) */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <button
                   onClick={() => submitGrade('correct')}
                   disabled={isPending}
-                  className="flex items-center justify-center gap-3 py-4 px-6 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white text-lg font-bold rounded-xl shadow-lg hover:shadow-emerald-500/20 transition-all focus:ring-4 focus:ring-emerald-400/50 focus:outline-none"
+                  className="flex items-center justify-center gap-3 py-4 px-4 sm:px-6 min-h-[56px] bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white text-base sm:text-lg font-bold rounded-xl shadow-lg hover:shadow-emerald-500/20 transition-all focus:ring-4 focus:ring-emerald-400/50 focus:outline-none"
                   aria-label="I got it!"
                 >
-                  <CheckCircle2 className="w-6 h-6" />
+                  <CheckCircle2 className="w-6 h-6 shrink-0" />
                   <span>I got it!</span>
                   <kbd className="text-xs font-mono font-normal ml-auto px-2 py-0.5 bg-emerald-700/80 rounded border border-emerald-500">1</kbd>
                 </button>
@@ -291,10 +291,10 @@ export const StudyView: React.FC<StudyViewProps> = ({
                 <button
                   onClick={() => submitGrade('incorrect')}
                   disabled={isPending}
-                  className="flex items-center justify-center gap-3 py-4 px-6 bg-rose-600 hover:bg-rose-500 disabled:opacity-50 text-white text-lg font-bold rounded-xl shadow-lg hover:shadow-rose-500/20 transition-all focus:ring-4 focus:ring-rose-400/50 focus:outline-none"
+                  className="flex items-center justify-center gap-3 py-4 px-4 sm:px-6 min-h-[56px] bg-rose-600 hover:bg-rose-500 disabled:opacity-50 text-white text-base sm:text-lg font-bold rounded-xl shadow-lg hover:shadow-rose-500/20 transition-all focus:ring-4 focus:ring-rose-400/50 focus:outline-none"
                   aria-label="Dang, I missed it!"
                 >
-                  <XCircle className="w-6 h-6" />
+                  <XCircle className="w-6 h-6 shrink-0" />
                   <span>Dang, I missed it!</span>
                   <kbd className="text-xs font-mono font-normal ml-auto px-2 py-0.5 bg-rose-700/80 rounded border border-rose-500">2</kbd>
                 </button>
@@ -308,10 +308,10 @@ export const StudyView: React.FC<StudyViewProps> = ({
               <button
                 onClick={undoLastGrade}
                 disabled={isPending}
-                className="flex items-center gap-2 px-4 py-2 bg-slate-700/80 hover:bg-slate-600 text-slate-300 text-sm font-medium rounded-lg transition-colors focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                className="flex items-center gap-2 px-4 py-2.5 min-h-[44px] bg-slate-700/80 hover:bg-slate-600 text-slate-300 text-sm font-medium rounded-lg transition-colors focus:ring-2 focus:ring-blue-400 focus:outline-none"
                 aria-label="Undo last grade"
               >
-                <RotateCcw className="w-4 h-4 text-slate-400" />
+                <RotateCcw className="w-4 h-4 text-slate-400 shrink-0" />
                 <span>Undo last grade</span>
               </button>
             </div>

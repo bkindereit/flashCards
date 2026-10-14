@@ -297,6 +297,7 @@ Release verification passes only when:
 | VA-ACC-002 | ACC-002–006 | Run axe-core on named views and complete keyboard-only manual procedure. | Zero included A/AA violations; all controls reachable, named, focused, and escapable. | Axe JSON, signed checklist. |
 | VA-ACC-003 | ACC-005 | Trigger import, authentication, network, and grade errors with screen reader active. | Errors are announced and focus moves or remains according to documented behavior. | Signed screen-reader checklist and recording. |
 | VA-ACC-004 | ACC-007 | Set 1280×720 viewport and 200% zoom; exercise named workflows. | No required text/control is inaccessible and no required horizontal page scrolling prevents use. | Screenshots and checklist. |
+| VA-ACC-005 | ACC-008 | Test responsive viewports on mobile phone (390×844 / 360×740) and tablet (768×1024 / 820×1180) across sign-in, deck list, and study views; verify touch targets ≥ 44×44px and no horizontal clipping. | All primary views fit viewport without horizontal overflow; touch targets meet minimum dimensions; complete workflows operable on touch interfaces. | Automated Playwright mobile tests and report. |
 
 ### 11.11 Performance and reliability activities
 

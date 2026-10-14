@@ -164,22 +164,22 @@ export const CardManagementView: React.FC<CardManagementViewProps> = ({
 
   return (
     <div className="max-w-6xl mx-auto p-4 sm:p-6" role="region" aria-label="Card Management">
-      <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
         <div>
           <button
             onClick={onBackToDeck}
-            className="text-sm text-blue-400 hover:text-blue-300 font-medium mb-1 block"
+            className="text-sm text-blue-400 hover:text-blue-300 font-medium mb-1 block min-h-[36px] flex items-center"
           >
             ← Back to Deck
           </button>
-          <h1 className="text-2xl font-bold text-white">Card Management — {deck.name}</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-white break-words">Card Management — {deck.name}</h1>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 w-full sm:w-auto">
           {/* MGT-009 Export */}
           <button
             onClick={exportCardsCsv}
-            className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-sm font-semibold rounded-lg shadow-sm"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-sm font-semibold rounded-lg shadow-sm min-h-[44px]"
           >
             <Download className="w-4 h-4" /> Export CSV
           </button>
@@ -194,7 +194,7 @@ export const CardManagementView: React.FC<CardManagementViewProps> = ({
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
           placeholder="Search cards by question or answer..."
-          className="w-full bg-slate-800 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          className="w-full bg-slate-800 border border-slate-700 rounded-xl pl-10 pr-4 py-2.5 min-h-[44px] text-base sm:text-sm text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-400 focus:outline-none"
           aria-label="Search cards"
         />
       </div>
@@ -304,14 +304,14 @@ export const CardManagementView: React.FC<CardManagementViewProps> = ({
                         <div className="flex items-center justify-end gap-1">
                           <button
                             onClick={() => saveEdit(card)}
-                            className="p-1.5 bg-green-600 hover:bg-green-500 text-white rounded"
+                            className="p-2 min-h-[36px] min-w-[36px] flex items-center justify-center bg-green-600 hover:bg-green-500 text-white rounded"
                             aria-label="Save changes"
                           >
                             <Check className="w-4 h-4" />
                           </button>
                           <button
                             onClick={cancelEdit}
-                            className="p-1.5 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded"
+                            className="p-2 min-h-[36px] min-w-[36px] flex items-center justify-center bg-slate-700 hover:bg-slate-600 text-slate-300 rounded"
                             aria-label="Cancel editing"
                           >
                             <X className="w-4 h-4" />
@@ -322,7 +322,7 @@ export const CardManagementView: React.FC<CardManagementViewProps> = ({
                           {/* Edit button */}
                           <button
                             onClick={() => startEdit(card)}
-                            className="p-1.5 text-slate-400 hover:text-white rounded"
+                            className="p-2 min-h-[36px] min-w-[36px] flex items-center justify-center text-slate-400 hover:text-white rounded"
                             aria-label="Edit card"
                           >
                             <Edit2 className="w-4 h-4" />
@@ -330,7 +330,7 @@ export const CardManagementView: React.FC<CardManagementViewProps> = ({
                           {/* Suspend / Restore button */}
                           <button
                             onClick={() => toggleSuspend(card)}
-                            className="p-1.5 text-slate-400 hover:text-white rounded"
+                            className="p-2 min-h-[36px] min-w-[36px] flex items-center justify-center text-slate-400 hover:text-white rounded"
                             aria-label={card.suspended_at ? 'Restore card' : 'Suspend card'}
                           >
                             {card.suspended_at ? (

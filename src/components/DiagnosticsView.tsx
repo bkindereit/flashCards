@@ -43,56 +43,56 @@ export const DiagnosticsView: React.FC<{ onBack: () => void }> = ({ onBack }) =>
 
   return (
     <div className="max-w-4xl mx-auto p-4 sm:p-6" role="region" aria-label="System Diagnostics">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
         <div>
-          <button onClick={onBack} className="text-sm text-blue-400 hover:text-blue-300 font-medium mb-1 block">
+          <button onClick={onBack} className="text-sm text-blue-400 hover:text-blue-300 font-medium mb-1 block min-h-[36px] flex items-center">
             ← Back
           </button>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-3">
-            <Activity className="w-7 h-7 text-blue-400" />
-            System Diagnostics & Runtime Verification
+          <h1 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-3 break-words">
+            <Activity className="w-6 h-6 sm:w-7 sm:h-7 text-blue-400 shrink-0" />
+            <span>System Diagnostics</span>
           </h1>
         </div>
 
         <button
           onClick={handleRunDiagnostics}
           disabled={isRunning}
-          className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-semibold rounded-xl shadow-md transition-all focus:ring-2 focus:ring-blue-400 focus:outline-none"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-semibold rounded-xl shadow-md transition-all focus:ring-2 focus:ring-blue-400 focus:outline-none min-h-[44px]"
         >
           <RefreshCw className={`w-4 h-4 ${isRunning ? 'animate-spin' : ''}`} />
           {isRunning ? 'Running Checks...' : 'Run Diagnostics'}
         </button>
       </div>
 
-      <p className="text-sm text-slate-400 mb-6">
+      <p className="text-xs sm:text-sm text-slate-400 mb-6">
         Non-destructive health inspection testing client version, FSRS conformance vector, database API, and network connectivity without altering study history.
       </p>
 
       {report && (
         <div className="space-y-6">
           {/* Header Status Card */}
-          <div className={`p-6 rounded-2xl border ${report.allPassed ? 'bg-emerald-950/40 border-emerald-700/60' : 'bg-red-950/40 border-red-700/60'}`}>
-            <div className="flex items-center justify-between">
+          <div className={`p-4 sm:p-6 rounded-2xl border ${report.allPassed ? 'bg-emerald-950/40 border-emerald-700/60' : 'bg-red-950/40 border-red-700/60'}`}>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 {report.allPassed ? (
-                  <CheckCircle className="w-8 h-8 text-emerald-400" />
+                  <CheckCircle className="w-8 h-8 text-emerald-400 shrink-0" />
                 ) : (
-                  <XCircle className="w-8 h-8 text-red-400" />
+                  <XCircle className="w-8 h-8 text-red-400 shrink-0" />
                 )}
                 <div>
-                  <h2 className="text-xl font-bold text-white">
+                  <h2 className="text-lg sm:text-xl font-bold text-white">
                     {report.allPassed ? 'All Diagnostic Checks Passed' : 'One or More Checks Failed'}
                   </h2>
-                  <p className="text-xs text-slate-400 mt-1">
+                  <p className="text-xs text-slate-400 mt-1 break-all">
                     Correlation ID: <span className="font-mono text-slate-300">{report.correlationId}</span> • Generated: {new Date(report.generatedAt).toLocaleString()}
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 w-full sm:w-auto">
                 <button
                   onClick={copyReport}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold rounded-lg"
+                  className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 min-h-[38px] bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold rounded-lg"
                   aria-label="Copy sanitized diagnostic report"
                 >
                   <Copy className="w-3.5 h-3.5" />
@@ -100,7 +100,7 @@ export const DiagnosticsView: React.FC<{ onBack: () => void }> = ({ onBack }) =>
                 </button>
                 <button
                   onClick={downloadReport}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold rounded-lg"
+                  className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-3 py-2 min-h-[38px] bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold rounded-lg"
                   aria-label="Download sanitized diagnostic report"
                 >
                   <Download className="w-3.5 h-3.5" />

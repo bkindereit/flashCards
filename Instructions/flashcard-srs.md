@@ -395,6 +395,7 @@ RLS provides database-enforced row authorization, but it must be combined with a
 | ACC-005 | Must | Status changes and validation errors shall be exposed through appropriate live-region or focus-management behavior. |
 | ACC-006 | Must | Named primary views shall contain no automatically detectable axe-core violations tagged WCAG 2 Level A or AA. |
 | ACC-007 | Must | Text and controls shall remain usable at 200% browser zoom at a 1280-by-720 CSS-pixel viewport without loss of required functionality. |
+| ACC-008 | Must | The interface shall be responsive and fully functional on mobile phone browsers (minimum viewport width 360 CSS-pixels) and tablet browsers (minimum viewport width 768 CSS-pixels), with touch targets meeting minimum dimensions of 44 by 44 CSS-pixels for primary controls. |
 
 Automated accessibility scanning detects only some classes of defects, so release verification includes manual keyboard and screen-reader activities.[cite:167][cite:170]
 

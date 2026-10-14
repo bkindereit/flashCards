@@ -257,4 +257,26 @@ describe('StudyView Component (UI-001..UI-016, ACC-002)', () => {
     fireEvent.keyDown(window, { key: ' ' });
     expect(screen.getByText('Tokyo')).toBeInTheDocument();
   });
+
+  it('ACC-008: Primary study controls provide touch targets and responsive layout styles', () => {
+    render(
+      <StudyView
+        deck={deck}
+        cards={[card1]}
+        durationMinutes={15}
+        onFinish={onFinish}
+        onExit={onExit}
+      />
+    );
+
+    const revealBtn = screen.getByRole('button', { name: /give me the answer/i });
+    expect(revealBtn.className).toContain('min-h-[48px]');
+
+    fireEvent.click(revealBtn);
+
+    const correctBtn = screen.getByRole('button', { name: /i got it!/i });
+    const incorrectBtn = screen.getByRole('button', { name: /dang, i missed it!/i });
+    expect(correctBtn.className).toContain('min-h-[56px]');
+    expect(incorrectBtn.className).toContain('min-h-[56px]');
+  });
 });
