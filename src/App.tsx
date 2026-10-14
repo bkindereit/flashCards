@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 
 export const App: React.FC = () => {
-  const { user, isLoading, signInWithOtp, signOut } = useAuth();
+  const { user, isLoading, signInWithOtp, verifyOtp, signOut } = useAuth();
 
   // Navigation state
   const [currentView, setCurrentView] = useState<'decks' | 'study' | 'cards' | 'diagnostics'>('decks');
@@ -44,6 +44,8 @@ export const App: React.FC = () => {
 
   // Auth form
   const [emailInput, setEmailInput] = useState('');
+  const [otpCodeInput, setOtpCodeInput] = useState('');
+  const [showOtpInput, setShowOtpInput] = useState(false);
   const [authMsg, setAuthMsg] = useState<{ text: string; error: boolean } | null>(null);
 
   useEffect(() => {
@@ -89,7 +91,17 @@ export const App: React.FC = () => {
     if (error) {
       setAuthMsg({ text: error.message, error: true });
     } else {
-      setAuthMsg({ text: 'Check your email for the magic sign-in link or OTP code!', error: false });
+      setShowOtpInput(true);
+      setAuthMsg({ text: 'Check your email for the magic sign-in link or 6-digit code!', error: false });
+    }
+  };
+
+  const handleVerifyOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!emailInput.trim() || !otpCodeInput.trim()) return;
+    const { error } = await verifyOtp(emailInput.trim(), otpCodeInput.trim());
+    if (error) {
+      setAuthMsg({ text: error.message, error: true });
     }
   };
 
@@ -184,9 +196,36 @@ export const App: React.FC = () => {
               type="submit"
               className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl shadow-lg transition-colors focus:ring-2 focus:ring-blue-400 focus:outline-none"
             >
-              Send Magic Sign-In Link
+              Send Magic Sign-In Link / Code
             </button>
           </form>
+
+          {/* Direct 6-digit OTP code verification */}
+          {(showOtpInput || authMsg) && (
+            <div className="mt-6 pt-6 border-t border-slate-700/80">
+              <p className="text-xs text-slate-400 mb-3">
+                Received a 6-digit verification code in your email? Enter it below:
+              </p>
+              <form onSubmit={handleVerifyOtp} className="space-y-3">
+                <input
+                  type="text"
+                  maxLength={6}
+                  value={otpCodeInput}
+                  onChange={e => setOtpCodeInput(e.target.value.trim())}
+                  placeholder="Enter 6-digit code (e.g. 123456)"
+                  aria-label="Verification code"
+                  className="w-full text-center tracking-widest font-mono text-lg bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  disabled={otpCodeInput.length < 6}
+                  className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white font-semibold rounded-xl shadow transition-colors focus:ring-2 focus:ring-emerald-400 focus:outline-none text-sm"
+                >
+                  Verify Code & Sign In
+                </button>
+              </form>
+            </div>
+          )}
 
           {authMsg && (
             <div

@@ -14,6 +14,7 @@ vi.mock('@/lib/supabase', () => ({
     auth: {
       getSession: vi.fn(),
       signInWithOtp: vi.fn(),
+      verifyOtp: vi.fn(),
       signOut: vi.fn(),
       onAuthStateChange: vi.fn()
     }
@@ -21,12 +22,13 @@ vi.mock('@/lib/supabase', () => ({
 }));
 
 const TestConsumer: React.FC = () => {
-  const { user, isLoading, signInWithOtp, signOut } = useAuth();
+  const { user, isLoading, signInWithOtp, verifyOtp, signOut } = useAuth();
   if (isLoading) return <div>Loading...</div>;
   if (!user) return (
     <div>
       <span>Signed Out</span>
       <button onClick={() => signInWithOtp('test@example.com')}>Sign In</button>
+      <button onClick={() => verifyOtp('test@example.com', '123456')}>Verify OTP</button>
     </div>
   );
   return (
@@ -103,6 +105,30 @@ describe('AuthContext (AUT-001..AUT-006)', () => {
     expect(supabase.auth.signInWithOtp).toHaveBeenCalledWith({
       email: 'test@example.com',
       options: { emailRedirectTo: window.location.origin }
+    });
+  });
+
+  it('AUT-001: verifyOtp calls supabase.auth.verifyOtp with email and token', async () => {
+    vi.mocked(supabase.auth.getSession).mockResolvedValue({ data: { session: null }, error: null } as any);
+    vi.mocked(supabase.auth.verifyOtp).mockResolvedValue({ data: { user: null, session: null }, error: null } as any);
+
+    await act(async () => {
+      render(
+        <AuthProvider>
+          <TestConsumer />
+        </AuthProvider>
+      );
+    });
+
+    const btn = screen.getByText('Verify OTP');
+    await act(async () => {
+      btn.click();
+    });
+
+    expect(supabase.auth.verifyOtp).toHaveBeenCalledWith({
+      email: 'test@example.com',
+      token: '123456',
+      type: 'email'
     });
   });
 
