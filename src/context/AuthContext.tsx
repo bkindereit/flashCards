@@ -8,6 +8,7 @@ interface AuthContextType {
   isLoading: boolean;
   signInWithOtp: (email: string) => Promise<{ error: Error | null }>;
   verifyOtp: (email: string, token: string) => Promise<{ error: Error | null }>;
+  signInWithPassword: (email: string, password: string) => Promise<{ error: Error | null }>;
   signOut: () => Promise<void>;
 }
 
@@ -68,6 +69,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const signInWithPassword = async (email: string, password: string) => {
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+      return { error };
+    } catch (err: unknown) {
+      return { error: err instanceof Error ? err : new Error(String(err)) };
+    }
+  };
+
   const signOut = async () => {
     // AUT-004 & AUT-005: Explicit sign out and state removal
     await supabase.auth.signOut();
@@ -76,7 +89,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, isLoading, signInWithOtp, verifyOtp, signOut }}>
+    <AuthContext.Provider value={{ user, session, isLoading, signInWithOtp, verifyOtp, signInWithPassword, signOut }}>
       {children}
     </AuthContext.Provider>
   );

@@ -19,19 +19,27 @@ If you created your flashcards in **Excel**, **Google Sheets**, or **Apple Numbe
 
 ---
 
-## Step 1: Open the Website & Sign In with Your Email
+## Step 1: Open the Website & Sign In
 1. Open your web browser (Chrome, Safari, Edge, or Firefox) and click or type this web address into the top address bar:
    > **Web Address (URL):** **[https://bkindereit.github.io/flashCards/](https://bkindereit.github.io/flashCards/)**
 2. You will see the **Adaptive Flashcards** sign-in screen in the center of the page:
-   - Click inside the box that says **"Enter your email address"** and type your email address.
-   - Click the blue **"Send Magic Sign-In Link / Code"** button.
-3. A message will appear:
-   > *"Check your email for the magic sign-in link or 6-digit code!"*
-4. Open your email inbox in another tab or on your phone (check your *Spam* or *Junk* folder if it doesn't arrive within 1 minute).
-5. **Two convenient ways to sign in (choose either one):**
-   - **Option A (Instant 6-Digit Code — Recommended):** Look at the email for the **6-digit code** (for example, `482915`). Switch back to the website, type the 6 digits into the box that says **"Enter 6-digit code (e.g. 123456)"**, and click the green **"Verify Code & Sign In"** button.
-   - **Option B (One-Click Link):** Click the blue **"Log In"** button inside the email.
-6. Your browser will immediately open to your personal **Your Flashcard Decks** home screen!
+
+### Method 1: Password Sign-In (Instant — No Email Waiting)
+1. In the first box (**"Enter your email address"**), type your email address (e.g. `bastiankindereit@gmail.com`).
+2. In the second box (**"Enter your password"**), type your password.
+3. Click the blue **"Sign In with Password"** button.
+4. You will immediately be signed in to your **Your Flashcard Decks** home screen!
+
+---
+
+### Method 2: Magic Sign-In Link or 6-Digit Email Code
+If you prefer passwordless sign-in or have not set a password:
+1. Type your email address in the email box.
+2. Click the gray **"Send Magic Sign-In Link / Code"** button.
+3. Open your email inbox for the message:
+   - **Option A (6-Digit Code):** Enter the 6-digit verification code into the box that appears and click **"Verify Code & Sign In"**.
+   - **Option B (One-Click Link):** Click the sign-in link inside the email.
+4. Your browser will open to your personal **Your Flashcard Decks** home screen!
 
 ---
 

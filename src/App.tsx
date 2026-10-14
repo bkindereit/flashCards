@@ -21,7 +21,7 @@ import {
 } from 'lucide-react';
 
 export const App: React.FC = () => {
-  const { user, isLoading, signInWithOtp, verifyOtp, signOut } = useAuth();
+  const { user, isLoading, signInWithOtp, verifyOtp, signInWithPassword, signOut } = useAuth();
 
   // Navigation state
   const [currentView, setCurrentView] = useState<'decks' | 'study' | 'cards' | 'diagnostics'>('decks');
@@ -44,6 +44,7 @@ export const App: React.FC = () => {
 
   // Auth form
   const [emailInput, setEmailInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
   const [otpCodeInput, setOtpCodeInput] = useState('');
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [authMsg, setAuthMsg] = useState<{ text: string; error: boolean } | null>(null);
@@ -84,9 +85,21 @@ export const App: React.FC = () => {
     return [];
   };
 
+  const handlePasswordLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!emailInput.trim() || !passwordInput) return;
+    const { error } = await signInWithPassword(emailInput.trim(), passwordInput);
+    if (error) {
+      setAuthMsg({ text: error.message, error: true });
+    }
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!emailInput.trim()) return;
+    if (!emailInput.trim()) {
+      setAuthMsg({ text: 'Please enter your email address above first.', error: true });
+      return;
+    }
     const { error } = await signInWithOtp(emailInput.trim());
     if (error) {
       setAuthMsg({ text: error.message, error: true });
@@ -182,7 +195,7 @@ export const App: React.FC = () => {
             Sign in with your email to access your synchronized study decks and FSRS memory model.
           </p>
 
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handlePasswordLogin} className="space-y-4">
             <input
               type="email"
               value={emailInput}
@@ -192,9 +205,36 @@ export const App: React.FC = () => {
               className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
               required
             />
+            <input
+              type="password"
+              value={passwordInput}
+              onChange={e => setPasswordInput(e.target.value)}
+              placeholder="Enter your password"
+              aria-label="Password"
+              className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              required
+            />
             <button
               type="submit"
               className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl shadow-lg transition-colors focus:ring-2 focus:ring-blue-400 focus:outline-none"
+            >
+              Sign In with Password
+            </button>
+          </form>
+
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-slate-700"></div>
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-slate-800 px-3 text-slate-400 font-semibold tracking-wider">Or</span>
+            </div>
+          </div>
+
+          <form onSubmit={handleLogin} className="space-y-4">
+            <button
+              type="submit"
+              className="w-full py-2.5 bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium rounded-xl border border-slate-600 transition-colors focus:ring-2 focus:ring-blue-400 focus:outline-none text-sm"
             >
               Send Magic Sign-In Link / Code
             </button>

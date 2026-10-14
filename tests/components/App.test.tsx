@@ -16,6 +16,7 @@ vi.mock('@/lib/supabase', () => ({
       getSession: vi.fn(),
       signInWithOtp: vi.fn(),
       verifyOtp: vi.fn(),
+      signInWithPassword: vi.fn(),
       signOut: vi.fn(),
       onAuthStateChange: vi.fn(() => ({
         data: { subscription: { unsubscribe: vi.fn() } }
@@ -179,6 +180,37 @@ describe('App Shell (ARC-001..ARC-010, AUT-002, ARC-006)', () => {
       email: 'learner@example.com'
     }));
     expect(screen.getByText(/check your email for the magic sign-in link/i)).toBeInTheDocument();
+  });
+
+  it('AUT-001: Submits password login form and calls signInWithPassword', async () => {
+    vi.mocked(supabase.auth.getSession).mockResolvedValue({
+      data: { session: null },
+      error: null
+    } as any);
+    vi.mocked(supabase.auth.signInWithPassword).mockResolvedValue({ data: { user: null, session: null }, error: null } as any);
+
+    await act(async () => {
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      );
+    });
+
+    const emailInput = screen.getByPlaceholderText('Enter your email address');
+    const passwordInput = screen.getByPlaceholderText('Enter your password');
+    fireEvent.change(emailInput, { target: { value: 'learner@example.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'mypassword123' } });
+
+    const submitBtn = screen.getByRole('button', { name: /sign in with password/i });
+    await act(async () => {
+      fireEvent.click(submitBtn);
+    });
+
+    expect(supabase.auth.signInWithPassword).toHaveBeenCalledWith({
+      email: 'learner@example.com',
+      password: 'mypassword123'
+    });
   });
 
   it('DEK-004..008: Supports deck actions (manage cards, archive, study empty)', async () => {
