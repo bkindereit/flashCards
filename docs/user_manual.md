@@ -24,12 +24,14 @@ If you created your flashcards in **Excel**, **Google Sheets**, or **Apple Numbe
    > **Web Address (URL):** **[https://bkindereit.github.io/flashCards/](https://bkindereit.github.io/flashCards/)**
 2. You will see the **Adaptive Flashcards** sign-in screen in the center of the page:
    - Click inside the box that says **"Enter your email address"** and type your email address.
-   - Click the blue **"Send Magic Sign-In Link"** button.
-3. A green message will appear below the button:
-   > *"Check your email for the magic sign-in link or OTP code!"*
+   - Click the blue **"Send Magic Sign-In Link / Code"** button.
+3. A message will appear:
+   > *"Check your email for the magic sign-in link or 6-digit code!"*
 4. Open your email inbox in another tab or on your phone (check your *Spam* or *Junk* folder if it doesn't arrive within 1 minute).
-5. Open the email titled **"Magic Link"** and click **"Log In"**.
-6. Your browser will automatically open to your personal **Your Flashcard Decks** home screen.
+5. **Two convenient ways to sign in (choose either one):**
+   - **Option A (Instant 6-Digit Code — Recommended):** Look at the email for the **6-digit code** (for example, `482915`). Switch back to the website, type the 6 digits into the box that says **"Enter 6-digit code (e.g. 123456)"**, and click the green **"Verify Code & Sign In"** button.
+   - **Option B (One-Click Link):** Click the blue **"Log In"** button inside the email.
+6. Your browser will immediately open to your personal **Your Flashcard Decks** home screen!
 
 ---
 
@@ -101,19 +103,18 @@ If you created your flashcards in **Excel**, **Google Sheets**, or **Apple Numbe
 * **Database Backend:** Supabase PostgreSQL with FSRS adaptive memory, Row-Level Security, and RPCs.
 * **Security & Privacy:** Every learner who signs in with their email has their own completely isolated, private database space. Nobody else can view or edit your decks or cards.
 
-### 2. Troubleshooting Magic Sign-In Links
-If clicking the email sign-in link opens `localhost:3000` or says `Email link is invalid or has expired`:
-1. **Check Site URL in Supabase:**
-   * Go to **[https://supabase.com/dashboard/project/fuqghjkscijbxrdkkdlv/auth/url-configuration](https://supabase.com/dashboard/project/fuqghjkscijbxrdkkdlv/auth/url-configuration)**.
-   * Under **Site URL**, ensure it is set to:
-     ```text
-     https://bkindereit.github.io/flashCards/
-     ```
-   * Click **Save changes**.
-   * Under **Redirect URLs**, click **Add URL**, enter `https://bkindereit.github.io/flashCards/**`, and click **Add URL**.
-2. **Request a Brand-New Sign-In Link:**
-   * Old sign-in emails contain the old redirect link and will expire.
-   * Go back to **[https://bkindereit.github.io/flashCards/](https://bkindereit.github.io/flashCards/)**, enter your email address again, click **Send Magic Sign-In Link**, and click **Log In** in the newest email.
+### 2. Troubleshooting Magic Sign-In Links & 6-Digit Codes
+* **If the Email Link Opens and Returns to Sign-In:**
+  Use **Option A**! Simply copy the **6-digit verification code** printed inside the email message, enter it into the **"Enter 6-digit code"** box on the screen, and click **"Verify Code & Sign In"**. This signs you in immediately without depending on link redirects.
+* **If You See "Email rate limit exceeded":**
+  Supabase protects against spam by limiting emails to 1 per 60 seconds. Wait 60 seconds before clicking "Send Magic Sign-In Link / Code" again. If you already received a code in your inbox, you do not need to wait—just enter the code directly and click "Verify Code & Sign In".
+* **Check Site URL in Supabase:**
+  If you host your own database, go to **Authentication → URL Configuration** in the Supabase Dashboard:
+  * Under **Site URL**, ensure it is set to:
+    ```text
+    https://bkindereit.github.io/flashCards/
+    ```
+  * Under **Redirect URLs**, add `https://bkindereit.github.io/flashCards/**`.
 
 ### 3. Setting Up a New Independent Database (Self-Hosters Only)
 If you ever want to connect your own independent Supabase database project from scratch:
