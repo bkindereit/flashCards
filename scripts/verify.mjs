@@ -174,16 +174,9 @@ runStep({
   command: 'npx vitest run --coverage --reporter=default --reporter=junit --outputFile.junit=reports/vitest/junit.xml'
 });
 
-// 5. Traceability Matrix Validation
+// 5. Production Build & Checksum Manifest
 runStep({
-  id: '05_traceability',
-  name: 'Requirements Traceability Checker (TST-016..TST-018)',
-  command: 'node scripts/check-traceability.mjs'
-});
-
-// 6. Production Build & Checksum Manifest
-runStep({
-  id: '06_build_and_manifest',
+  id: '05_build_and_manifest',
   name: 'Production Build & Asset Checksum Manifest (ARC-001, ARC-003)',
   command: 'npx vite build',
   fn: () => {
@@ -226,18 +219,25 @@ runStep({
   }
 });
 
-// 7. Secret Scan
+// 6. Secret Scan
 runStep({
-  id: '07_secret_scan',
+  id: '06_secret_scan',
   name: 'Secret & Credential Scan (SEC-004)',
   command: 'node scripts/secret-scan.mjs'
 });
 
-// 8. Production Dependency Audit
+// 7. Production Dependency Audit
 runStep({
-  id: '08_dependency_audit',
+  id: '07_dependency_audit',
   name: 'Production Dependency Vulnerability Audit',
   command: 'npm audit --omit=dev --audit-level=high'
+});
+
+// 8. Performance Benchmarks
+runStep({
+  id: '08_performance_benchmarks',
+  name: 'Performance Benchmarks (PRF-001, PRF-002)',
+  command: 'npm run test:perf'
 });
 
 // 9. Database Integration Tests (pgTAP via Supabase CLI)
@@ -246,7 +246,20 @@ if (supabaseStatus.available) {
   runStep({
     id: '09_database_pgtap',
     name: 'Database Schema, RLS & RPC Tests (pgTAP)',
-    command: 'supabase test db'
+    command: 'supabase test db',
+    fn: () => {
+      const pgtapDir = path.join(reportsDir, 'pgtap');
+      fs.mkdirSync(pgtapDir, { recursive: true });
+      const tapPath = path.join(pgtapDir, 'output.tap');
+      try {
+        const out = execSync('supabase test db', { cwd: repoRoot, encoding: 'utf8' });
+        fs.writeFileSync(tapPath, out, 'utf8');
+        return { status: 'passed', exitCode: 0, notes: 'All pgTAP assertions passed' };
+      } catch (err) {
+        fs.writeFileSync(tapPath, (err.stdout || '') + '\n' + (err.stderr || ''), 'utf8');
+        throw err;
+      }
+    }
   });
 } else {
   console.log(`▶ Skipping (Blocked): Database Tests (pgTAP via Supabase CLI)`);
@@ -282,6 +295,20 @@ if (supabaseStatus.available) {
     notes: `Blocked by environment: Local Supabase authentication stack not running (DEC-003)`
   });
 }
+
+// 11. Traceability Matrix Synchronization
+runStep({
+  id: '11_traceability_sync',
+  name: 'Traceability Matrix Synchronization (TST-016..TST-018)',
+  command: 'node scripts/sync-traceability.mjs'
+});
+
+// 12. Traceability Matrix Validation
+runStep({
+  id: '12_traceability_check',
+  name: 'Requirements Traceability Checker (TST-016..TST-018)',
+  command: 'node scripts/check-traceability.mjs'
+});
 
 // Write verification summary
 const endTime = new Date();

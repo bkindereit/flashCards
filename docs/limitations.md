@@ -26,6 +26,10 @@ This document formalizes the known constraints, residual risks, and deferred non
 - **Assumption**: Automated accessibility scanners (`@axe-core/playwright`, vitest component checks) verify WCAG 2.1 AA structural syntax, ARIA attributes, contrast ratios, and focus indicator styles.
 - **Residual Risk**: Automated tests cover approximately 30–50% of real-world accessibility barriers. Full compliance release gating requires human operator sign-off of manual protocols (`MAN-ACC-001`, `MAN-ACC-002`).
 
+### 1.6 Remote Reference Network Performance (PRF-003)
+- **Assumption**: Initial load to interactive study view within 3.0 seconds at p95 requires an operational remote reference network and warm cache.
+- **Residual Risk**: In local test environments without remote network conditions, PRF-003 is tracked as unmeasured / blocked per DEC-004 pending production staging benchmark execution.
+
 ---
 
 ## 2. Deferred Non-Mandatory Requirements

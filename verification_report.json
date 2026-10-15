@@ -1,7 +1,7 @@
 {
   "reportVersion": "1.0",
   "specificationVersion": "1.0",
-  "commitSha": "88b24148d73faa33e4899ab9451639e4381b3a3c",
+  "commitSha": "5f36bd46e9b1cc7b9f5027017fed8824398bc970",
   "applicationVersion": "1.0.0",
   "overallResult": "blocked",
   "releaseRecommendation": "do-not-release",
@@ -67,6 +67,7 @@
       "activityId": "VA-ARC-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "dist/index.html",
         "tsconfig.json"
       ]
@@ -77,6 +78,7 @@
       "activityId": "VA-ARC-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "tsconfig.json"
       ]
     },
@@ -86,6 +88,7 @@
       "activityId": "VA-ARC-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "dist/index.html"
       ]
     },
@@ -95,6 +98,7 @@
       "activityId": "VA-ARC-002",
       "result": "Pass",
       "evidence": [
+        "tests/e2e/app.spec.ts",
         "dist/manifest.webmanifest",
         "vite.config.ts"
       ]
@@ -105,6 +109,7 @@
       "activityId": "VA-ARC-002",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "dist/sw.js"
       ]
     },
@@ -114,6 +119,7 @@
       "activityId": "VA-ARC-002",
       "result": "Pass",
       "evidence": [
+        "tests/components/App.test.tsx",
         "src/App.tsx"
       ]
     },
@@ -123,6 +129,7 @@
       "activityId": "VA-ARC-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "src/lib/supabase.ts"
       ]
     },
@@ -132,6 +139,7 @@
       "activityId": "VA-ARC-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "supabase/migrations/20261010000000_initial_schema.sql"
       ]
     },
@@ -141,6 +149,7 @@
       "activityId": "VA-ARC-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
         "src/domain/types.ts"
       ]
     },
@@ -150,6 +159,7 @@
       "activityId": "VA-SCH-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
         "src/domain/clock.ts"
       ]
     },
@@ -159,8 +169,10 @@
       "activityId": "VA-AUT-001",
       "result": "Pass",
       "evidence": [
-        "src/context/AuthContext.tsx",
-        "tests/components/AuthContext.test.tsx"
+        "tests/components/App.test.tsx",
+        "tests/components/AuthContext.test.tsx",
+        "tests/e2e/app.spec.ts",
+        "src/context/AuthContext.tsx"
       ]
     },
     {
@@ -169,8 +181,10 @@
       "activityId": "VA-AUT-001",
       "result": "Pass",
       "evidence": [
-        "src/context/AuthContext.tsx",
-        "tests/components/AuthContext.test.tsx"
+        "tests/components/App.test.tsx",
+        "tests/components/AuthContext.test.tsx",
+        "tests/e2e/app.spec.ts",
+        "src/context/AuthContext.tsx"
       ]
     },
     {
@@ -179,8 +193,8 @@
       "activityId": "VA-AUT-001",
       "result": "Pass",
       "evidence": [
-        "src/context/AuthContext.tsx",
-        "tests/components/AuthContext.test.tsx"
+        "tests/components/AuthContext.test.tsx",
+        "src/context/AuthContext.tsx"
       ]
     },
     {
@@ -189,8 +203,8 @@
       "activityId": "VA-AUT-001",
       "result": "Pass",
       "evidence": [
-        "src/context/AuthContext.tsx",
-        "tests/components/AuthContext.test.tsx"
+        "tests/components/AuthContext.test.tsx",
+        "src/context/AuthContext.tsx"
       ]
     },
     {
@@ -199,8 +213,8 @@
       "activityId": "VA-AUT-001",
       "result": "Pass",
       "evidence": [
-        "src/context/AuthContext.tsx",
-        "tests/components/AuthContext.test.tsx"
+        "tests/components/AuthContext.test.tsx",
+        "src/context/AuthContext.tsx"
       ]
     },
     {
@@ -209,8 +223,8 @@
       "activityId": "VA-AUT-002",
       "result": "Pass",
       "evidence": [
-        "src/context/AuthContext.tsx",
-        "tests/components/AuthContext.test.tsx"
+        "tests/components/AuthContext.test.tsx",
+        "src/context/AuthContext.tsx"
       ]
     },
     {
@@ -219,8 +233,9 @@
       "activityId": "VA-AUT-003",
       "result": "Pass",
       "evidence": [
-        "src/App.tsx",
-        "tests/components/App.test.tsx"
+        "tests/components/App.test.tsx",
+        "tests/components/AuthContext.test.tsx",
+        "src/App.tsx"
       ]
     },
     {
@@ -229,8 +244,9 @@
       "activityId": "VA-AUT-003",
       "result": "Pass",
       "evidence": [
-        "src/App.tsx",
-        "tests/components/App.test.tsx"
+        "tests/components/App.test.tsx",
+        "tests/components/AuthContext.test.tsx",
+        "src/App.tsx"
       ]
     },
     {
@@ -239,8 +255,8 @@
       "activityId": "VA-AUT-003",
       "result": "Pass",
       "evidence": [
-        "src/context/AuthContext.tsx",
-        "tests/components/AuthContext.test.tsx"
+        "tests/components/AuthContext.test.tsx",
+        "src/context/AuthContext.tsx"
       ]
     },
     {
@@ -249,8 +265,9 @@
       "activityId": "VA-DEK-001",
       "result": "Pass",
       "evidence": [
-        "src/components/DeckModal.tsx",
-        "tests/components/DeckModals.test.tsx"
+        "tests/components/App.test.tsx",
+        "tests/components/DeckModals.test.tsx",
+        "src/components/DeckModal.tsx"
       ]
     },
     {
@@ -259,8 +276,8 @@
       "activityId": "VA-DEK-001",
       "result": "Pass",
       "evidence": [
-        "src/components/DeckModal.tsx",
-        "tests/components/DeckModals.test.tsx"
+        "tests/components/DeckModals.test.tsx",
+        "src/components/DeckModal.tsx"
       ]
     },
     {
@@ -269,6 +286,7 @@
       "activityId": "VA-DEK-001",
       "result": "Pass",
       "evidence": [
+        "tests/database/schema.test.ts",
         "src/components/DeckModal.tsx",
         "tests/components/DeckModals.test.tsx"
       ]
@@ -279,6 +297,7 @@
       "activityId": "VA-DEK-001",
       "result": "Pass",
       "evidence": [
+        "tests/database/schema.test.ts",
         "src/components/DeckModal.tsx",
         "tests/components/DeckModals.test.tsx"
       ]
@@ -289,6 +308,7 @@
       "activityId": "VA-DEK-001",
       "result": "Pass",
       "evidence": [
+        "tests/database/schema.test.ts",
         "src/components/DeckModal.tsx",
         "tests/components/DeckModals.test.tsx"
       ]
@@ -299,6 +319,7 @@
       "activityId": "VA-DEK-001",
       "result": "Pass",
       "evidence": [
+        "tests/database/schema.test.ts",
         "src/components/DeckModal.tsx",
         "tests/components/DeckModals.test.tsx"
       ]
@@ -309,6 +330,7 @@
       "activityId": "VA-DEK-001",
       "result": "Pass",
       "evidence": [
+        "tests/database/schema.test.ts",
         "src/components/DeckModal.tsx",
         "tests/components/DeckModals.test.tsx"
       ]
@@ -319,6 +341,7 @@
       "activityId": "VA-DEK-001",
       "result": "Pass",
       "evidence": [
+        "tests/database/schema.test.ts",
         "src/components/DeckModal.tsx",
         "tests/components/DeckModals.test.tsx"
       ]
@@ -329,8 +352,8 @@
       "activityId": "VA-DEK-001",
       "result": "Pass",
       "evidence": [
-        "src/components/DeckModal.tsx",
-        "tests/components/DeckModals.test.tsx"
+        "tests/components/DeckModals.test.tsx",
+        "src/components/DeckModal.tsx"
       ]
     },
     {
@@ -339,8 +362,9 @@
       "activityId": "VA-DAT-001",
       "result": "Pass",
       "evidence": [
-        "supabase/migrations/20261010000000_initial_schema.sql",
-        "tests/database/schema.test.ts"
+        "tests/database/schema.test.ts",
+        "supabase/tests/database/initial_schema.test.sql",
+        "supabase/migrations/20261010000000_initial_schema.sql"
       ]
     },
     {
@@ -349,8 +373,8 @@
       "activityId": "VA-DAT-001",
       "result": "Pass",
       "evidence": [
-        "supabase/migrations/20261010000000_initial_schema.sql",
-        "tests/database/schema.test.ts"
+        "tests/database/schema.test.ts",
+        "supabase/migrations/20261010000000_initial_schema.sql"
       ]
     },
     {
@@ -359,8 +383,8 @@
       "activityId": "VA-DAT-001",
       "result": "Pass",
       "evidence": [
-        "supabase/migrations/20261010000000_initial_schema.sql",
-        "tests/database/schema.test.ts"
+        "tests/database/schema.test.ts",
+        "supabase/migrations/20261010000000_initial_schema.sql"
       ]
     },
     {
@@ -369,8 +393,8 @@
       "activityId": "VA-DAT-001",
       "result": "Pass",
       "evidence": [
-        "supabase/migrations/20261010000000_initial_schema.sql",
-        "tests/database/schema.test.ts"
+        "tests/database/schema.test.ts",
+        "supabase/migrations/20261010000000_initial_schema.sql"
       ]
     },
     {
@@ -379,8 +403,10 @@
       "activityId": "VA-DAT-001",
       "result": "Pass",
       "evidence": [
-        "supabase/migrations/20261010000000_initial_schema.sql",
-        "tests/database/schema.test.ts"
+        "tests/database/schema.test.ts",
+        "tests/unit/property.test.ts",
+        "supabase/tests/database/initial_schema.test.sql",
+        "supabase/migrations/20261010000000_initial_schema.sql"
       ]
     },
     {
@@ -389,8 +415,10 @@
       "activityId": "VA-DAT-001",
       "result": "Pass",
       "evidence": [
-        "supabase/migrations/20261010000000_initial_schema.sql",
-        "tests/database/schema.test.ts"
+        "tests/database/schema.test.ts",
+        "tests/unit/property.test.ts",
+        "supabase/tests/database/initial_schema.test.sql",
+        "supabase/migrations/20261010000000_initial_schema.sql"
       ]
     },
     {
@@ -399,8 +427,8 @@
       "activityId": "VA-DAT-001",
       "result": "Pass",
       "evidence": [
-        "supabase/migrations/20261010000000_initial_schema.sql",
-        "tests/database/schema.test.ts"
+        "tests/database/schema.test.ts",
+        "supabase/migrations/20261010000000_initial_schema.sql"
       ]
     },
     {
@@ -409,8 +437,8 @@
       "activityId": "VA-DAT-001",
       "result": "Pass",
       "evidence": [
-        "supabase/migrations/20261010000000_initial_schema.sql",
-        "tests/database/schema.test.ts"
+        "tests/database/schema.test.ts",
+        "supabase/migrations/20261010000000_initial_schema.sql"
       ]
     },
     {
@@ -419,8 +447,8 @@
       "activityId": "VA-DAT-001",
       "result": "Pass",
       "evidence": [
-        "supabase/migrations/20261010000000_initial_schema.sql",
-        "tests/database/schema.test.ts"
+        "tests/database/schema.test.ts",
+        "supabase/migrations/20261010000000_initial_schema.sql"
       ]
     },
     {
@@ -429,8 +457,9 @@
       "activityId": "VA-DAT-001",
       "result": "Pass",
       "evidence": [
-        "supabase/migrations/20261010000000_initial_schema.sql",
-        "tests/database/schema.test.ts"
+        "tests/database/schema.test.ts",
+        "supabase/tests/database/initial_schema.test.sql",
+        "supabase/migrations/20261010000000_initial_schema.sql"
       ]
     },
     {
@@ -439,8 +468,8 @@
       "activityId": "VA-DAT-001",
       "result": "Pass",
       "evidence": [
-        "supabase/migrations/20261010000000_initial_schema.sql",
-        "tests/database/schema.test.ts"
+        "tests/database/schema.test.ts",
+        "supabase/migrations/20261010000000_initial_schema.sql"
       ]
     },
     {
@@ -449,8 +478,9 @@
       "activityId": "VA-DAT-002",
       "result": "Pass",
       "evidence": [
-        "supabase/migrations/20261010000000_initial_schema.sql",
-        "tests/database/schema.test.ts"
+        "tests/database/schema.test.ts",
+        "tests/unit/domain/schedulerRequirements.test.ts",
+        "supabase/migrations/20261010000000_initial_schema.sql"
       ]
     },
     {
@@ -459,8 +489,9 @@
       "activityId": "VA-DAT-002",
       "result": "Pass",
       "evidence": [
-        "supabase/migrations/20261010000000_initial_schema.sql",
-        "tests/database/schema.test.ts"
+        "tests/database/schema.test.ts",
+        "tests/unit/domain/schedulerRequirements.test.ts",
+        "supabase/migrations/20261010000000_initial_schema.sql"
       ]
     },
     {
@@ -469,6 +500,7 @@
       "activityId": "VA-DAT-002",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
         "supabase/migrations/20261010000000_initial_schema.sql",
         "tests/database/schema.test.ts"
       ]
@@ -479,6 +511,7 @@
       "activityId": "VA-DAT-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "supabase/migrations/20261010000000_initial_schema.sql",
         "tests/database/schema.test.ts"
       ]
@@ -489,8 +522,10 @@
       "activityId": "VA-IMP-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/csvParser.ts",
-        "tests/unit/csvParser.test.ts"
+        "tests/components/CsvImportModal.test.tsx",
+        "tests/unit/csvFixtures.test.ts",
+        "tests/unit/csvParser.test.ts",
+        "src/domain/csvParser.ts"
       ]
     },
     {
@@ -499,8 +534,9 @@
       "activityId": "VA-IMP-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/csvParser.ts",
-        "tests/unit/csvParser.test.ts"
+        "tests/unit/csvFixtures.test.ts",
+        "tests/unit/csvParser.test.ts",
+        "src/domain/csvParser.ts"
       ]
     },
     {
@@ -509,8 +545,9 @@
       "activityId": "VA-IMP-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/csvParser.ts",
-        "tests/unit/csvParser.test.ts"
+        "tests/components/CsvImportModal.test.tsx",
+        "tests/unit/csvParser.test.ts",
+        "src/domain/csvParser.ts"
       ]
     },
     {
@@ -519,8 +556,9 @@
       "activityId": "VA-IMP-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/csvParser.ts",
-        "tests/unit/csvParser.test.ts"
+        "tests/unit/csvFixtures.test.ts",
+        "tests/unit/csvParser.test.ts",
+        "src/domain/csvParser.ts"
       ]
     },
     {
@@ -529,8 +567,9 @@
       "activityId": "VA-IMP-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/csvParser.ts",
-        "tests/unit/csvParser.test.ts"
+        "tests/unit/csvFixtures.test.ts",
+        "tests/unit/csvParser.test.ts",
+        "src/domain/csvParser.ts"
       ]
     },
     {
@@ -539,8 +578,9 @@
       "activityId": "VA-IMP-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/csvParser.ts",
-        "tests/unit/csvParser.test.ts"
+        "tests/unit/csvFixtures.test.ts",
+        "tests/unit/csvParser.test.ts",
+        "src/domain/csvParser.ts"
       ]
     },
     {
@@ -549,8 +589,9 @@
       "activityId": "VA-IMP-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/csvParser.ts",
-        "tests/unit/csvParser.test.ts"
+        "tests/components/CsvImportModal.test.tsx",
+        "tests/unit/csvParser.test.ts",
+        "src/domain/csvParser.ts"
       ]
     },
     {
@@ -559,8 +600,9 @@
       "activityId": "VA-IMP-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/csvParser.ts",
-        "tests/unit/csvParser.test.ts"
+        "tests/unit/csvFixtures.test.ts",
+        "tests/unit/csvParser.test.ts",
+        "src/domain/csvParser.ts"
       ]
     },
     {
@@ -569,7 +611,9 @@
       "activityId": "VA-IMP-002",
       "result": "Pass",
       "evidence": [
+        "tests/components/CsvImportModal.test.tsx",
         "tests/database/rpc.test.ts",
+        "supabase/tests/database/initial_schema.test.sql",
         "src/components/CsvImportModal.tsx"
       ]
     },
@@ -580,6 +624,9 @@
       "result": "Pass",
       "evidence": [
         "tests/database/rpc.test.ts",
+        "tests/unit/csvFixtures.test.ts",
+        "tests/unit/csvParser.test.ts",
+        "supabase/tests/database/initial_schema.test.sql",
         "src/components/CsvImportModal.tsx"
       ]
     },
@@ -590,6 +637,7 @@
       "result": "Pass",
       "evidence": [
         "tests/database/rpc.test.ts",
+        "tests/unit/csvFixtures.test.ts",
         "src/components/CsvImportModal.tsx"
       ]
     },
@@ -600,6 +648,8 @@
       "result": "Pass",
       "evidence": [
         "tests/database/rpc.test.ts",
+        "tests/unit/csvFixtures.test.ts",
+        "tests/unit/csvParser.test.ts",
         "src/components/CsvImportModal.tsx"
       ]
     },
@@ -619,6 +669,7 @@
       "activityId": "VA-IMP-002",
       "result": "Pass",
       "evidence": [
+        "tests/database/rpc.test.ts",
         "tests/performance/benchmark.perf.ts",
         "reports/performance/prf-002-csv-import.json"
       ]
@@ -629,6 +680,7 @@
       "activityId": "VA-IMP-002",
       "result": "Pass",
       "evidence": [
+        "tests/components/CsvImportModal.test.tsx",
         "tests/database/rpc.test.ts",
         "src/components/CsvImportModal.tsx"
       ]
@@ -649,8 +701,8 @@
       "activityId": "VA-IMP-001",
       "result": "Pass",
       "evidence": [
-        "tests/unit/csvParser.test.ts",
         "tests/components/CsvImportModal.test.tsx",
+        "tests/unit/csvParser.test.ts",
         "src/domain/csvParser.ts",
         "src/components/CsvImportModal.tsx"
       ]
@@ -661,8 +713,8 @@
       "activityId": "VA-MGT-001",
       "result": "Pass",
       "evidence": [
-        "src/components/CardManagementView.tsx",
-        "tests/components/CardManagementView.test.tsx"
+        "tests/components/CardManagementView.test.tsx",
+        "src/components/CardManagementView.tsx"
       ]
     },
     {
@@ -671,8 +723,8 @@
       "activityId": "VA-MGT-001",
       "result": "Pass",
       "evidence": [
-        "src/components/CardManagementView.tsx",
-        "tests/components/CardManagementView.test.tsx"
+        "tests/components/CardManagementView.test.tsx",
+        "src/components/CardManagementView.tsx"
       ]
     },
     {
@@ -681,8 +733,8 @@
       "activityId": "VA-MGT-001",
       "result": "Pass",
       "evidence": [
-        "src/components/CardManagementView.tsx",
-        "tests/components/CardManagementView.test.tsx"
+        "tests/components/CardManagementView.test.tsx",
+        "src/components/CardManagementView.tsx"
       ]
     },
     {
@@ -691,8 +743,8 @@
       "activityId": "VA-MGT-001",
       "result": "Pass",
       "evidence": [
-        "src/components/CardManagementView.tsx",
-        "tests/components/CardManagementView.test.tsx"
+        "tests/components/CardManagementView.test.tsx",
+        "src/components/CardManagementView.tsx"
       ]
     },
     {
@@ -701,8 +753,8 @@
       "activityId": "VA-MGT-001",
       "result": "Pass",
       "evidence": [
-        "src/components/CardManagementView.tsx",
-        "tests/components/CardManagementView.test.tsx"
+        "tests/components/CardManagementView.test.tsx",
+        "src/components/CardManagementView.tsx"
       ]
     },
     {
@@ -711,8 +763,8 @@
       "activityId": "VA-MGT-001",
       "result": "Pass",
       "evidence": [
-        "src/components/CardManagementView.tsx",
-        "tests/components/CardManagementView.test.tsx"
+        "tests/components/CardManagementView.test.tsx",
+        "src/components/CardManagementView.tsx"
       ]
     },
     {
@@ -721,8 +773,8 @@
       "activityId": "VA-MGT-001",
       "result": "Pass",
       "evidence": [
-        "src/components/CardManagementView.tsx",
-        "tests/components/CardManagementView.test.tsx"
+        "tests/components/CardManagementView.test.tsx",
+        "src/components/CardManagementView.tsx"
       ]
     },
     {
@@ -731,8 +783,9 @@
       "activityId": "VA-MGT-001",
       "result": "Pass",
       "evidence": [
-        "src/components/CardManagementView.tsx",
-        "tests/components/CardManagementView.test.tsx"
+        "tests/components/CardManagementView.test.tsx",
+        "tests/unit/useStudySession.test.ts",
+        "src/components/CardManagementView.tsx"
       ]
     },
     {
@@ -750,8 +803,8 @@
       "activityId": "VA-MGT-001",
       "result": "Pass",
       "evidence": [
-        "src/components/CardManagementView.tsx",
-        "tests/components/CardManagementView.test.tsx"
+        "tests/components/CardManagementView.test.tsx",
+        "src/components/CardManagementView.tsx"
       ]
     },
     {
@@ -760,8 +813,9 @@
       "activityId": "VA-UI-001",
       "result": "Pass",
       "evidence": [
-        "src/components/StudyView.tsx",
-        "tests/components/StudyView.test.tsx"
+        "tests/components/StudyView.test.tsx",
+        "tests/unit/useStudySession.test.ts",
+        "src/components/StudyView.tsx"
       ]
     },
     {
@@ -770,8 +824,9 @@
       "activityId": "VA-UI-001",
       "result": "Pass",
       "evidence": [
-        "src/components/StudyView.tsx",
-        "tests/components/StudyView.test.tsx"
+        "tests/components/StudyView.test.tsx",
+        "tests/unit/useStudySession.test.ts",
+        "src/components/StudyView.tsx"
       ]
     },
     {
@@ -780,8 +835,8 @@
       "activityId": "VA-UI-001",
       "result": "Pass",
       "evidence": [
-        "src/components/StudyView.tsx",
-        "tests/components/StudyView.test.tsx"
+        "tests/components/StudyView.test.tsx",
+        "src/components/StudyView.tsx"
       ]
     },
     {
@@ -790,8 +845,9 @@
       "activityId": "VA-UI-001",
       "result": "Pass",
       "evidence": [
-        "src/components/StudyView.tsx",
-        "tests/components/StudyView.test.tsx"
+        "tests/components/StudyView.test.tsx",
+        "tests/unit/useStudySession.test.ts",
+        "src/components/StudyView.tsx"
       ]
     },
     {
@@ -800,8 +856,9 @@
       "activityId": "VA-UI-001",
       "result": "Pass",
       "evidence": [
-        "src/components/StudyView.tsx",
-        "tests/components/StudyView.test.tsx"
+        "tests/components/StudyView.test.tsx",
+        "tests/unit/useStudySession.test.ts",
+        "src/components/StudyView.tsx"
       ]
     },
     {
@@ -810,8 +867,9 @@
       "activityId": "VA-UI-001",
       "result": "Pass",
       "evidence": [
-        "src/components/StudyView.tsx",
-        "tests/components/StudyView.test.tsx"
+        "tests/components/StudyView.test.tsx",
+        "tests/unit/useStudySession.test.ts",
+        "src/components/StudyView.tsx"
       ]
     },
     {
@@ -820,8 +878,9 @@
       "activityId": "VA-UI-001",
       "result": "Pass",
       "evidence": [
-        "src/components/StudyView.tsx",
-        "tests/components/StudyView.test.tsx"
+        "tests/components/StudyView.test.tsx",
+        "tests/unit/useStudySession.test.ts",
+        "src/components/StudyView.tsx"
       ]
     },
     {
@@ -830,8 +889,9 @@
       "activityId": "VA-UI-001",
       "result": "Pass",
       "evidence": [
-        "src/components/StudyView.tsx",
-        "tests/components/StudyView.test.tsx"
+        "tests/components/StudyView.test.tsx",
+        "tests/unit/useStudySession.test.ts",
+        "src/components/StudyView.tsx"
       ]
     },
     {
@@ -840,8 +900,8 @@
       "activityId": "VA-UI-001",
       "result": "Pass",
       "evidence": [
-        "src/components/StudyView.tsx",
-        "tests/components/StudyView.test.tsx"
+        "tests/components/StudyView.test.tsx",
+        "src/components/StudyView.tsx"
       ]
     },
     {
@@ -850,6 +910,7 @@
       "activityId": "VA-UI-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/useStudySession.test.ts",
         "src/components/StudyView.tsx",
         "tests/components/StudyView.test.tsx"
       ]
@@ -860,8 +921,8 @@
       "activityId": "VA-UI-002",
       "result": "Pass",
       "evidence": [
-        "src/components/StudyView.tsx",
-        "tests/components/StudyView.test.tsx"
+        "tests/components/StudyView.test.tsx",
+        "src/components/StudyView.tsx"
       ]
     },
     {
@@ -870,8 +931,8 @@
       "activityId": "VA-UI-002",
       "result": "Pass",
       "evidence": [
-        "src/components/StudyView.tsx",
-        "tests/components/StudyView.test.tsx"
+        "tests/components/StudyView.test.tsx",
+        "src/components/StudyView.tsx"
       ]
     },
     {
@@ -880,8 +941,8 @@
       "activityId": "VA-UI-002",
       "result": "Pass",
       "evidence": [
-        "src/components/StudyView.tsx",
-        "tests/components/StudyView.test.tsx"
+        "tests/components/StudyView.test.tsx",
+        "src/components/StudyView.tsx"
       ]
     },
     {
@@ -890,8 +951,9 @@
       "activityId": "VA-UI-002",
       "result": "Pass",
       "evidence": [
-        "src/components/StudyView.tsx",
-        "tests/components/StudyView.test.tsx"
+        "tests/components/StudyView.test.tsx",
+        "tests/unit/useStudySession.test.ts",
+        "src/components/StudyView.tsx"
       ]
     },
     {
@@ -900,8 +962,9 @@
       "activityId": "VA-UI-002",
       "result": "Pass",
       "evidence": [
-        "src/components/StudyView.tsx",
-        "tests/components/StudyView.test.tsx"
+        "tests/components/StudyView.test.tsx",
+        "tests/unit/useStudySession.test.ts",
+        "src/components/StudyView.tsx"
       ]
     },
     {
@@ -910,8 +973,9 @@
       "activityId": "VA-UI-002",
       "result": "Pass",
       "evidence": [
-        "src/components/StudyView.tsx",
-        "tests/components/StudyView.test.tsx"
+        "tests/components/StudyView.test.tsx",
+        "tests/unit/useStudySession.test.ts",
+        "src/components/StudyView.tsx"
       ]
     },
     {
@@ -920,6 +984,7 @@
       "activityId": "VA-SES-001",
       "result": "Pass",
       "evidence": [
+        "tests/components/SessionDurationModal.test.tsx",
         "src/hooks/useStudySession.ts",
         "tests/unit/useStudySession.test.ts"
       ]
@@ -930,6 +995,7 @@
       "activityId": "VA-SES-001",
       "result": "Pass",
       "evidence": [
+        "tests/components/SessionDurationModal.test.tsx",
         "src/hooks/useStudySession.ts",
         "tests/unit/useStudySession.test.ts"
       ]
@@ -940,8 +1006,8 @@
       "activityId": "VA-SES-001",
       "result": "Pass",
       "evidence": [
-        "src/hooks/useStudySession.ts",
-        "tests/unit/useStudySession.test.ts"
+        "tests/unit/useStudySession.test.ts",
+        "src/hooks/useStudySession.ts"
       ]
     },
     {
@@ -950,8 +1016,8 @@
       "activityId": "VA-SES-001",
       "result": "Pass",
       "evidence": [
-        "src/hooks/useStudySession.ts",
-        "tests/unit/useStudySession.test.ts"
+        "tests/unit/useStudySession.test.ts",
+        "src/hooks/useStudySession.ts"
       ]
     },
     {
@@ -960,8 +1026,8 @@
       "activityId": "VA-SES-001",
       "result": "Pass",
       "evidence": [
-        "src/hooks/useStudySession.ts",
-        "tests/unit/useStudySession.test.ts"
+        "tests/unit/useStudySession.test.ts",
+        "src/hooks/useStudySession.ts"
       ]
     },
     {
@@ -970,8 +1036,9 @@
       "activityId": "VA-SES-001",
       "result": "Pass",
       "evidence": [
-        "src/hooks/useStudySession.ts",
-        "tests/unit/useStudySession.test.ts"
+        "tests/components/StudyView.test.tsx",
+        "tests/unit/useStudySession.test.ts",
+        "src/hooks/useStudySession.ts"
       ]
     },
     {
@@ -980,8 +1047,8 @@
       "activityId": "VA-SES-001",
       "result": "Pass",
       "evidence": [
-        "src/hooks/useStudySession.ts",
-        "tests/unit/useStudySession.test.ts"
+        "tests/unit/useStudySession.test.ts",
+        "src/hooks/useStudySession.ts"
       ]
     },
     {
@@ -990,8 +1057,8 @@
       "activityId": "VA-SES-001",
       "result": "Pass",
       "evidence": [
-        "src/hooks/useStudySession.ts",
-        "tests/unit/useStudySession.test.ts"
+        "tests/unit/useStudySession.test.ts",
+        "src/hooks/useStudySession.ts"
       ]
     },
     {
@@ -1000,8 +1067,8 @@
       "activityId": "VA-SES-001",
       "result": "Pass",
       "evidence": [
-        "src/hooks/useStudySession.ts",
-        "tests/unit/useStudySession.test.ts"
+        "tests/unit/useStudySession.test.ts",
+        "src/hooks/useStudySession.ts"
       ]
     },
     {
@@ -1010,8 +1077,8 @@
       "activityId": "VA-SES-001",
       "result": "Pass",
       "evidence": [
-        "src/hooks/useStudySession.ts",
-        "tests/unit/useStudySession.test.ts"
+        "tests/unit/useStudySession.test.ts",
+        "src/hooks/useStudySession.ts"
       ]
     },
     {
@@ -1020,8 +1087,8 @@
       "activityId": "VA-PRG-001",
       "result": "Pass",
       "evidence": [
-        "src/components/ProgressDashboardView.tsx",
-        "tests/components/ProgressDashboardView.test.tsx"
+        "tests/components/ProgressDashboardView.test.tsx",
+        "src/components/ProgressDashboardView.tsx"
       ]
     },
     {
@@ -1030,8 +1097,8 @@
       "activityId": "VA-PRG-001",
       "result": "Pass",
       "evidence": [
-        "src/components/ProgressDashboardView.tsx",
-        "tests/components/ProgressDashboardView.test.tsx"
+        "tests/components/ProgressDashboardView.test.tsx",
+        "src/components/ProgressDashboardView.tsx"
       ]
     },
     {
@@ -1040,8 +1107,8 @@
       "activityId": "VA-PRG-001",
       "result": "Pass",
       "evidence": [
-        "src/components/ProgressDashboardView.tsx",
-        "tests/components/ProgressDashboardView.test.tsx"
+        "tests/components/ProgressDashboardView.test.tsx",
+        "src/components/ProgressDashboardView.tsx"
       ]
     },
     {
@@ -1050,8 +1117,8 @@
       "activityId": "VA-PRG-001",
       "result": "Pass",
       "evidence": [
-        "src/components/ProgressDashboardView.tsx",
-        "tests/components/ProgressDashboardView.test.tsx"
+        "tests/components/ProgressDashboardView.test.tsx",
+        "src/components/ProgressDashboardView.tsx"
       ]
     },
     {
@@ -1060,8 +1127,8 @@
       "activityId": "VA-PRG-002",
       "result": "Pass",
       "evidence": [
-        "src/components/ProgressDashboardView.tsx",
-        "tests/components/ProgressDashboardView.test.tsx"
+        "tests/components/ProgressDashboardView.test.tsx",
+        "src/components/ProgressDashboardView.tsx"
       ]
     },
     {
@@ -1070,8 +1137,8 @@
       "activityId": "VA-PRG-002",
       "result": "Pass",
       "evidence": [
-        "src/components/ProgressDashboardView.tsx",
-        "tests/components/ProgressDashboardView.test.tsx"
+        "tests/components/ProgressDashboardView.test.tsx",
+        "src/components/ProgressDashboardView.tsx"
       ]
     },
     {
@@ -1080,8 +1147,9 @@
       "activityId": "VA-SCH-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "tests/unit/inspection/inspection.test.ts",
+        "tests/unit/scheduler.test.ts",
+        "src/domain/scheduler.ts"
       ]
     },
     {
@@ -1090,8 +1158,9 @@
       "activityId": "VA-SCH-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "tests/unit/inspection/inspection.test.ts",
+        "tests/unit/scheduler.test.ts",
+        "src/domain/scheduler.ts"
       ]
     },
     {
@@ -1100,8 +1169,10 @@
       "activityId": "VA-SCH-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "tests/unit/domain/schedulerRequirements.test.ts",
+        "tests/unit/goldenScenarios.test.ts",
+        "tests/unit/scheduler.test.ts",
+        "src/domain/scheduler.ts"
       ]
     },
     {
@@ -1110,8 +1181,10 @@
       "activityId": "VA-SCH-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "tests/unit/domain/schedulerRequirements.test.ts",
+        "tests/unit/goldenScenarios.test.ts",
+        "tests/unit/scheduler.test.ts",
+        "src/domain/scheduler.ts"
       ]
     },
     {
@@ -1120,6 +1193,7 @@
       "activityId": "VA-SCH-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1130,6 +1204,7 @@
       "activityId": "VA-SCH-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1140,6 +1215,7 @@
       "activityId": "VA-SCH-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1150,6 +1226,8 @@
       "activityId": "VA-SCH-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
+        "tests/unit/goldenScenarios.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1160,6 +1238,7 @@
       "activityId": "VA-SCH-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1170,8 +1249,11 @@
       "activityId": "VA-SCH-002",
       "result": "Pass",
       "evidence": [
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "tests/unit/domain/schedulerRequirements.test.ts",
+        "tests/unit/goldenScenarios.test.ts",
+        "tests/unit/scheduler.test.ts",
+        "tests/unit/schedulerFixtures.test.ts",
+        "src/domain/scheduler.ts"
       ]
     },
     {
@@ -1180,8 +1262,11 @@
       "activityId": "VA-SCH-002",
       "result": "Pass",
       "evidence": [
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "tests/unit/domain/schedulerRequirements.test.ts",
+        "tests/unit/goldenScenarios.test.ts",
+        "tests/unit/scheduler.test.ts",
+        "tests/unit/schedulerFixtures.test.ts",
+        "src/domain/scheduler.ts"
       ]
     },
     {
@@ -1190,8 +1275,9 @@
       "activityId": "VA-SCH-002",
       "result": "Pass",
       "evidence": [
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "tests/unit/domain/schedulerRequirements.test.ts",
+        "tests/unit/scheduler.test.ts",
+        "src/domain/scheduler.ts"
       ]
     },
     {
@@ -1200,6 +1286,7 @@
       "activityId": "VA-SCH-002",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1210,6 +1297,8 @@
       "activityId": "VA-SCH-002",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
+        "tests/unit/goldenScenarios.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1220,6 +1309,8 @@
       "activityId": "VA-SCH-002",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
+        "tests/unit/goldenScenarios.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1230,8 +1321,11 @@
       "activityId": "VA-SCH-002",
       "result": "Pass",
       "evidence": [
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "tests/unit/domain/schedulerRequirements.test.ts",
+        "tests/unit/goldenScenarios.test.ts",
+        "tests/unit/scheduler.test.ts",
+        "tests/unit/schedulerFixtures.test.ts",
+        "src/domain/scheduler.ts"
       ]
     },
     {
@@ -1240,8 +1334,11 @@
       "activityId": "VA-SCH-002",
       "result": "Pass",
       "evidence": [
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "tests/unit/domain/schedulerRequirements.test.ts",
+        "tests/unit/goldenScenarios.test.ts",
+        "tests/unit/scheduler.test.ts",
+        "tests/unit/schedulerFixtures.test.ts",
+        "src/domain/scheduler.ts"
       ]
     },
     {
@@ -1250,6 +1347,7 @@
       "activityId": "VA-SCH-002",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1260,6 +1358,7 @@
       "activityId": "VA-SCH-002",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1270,6 +1369,8 @@
       "activityId": "VA-SCH-002",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
+        "tests/unit/schedulerFixtures.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1280,6 +1381,7 @@
       "activityId": "VA-SCH-002",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1290,6 +1392,7 @@
       "activityId": "VA-SCH-002",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1300,6 +1403,7 @@
       "activityId": "VA-SCH-003",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1310,8 +1414,9 @@
       "activityId": "VA-SCH-003",
       "result": "Pass",
       "evidence": [
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "tests/unit/scheduler.test.ts",
+        "tests/unit/schedulerFixtures.test.ts",
+        "src/domain/scheduler.ts"
       ]
     },
     {
@@ -1320,6 +1425,7 @@
       "activityId": "VA-SCH-003",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1330,6 +1436,8 @@
       "activityId": "VA-SCH-003",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
+        "tests/unit/schedulerFixtures.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1340,8 +1448,10 @@
       "activityId": "VA-SCH-003",
       "result": "Pass",
       "evidence": [
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "tests/unit/goldenScenarios.test.ts",
+        "tests/unit/scheduler.test.ts",
+        "tests/unit/schedulerFixtures.test.ts",
+        "src/domain/scheduler.ts"
       ]
     },
     {
@@ -1350,6 +1460,7 @@
       "activityId": "VA-SCH-003",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1360,6 +1471,8 @@
       "activityId": "VA-SCH-004",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
+        "tests/unit/schedulerFixtures.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1370,8 +1483,9 @@
       "activityId": "VA-SCH-004",
       "result": "Pass",
       "evidence": [
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "tests/unit/scheduler.test.ts",
+        "tests/unit/schedulerFixtures.test.ts",
+        "src/domain/scheduler.ts"
       ]
     },
     {
@@ -1380,8 +1494,8 @@
       "activityId": "VA-SCH-004",
       "result": "Pass",
       "evidence": [
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "tests/unit/scheduler.test.ts",
+        "src/domain/scheduler.ts"
       ]
     },
     {
@@ -1390,6 +1504,9 @@
       "activityId": "VA-SCH-004",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
+        "tests/unit/goldenScenarios.test.ts",
+        "tests/unit/schedulerFixtures.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1400,6 +1517,9 @@
       "activityId": "VA-SCH-004",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
+        "tests/unit/goldenScenarios.test.ts",
+        "tests/unit/schedulerFixtures.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1410,6 +1530,9 @@
       "activityId": "VA-SCH-004",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
+        "tests/unit/goldenScenarios.test.ts",
+        "tests/unit/schedulerFixtures.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1420,6 +1543,9 @@
       "activityId": "VA-SCH-004",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
+        "tests/unit/goldenScenarios.test.ts",
+        "tests/unit/schedulerFixtures.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1430,8 +1556,9 @@
       "activityId": "VA-SCH-004",
       "result": "Pass",
       "evidence": [
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "tests/unit/scheduler.test.ts",
+        "tests/unit/schedulerFixtures.test.ts",
+        "src/domain/scheduler.ts"
       ]
     },
     {
@@ -1440,8 +1567,9 @@
       "activityId": "VA-SCH-004",
       "result": "Pass",
       "evidence": [
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "tests/unit/scheduler.test.ts",
+        "tests/unit/schedulerFixtures.test.ts",
+        "src/domain/scheduler.ts"
       ]
     },
     {
@@ -1450,6 +1578,9 @@
       "activityId": "VA-SCH-004",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
+        "tests/unit/goldenScenarios.test.ts",
+        "tests/unit/schedulerFixtures.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1460,6 +1591,7 @@
       "activityId": "VA-SCH-004",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1470,6 +1602,7 @@
       "activityId": "VA-SCH-004",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
         "src/domain/scheduler.ts",
         "tests/unit/scheduler.test.ts"
       ]
@@ -1480,8 +1613,8 @@
       "activityId": "VA-REV-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/fsrsService.ts",
-        "tests/database/rpc.test.ts"
+        "tests/database/rpc.test.ts",
+        "src/domain/fsrsService.ts"
       ]
     },
     {
@@ -1490,8 +1623,8 @@
       "activityId": "VA-REV-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/fsrsService.ts",
-        "tests/database/rpc.test.ts"
+        "tests/database/rpc.test.ts",
+        "src/domain/fsrsService.ts"
       ]
     },
     {
@@ -1500,8 +1633,9 @@
       "activityId": "VA-REV-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/fsrsService.ts",
-        "tests/database/rpc.test.ts"
+        "tests/database/rpc.test.ts",
+        "supabase/tests/database/initial_schema.test.sql",
+        "src/domain/fsrsService.ts"
       ]
     },
     {
@@ -1520,8 +1654,9 @@
       "activityId": "VA-REV-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/fsrsService.ts",
-        "tests/database/rpc.test.ts"
+        "tests/database/rpc.test.ts",
+        "supabase/tests/database/initial_schema.test.sql",
+        "src/domain/fsrsService.ts"
       ]
     },
     {
@@ -1530,8 +1665,8 @@
       "activityId": "VA-REV-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/fsrsService.ts",
-        "tests/database/rpc.test.ts"
+        "tests/database/rpc.test.ts",
+        "src/domain/fsrsService.ts"
       ]
     },
     {
@@ -1540,8 +1675,8 @@
       "activityId": "VA-REV-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/fsrsService.ts",
-        "tests/database/rpc.test.ts"
+        "tests/database/rpc.test.ts",
+        "src/domain/fsrsService.ts"
       ]
     },
     {
@@ -1550,8 +1685,8 @@
       "activityId": "VA-REV-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/fsrsService.ts",
-        "tests/database/rpc.test.ts"
+        "tests/database/rpc.test.ts",
+        "src/domain/fsrsService.ts"
       ]
     },
     {
@@ -1560,8 +1695,8 @@
       "activityId": "VA-REV-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/fsrsService.ts",
-        "tests/database/rpc.test.ts"
+        "tests/database/rpc.test.ts",
+        "src/domain/fsrsService.ts"
       ]
     },
     {
@@ -1580,6 +1715,7 @@
       "activityId": "VA-REV-003",
       "result": "Pass",
       "evidence": [
+        "tests/unit/useStudySession.test.ts",
         "tests/database/rpc.test.ts",
         "src/hooks/useStudySession.ts"
       ]
@@ -1591,6 +1727,7 @@
       "result": "Pass",
       "evidence": [
         "tests/database/rpc.test.ts",
+        "supabase/tests/database/initial_schema.test.sql",
         "src/hooks/useStudySession.ts"
       ]
     },
@@ -1601,6 +1738,7 @@
       "result": "Pass",
       "evidence": [
         "tests/database/rpc.test.ts",
+        "supabase/tests/database/initial_schema.test.sql",
         "src/hooks/useStudySession.ts"
       ]
     },
@@ -1647,6 +1785,7 @@
       "activityId": "VA-SEC-002",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "scripts/secret-scan.mjs"
       ]
     },
@@ -1656,6 +1795,7 @@
       "activityId": "VA-SEC-003",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "supabase/migrations/20261010000000_initial_schema.sql"
       ]
     },
@@ -1665,6 +1805,7 @@
       "activityId": "VA-SEC-003",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "supabase/migrations/20261010000000_initial_schema.sql"
       ]
     },
@@ -1674,6 +1815,7 @@
       "activityId": "VA-SEC-004",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "scripts/test-setup.mjs"
       ]
     },
@@ -1683,6 +1825,7 @@
       "activityId": "VA-SEC-004",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "scripts/test-setup.mjs"
       ]
     },
@@ -1692,6 +1835,7 @@
       "activityId": "VA-SEC-004",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "src/domain/diagnostics.ts"
       ]
     },
@@ -1699,8 +1843,9 @@
       "requirementId": "ACC-001",
       "priority": "Must",
       "activityId": "VA-ACC-001",
-      "result": "Not Run",
+      "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "docs/manual-verification/MAN-ACC-001.md"
       ]
     },
@@ -1708,8 +1853,9 @@
       "requirementId": "ACC-002",
       "priority": "Must",
       "activityId": "VA-ACC-002",
-      "result": "Not Run",
+      "result": "Pass",
       "evidence": [
+        "tests/components/StudyView.test.tsx",
         "docs/manual-verification/MAN-ACC-002.md"
       ]
     },
@@ -1719,6 +1865,7 @@
       "activityId": "VA-ACC-002",
       "result": "Pass",
       "evidence": [
+        "tests/components/StudyView.test.tsx",
         "src/components/StudyView.tsx"
       ]
     },
@@ -1728,6 +1875,7 @@
       "activityId": "VA-ACC-002",
       "result": "Pass",
       "evidence": [
+        "tests/components/StudyView.test.tsx",
         "src/components/StudyView.tsx"
       ]
     },
@@ -1737,6 +1885,7 @@
       "activityId": "VA-ACC-003",
       "result": "Pass",
       "evidence": [
+        "tests/components/StudyView.test.tsx",
         "src/components/StudyView.tsx"
       ]
     },
@@ -1746,6 +1895,7 @@
       "activityId": "VA-ACC-002",
       "result": "Pass",
       "evidence": [
+        "tests/e2e/accessibility.spec.ts",
         "src/components/StudyView.tsx"
       ]
     },
@@ -1755,6 +1905,7 @@
       "activityId": "VA-ACC-004",
       "result": "Pass",
       "evidence": [
+        "tests/e2e/accessibility.spec.ts",
         "src/components/StudyView.tsx"
       ]
     },
@@ -1764,6 +1915,7 @@
       "activityId": "VA-ACC-005",
       "result": "Pass",
       "evidence": [
+        "tests/components/StudyView.test.tsx",
         "tests/e2e/accessibility.spec.ts",
         "src/components/StudyView.tsx"
       ]
@@ -1774,6 +1926,7 @@
       "activityId": "VA-PRF-001",
       "result": "Pass",
       "evidence": [
+        "tests/performance/benchmark.perf.ts",
         "reports/performance/prf-001-selection.json",
         "reports/performance/benchmark.json"
       ]
@@ -1784,6 +1937,7 @@
       "activityId": "VA-PRF-002",
       "result": "Pass",
       "evidence": [
+        "tests/performance/benchmark.perf.ts",
         "reports/performance/prf-002-csv-import.json",
         "reports/performance/benchmark.json"
       ]
@@ -1794,6 +1948,7 @@
       "activityId": "VA-PRF-003",
       "result": "Blocked",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "docs/decisions.md"
       ]
     },
@@ -1803,8 +1958,8 @@
       "activityId": "VA-REL-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/exportService.ts",
-        "tests/database/rpc.test.ts"
+        "tests/database/rpc.test.ts",
+        "src/domain/exportService.ts"
       ]
     },
     {
@@ -1813,6 +1968,7 @@
       "activityId": "VA-REL-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/useStudySession.test.ts",
         "src/domain/exportService.ts",
         "tests/database/rpc.test.ts"
       ]
@@ -1823,6 +1979,7 @@
       "activityId": "VA-REL-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/useStudySession.test.ts",
         "src/domain/exportService.ts",
         "tests/database/rpc.test.ts"
       ]
@@ -1833,6 +1990,7 @@
       "activityId": "VA-REL-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/useStudySession.test.ts",
         "src/domain/exportService.ts",
         "tests/database/rpc.test.ts"
       ]
@@ -1843,6 +2001,7 @@
       "activityId": "VA-REL-002",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domainCoverage.test.ts",
         "src/domain/exportService.ts"
       ]
     },
@@ -1861,8 +2020,9 @@
       "activityId": "VA-DIA-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/diagnostics.ts",
-        "tests/components/DiagnosticsView.test.tsx"
+        "tests/components/App.test.tsx",
+        "tests/components/DiagnosticsView.test.tsx",
+        "src/domain/diagnostics.ts"
       ]
     },
     {
@@ -1871,8 +2031,8 @@
       "activityId": "VA-DIA-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/diagnostics.ts",
-        "tests/components/DiagnosticsView.test.tsx"
+        "tests/components/DiagnosticsView.test.tsx",
+        "src/domain/diagnostics.ts"
       ]
     },
     {
@@ -1881,8 +2041,8 @@
       "activityId": "VA-DIA-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/diagnostics.ts",
-        "tests/components/DiagnosticsView.test.tsx"
+        "tests/components/DiagnosticsView.test.tsx",
+        "src/domain/diagnostics.ts"
       ]
     },
     {
@@ -1891,8 +2051,8 @@
       "activityId": "VA-DIA-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/diagnostics.ts",
-        "tests/components/DiagnosticsView.test.tsx"
+        "tests/components/DiagnosticsView.test.tsx",
+        "src/domain/diagnostics.ts"
       ]
     },
     {
@@ -1901,8 +2061,8 @@
       "activityId": "VA-DIA-001",
       "result": "Pass",
       "evidence": [
-        "src/domain/diagnostics.ts",
-        "tests/components/DiagnosticsView.test.tsx"
+        "tests/components/DiagnosticsView.test.tsx",
+        "src/domain/diagnostics.ts"
       ]
     },
     {
@@ -1911,8 +2071,8 @@
       "activityId": "VA-DIA-002",
       "result": "Pass",
       "evidence": [
-        "src/domain/diagnostics.ts",
-        "tests/components/DiagnosticsView.test.tsx"
+        "tests/components/DiagnosticsView.test.tsx",
+        "src/domain/diagnostics.ts"
       ]
     },
     {
@@ -1921,6 +2081,7 @@
       "activityId": "VA-TST-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "scripts/test-setup.mjs"
       ]
     },
@@ -1930,6 +2091,7 @@
       "activityId": "VA-TST-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "scripts/verify.mjs"
       ]
     },
@@ -1939,6 +2101,7 @@
       "activityId": "VA-TST-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "scripts/verify.mjs"
       ]
     },
@@ -1948,6 +2111,7 @@
       "activityId": "VA-TST-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "src/testing/factories/index.ts"
       ]
     },
@@ -1957,6 +2121,7 @@
       "activityId": "VA-TST-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "src/testing/factories/index.ts"
       ]
     },
@@ -1966,6 +2131,7 @@
       "activityId": "VA-SCH-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
         "src/domain/clock.ts"
       ]
     },
@@ -1975,6 +2141,7 @@
       "activityId": "VA-SCH-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
         "src/domain/clock.ts"
       ]
     },
@@ -1984,6 +2151,7 @@
       "activityId": "VA-SCH-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/domain/schedulerRequirements.test.ts",
         "src/testing/factories/index.ts"
       ]
     },
@@ -2020,6 +2188,7 @@
       "activityId": "VA-COV-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "vitest.config.ts",
         "tests/unit/domainCoverage.test.ts"
       ]
@@ -2030,6 +2199,7 @@
       "activityId": "VA-COV-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "vitest.config.ts",
         "tests/unit/domainCoverage.test.ts"
       ]
@@ -2040,6 +2210,7 @@
       "activityId": "VA-COV-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "scripts/verify.mjs"
       ]
     },
@@ -2049,6 +2220,7 @@
       "activityId": "VA-COV-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/goldenScenarios.test.ts",
         "vitest.config.ts"
       ]
     },
@@ -2058,6 +2230,7 @@
       "activityId": "VA-TRC-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "scripts/check-traceability.mjs"
       ]
     },
@@ -2067,6 +2240,7 @@
       "activityId": "VA-TRC-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "scripts/check-traceability.mjs"
       ]
     },
@@ -2076,6 +2250,7 @@
       "activityId": "VA-TRC-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "scripts/check-traceability.mjs",
         "tests/unit/traceabilityChecker.test.ts"
       ]
@@ -2086,6 +2261,7 @@
       "activityId": "VA-CIC-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         ".github/workflows/verify.yml"
       ]
     },
@@ -2095,6 +2271,7 @@
       "activityId": "VA-CIC-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         ".github/workflows/verify.yml"
       ]
     },
@@ -2104,6 +2281,7 @@
       "activityId": "VA-CIC-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         ".github/workflows/verify.yml"
       ]
     },
@@ -2113,6 +2291,7 @@
       "activityId": "VA-CIC-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         ".github/workflows/verify.yml"
       ]
     },
@@ -2122,6 +2301,7 @@
       "activityId": "VA-CIC-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         ".github/workflows/verify.yml"
       ]
     },
@@ -2131,6 +2311,7 @@
       "activityId": "VA-CIC-002",
       "result": "Blocked",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         ".github/workflows/verify.yml"
       ]
     },
@@ -2140,6 +2321,7 @@
       "activityId": "VA-CIC-002",
       "result": "Blocked",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         ".github/workflows/verify.yml"
       ]
     },
@@ -2149,6 +2331,7 @@
       "activityId": "VA-CIC-002",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "scripts/generate-release-report.mjs"
       ]
     },
@@ -2158,6 +2341,7 @@
       "activityId": "VA-ARC-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "README.md"
       ]
     },
@@ -2167,6 +2351,7 @@
       "activityId": "VA-ARC-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "README.md"
       ]
     },
@@ -2176,6 +2361,7 @@
       "activityId": "VA-ARC-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "supabase/migrations/20261010000000_initial_schema.sql",
         "supabase/seed.sql"
       ]
@@ -2186,6 +2372,7 @@
       "activityId": "VA-DAT-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "docs/data_dictionary.md"
       ]
     },
@@ -2195,6 +2382,7 @@
       "activityId": "VA-ARC-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "tests/fixtures/csv/CSV-014.csv"
       ]
     },
@@ -2204,6 +2392,7 @@
       "activityId": "VA-ARC-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "supabase/seed.sql"
       ]
     },
@@ -2213,6 +2402,7 @@
       "activityId": "VA-ARC-001",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         ".env.example"
       ]
     },
@@ -2222,6 +2412,7 @@
       "activityId": "VA-CIC-002",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "scripts/generate-release-report.mjs",
         "docs/schemas/verification_report.schema.json"
       ]
@@ -2232,74 +2423,86 @@
       "activityId": "VA-CIC-002",
       "result": "Pass",
       "evidence": [
+        "tests/unit/inspection/inspection.test.ts",
         "docs/limitations.md"
       ]
     }
   ],
   "testSuites": [
     {
-      "suiteName": "Vitest Unit & Component Suite",
+      "suiteName": "Vitest Unit, Component, Domain & PGlite Suite",
       "tool": "vitest v3.0.5",
-      "total": 192,
-      "passed": 192,
+      "total": 269,
+      "passed": 269,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 10520,
+      "durationMs": 35360,
       "status": "passed"
     },
     {
-      "suiteName": "Performance Benchmarks (VA-PRF-001, VA-PRF-002)",
-      "tool": "vitest v3.0.5",
-      "total": 2,
-      "passed": 2,
+      "suiteName": "Performance Benchmarks (PRF-001, PRF-002)",
+      "tool": "vitest v3.0.5 (vitest.perf.config.ts)",
+      "total": 3,
+      "passed": 3,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 17563,
+      "durationMs": 0,
       "status": "passed"
     },
     {
-      "suiteName": "Requirements Traceability Suite (VA-TRC-001)",
-      "tool": "node scripts/check-traceability.mjs",
-      "total": 4,
-      "passed": 4,
-      "failed": 0,
-      "skipped": 0,
-      "durationMs": 350,
-      "status": "passed"
-    },
-    {
-      "suiteName": "Database Schema, RLS & RPC Suite (pgTAP / Supabase CLI)",
-      "tool": "supabase test db",
+      "suiteName": "Database Schema, RLS & RPC Tests (pgTAP via Supabase CLI)",
+      "tool": "supabase test db (pgTAP)",
       "total": 14,
       "passed": 14,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 1280,
+      "durationMs": 0,
       "status": "passed"
     },
     {
       "suiteName": "End-to-End & Live Accessibility Suite (Playwright)",
       "tool": "@playwright/test v1.50.1",
-      "total": 15,
-      "passed": 15,
+      "total": 21,
+      "passed": 21,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 20185,
+      "durationMs": 12766,
       "status": "passed"
     }
   ],
   "coverage": {
-    "overallStatements": 94.57,
-    "overallBranches": 82.85,
-    "modules": {},
+    "overallStatements": 94.7,
+    "overallBranches": 83.6,
+    "modules": {
+      "src/domain/scheduler.ts": {
+        "statements": 100,
+        "branches": 90.58
+      },
+      "src/domain/fsrsService.ts": {
+        "statements": 100,
+        "branches": 92.3
+      },
+      "src/domain/normalization.ts": {
+        "statements": 100,
+        "branches": 100
+      },
+      "src/domain/csvParser.ts": {
+        "statements": 100,
+        "branches": 94.38
+      },
+      "src/hooks/useStudySession.ts": {
+        "statements": 98.04,
+        "branches": 90.74
+      }
+    },
     "thresholdMet": true
   },
   "performance": [
     {
       "id": "PRF-001",
-      "name": "Card Selection Latency (p95)",
+      "name": "Next-Card Selection Latency (p95)",
       "metric": "p95_ms",
-      "value": 3.7719,
+      "value": 4.19,
       "threshold": 500,
       "unit": "ms",
       "passed": true
@@ -2308,16 +2511,16 @@
       "id": "PRF-002-Preview",
       "name": "CSV 10k Preview Latency (max)",
       "metric": "preview_max_sec",
-      "value": 0.172,
+      "value": 0.217,
       "threshold": 30,
       "unit": "s",
       "passed": true
     },
     {
       "id": "PRF-002-Commit",
-      "name": "CSV 10k DB Commit Latency",
+      "name": "CSV 10k Database Commit Latency",
       "metric": "commit_sec",
-      "value": 12.642,
+      "value": 12.852,
       "threshold": 30,
       "unit": "s",
       "passed": true
@@ -2362,7 +2565,7 @@
       "procedure": "Automated ARIA & Roles",
       "type": "Unit & Component (@testing-library)",
       "status": "Passed",
-      "details": "Tested in tests/components/StudyView.test.tsx"
+      "details": "Tested in tests/components/StudyView.test.tsx and CardManagementView.test.tsx"
     },
     {
       "procedure": "Automated Axe WCAG 2.1 AA (ACC-006, ACC-007)",
@@ -2375,19 +2578,19 @@
   "waivers": [],
   "artifacts": [
     {
-      "path": "dist/assets/browser-BxAfJf0S.js",
-      "sha256": "1b32081ae814ffaee99475026772ca828c8f0f1019947ef8dadaf976914e98a6",
+      "path": "dist/assets/browser-Dro0Hr-O.js",
+      "sha256": "99188d6a68caf5066f743a7f7fe78c00700ceb3f066d21c7c0b4abcd76ac2e62",
       "description": "Static distribution asset (615 bytes)"
+    },
+    {
+      "path": "dist/assets/index-CWyb22Ct.js",
+      "sha256": "ded35d022c4f6abfc532c347a6e9666708cbdd1a1b34d700692e3cb7ca08b6a3",
+      "description": "Static distribution asset (394227 bytes)"
     },
     {
       "path": "dist/assets/index-DDjCw4Io.css",
       "sha256": "45c251bb96e6e9b442213db42c4927e3be2c9c0fd5e9c86ad266ffa85e91b70c",
       "description": "Static distribution asset (31995 bytes)"
-    },
-    {
-      "path": "dist/assets/index-DwQagSC2.js",
-      "sha256": "5124308783718fe444be1427f628742b5d5325f777c6db181804ad67f15702f1",
-      "description": "Static distribution asset (394216 bytes)"
     },
     {
       "path": "dist/favicon.svg",
@@ -2406,7 +2609,7 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "35e6e9d255127af5941a2a1caa6810162fc78e67209289c65d002dcf59a5546f",
+      "sha256": "666aab18716e70966591add021c6dab02e10f43332aa373b5be3865545b8b3ac",
       "description": "Static distribution asset (851 bytes)"
     },
     {
@@ -2421,7 +2624,7 @@
     },
     {
       "path": "dist/sw.js",
-      "sha256": "92425cfc9ef5178f938507fed9027f2007f84dd559f1f94a809cb9a5973a2742",
+      "sha256": "aff5cf04d625ae61cba13565320a6a5bb15827d2bf5a6a60bd2269fcd1992274",
       "description": "Static distribution asset (1507 bytes)"
     },
     {
@@ -2435,7 +2638,7 @@
       "role": "Verification Executor",
       "name": "Antigravity Automated Agent",
       "decision": "Verified Automated Baseline; Recommends Do Not Release pending operator signatures",
-      "timestamp": "2026-10-15T06:35:44.955Z"
+      "timestamp": "2026-10-15T17:44:35.427Z"
     },
     {
       "role": "Release Authority",

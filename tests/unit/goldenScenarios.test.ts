@@ -7,7 +7,7 @@ import { createCard, createDeck, createStudySession, createSessionCardState } fr
 describe('Versioned Golden Scenarios (TST-015 & VA-SCH-006)', () => {
   const t0 = new Date('2026-06-01T10:00:00Z');
 
-  it('Golden 1 - New Learning: selects from cohort 1 in source order', () => {
+  it('TST-015, SCH-010, SCH-011: Golden 1 - New Learning: selects from cohort 1 in source order', () => {
     const deck = createDeck();
     const session = createStudySession(deck.id);
     const clock = new FixedClock(t0);
@@ -33,7 +33,7 @@ describe('Versioned Golden Scenarios (TST-015 & VA-SCH-006)', () => {
     expect(sel?.queue).toBe('active_cohort');
   });
 
-  it('Golden 2 - Success: rating Good updates state and stability', () => {
+  it('TST-015, SCH-003, SCH-014: Golden 2 - Success: rating Good updates state and stability', () => {
     const fsrs = new FsrsService(0.90);
     const card = createCard({ learning_state: 'new' });
 
@@ -43,7 +43,7 @@ describe('Versioned Golden Scenarios (TST-015 & VA-SCH-006)', () => {
     expect(new Date(review.card.due).getTime()).toBeGreaterThan(t0.getTime());
   });
 
-  it('Golden 3 - Lapse: rating Again on review card causes lapse', () => {
+  it('TST-015, SCH-004, SCH-015: Golden 3 - Lapse: rating Again on review card causes lapse', () => {
     const fsrs = new FsrsService(0.90);
     const card = createCard({
       learning_state: 'review',
@@ -57,7 +57,7 @@ describe('Versioned Golden Scenarios (TST-015 & VA-SCH-006)', () => {
     expect(review.card.lapses).toBe(1);
   });
 
-  it('Golden 4 - Relearning: failed card regains priority after anti-echo delay and intervening count', () => {
+  it('TST-015, SCH-016, SCH-017, SCH-032: Golden 4 - Relearning: failed card regains priority after anti-echo delay and intervening count', () => {
     const deck = createDeck({ min_failed_retry_delay_seconds: 60, min_intervening_cards: 3 });
     const session = createStudySession(deck.id);
     const clock = new FixedClock(t0);
@@ -98,7 +98,7 @@ describe('Versioned Golden Scenarios (TST-015 & VA-SCH-006)', () => {
     expect(sel?.queue).toBe('relearning');
   });
 
-  it('Golden 5 - Overdue Review: cards overdue by > max(7 days, scheduled_interval) become mandatory', () => {
+  it('TST-015, SCH-033, SCH-034: Golden 5 - Overdue Review: cards overdue by > max(7 days, scheduled_interval) become mandatory', () => {
     const deck = createDeck();
     const session = createStudySession(deck.id);
     const clock = new FixedClock(t0);
@@ -135,7 +135,7 @@ describe('Versioned Golden Scenarios (TST-015 & VA-SCH-006)', () => {
     expect(sel?.queue).toBe('mandatory_overdue');
   });
 
-  it('Golden 6 - Exam Imminent Prioritization: prioritizes candidates before exam horizon', () => {
+  it('TST-015, SCH-035, SCH-038: Golden 6 - Exam Imminent Prioritization: prioritizes candidates before exam horizon', () => {
     const examDate = new Date(t0.getTime() + 7 * 86400000); // Exam in 7 days
     const deck = createDeck({ exam_date: examDate.toISOString() });
     const session = createStudySession(deck.id);
@@ -172,7 +172,7 @@ describe('Versioned Golden Scenarios (TST-015 & VA-SCH-006)', () => {
     expect(sel?.selectedCard.id).toBe('weak-card');
   });
 
-  it('Golden 7 - Due Backlog Suppression: completely suppresses new cards when due workload >= capacity', () => {
+  it('TST-015, SCH-027: Golden 7 - Due Backlog Suppression: completely suppresses new cards when due workload >= capacity', () => {
     const deck = createDeck();
     const session = createStudySession(deck.id, { duration_seconds: 300, active_duration_seconds: 200 }); // 100s remaining
     const clock = new FixedClock(t0);
@@ -199,7 +199,7 @@ describe('Versioned Golden Scenarios (TST-015 & VA-SCH-006)', () => {
     expect(sel?.selectedCard.id).not.toBe('new-suppressed');
   });
 
-  it('VA-SCH-006: Utility formula conformance against independent calculation', () => {
+  it('TST-015, SCH-008, SCH-035: VA-SCH-006: Utility formula conformance against independent calculation', () => {
     const fsrs = new FsrsService(0.90);
     const card = createCard({
       learning_state: 'review',

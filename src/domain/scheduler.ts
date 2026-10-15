@@ -233,12 +233,12 @@ export class SchedulerEngine {
         const epsilon = 1e-6;
         const tiedCandidates = scored.filter(c => Math.abs(c.base_utility - bestScore) <= epsilon);
 
-        if (tiedCandidates.length === 1) {
-          chosenCandidate = tiedCandidates[0]!;
+        if (tiedCandidates.length <= 1) {
+          chosenCandidate = tiedCandidates[0] ?? scored[0]!;
         } else {
           // Seeded random pick among ties
           const idx = Math.floor(rng.next() * tiedCandidates.length);
-          chosenCandidate = tiedCandidates[idx]!;
+          chosenCandidate = tiedCandidates[idx] ?? scored[0]!;
         }
       }
 

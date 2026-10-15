@@ -124,3 +124,25 @@ export interface SelectionResult {
   utilityValues: Record<string, number>;
   timestamp: string;
 }
+
+export interface ReviewEvent {
+  id: string;
+  user_id: string;
+  card_id: string;
+  deck_id: string;
+  study_session_id?: string | null;
+  operation_id: string;
+  shown_at: string;
+  revealed_at: string;
+  rated_at: string;
+  result: ReviewResult;
+  rating: number; // 1 (Again), 3 (Good)
+  response_latency_ms: number;
+  pre_state: Record<string, unknown>;
+  post_state: Record<string, unknown>;
+  algorithm_version: string;
+  is_invalidated: boolean;
+  invalidation_reason?: string | null;
+  superseded_by_operation_id?: string | null;
+  created_at: string;
+}

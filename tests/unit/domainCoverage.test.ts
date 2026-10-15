@@ -179,7 +179,7 @@ describe('triggerJsonDownload (REL-005)', () => {
     expect(() => triggerJsonDownload(data)).not.toThrow();
   });
 
-  it('exportAllUserData fetches all tables and builds export object (REL-005)', async () => {
+  it('REL-005: exportAllUserData fetches all tables and builds export object with owned decks, cards, sessions, events, and algorithm versions', async () => {
     vi.mocked(supabase.auth.getUser).mockResolvedValueOnce({
       data: { user: { id: 'test-user-id' } as any },
       error: null

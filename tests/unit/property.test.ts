@@ -7,7 +7,7 @@ describe('Property-Based Scheduling Tests (TST-010, TST-011)', () => {
   const fsrsService = new FsrsService(0.90);
   const baseTime = new Date('2026-06-01T12:00:00Z');
 
-  it('verifies 10,000 valid histories maintain non-negative counters and valid probabilities', () => {
+  it('TST-010, TST-011, DAT-005, DAT-006: verifies 10,000 valid histories maintain non-negative counters and valid probabilities', () => {
     let iterationCount = 0;
 
     fc.assert(

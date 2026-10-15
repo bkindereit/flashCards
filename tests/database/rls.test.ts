@@ -65,7 +65,7 @@ describe('Row-Level Security (RLS) Isolation (SEC-001, SEC-002, SEC-003)', () =>
     `);
   });
 
-  it('SEC-002: User B cannot select or modify User A records', async () => {
+  it('SEC-001, SEC-002: RLS enabled and User B cannot select or modify User A records', async () => {
     // Switch to User B
     await db.exec(`SET "request.jwt.claim.sub" = '${userB}';`);
 

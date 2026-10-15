@@ -2,11 +2,11 @@ import { describe, it, expect } from 'vitest';
 import { parseAndPreviewCsv, parseRfc4180Csv, detectDelimiter } from '@/domain/csvParser';
 
 describe('CSV Parsing & Preview (IMP-001..IMP-012)', () => {
-  it('CSV-001: Rejects empty CSV', async () => {
+  it('IMP-005: Rejects empty CSV', async () => {
     await expect(parseAndPreviewCsv('')).rejects.toThrow('CSV input is empty');
   });
 
-  it('CSV-002: Header only returns zero data rows', async () => {
+  it('IMP-001: Header only returns zero data rows', async () => {
     const csv = 'question,answer';
     const preview = await parseAndPreviewCsv(csv);
     expect(preview.totalRows).toBe(0);
@@ -14,7 +14,7 @@ describe('CSV Parsing & Preview (IMP-001..IMP-012)', () => {
     expect(preview.rejectedRows).toHaveLength(0);
   });
 
-  it('CSV-003: Parses valid unique rows with exact counts', async () => {
+  it('IMP-003, IMP-007: Parses valid unique rows with exact counts', async () => {
     const csv = `question,answer
 What is 2+2?,4
 What is the capital of Japan?,Tokyo
@@ -29,7 +29,7 @@ Who wrote Hamlet?,Shakespeare`;
     expect(preview.validRows[0]?.normalizedAnswer).toBe('4');
   });
 
-  it('CSV-004: Recognizes reversed exact headers (answer, question)', async () => {
+  it('IMP-002: Recognizes reversed exact headers (answer, question)', async () => {
     const csv = `answer,question
 Paris,Capital of France?
 Berlin,Capital of Germany?`;
@@ -41,7 +41,7 @@ Berlin,Capital of Germany?`;
     expect(preview.validRows[0]?.normalizedAnswer).toBe('Paris');
   });
 
-  it('CSV-005 & CSV-006: Parses RFC 4180 quotes, escaped quotes, and embedded line breaks', async () => {
+  it('IMP-004: Parses RFC 4180 quotes, escaped quotes, and embedded line breaks', async () => {
     const csv = `question,answer
 "Quotes, commas, and ""escaped"" quotes","Here is line 1\nand line 2"`;
 
@@ -51,7 +51,7 @@ Berlin,Capital of Germany?`;
     expect(preview.validRows[0]?.normalizedAnswer).toBe('Here is line 1\nand line 2');
   });
 
-  it('CSV-009: Rejects blank questions or answers with row number and reason', async () => {
+  it('IMP-005, IMP-006: Rejects blank questions or answers with row number and reason', async () => {
     const csv = `question,answer
 Valid Q,Valid A
    ,Blank Q
@@ -69,12 +69,12 @@ Blank A,
     expect(preview.rejectedRows[2]?.reason).toContain('Both normalized question and answer are blank');
   });
 
-  it('CSV-010: Rejects structurally malformed CSV (unterminated quote)', async () => {
+  it('IMP-006, IMP-008: Rejects structurally malformed CSV (unterminated quote)', async () => {
     const csv = `question,answer\n"Unterminated quote,test`;
     await expect(parseAndPreviewCsv(csv)).rejects.toThrow(/CSV structure error/);
   });
 
-  it('CSV-011: Detects in-file duplicates and counts them properly', async () => {
+  it('IMP-010, IMP-012: Detects in-file duplicates and counts them properly', async () => {
     const csv = `question,answer
 Duplicate Question,Same Answer
 Unique Question,Different Answer
@@ -86,7 +86,7 @@ Duplicate Question,Same Answer`;
     expect(preview.potentialInserts).toBe(2);
   });
 
-  it('Handles custom column mapping when exact headers absent', async () => {
+  it('IMP-002: Handles custom column mapping when exact headers absent', async () => {
     const csv = `front,back,notes
 Hello,Bonjour,greeting
 Goodbye,Au revoir,farewell`;
@@ -116,7 +116,7 @@ Goodbye,Au revoir,farewell`;
     ]);
   });
 
-  it('Rejects rows that have fewer columns than mapped', async () => {
+  it('IMP-006: Rejects rows that have fewer columns than mapped', async () => {
     const csv = `question,answer,notes\nQ1,A1,N1\nOnlyOneColumn`;
     const preview = await parseAndPreviewCsv(csv, {
       questionColumnIndex: 0,
@@ -127,7 +127,7 @@ Goodbye,Au revoir,farewell`;
     expect(preview.rejectedRows[0]?.reason).toContain('Row contains 1 columns, but expected at least 2');
   });
 
-  it('Identifies whether question, answer, or both are blank', async () => {
+  it('IMP-005: Identifies whether question, answer, or both are blank', async () => {
     const csv = `question,answer\nQ1,\n,A2\n,\nQ3,A3`;
     const preview = await parseAndPreviewCsv(csv);
     expect(preview.validRows).toHaveLength(1);

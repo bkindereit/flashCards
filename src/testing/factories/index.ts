@@ -103,3 +103,28 @@ export function createSessionCardState(sessionId: string, cardId: string, overri
     ...overrides
   };
 }
+
+export function createReviewEvent(overrides?: Partial<import('@/domain/types').ReviewEvent>): import('@/domain/types').ReviewEvent {
+  return {
+    id: nextId(),
+    user_id: 'user-default-id',
+    card_id: nextId(),
+    deck_id: nextId(),
+    study_session_id: nextId(),
+    operation_id: nextId(),
+    shown_at: new Date('2026-01-01T12:00:00Z').toISOString(),
+    revealed_at: new Date('2026-01-01T12:00:05Z').toISOString(),
+    rated_at: new Date('2026-01-01T12:00:07Z').toISOString(),
+    result: 'correct',
+    rating: 3,
+    response_latency_ms: 2000,
+    pre_state: { learning_state: 'new' },
+    post_state: { learning_state: 'learning' },
+    algorithm_version: 'v4-default-1.0.0',
+    is_invalidated: false,
+    invalidation_reason: null,
+    superseded_by_operation_id: null,
+    created_at: new Date('2026-01-01T12:00:07Z').toISOString(),
+    ...overrides
+  };
+}

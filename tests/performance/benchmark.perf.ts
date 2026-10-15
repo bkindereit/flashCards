@@ -34,7 +34,7 @@ function calculatePercentiles(samples: number[]) {
 }
 
 describe('Performance Benchmarks (PRF-001, PRF-002)', () => {
-  it('VA-PRF-001: Next-card selection p95 <= 500 ms over 1,000 selections with 10k cards', () => {
+  it('PRF-001: Next-card selection p95 <= 500 ms over 1,000 selections with 10k cards', () => {
     const deck = createDeck({ id: 'perf-deck-1', name: 'Large 10k Deck' });
     const session = createStudySession(deck.id, { id: 'perf-sess-1', duration_seconds: 1800 });
 
@@ -151,7 +151,7 @@ describe('Performance Benchmarks (PRF-001, PRF-002)', () => {
     expect(stats.p95).toBeLessThanOrEqual(500.0);
   });
 
-  it('VA-PRF-002: Preview and commit of 10,000-row CSV-014 each complete in <= 30 seconds', async () => {
+  it('PRF-002: Preview and commit of 10,000-row CSV-014 each complete in <= 30 seconds', async () => {
     const csvPath = path.resolve(process.cwd(), 'tests/fixtures/csv/CSV-014.csv');
     const csvContent = fs.readFileSync(csvPath, 'utf8');
 

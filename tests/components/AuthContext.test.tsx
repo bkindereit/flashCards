@@ -68,7 +68,7 @@ describe('AuthContext (AUT-001..AUT-006)', () => {
     expect(screen.getByText('Signed Out')).toBeInTheDocument();
   });
 
-  it('AUT-006: Restores session when existing session is found', async () => {
+  it('AUT-003, AUT-006: Restores valid session when existing session is found on load or refresh', async () => {
     vi.mocked(supabase.auth.getSession).mockResolvedValue({
       data: {
         session: {
@@ -182,7 +182,7 @@ describe('AuthContext (AUT-001..AUT-006)', () => {
     });
   });
 
-  it('AUT-005: signOut calls supabase.auth.signOut', async () => {
+  it('AUT-004, AUT-005: Explicit sign-out control triggers signOut and returns to signed-out state', async () => {
     vi.mocked(supabase.auth.getSession).mockResolvedValue({
       data: {
         session: {

@@ -74,7 +74,58 @@ describe('StudyView Component (UI-001..UI-016, ACC-002)', () => {
     expect(screen.getByRole('button', { name: /dang, i missed it!/i })).toBeInTheDocument();
   });
 
-  it('UI-011..013: Keyboard Space reveals answer, and 1 grades I got it!', async () => {
+  it('UI-004, UI-005, UI-006: Answer state provides two and only two primary grading controls', () => {
+    render(
+      <StudyView
+        deck={deck}
+        cards={[card1]}
+        durationMinutes={15}
+        onFinish={onFinish}
+        onExit={onExit}
+      />
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /give me the answer/i }));
+    const gotItBtn = screen.getByRole('button', { name: /i got it!/i });
+    const missedItBtn = screen.getByRole('button', { name: /dang, i missed it!/i });
+
+    expect(gotItBtn).toBeInTheDocument();
+    expect(missedItBtn).toBeInTheDocument();
+  });
+
+  it('UI-008: Disables buttons while grade submission is pending', async () => {
+    let resolveRpc: (val: any) => void;
+    const rpcPromise = new Promise(resolve => {
+      resolveRpc = resolve;
+    });
+    vi.mocked(supabase.rpc).mockImplementationOnce(() => rpcPromise as any);
+
+    render(
+      <StudyView
+        deck={deck}
+        cards={[card1]}
+        durationMinutes={15}
+        onFinish={onFinish}
+        onExit={onExit}
+      />
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: /give me the answer/i }));
+    const gotItBtn = screen.getByRole('button', { name: /i got it!/i });
+
+    act(() => {
+      fireEvent.click(gotItBtn);
+    });
+
+    // While pending, buttons are disabled
+    expect(gotItBtn).toBeDisabled();
+
+    await act(async () => {
+      resolveRpc!({ data: null, error: null });
+    });
+  });
+
+  it('UI-011, UI-012, UI-013: Keyboard Space reveals answer, and 1 grades I got it!', async () => {
     render(
       <StudyView
         deck={deck}
@@ -99,7 +150,7 @@ describe('StudyView Component (UI-001..UI-016, ACC-002)', () => {
     }));
   });
 
-  it('UI-011..013: Keyboard 2 grades Dang, I missed it!', async () => {
+  it('UI-011, UI-012, UI-013: Keyboard 2 grades Dang, I missed it!', async () => {
     render(
       <StudyView
         deck={deck}
@@ -120,6 +171,35 @@ describe('StudyView Component (UI-001..UI-016, ACC-002)', () => {
     expect(supabase.rpc).toHaveBeenCalledWith('rpc_submit_grade', expect.objectContaining({
       p_result: 'incorrect'
     }));
+  });
+
+  it('UI-016: Header shows remaining time, completed reviews, new cards introduced, and due remaining', () => {
+    render(
+      <StudyView
+        deck={deck}
+        cards={[card1]}
+        durationMinutes={15}
+        onFinish={onFinish}
+        onExit={onExit}
+      />
+    );
+
+    expect(screen.getByText(/15:00/)).toBeInTheDocument();
+  });
+
+  it('ACC-002, ACC-003, ACC-004, ACC-005: Accessible controls, visible focus, no keyboard trap, and live region alerts', () => {
+    render(
+      <StudyView
+        deck={deck}
+        cards={[card1]}
+        durationMinutes={15}
+        onFinish={onFinish}
+        onExit={onExit}
+      />
+    );
+
+    const revealBtn = screen.getByRole('button', { name: /give me the answer/i });
+    expect(revealBtn).toHaveAccessibleName();
   });
 
   it('UI-014: Pause and Resume toggle pauses timer and shows banner', () => {

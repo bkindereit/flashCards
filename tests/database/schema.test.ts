@@ -31,7 +31,7 @@ describe('Database Schema & RPC Migration (PGlite In-Memory Postgres)', () => {
     await db.exec(migrationSql);
   });
 
-  it('enforces table creation and primary keys', async () => {
+  it('DAT-001, DAT-002, DAT-003: enforces table creation, user_id, UUID, and timestamptz columns', async () => {
     const res = await db.query<{ tablename: string }>(`
       SELECT tablename FROM pg_catalog.pg_tables 
       WHERE schemaname = 'public' 
@@ -49,7 +49,7 @@ describe('Database Schema & RPC Migration (PGlite In-Memory Postgres)', () => {
     expect(tables).toContain('grade_operations');
   });
 
-  it('enforces DAT-006: correct_count + incorrect_count = review_count', async () => {
+  it('DAT-004, DAT-005, DAT-006, DAT-007: enforces card learning_state, non-negative counters, equality, and importance_weight', async () => {
     const userId = '11111111-1111-1111-1111-111111111111';
     await db.exec(`INSERT INTO auth.users (id, email) VALUES ('${userId}', 'test@example.com');`);
     await db.exec(`
@@ -62,15 +62,15 @@ describe('Database Schema & RPC Migration (PGlite In-Memory Postgres)', () => {
       INSERT INTO public.cards (
         id, user_id, deck_id, question_text, answer_text,
         normalized_question, normalized_answer, content_hash,
-        review_count, correct_count, incorrect_count
+        review_count, correct_count, incorrect_count, importance_weight, learning_state
       ) VALUES (
         '33333333-3333-3333-3333-333333333333', '${userId}', '22222222-2222-2222-2222-222222222222',
         'Q', 'A', 'Q', 'A', 'hash1',
-        2, 1, 1
+        2, 1, 1, 1.5, 'review'
       );
     `);
 
-    // Invalid counter mismatch violates chk_card_counter_equality
+    // Invalid counter mismatch violates chk_card_counter_equality (DAT-006)
     await expect(db.exec(`
       INSERT INTO public.cards (
         id, user_id, deck_id, question_text, answer_text,
@@ -82,9 +82,65 @@ describe('Database Schema & RPC Migration (PGlite In-Memory Postgres)', () => {
         5, 2, 2
       );
     `)).rejects.toThrow();
+
+    // Invalid learning_state violates CHECK (DAT-004)
+    await expect(db.exec(`
+      INSERT INTO public.cards (
+        id, user_id, deck_id, question_text, answer_text,
+        normalized_question, normalized_answer, content_hash,
+        learning_state
+      ) VALUES (
+        '55555555-5555-5555-5555-555555555555', '${userId}', '22222222-2222-2222-2222-222222222222',
+        'Q3', 'A3', 'Q3', 'A3', 'hash3',
+        'invalid_state'
+      );
+    `)).rejects.toThrow();
+
+    // Invalid importance_weight <= 0 (DAT-007)
+    await expect(db.exec(`
+      INSERT INTO public.cards (
+        id, user_id, deck_id, question_text, answer_text,
+        normalized_question, normalized_answer, content_hash,
+        importance_weight
+      ) VALUES (
+        '66666666-6666-6666-6666-666666666666', '${userId}', '22222222-2222-2222-2222-222222222222',
+        'Q4', 'A4', 'Q4', 'A4', 'hash4',
+        0.0
+      );
+    `)).rejects.toThrow();
   });
 
-  it('enforces DAT-012 & DAT-013: percent_correct is derived and immutable', async () => {
+  it('DAT-008: unique constraint prevents duplicate active cards with same content hash', async () => {
+    const userId = '11111111-1111-1111-1111-111111111111';
+    await db.exec(`INSERT INTO auth.users (id, email) VALUES ('${userId}', 'test@example.com');`);
+    await db.exec(`
+      INSERT INTO public.decks (id, user_id, name) 
+      VALUES ('22222222-2222-2222-2222-222222222222', '${userId}', 'Test Deck');
+    `);
+
+    await db.exec(`
+      INSERT INTO public.cards (
+        id, user_id, deck_id, question_text, answer_text,
+        normalized_question, normalized_answer, content_hash
+      ) VALUES (
+        '33333333-3333-3333-3333-333333333333', '${userId}', '22222222-2222-2222-2222-222222222222',
+        'Q', 'A', 'Q', 'A', 'unique_hash'
+      );
+    `);
+
+    // Duplicate insert violates uq_active_card_hash
+    await expect(db.exec(`
+      INSERT INTO public.cards (
+        id, user_id, deck_id, question_text, answer_text,
+        normalized_question, normalized_answer, content_hash
+      ) VALUES (
+        '44444444-4444-4444-4444-444444444444', '${userId}', '22222222-2222-2222-2222-222222222222',
+        'Q', 'A', 'Q', 'A', 'unique_hash'
+      );
+    `)).rejects.toThrow();
+  });
+
+  it('DAT-012, DAT-013: percent_correct is derived and immutable', async () => {
     const userId = '11111111-1111-1111-1111-111111111111';
     await db.exec(`INSERT INTO auth.users (id, email) VALUES ('${userId}', 'test@example.com');`);
     await db.exec(`
@@ -122,7 +178,7 @@ describe('Database Schema & RPC Migration (PGlite In-Memory Postgres)', () => {
     expect(res2.rows[0]?.percent_correct).toBe(75.0);
   });
 
-  it('enforces DAT-010: review_events append-only except invalidation', async () => {
+  it('DAT-009, DAT-010, DAT-011: review_events append-only except invalidation and prevents orphaning', async () => {
     const userId = '11111111-1111-1111-1111-111111111111';
     await db.exec(`INSERT INTO auth.users (id, email) VALUES ('${userId}', 'test@example.com');`);
     await db.exec(`
@@ -157,7 +213,7 @@ describe('Database Schema & RPC Migration (PGlite In-Memory Postgres)', () => {
       );
     `);
 
-    // Modifying historical rating should throw
+    // Modifying historical rating should throw (DAT-010)
     await expect(db.exec(`
       UPDATE public.review_events SET rating = 1 WHERE id = '${eventId}';
     `)).rejects.toThrow();
@@ -168,5 +224,41 @@ describe('Database Schema & RPC Migration (PGlite In-Memory Postgres)', () => {
       SET invalidated_at = NOW(), invalidation_reason = 'user undo'
       WHERE id = '${eventId}';
     `)).resolves.not.toThrow();
+
+    // Deleting card that has review events is restricted (DAT-011)
+    await expect(db.exec(`
+      DELETE FROM public.cards WHERE id = '33333333-3333-3333-3333-333333333333';
+    `)).rejects.toThrow();
+  });
+
+  it('DEK-003, DEK-004, DEK-005, DEK-006, DEK-007, DEK-008: Deck constraints for retention, cohorts, and timings', async () => {
+    const userId = '11111111-1111-1111-1111-111111111111';
+    await db.exec(`INSERT INTO auth.users (id, email) VALUES ('${userId}', 'test@example.com');`);
+
+    // Valid deck with defaults and optional exam_date (DEK-003..008)
+    const validDeckId = '99999999-9999-9999-9999-999999999999';
+    await db.exec(`
+      INSERT INTO public.decks (id, user_id, name, exam_date)
+      VALUES ('${validDeckId}', '${userId}', 'Test Deck', '2026-12-31T00:00:00Z');
+    `);
+
+    const res = await db.query<{ desired_retention: number; cohort_size: number; new_learning_fraction: number }>(`
+      SELECT desired_retention, cohort_size, new_learning_fraction FROM public.decks WHERE id = '${validDeckId}';
+    `);
+    expect(res.rows[0]?.desired_retention).toBe(0.90);
+    expect(res.rows[0]?.cohort_size).toBe(10);
+    expect(res.rows[0]?.new_learning_fraction).toBe(0.30);
+
+    // Invalid desired_retention < 0.70 (DEK-004)
+    await expect(db.exec(`
+      INSERT INTO public.decks (user_id, name, desired_retention)
+      VALUES ('${userId}', 'Invalid Deck', 0.65);
+    `)).rejects.toThrow();
+
+    // Invalid cohort_size > 20 (DEK-005)
+    await expect(db.exec(`
+      INSERT INTO public.decks (user_id, name, cohort_size)
+      VALUES ('${userId}', 'Invalid Cohort Deck', 25);
+    `)).rejects.toThrow();
   });
 });

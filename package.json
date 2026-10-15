@@ -14,6 +14,7 @@
     "test:traceability": "node scripts/check-traceability.mjs",
     "test:perf": "vitest run -c vitest.perf.config.ts",
     "test:e2e": "playwright test",
+    "trace:sync": "node scripts/sync-traceability.mjs",
     "secret-scan": "node scripts/secret-scan.mjs",
     "verify": "node scripts/verify.mjs",
     "report:release": "node scripts/generate-release-report.mjs"

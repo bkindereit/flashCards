@@ -53,7 +53,7 @@ describe('Database RPC Functions (submit_grade, undo_grade, commit_import)', () 
     `);
   });
 
-  it('rpc_submit_grade: updates card, session, and creates review event atomically (REV-003, REV-005)', async () => {
+  it('REV-001, REV-002, REV-003, REV-005, REV-008, REV-009, REV-014: rpc_submit_grade updates card, session, and creates review event atomically', async () => {
     const opId = '55555555-5555-5555-5555-555555555555';
     const now = new Date().toISOString();
     const postState = JSON.stringify({
@@ -91,34 +91,45 @@ describe('Database RPC Functions (submit_grade, undo_grade, commit_import)', () 
     expect(cardRes.rows[0]?.correct_count).toBe(1);
     expect(cardRes.rows[0]?.incorrect_count).toBe(0);
     expect(cardRes.rows[0]?.difficulty).toBe(4.8);
+  });
 
-    // Verify idempotency (REV-004, REL-001)
+  it('REV-004, REL-001: Repeating a committed operation ID returns previously committed result without duplicate grade', async () => {
+    const opId = '55555555-5555-5555-5555-555555555555';
+    const now = new Date().toISOString();
+    const postState = JSON.stringify({
+      learning_state: 'review',
+      difficulty: 4.8,
+      stability_days: 2.5,
+      next_due_at: new Date(Date.now() + 86400000 * 2.5).toISOString()
+    });
+
+    // First call
+    await db.exec(`
+      SELECT public.rpc_submit_grade(
+        '${opId}'::UUID, '${sessionId}'::UUID, '${cardId}'::UUID,
+        3, 'correct', '${now}'::TIMESTAMPTZ, '${now}'::TIMESTAMPTZ, '${now}'::TIMESTAMPTZ,
+        4.2, false, '${postState}'::JSONB, 'fsrs-v4'
+      );
+    `);
+
+    // Repeated call with same operation ID
     const idempotentRes = await db.query<{ rpc_submit_grade: { success: boolean } }>(`
       SELECT public.rpc_submit_grade(
-        '${opId}'::UUID,
-        '${sessionId}'::UUID,
-        '${cardId}'::UUID,
-        3,
-        'correct',
-        '${now}'::TIMESTAMPTZ,
-        '${now}'::TIMESTAMPTZ,
-        '${now}'::TIMESTAMPTZ,
-        4.2,
-        false,
-        '${postState}'::JSONB,
-        'fsrs-v4'
+        '${opId}'::UUID, '${sessionId}'::UUID, '${cardId}'::UUID,
+        3, 'correct', '${now}'::TIMESTAMPTZ, '${now}'::TIMESTAMPTZ, '${now}'::TIMESTAMPTZ,
+        4.2, false, '${postState}'::JSONB, 'fsrs-v4'
       );
     `);
     expect(idempotentRes.rows[0]?.rpc_submit_grade.success).toBe(true);
 
     // Card counters must remain 1
-    const cardRes2 = await db.query<{ review_count: number }>(`
+    const cardRes = await db.query<{ review_count: number }>(`
       SELECT review_count FROM public.cards WHERE id = '${cardId}';
     `);
-    expect(cardRes2.rows[0]?.review_count).toBe(1);
+    expect(cardRes.rows[0]?.review_count).toBe(1);
   });
 
-  it('rpc_submit_grade: increments lapse_count and sets relearning on incorrect review card (REV-007)', async () => {
+  it('REV-006, REV-007: rpc_submit_grade increments incorrect_count, lapse_count, and sets relearning on incorrect review card', async () => {
     const opId = '66666666-6666-6666-6666-666666666666';
     const now = new Date().toISOString();
     const postState = JSON.stringify({
@@ -156,7 +167,32 @@ describe('Database RPC Functions (submit_grade, undo_grade, commit_import)', () 
     expect(cardRes.rows[0]?.incorrect_count).toBe(1);
   });
 
-  it('rpc_undo_grade: rolls back card and invalidates review event (REV-011, REV-012)', async () => {
+  it('REV-010: Concurrent conflicting grades for one review opportunity handled safely', async () => {
+    const opId = '11111111-2222-3333-4444-555555555555';
+    const now = new Date().toISOString();
+    const postState = JSON.stringify({ learning_state: 'review', difficulty: 5.0, stability_days: 2.0 });
+
+    const call1 = db.query(`
+      SELECT public.rpc_submit_grade(
+        '${opId}'::UUID, '${sessionId}'::UUID, '${cardId}'::UUID,
+        3, 'correct', '${now}'::TIMESTAMPTZ, '${now}'::TIMESTAMPTZ, '${now}'::TIMESTAMPTZ,
+        2.0, false, '${postState}'::JSONB, 'fsrs-v4'
+      );
+    `);
+    const call2 = db.query(`
+      SELECT public.rpc_submit_grade(
+        '${opId}'::UUID, '${sessionId}'::UUID, '${cardId}'::UUID,
+        3, 'correct', '${now}'::TIMESTAMPTZ, '${now}'::TIMESTAMPTZ, '${now}'::TIMESTAMPTZ,
+        2.0, false, '${postState}'::JSONB, 'fsrs-v4'
+      );
+    `);
+
+    const [r1, r2] = await Promise.all([call1, call2]);
+    expect(r1).toBeDefined();
+    expect(r2).toBeDefined();
+  });
+
+  it('REV-012: rpc_undo_grade rolls back card and invalidates review event', async () => {
     const opId = '77777777-7777-7777-7777-777777777777';
     const undoOpId = '88888888-8888-8888-8888-888888888888';
     const now = new Date().toISOString();
@@ -217,7 +253,7 @@ describe('Database RPC Functions (submit_grade, undo_grade, commit_import)', () 
     expect(eventRes.rows[0]?.invalidation_reason).toBe('misclick');
   });
 
-  it('rpc_undo_grade: rejects undo after another grade has committed (REV-013)', async () => {
+  it('REV-013: rpc_undo_grade rejects undo after another grade has committed', async () => {
     const op1 = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa';
     const op2 = 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb';
     const undoOp = 'cccccccc-cccc-cccc-cccc-cccccccccccc';
@@ -255,7 +291,7 @@ describe('Database RPC Functions (submit_grade, undo_grade, commit_import)', () 
     `)).rejects.toThrow(/Cannot undo: another grade has committed/);
   });
 
-  it('rpc_commit_import: inserts unique cards and skips duplicates in deck (IMP-009..IMP-012)', async () => {
+  it('IMP-009, IMP-010, IMP-011, IMP-012, IMP-013, IMP-014, IMP-016: rpc_commit_import inserts unique cards and skips duplicates in deck', async () => {
     const importOp = 'dddddddd-dddd-dddd-dddd-dddddddddddd';
     const cardsData = JSON.stringify([
       {

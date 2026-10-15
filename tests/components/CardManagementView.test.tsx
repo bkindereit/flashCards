@@ -117,7 +117,7 @@ describe('CardManagementView (MGT-001..MGT-010)', () => {
     });
   });
 
-  it('MGT-004: Inline editing updates card question and answer', async () => {
+  it('MGT-003, MGT-004, MGT-006: Inline editing updates card question and answer and preserves id and counters', async () => {
     render(
       <CardManagementView
         deck={deck}
@@ -141,6 +141,54 @@ describe('CardManagementView (MGT-001..MGT-010)', () => {
     await waitFor(() => {
       expect(supabase.from).toHaveBeenCalledWith('cards');
     });
+  });
+
+  it('MGT-005: Edit that would duplicate another card in deck is rejected without changing either card', async () => {
+    const hash2 = await computeContentHash(
+      canonicalNormalize(card2.question_text),
+      canonicalNormalize(card2.answer_text)
+    );
+    const card2WithHash = { ...card2, content_hash: hash2 };
+
+    render(
+      <CardManagementView
+        deck={deck}
+        cards={[card1, card2WithHash]}
+        onCardsChange={onCardsChange}
+        onBackToDeck={onBackToDeck}
+      />
+    );
+
+    const editBtns = screen.getAllByRole('button', { name: /edit card/i });
+    fireEvent.click(editBtns[0]!);
+
+    const qInput = screen.getByDisplayValue(card1.question_text);
+    const aInput = screen.getByDisplayValue(card1.answer_text);
+    fireEvent.change(qInput, { target: { value: card2.question_text } });
+    fireEvent.change(aInput, { target: { value: card2.answer_text } });
+
+    const saveBtn = screen.getByRole('button', { name: /save changes/i });
+    await act(async () => {
+      fireEvent.click(saveBtn);
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText(/already exists in the deck/i)).toBeInTheDocument();
+    });
+  });
+
+  it('MGT-008: Suspended card displays suspended status', () => {
+    const suspended = { ...card1, suspended_at: new Date().toISOString() };
+    render(
+      <CardManagementView
+        deck={deck}
+        cards={[suspended]}
+        onCardsChange={onCardsChange}
+        onBackToDeck={onBackToDeck}
+      />
+    );
+
+    expect(screen.getByText(/suspended/i)).toBeInTheDocument();
   });
 
   it('MGT-010: Manually adds a new card and concatenates it onto the end with next source_order', async () => {

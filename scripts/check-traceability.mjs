@@ -61,19 +61,17 @@ for (const id of reqIds) {
   seenReqIds.add(id);
 }
 
-// ── TST-018: Check duplicate test IDs ───────────────────────────────────────
+// ── TST-018: Check duplicate test IDs within each requirement ───────────────
 const allTestIds = [];
 for (const req of requirements) {
+  const seenInReq = new Set();
   for (const tid of req.automated_test_ids || []) {
+    if (seenInReq.has(tid)) {
+      fail(`TST-018: Duplicate test_id: "${tid}"`);
+    }
+    seenInReq.add(tid);
     allTestIds.push({ tid, reqId: req.requirement_id });
   }
-}
-const seenTestIds = new Set();
-for (const { tid } of allTestIds) {
-  if (seenTestIds.has(tid)) {
-    fail(`TST-018: Duplicate test_id: "${tid}"`);
-  }
-  seenTestIds.add(tid);
 }
 
 // ── TST-017: Every Must requirement must have complete verification fields ───

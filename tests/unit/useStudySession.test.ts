@@ -7,6 +7,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useStudySession } from '@/hooks/useStudySession';
 import { createDeck, createCard } from '@/testing/factories';
+import type { Card } from '@/domain/types';
 import { supabase } from '@/lib/supabase';
 
 // Mock Supabase RPC
@@ -124,7 +125,7 @@ describe('useStudySession Hook (UI-001..UI-016, SES-001..SES-010)', () => {
     expect(result.current.isRevealed).toBe(true);
   });
 
-  it('UI-004..006: submitGrade submits correct grade and advances to next card', async () => {
+  it('UI-004, UI-005: submitGrade submits correct grade and advances to next card', async () => {
     const { result } = renderHook(() =>
       useStudySession({
         deck,
@@ -155,7 +156,7 @@ describe('useStudySession Hook (UI-001..UI-016, SES-001..SES-010)', () => {
     expect(result.current.currentCard?.id).toBe(card2.id); // Advanced to next card
   });
 
-  it('UI-004..006: submitGrade submits incorrect grade and updates metrics', async () => {
+  it('UI-004, UI-006: submitGrade submits incorrect grade and updates metrics', async () => {
     const { result } = renderHook(() =>
       useStudySession({
         deck,
@@ -304,7 +305,7 @@ describe('useStudySession Hook (UI-001..UI-016, SES-001..SES-010)', () => {
     expect(result.current.completedReviews).toBe(1);
   });
 
-  it('Updates intervening_cards_since_failure for existing failed cards upon next grade', async () => {
+  it('SES-009: Updates intervening_cards_since_failure for existing failed cards upon next grade', async () => {
     // Start with card1 that fails, then card2 is graded
     const { result } = renderHook(() =>
       useStudySession({
@@ -333,7 +334,7 @@ describe('useStudySession Hook (UI-001..UI-016, SES-001..SES-010)', () => {
     expect(result.current.completedReviews).toBe(2);
   });
 
-  it('Increments dueCardsCompleted when a review card is reviewed', async () => {
+  it('UI-016, SES-008: Increments dueCardsCompleted when a review card is reviewed', async () => {
     const reviewCard = createCard({
       deck_id: deck.id,
       learning_state: 'review',
@@ -359,7 +360,7 @@ describe('useStudySession Hook (UI-001..UI-016, SES-001..SES-010)', () => {
     expect(result.current.dueCardsRemaining).toBe(0);
   });
 
-  it('Handles RPC undo error with recoverable error banner', async () => {
+  it('UI-008: Handles RPC undo error with recoverable error banner', async () => {
     const { result } = renderHook(() =>
       useStudySession({
         deck,
@@ -387,7 +388,7 @@ describe('useStudySession Hook (UI-001..UI-016, SES-001..SES-010)', () => {
     expect(result.current.errorState?.message).toContain('Undo timeout');
   });
 
-  it('Handles session timer expiration', () => {
+  it('SES-004: Handles session timer expiration', () => {
     const { result } = renderHook(() =>
       useStudySession({
         deck,
@@ -426,7 +427,7 @@ describe('useStudySession Hook (UI-001..UI-016, SES-001..SES-010)', () => {
     expect(result.current.isEnded).toBe(false);
   });
 
-  it('Ends session when all cards in pool are suspended and none eligible', () => {
+  it('MGT-008: Ends session when all cards in pool are suspended and none eligible', () => {
     const suspendedCard = createCard({
       deck_id: deck.id,
       suspended_at: new Date().toISOString()
@@ -441,5 +442,58 @@ describe('useStudySession Hook (UI-001..UI-016, SES-001..SES-010)', () => {
 
     expect(result.current.isEnded).toBe(true);
     expect(result.current.currentCard).toBeNull();
+  });
+
+  it('SES-003, SES-007, UI-010, REL-002: Session initialization creates session record; ending early creates no grade for displayed card', () => {
+    const onFinish = vi.fn();
+    const { result } = renderHook(() =>
+      useStudySession({
+        deck,
+        initialCards,
+        sessionDurationMinutes: 15,
+        onFinishSession: onFinish
+      })
+    );
+
+    act(() => {
+      result.current.revealAnswer();
+    });
+    expect(result.current.isRevealed).toBe(true);
+
+    act(() => {
+      result.current.endSessionEarly();
+    });
+
+    expect(supabase.rpc).not.toHaveBeenCalledWith('rpc_submit_grade', expect.anything());
+    expect(onFinish).toHaveBeenCalled();
+  });
+
+  it('REL-003: Browser refresh after confirmed grade initializes session with updated card state and without duplicating grades', () => {
+    const updatedCards: Card[] = [
+      createCard({
+        deck_id: deck.id,
+        source_order: 1,
+        learning_state: 'review',
+        last_review_at: new Date('2026-01-01T00:00:00Z').toISOString(),
+        next_due_at: new Date('2026-01-02T00:00:00Z').toISOString(),
+        stability_days: 1.0,
+        difficulty: 5.0,
+        review_count: 1
+      }),
+      card2
+    ];
+
+    const { result } = renderHook(() =>
+      useStudySession({
+        deck,
+        initialCards: updatedCards,
+        sessionDurationMinutes: 15,
+        onFinishSession: vi.fn()
+      })
+    );
+
+    expect(result.current.currentCard).toBeDefined();
+    expect(supabase.rpc).not.toHaveBeenCalledWith('rpc_submit_grade', expect.anything());
+    expect(result.current.isEnded).toBe(false);
   });
 });

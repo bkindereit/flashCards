@@ -34,7 +34,7 @@ describe('DiagnosticsView (DIA-001..DIA-006)', () => {
     expect(screen.getByRole('button', { name: /run diagnostics/i })).toBeInTheDocument();
   });
 
-  it('DIA-002..004: Executes diagnostic suite and displays individual check results', async () => {
+  it('DIA-002, DIA-003, DIA-004, DIA-006: Executes diagnostic suite with conformance vector and displays individual check results', async () => {
     render(<DiagnosticsView onBack={onBack} />);
 
     const runBtn = screen.getByRole('button', { name: /run diagnostics/i });

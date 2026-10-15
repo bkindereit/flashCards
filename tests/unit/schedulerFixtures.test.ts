@@ -9,7 +9,7 @@ import { SchedulerEngine, SchedulerContext } from '@/domain/scheduler';
 import { SeededRandom } from '@/domain/clock';
 
 describe('Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012)', () => {
-  it('SCHF-001: Ten unseen cards, selects from active cohort', () => {
+  it('SCH-010, SCH-011: SCHF-001: Ten unseen cards, selects from active cohort', () => {
     const fix = createSchedulerFixture('SCHF-001');
     const engine = new SchedulerEngine(fix.deck.desired_retention, fix.clock);
     const ctx: SchedulerContext = { ...fix };
@@ -20,7 +20,7 @@ describe('Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012)', ()
     expect(sel?.selectedCard.learning_state).toBe('new');
   });
 
-  it('SCHF-002: Failed learning card excluded because delay not met', () => {
+  it('SCH-016: SCHF-002: Failed learning card excluded because delay not met', () => {
     const fix = createSchedulerFixture('SCHF-002');
     const engine = new SchedulerEngine(fix.deck.desired_retention, fix.clock);
     const ctx: SchedulerContext = { ...fix };
@@ -29,7 +29,7 @@ describe('Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012)', ()
     expect(sel).toBeNull();
   });
 
-  it('SCHF-003: Failed learning card selected when delay and intervening met', () => {
+  it('SCH-017: SCHF-003: Failed learning card selected when delay and intervening met', () => {
     const fix = createSchedulerFixture('SCHF-003');
     const engine = new SchedulerEngine(fix.deck.desired_retention, fix.clock);
     const ctx: SchedulerContext = { ...fix };
@@ -38,7 +38,7 @@ describe('Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012)', ()
     expect(sel?.selectedCard.id).toBe(fix.allCards[0]?.id);
   });
 
-  it('SCHF-004: Acquisition ceiling reached blocks new cohort cards', () => {
+  it('SCH-020, SCH-024: SCHF-004: Acquisition ceiling reached blocks new cohort cards', () => {
     const fix = createSchedulerFixture('SCHF-004');
     const engine = new SchedulerEngine(fix.deck.desired_retention, fix.clock);
     const ctx: SchedulerContext = { ...fix };
@@ -50,7 +50,7 @@ describe('Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012)', ()
     }
   });
 
-  it('SCHF-005: Manageable due pool prioritizes due review card', () => {
+  it('SCH-029: SCHF-005: Manageable due pool prioritizes due review card', () => {
     const fix = createSchedulerFixture('SCHF-005');
     const engine = new SchedulerEngine(fix.deck.desired_retention, fix.clock);
     const ctx: SchedulerContext = { ...fix };
@@ -60,7 +60,7 @@ describe('Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012)', ()
     expect(sel?.selectedCard.id).toBe(fix.allCards[0]?.id);
   });
 
-  it('SCHF-006: Due workload equal to remaining session selects due cards', () => {
+  it('SCH-026: SCHF-006: Due workload equal to remaining session selects due cards', () => {
     const fix = createSchedulerFixture('SCHF-006');
     const engine = new SchedulerEngine(fix.deck.desired_retention, fix.clock);
     const ctx: SchedulerContext = { ...fix };
@@ -69,7 +69,7 @@ describe('Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012)', ()
     expect(sel?.queue).toBe('due_review');
   });
 
-  it('SCHF-007: Due workload suppresses new cards introduction', () => {
+  it('SCH-027: SCHF-007: Due workload suppresses new cards introduction', () => {
     const fix = createSchedulerFixture('SCHF-007');
     const engine = new SchedulerEngine(fix.deck.desired_retention, fix.clock);
     const ctx: SchedulerContext = { ...fix };
@@ -79,7 +79,7 @@ describe('Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012)', ()
     expect(sel?.selectedCard.learning_state).toBe('review');
   });
 
-  it('SCHF-008: Mandatory overdue card takes priority over regular due card', () => {
+  it('SCH-033, SCH-034: SCHF-008: Mandatory overdue card takes priority over regular due card', () => {
     const fix = createSchedulerFixture('SCHF-008');
     const engine = new SchedulerEngine(fix.deck.desired_retention, fix.clock);
     const ctx: SchedulerContext = { ...fix };
@@ -89,7 +89,7 @@ describe('Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012)', ()
     expect(sel?.selectedCard.id).toBe(fix.allCards[0]?.id);
   });
 
-  it('SCHF-009: Equal utility tie candidates resolved deterministically with seed', () => {
+  it('SCH-036, SCH-037: SCHF-009: Equal utility tie candidates resolved deterministically with seed', () => {
     const fix = createSchedulerFixture('SCHF-009');
     const rng1 = new SeededRandom('fixed-seed-42');
     const engine1 = new SchedulerEngine(fix.deck.desired_retention, fix.clock, rng1);
@@ -104,7 +104,7 @@ describe('Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012)', ()
     expect(sel1?.selectedCard.id).toBe(sel2?.selectedCard.id);
   });
 
-  it('SCHF-010: Exam in seven days selects card with highest retention benefit', () => {
+  it('SCH-035, SCH-038: SCHF-010: Exam in seven days selects card with highest retention benefit', () => {
     const fix = createSchedulerFixture('SCHF-010');
     const engine = new SchedulerEngine(fix.deck.desired_retention, fix.clock);
     const ctx: SchedulerContext = { ...fix };
@@ -114,7 +114,7 @@ describe('Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012)', ()
     expect(sel?.selectedCard.id).toBe(fix.allCards[0]?.id);
   });
 
-  it('SCHF-011: Suspended card excluded despite high utility', () => {
+  it('SCH-030: SCHF-011: Suspended card excluded despite high utility', () => {
     const fix = createSchedulerFixture('SCHF-011');
     const engine = new SchedulerEngine(fix.deck.desired_retention, fix.clock);
     const ctx: SchedulerContext = { ...fix };
@@ -124,7 +124,7 @@ describe('Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012)', ()
     expect(sel?.selectedCard.id).toBe(fix.allCards[1]?.id);
   });
 
-  it('SCHF-012: Relearning card takes highest priority above regular review', () => {
+  it('SCH-032: SCHF-012: Relearning card takes highest priority above regular review', () => {
     const fix = createSchedulerFixture('SCHF-012');
     const engine = new SchedulerEngine(fix.deck.desired_retention, fix.clock);
     const ctx: SchedulerContext = { ...fix };

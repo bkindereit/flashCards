@@ -7,13 +7,13 @@ import { createCard, createDeck, createStudySession, createSessionCardState } fr
 describe('Scheduler Engine & FSRS Integration (SCH-001..SCH-040)', () => {
   const baseTime = new Date('2026-06-01T12:00:00Z');
 
-  it('SCH-001 & SCH-002: Records pinned versions', () => {
+  it('SCH-001, SCH-002: Records pinned versions', () => {
     expect(FSRS_PACKAGE_VERSION).toBe('4.4.1');
     expect(FSRS_PARAMETER_SET_VERSION).toBe('default-v4');
     expect(SCHEDULING_POLICY_VERSION).toBe('fca-v1.0');
   });
 
-  it('SCH-003 & SCH-004: Maps binary grades to FSRS Good and Again', () => {
+  it('SCH-003, SCH-004: Maps binary grades to FSRS Good and Again', () => {
     const fsrsService = new FsrsService(0.90);
     const card = createCard({ learning_state: 'new' });
 
@@ -28,7 +28,7 @@ describe('Scheduler Engine & FSRS Integration (SCH-001..SCH-040)', () => {
     expect(goodResult.card.stability).toBeGreaterThan(againResult.card.stability);
   });
 
-  it('SCH-010..SCH-012: Deterministic cohort numbers and 1 active cohort at a time', () => {
+  it('SCH-010, SCH-011, SCH-012: Deterministic cohort numbers and 1 active cohort at a time', () => {
     const deck = createDeck({ cohort_size: 10 });
     const session = createStudySession(deck.id);
     const clock = new FixedClock(baseTime);
@@ -61,7 +61,7 @@ describe('Scheduler Engine & FSRS Integration (SCH-001..SCH-040)', () => {
     expect(sel?.queue).toBe('active_cohort');
   });
 
-  it('SCH-016 & SCH-017: Failed card is not repeated until delay & intervening count met', () => {
+  it('SCH-016, SCH-017: Failed card is not repeated until delay & intervening count met', () => {
     const deck = createDeck({ min_failed_retry_delay_seconds: 60, min_intervening_cards: 3 });
     const session = createStudySession(deck.id);
     const clock = new FixedClock(baseTime);
@@ -229,7 +229,7 @@ describe('Scheduler Engine & FSRS Integration (SCH-001..SCH-040)', () => {
     expect(['card-b', 'card-c']).toContain(sel?.selectedCard.id);
   });
 
-  it('SCH-036 & SCH-037: Deterministic selection with seeded random tie-breaker', () => {
+  it('SCH-036, SCH-037: Deterministic selection with seeded random tie-breaker', () => {
     const deck = createDeck();
     const session = createStudySession(deck.id);
     const clock = new FixedClock(baseTime);
