@@ -312,4 +312,59 @@ describe('App Shell (ARC-001..ARC-010, AUT-002, ARC-006)', () => {
     });
     expect(screen.getByRole('table')).toBeInTheDocument();
   });
+
+  it('PRG-001..PRG-006: Navigates to learning progress dashboard from top navbar and deck card', async () => {
+    const deck1 = createDeck({ id: 'deck-1', name: 'Pharmacology' });
+    vi.mocked(supabase.auth.getSession).mockResolvedValue({
+      data: {
+        session: {
+          user: { id: 'u1', email: 'student@example.com' }
+        }
+      },
+      error: null
+    } as any);
+
+    vi.mocked(supabase.from).mockReturnValue({
+      select: vi.fn(() => ({
+        order: vi.fn(() => Promise.resolve({ data: [deck1], error: null })),
+        eq: vi.fn(() => ({
+          order: vi.fn(() => Promise.resolve({ data: [], error: null }))
+        }))
+      }))
+    } as any);
+
+    await act(async () => {
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      );
+    });
+
+    // Check navbar progress button
+    const progressNavBtn = screen.getByRole('button', { name: /view learning progress dashboard/i });
+    await act(async () => {
+      fireEvent.click(progressNavBtn);
+    });
+
+    expect(await screen.findByRole('region', { name: /learning progress dashboard/i })).toBeInTheDocument();
+    expect(screen.getByText(/learning progress & mastery/i)).toBeInTheDocument();
+
+    // Back to decks
+    const backBtn = screen.getByRole('button', { name: /back to decks/i });
+    await act(async () => {
+      fireEvent.click(backBtn);
+    });
+
+    expect(await screen.findByText('Pharmacology')).toBeInTheDocument();
+
+    // Check deck card progress button
+    const deckProgressBtn = screen.getByLabelText('View progress for Pharmacology');
+    await act(async () => {
+      fireEvent.click(deckProgressBtn);
+    });
+
+    expect(await screen.findByRole('region', { name: /learning progress dashboard/i })).toBeInTheDocument();
+  });
 });
+

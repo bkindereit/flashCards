@@ -320,6 +320,13 @@ Release verification passes only when:
 | VA-CIC-002 | CIC-006–008 | Attempt deployment from failed and passed commits. | Failed commit cannot deploy; passed exact SHA deploys; report generated. | Deployment provenance. |
 | VA-TRC-001 | TST-016–018 | Run traceability checker normally and with injected missing, duplicate, and orphan IDs. | Normal matrix passes; each injected defect fails with location. | Checker output. |
 
+### 11.13 Progress dashboard activities
+
+| Activity ID | Requirements | Procedure | Pass criteria | Evidence |
+|---|---|---|---|---|
+| VA-PRG-001 | PRG-001–004 | Render learning progress dashboard with test decks and verify segmented mastery breakdown bar, true recall accuracy %, study streak & 28-day activity heatmap, and 7-day upcoming due forecast. | Metrics and proportions accurately reflect card counts, session aggregates, review timestamps, and due dates; deck filter switches scope properly. | Component tests and Playwright reports. |
+| VA-PRG-002 | PRG-005–006 | Verify exam readiness and target pace tracking for decks with and without exam dates; verify trouble spots list ranking by lapses and incorrect attempts, answer toggle, and practice actions. | Exam days remaining, daily pace calculation, and readiness progress bar accurately reflect status; trouble spots list top 5 lapsed cards with working collapsible answer reveal and practice button. | Component unit tests and snapshots. |
+
 ## 12. Manual verification procedures
 
 ### 12.1 Keyboard procedure MAN-ACC-001

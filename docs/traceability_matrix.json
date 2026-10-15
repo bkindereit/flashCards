@@ -1919,6 +1919,126 @@
       "anomaly_ids": []
     },
     {
+      "requirement_id": "PRG-001",
+      "priority": "Must",
+      "description": "The application shall provide a learning progress dashboard displaying deck mastery breakdown segmented by new, learning, review (mature), and suspended states, with numerical counts and a visual proportion indicator.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-PRG-001"
+      ],
+      "automated_test_ids": [
+        "test:prg-001"
+      ],
+      "evidence_paths": [
+        "src/components/ProgressDashboardView.tsx",
+        "tests/components/ProgressDashboardView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "PRG-002",
+      "priority": "Must",
+      "description": "The progress dashboard shall display true recall accuracy percentage, total cards reviewed, and total active study duration aggregated across sessions for all decks or a selected deck.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-PRG-001"
+      ],
+      "automated_test_ids": [
+        "test:prg-002"
+      ],
+      "evidence_paths": [
+        "src/components/ProgressDashboardView.tsx",
+        "tests/components/ProgressDashboardView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "PRG-003",
+      "priority": "Must",
+      "description": "The progress dashboard shall display the user's active study streak in days and a 28-day daily activity history visualizer.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-PRG-001"
+      ],
+      "automated_test_ids": [
+        "test:prg-003"
+      ],
+      "evidence_paths": [
+        "src/components/ProgressDashboardView.tsx",
+        "tests/components/ProgressDashboardView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "PRG-004",
+      "priority": "Must",
+      "description": "The progress dashboard shall display an upcoming due forecast showing the number of review cards scheduled to become due over each of the next 7 days.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-PRG-001"
+      ],
+      "automated_test_ids": [
+        "test:prg-004"
+      ],
+      "evidence_paths": [
+        "src/components/ProgressDashboardView.tsx",
+        "tests/components/ProgressDashboardView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "PRG-005",
+      "priority": "Must",
+      "description": "For decks with a configured exam target date, the dashboard shall display days remaining, target pace required in new cards per day, and curriculum introduction progress percentage.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-PRG-002"
+      ],
+      "automated_test_ids": [
+        "test:prg-005"
+      ],
+      "evidence_paths": [
+        "src/components/ProgressDashboardView.tsx",
+        "tests/components/ProgressDashboardView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "PRG-006",
+      "priority": "Must",
+      "description": "The progress dashboard shall display a list of trouble spot cards with highest lapse counts and lowest success rates, with collapsible answer reveal and a direct practice action.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-PRG-002"
+      ],
+      "automated_test_ids": [
+        "test:prg-006"
+      ],
+      "evidence_paths": [
+        "src/components/ProgressDashboardView.tsx",
+        "tests/components/ProgressDashboardView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
       "requirement_id": "SCH-001",
       "priority": "Must",
       "description": "The application shall use a maintained TypeScript FSRS implementation whose exact package version is pinned in the lockfile.",
@@ -4959,6 +5079,24 @@
     ],
     "test:imp-017": [
       "IMP-017"
+    ],
+    "test:prg-001": [
+      "PRG-001"
+    ],
+    "test:prg-002": [
+      "PRG-002"
+    ],
+    "test:prg-003": [
+      "PRG-003"
+    ],
+    "test:prg-004": [
+      "PRG-004"
+    ],
+    "test:prg-005": [
+      "PRG-005"
+    ],
+    "test:prg-006": [
+      "PRG-006"
     ]
   }
 }

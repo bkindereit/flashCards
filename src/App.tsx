@@ -13,18 +13,20 @@ import { SessionDurationModal } from '@/components/SessionDurationModal';
 import { CsvImportModal } from '@/components/CsvImportModal';
 import { CardManagementView } from '@/components/CardManagementView';
 import { DiagnosticsView } from '@/components/DiagnosticsView';
+import { ProgressDashboardView } from '@/components/ProgressDashboardView';
 import { DeckModal } from '@/components/DeckModal';
 import { DeleteDeckConfirmationModal } from '@/components/DeleteDeckConfirmationModal';
 import {
   Layers, Plus, Play, Settings, Upload, Activity,
-  Download, LogOut, WifiOff, Archive, Trash2, BookOpen, UserPlus
+  Download, LogOut, WifiOff, Archive, Trash2, BookOpen, UserPlus, TrendingUp
 } from 'lucide-react';
 
 export const App: React.FC = () => {
   const { user, isLoading, signInWithOtp, verifyOtp, signInWithPassword, signUp, signOut } = useAuth();
 
   // Navigation state
-  const [currentView, setCurrentView] = useState<'decks' | 'study' | 'cards' | 'diagnostics'>('decks');
+  const [currentView, setCurrentView] = useState<'decks' | 'study' | 'cards' | 'diagnostics' | 'progress'>('decks');
+  const [selectedProgressDeckId, setSelectedProgressDeckId] = useState<string | null>(null);
   const [activeDeck, setActiveDeck] = useState<Deck | null>(null);
   const [decks, setDecks] = useState<Deck[]>([]);
   const [activeDeckCards, setActiveDeckCards] = useState<Card[]>([]);
@@ -392,6 +394,18 @@ export const App: React.FC = () => {
 
         <div className="flex items-center gap-1.5 sm:gap-3">
           <button
+            onClick={() => {
+              setSelectedProgressDeckId(null);
+              setCurrentView('progress');
+            }}
+            className="flex items-center gap-1.5 px-2.5 py-2 sm:px-3 sm:py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-300 text-xs font-semibold rounded-lg transition-colors min-h-[36px] sm:min-h-0"
+            aria-label="View learning progress dashboard"
+          >
+            <TrendingUp className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-emerald-400" />
+            <span className="hidden sm:inline">Progress</span>
+          </button>
+
+          <button
             onClick={() => setCurrentView('diagnostics')}
             className="flex items-center gap-1.5 px-2.5 py-2 sm:px-3 sm:py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-300 text-xs font-semibold rounded-lg transition-colors min-h-[36px] sm:min-h-0"
             aria-label="Run diagnostics"
@@ -426,6 +440,15 @@ export const App: React.FC = () => {
           <DiagnosticsView onBack={() => setCurrentView('decks')} />
         )}
 
+        {currentView === 'progress' && (
+          <ProgressDashboardView
+            decks={decks}
+            initialDeckId={selectedProgressDeckId}
+            onBack={() => setCurrentView('decks')}
+            onStudyDeck={deck => handleStartStudy(deck)}
+          />
+        )}
+
         {currentView === 'cards' && activeDeck && (
           <CardManagementView
             deck={activeDeck}
@@ -454,6 +477,30 @@ export const App: React.FC = () => {
 
         {currentView === 'decks' && (
           <div className="max-w-6xl mx-auto">
+            {/* Quick Progress Banner on Front Display */}
+            <div className="mb-6 p-4 sm:p-5 bg-gradient-to-r from-slate-800 via-slate-800 to-slate-850 border border-slate-700/80 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg">
+              <div className="flex items-center gap-3.5">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+                  <TrendingUp className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-sm sm:text-base font-bold text-white">Learning Progress & Mastery</h3>
+                  <p className="text-xs text-slate-400">Track recall accuracy, study streaks, upcoming due forecast, and exam readiness.</p>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  setSelectedProgressDeckId(null);
+                  setCurrentView('progress');
+                }}
+                className="w-full sm:w-auto px-4 py-2 bg-slate-700 hover:bg-slate-650 text-emerald-300 hover:text-emerald-200 text-xs font-semibold rounded-xl border border-slate-600 transition-colors flex items-center justify-center gap-1.5 min-h-[44px]"
+                aria-label="Open learning progress dashboard"
+              >
+                <span>View Dashboard</span>
+                <TrendingUp className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8">
               <div>
                 <h2 className="text-xl sm:text-2xl font-bold text-white">Your Flashcard Decks</h2>
@@ -544,6 +591,17 @@ export const App: React.FC = () => {
                           aria-label="Manage cards"
                         >
                           <Layers className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={() => {
+                            setSelectedProgressDeckId(deck.id);
+                            setCurrentView('progress');
+                          }}
+                          className="p-2 min-h-[40px] min-w-[40px] flex items-center justify-center bg-slate-700 hover:bg-slate-650 text-slate-300 rounded-lg text-xs"
+                          title="Deck Progress"
+                          aria-label={`View progress for ${deck.name}`}
+                        >
+                          <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
                         </button>
                       </div>
 

@@ -280,6 +280,17 @@ The study interaction shall use one in-page card or modal state, not separate br
 | SES-009 | Must | Valid review-duration estimates shall exclude paused intervals and events explicitly flagged as interrupted. |
 | SES-010 | Must | The application shall maintain an exponentially weighted estimate of seconds per review using valid events. |
 
+### 8.9 Learning progress dashboard
+
+| ID | Priority | Requirement |
+|---|---|---|
+| PRG-001 | Must | The application shall provide a learning progress dashboard displaying deck mastery breakdown segmented by new, learning, review (mature), and suspended states, with numerical counts and a visual proportion indicator. |
+| PRG-002 | Must | The progress dashboard shall display true recall accuracy percentage, total cards reviewed, and total active study duration aggregated across sessions for all decks or a selected deck. |
+| PRG-003 | Must | The progress dashboard shall display the user's active study streak in days and a 28-day daily activity history visualizer. |
+| PRG-004 | Must | The progress dashboard shall display an upcoming due forecast showing the number of review cards scheduled to become due over each of the next 7 days. |
+| PRG-005 | Must | For decks with a configured exam target date, the dashboard shall display days remaining, target pace required in new cards per day, and curriculum introduction progress percentage. |
+| PRG-006 | Must | The progress dashboard shall display a list of trouble spot cards with highest lapse counts and lowest success rates, with collapsible answer reveal and a direct practice action. |
+
 ## 9. Learning and selection engine
 
 ### 9.1 Memory model

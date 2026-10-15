@@ -1,7 +1,7 @@
 {
   "reportVersion": "1.0",
   "specificationVersion": "1.0",
-  "commitSha": "57d983f7c1e6193e9464800de74f51a958895fa4",
+  "commitSha": "84431d1a97210f2d565641187d0bedab66ec5e70",
   "applicationVersion": "1.0.0",
   "overallResult": "blocked",
   "releaseRecommendation": "do-not-release",
@@ -1012,6 +1012,66 @@
       "evidence": [
         "src/hooks/useStudySession.ts",
         "tests/unit/useStudySession.test.ts"
+      ]
+    },
+    {
+      "requirementId": "PRG-001",
+      "priority": "Must",
+      "activityId": "VA-PRG-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/ProgressDashboardView.tsx",
+        "tests/components/ProgressDashboardView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "PRG-002",
+      "priority": "Must",
+      "activityId": "VA-PRG-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/ProgressDashboardView.tsx",
+        "tests/components/ProgressDashboardView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "PRG-003",
+      "priority": "Must",
+      "activityId": "VA-PRG-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/ProgressDashboardView.tsx",
+        "tests/components/ProgressDashboardView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "PRG-004",
+      "priority": "Must",
+      "activityId": "VA-PRG-001",
+      "result": "Pass",
+      "evidence": [
+        "src/components/ProgressDashboardView.tsx",
+        "tests/components/ProgressDashboardView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "PRG-005",
+      "priority": "Must",
+      "activityId": "VA-PRG-002",
+      "result": "Pass",
+      "evidence": [
+        "src/components/ProgressDashboardView.tsx",
+        "tests/components/ProgressDashboardView.test.tsx"
+      ]
+    },
+    {
+      "requirementId": "PRG-006",
+      "priority": "Must",
+      "activityId": "VA-PRG-002",
+      "result": "Pass",
+      "evidence": [
+        "src/components/ProgressDashboardView.tsx",
+        "tests/components/ProgressDashboardView.test.tsx"
       ]
     },
     {
@@ -2214,7 +2274,7 @@
       "passed": 14,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 2087,
+      "durationMs": 1873,
       "status": "passed"
     },
     {
@@ -2224,13 +2284,13 @@
       "passed": 15,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 18785,
+      "durationMs": 19332,
       "status": "passed"
     }
   ],
   "coverage": {
-    "overallStatements": 93.63,
-    "overallBranches": 81.85,
+    "overallStatements": 94.57,
+    "overallBranches": 82.85,
     "modules": {},
     "thresholdMet": true
   },
@@ -2315,19 +2375,19 @@
   "waivers": [],
   "artifacts": [
     {
-      "path": "dist/assets/browser-SWZqrtSB.js",
-      "sha256": "67b82f6298a3c5abd5b487fb73a545dadc5fcaae63409fc4060cd88af69dd09f",
+      "path": "dist/assets/browser-BxAfJf0S.js",
+      "sha256": "1b32081ae814ffaee99475026772ca828c8f0f1019947ef8dadaf976914e98a6",
       "description": "Static distribution asset (615 bytes)"
     },
     {
-      "path": "dist/assets/index-VZz_bhLg.css",
-      "sha256": "de9a74a79e85d9a8e3a0e86b12616af56f2c2456a84e7a516e72fc7e03ca4758",
-      "description": "Static distribution asset (27123 bytes)"
+      "path": "dist/assets/index-DDjCw4Io.css",
+      "sha256": "45c251bb96e6e9b442213db42c4927e3be2c9c0fd5e9c86ad266ffa85e91b70c",
+      "description": "Static distribution asset (31995 bytes)"
     },
     {
-      "path": "dist/assets/index-d1O7z80P.js",
-      "sha256": "a6f48c0b977eaaa17665e881bb81c916ec9d591d2ae82b32cc9ff61c3bbf9fc1",
-      "description": "Static distribution asset (369666 bytes)"
+      "path": "dist/assets/index-DwQagSC2.js",
+      "sha256": "5124308783718fe444be1427f628742b5d5325f777c6db181804ad67f15702f1",
+      "description": "Static distribution asset (394216 bytes)"
     },
     {
       "path": "dist/favicon.svg",
@@ -2346,7 +2406,7 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "da8c02ae3a6c70ff484ae904a8b01e3b8154cb5102dcce3ad870cbbcd1385434",
+      "sha256": "35e6e9d255127af5941a2a1caa6810162fc78e67209289c65d002dcf59a5546f",
       "description": "Static distribution asset (851 bytes)"
     },
     {
@@ -2361,7 +2421,7 @@
     },
     {
       "path": "dist/sw.js",
-      "sha256": "ed85f60f9b46be9156c5fdc1f2d845ba6bb2ea24983000eb0733b297d27bfb6a",
+      "sha256": "92425cfc9ef5178f938507fed9027f2007f84dd559f1f94a809cb9a5973a2742",
       "description": "Static distribution asset (1507 bytes)"
     },
     {
@@ -2375,7 +2435,7 @@
       "role": "Verification Executor",
       "name": "Antigravity Automated Agent",
       "decision": "Verified Automated Baseline; Recommends Do Not Release pending operator signatures",
-      "timestamp": "2026-10-15T05:59:50.270Z"
+      "timestamp": "2026-10-15T06:24:57.734Z"
     },
     {
       "role": "Release Authority",

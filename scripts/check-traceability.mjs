@@ -169,7 +169,8 @@ const validActivityIds = new Set([
   'VA-ACC-001', 'VA-ACC-002', 'VA-ACC-003', 'VA-ACC-004', 'VA-ACC-005',
   'VA-PRF-001', 'VA-PRF-002', 'VA-PRF-003', 'VA-REL-001', 'VA-REL-002',
   'VA-DIA-001', 'VA-DIA-002',
-  'VA-CIC-001', 'VA-CIC-002', 'VA-TRC-001'
+  'VA-CIC-001', 'VA-CIC-002', 'VA-TRC-001',
+  'VA-PRG-001', 'VA-PRG-002'
 ]);
 
 for (const req of requirements) {

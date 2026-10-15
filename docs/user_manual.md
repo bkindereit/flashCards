@@ -131,6 +131,49 @@ If you prefer to type questions and answers in directly by hand:
   Click **"Export CSV"** in Card Management or **"Export JSON"** at the top of the home screen to download all your decks and cards.
 
 ---
+
+## Step 6: Tracking Your Learning Progress & Mastery
+The **Learning Progress Dashboard** provides analytics and forecast visualizations so you always know your retention rate and readiness:
+
+### How to Access the Dashboard
+- **From the Top Header:** Click or tap the **"Progress"** button (green trending line icon) in the top navigation bar.
+- **From the Home Screen:** Tap the **"View Dashboard"** button in the prominent quick progress banner above your decks.
+- **For a Specific Deck:** Click the green **TrendingUp icon** on any individual deck card to jump straight into that deck's metrics.
+
+### Key Metrics & Visualizations Displayed
+1. **Deck Mastery Breakdown (Segmented Progress Bar):**
+   - Visual color-coded bar displaying the exact proportion and counts of your cards in each stage:
+     - 🟩 **Mature Review:** Cards successfully memorized and managed on long-term spaced repetition.
+     - 🟦 **Learning:** Cards currently undergoing initial acquisition.
+     - 🟧 **Lapsed (Relearning):** Cards previously known that were forgotten and are currently being restudied.
+     - ⬛ **New Unseen:** Fresh cards imported or created that have not yet been studied.
+     - 🟥 **Suspended:** Cards you temporarily paused from study.
+2. **True Recall Accuracy & Active Study Time:**
+   - **True Accuracy %:** Lifetime recall percentage based on all binary review events.
+   - **Time Spent:** Total active study time in minutes (excludes paused intervals).
+   - **Total Sessions & Cards in Scope:** Total sessions completed and cards currently available.
+3. **Study Streak & 28-Day Activity Heatmap:**
+   - **Daily Streak:** Tracks consecutive active days studied to maintain your learning habit.
+   - **4-Week Calendar Grid:** Color-coded square matrix displaying study activity across the past 28 days (lighter to darker emerald based on daily review volume).
+4. **Upcoming 7-Day Due Forecast:**
+   - Mini bar chart showing the number of review cards scheduled to become due over each of the next 7 days (Today, Tomorrow, and subsequent weekdays).
+   - A direct **"Study Due Cards"** button lets you immediately launch a session if cards are waiting.
+5. **Exam Target Readiness & Pace Tracker:**
+   - If your deck has a Target Exam Date configured, this panel tracks:
+     - **Days Remaining:** Exact countdown to your exam.
+     - **Required Daily Pace:** How many new cards you need to introduce per day to finish before exam day.
+     - **Curriculum Progress:** Percentage of the deck already introduced into active memory.
+     - **On Track Indicator:** Green status badge confirming whether your current pace is manageable.
+6. **Trouble Spots & Difficult Cards List:**
+   - Automatically ranks and displays your top lapsed and missed questions.
+   - Click **"Show answer"** to preview the correct answer.
+   - Click **"Practice"** to launch an adaptive recall session focused on reinforcing difficult concepts.
+
+### Smartphone & Tablet Usability
+- The dashboard is fully responsive: columns stack neatly on smartphones ($\ge 360\text{px}$) and expand into multi-column grid cards on tablets ($\ge 768\text{px}$).
+- All buttons and interactive controls feature touch targets of at least $44\times 44\text{px}$ for effortless tapping on touchscreens.
+
+---
 ---
 
 # Appendix: Cloud Database Setup & Sign-In Troubleshooting
