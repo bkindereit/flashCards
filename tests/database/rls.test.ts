@@ -27,9 +27,12 @@ describe('Row-Level Security (RLS) Isolation (SEC-001, SEC-002, SEC-003)', () =>
       $$ LANGUAGE plpgsql;
     `);
 
-    const migrationPath = path.resolve(__dirname, '../../supabase/migrations/20261010000000_initial_schema.sql');
-    const migrationSql = fs.readFileSync(migrationPath, 'utf8');
-    await db.exec(migrationSql);
+    const migrationsDir = path.resolve(__dirname, '../../supabase/migrations');
+    const files = fs.readdirSync(migrationsDir).filter(f => f.endsWith('.sql')).sort();
+    for (const f of files) {
+      const sql = fs.readFileSync(path.join(migrationsDir, f), 'utf8');
+      await db.exec(sql);
+    }
 
     // Create user accounts
     await db.exec(`

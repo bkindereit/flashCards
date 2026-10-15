@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { Card, Deck, LearningState } from '@/domain/types';
 import { canonicalNormalize, computeContentHash } from '@/domain/normalization';
-import { Search, Edit2, PauseCircle, PlayCircle, Download, Check, X, AlertCircle, Plus } from 'lucide-react';
+import { Search, Edit2, PauseCircle, PlayCircle, Download, Check, X, AlertCircle, Plus, Trash2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 interface CardManagementViewProps {
@@ -29,6 +29,10 @@ export const CardManagementView: React.FC<CardManagementViewProps> = ({
   const [editQuestion, setEditQuestion] = useState<string>('');
   const [editAnswer, setEditAnswer] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
+
+  // Card Deletion State (MGT-011)
+  const [cardToDelete, setCardToDelete] = useState<Card | null>(null);
+  const [isDeletingCard, setIsDeletingCard] = useState<boolean>(false);
 
   // Manual Card Creation State (MGT-010)
   const [isAddingCard, setIsAddingCard] = useState<boolean>(initialAddMode);
@@ -234,6 +238,26 @@ export const CardManagementView: React.FC<CardManagementViewProps> = ({
       onCardsChange(updated);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Failed to toggle card status');
+    }
+  };
+
+  // MGT-011: Delete card and associated review history
+  const handleDeleteCard = async (card: Card) => {
+    try {
+      setIsDeletingCard(true);
+      setError(null);
+      const { error: rpcError } = await supabase.rpc('rpc_delete_card', { p_card_id: card.id });
+      if (rpcError) {
+        const { error: directError } = await supabase.from('cards').delete().eq('id', card.id);
+        if (directError) throw rpcError || directError;
+      }
+      const updated = cards.filter(c => c.id !== card.id);
+      onCardsChange(updated);
+      setCardToDelete(null);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Database error deleting card');
+    } finally {
+      setIsDeletingCard(false);
     }
   };
 
@@ -521,6 +545,15 @@ export const CardManagementView: React.FC<CardManagementViewProps> = ({
                               <PauseCircle className="w-4 h-4 text-amber-400" />
                             )}
                           </button>
+                          {/* Delete button (MGT-011) */}
+                          <button
+                            onClick={() => setCardToDelete(card)}
+                            className="p-2 min-h-[36px] min-w-[36px] flex items-center justify-center text-slate-400 hover:text-red-400 hover:bg-red-950/40 rounded transition-colors"
+                            aria-label="Delete card"
+                            title="Delete card"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
                         </div>
                       )}
                     </td>
@@ -540,6 +573,73 @@ export const CardManagementView: React.FC<CardManagementViewProps> = ({
           </table>
         </div>
       </div>
+
+      {/* Permanent Card Deletion Confirmation Modal (MGT-011) */}
+      {cardToDelete && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="delete-card-title"
+          className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-150"
+        >
+          <div className="bg-slate-800 border border-red-700/60 rounded-2xl shadow-2xl max-w-md w-full p-6 text-slate-100">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-700 mb-4">
+              <div className="flex items-center gap-3 text-red-400">
+                <Trash2 className="w-6 h-6" />
+                <h2 id="delete-card-title" className="text-xl font-bold text-white">Delete Card Permanently</h2>
+              </div>
+              <button
+                onClick={() => setCardToDelete(null)}
+                disabled={isDeletingCard}
+                className="text-slate-400 hover:text-white p-1 rounded-lg disabled:opacity-50 min-h-[36px] min-w-[36px] flex items-center justify-center"
+                aria-label="Cancel card deletion"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <p className="text-sm text-slate-300 mb-3">
+              Are you sure you want to permanently delete this card from the deck? This action cannot be undone.
+            </p>
+
+            <div className="p-3 bg-slate-900 border border-slate-700 rounded-xl mb-6 text-xs space-y-1.5">
+              <div className="text-slate-400 uppercase tracking-wider text-[10px] font-semibold">Question:</div>
+              <div className="text-white font-sans text-sm line-clamp-3">{cardToDelete.question_text}</div>
+              <div className="text-slate-400 uppercase tracking-wider text-[10px] font-semibold pt-1">Answer:</div>
+              <div className="text-slate-300 font-sans text-sm line-clamp-2">{cardToDelete.answer_text}</div>
+            </div>
+
+            <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-700">
+              <button
+                type="button"
+                disabled={isDeletingCard}
+                onClick={() => setCardToDelete(null)}
+                className="px-4 py-2 bg-slate-700 hover:bg-slate-650 disabled:opacity-50 text-slate-300 font-medium rounded-lg min-h-[44px]"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={isDeletingCard}
+                onClick={() => handleDeleteCard(cardToDelete)}
+                className="flex items-center gap-2 px-6 py-2 bg-red-600 hover:bg-red-500 disabled:opacity-40 text-white font-semibold rounded-lg shadow-md focus:ring-2 focus:ring-red-400 focus:outline-none min-h-[44px]"
+                aria-label="Confirm delete card"
+              >
+                {isDeletingCard ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span>Deleting...</span>
+                  </>
+                ) : (
+                  <>
+                    <Trash2 className="w-4 h-4" /> <span>Delete Card</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

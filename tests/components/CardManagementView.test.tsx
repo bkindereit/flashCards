@@ -12,6 +12,7 @@ import { computeContentHash, canonicalNormalize } from '@/domain/normalization';
 
 vi.mock('@/lib/supabase', () => ({
   supabase: {
+    rpc: vi.fn(() => Promise.resolve({ data: true, error: null })),
     from: vi.fn(() => ({
       update: vi.fn(() => ({
         eq: vi.fn(() => Promise.resolve({ error: null }))
@@ -20,12 +21,15 @@ vi.mock('@/lib/supabase', () => ({
         select: vi.fn(() => ({
           single: vi.fn(() => Promise.resolve({ data: null, error: null }))
         }))
+      })),
+      delete: vi.fn(() => ({
+        eq: vi.fn(() => Promise.resolve({ error: null }))
       }))
     }))
   }
 }));
 
-describe('CardManagementView (MGT-001..MGT-010)', () => {
+describe('CardManagementView (MGT-001..MGT-011)', () => {
   const deck = createDeck();
   const card1 = createCard({
     deck_id: deck.id,
@@ -51,6 +55,7 @@ describe('CardManagementView (MGT-001..MGT-010)', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.mocked(supabase.rpc).mockResolvedValue({ data: true, error: null } as any);
     vi.mocked(supabase.from).mockReturnValue({
       update: vi.fn(() => ({
         eq: vi.fn(() => Promise.resolve({ error: null }))
@@ -59,6 +64,9 @@ describe('CardManagementView (MGT-001..MGT-010)', () => {
         select: vi.fn(() => ({
           single: vi.fn(() => Promise.resolve({ data: null, error: null }))
         }))
+      })),
+      delete: vi.fn(() => ({
+        eq: vi.fn(() => Promise.resolve({ error: null }))
       }))
     } as any);
   });
@@ -297,6 +305,53 @@ describe('CardManagementView (MGT-001..MGT-010)', () => {
     await waitFor(() => {
       expect(screen.getByText(/already exists in the deck/i)).toBeInTheDocument();
     });
+    expect(onCardsChange).not.toHaveBeenCalled();
+  });
+
+  it('MGT-011: Deleting a card shows confirmation dialog and removes the card on confirm', async () => {
+    render(
+      <CardManagementView
+        deck={deck}
+        cards={[card1, card2]}
+        onCardsChange={onCardsChange}
+        onBackToDeck={onBackToDeck}
+      />
+    );
+
+    const deleteBtns = screen.getAllByRole('button', { name: /delete card/i });
+    fireEvent.click(deleteBtns[0]!);
+
+    expect(screen.getByRole('dialog', { name: /delete card permanently/i })).toBeInTheDocument();
+    expect(screen.getAllByText('What is photosynthesis?').length).toBeGreaterThanOrEqual(1);
+
+    const confirmBtn = screen.getByRole('button', { name: /confirm delete card/i });
+    await act(async () => {
+      fireEvent.click(confirmBtn);
+    });
+
+    await waitFor(() => {
+      expect(supabase.rpc).toHaveBeenCalledWith('rpc_delete_card', { p_card_id: card1.id });
+      expect(onCardsChange).toHaveBeenCalledWith([card2]);
+    });
+  });
+
+  it('MGT-011: Cancelling card deletion closes modal without deleting card', async () => {
+    render(
+      <CardManagementView
+        deck={deck}
+        cards={[card1, card2]}
+        onCardsChange={onCardsChange}
+        onBackToDeck={onBackToDeck}
+      />
+    );
+
+    const deleteBtns = screen.getAllByRole('button', { name: /delete card/i });
+    fireEvent.click(deleteBtns[0]!);
+
+    const cancelBtn = screen.getByRole('button', { name: /cancel card deletion/i });
+    fireEvent.click(cancelBtn);
+
+    expect(screen.queryByRole('dialog', { name: /delete card permanently/i })).not.toBeInTheDocument();
     expect(onCardsChange).not.toHaveBeenCalled();
   });
 });

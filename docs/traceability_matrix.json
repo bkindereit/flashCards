@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Authoritative Bidirectional Requirements Traceability Matrix — FCA-SRS-001 vs FCA-VVP-001",
   "version": "1.0",
-  "generated_at": "2026-10-15T19:43:26.094Z",
+  "generated_at": "2026-10-15T19:57:29.804Z",
   "requirements": [
     {
       "requirement_id": "ARC-001",
@@ -1508,6 +1508,30 @@
       "evidence_paths": [
         "tests/components/CardManagementView.test.tsx",
         "src/components/CardManagementView.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "MGT-011",
+      "priority": "Must",
+      "description": "The user shall be able to permanently delete a card from a deck, removing the card and its associated review history.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-ARC-001"
+      ],
+      "automated_test_ids": [
+        "tests/components/CardManagementView.test.tsx::MGT-011: Deleting a card shows confirmation dialog and removes the card on confirm",
+        "tests/components/CardManagementView.test.tsx::MGT-011: Cancelling card deletion closes modal without deleting card",
+        "tests/database/rpc.test.ts::MGT-011: rpc_delete_card deletes card and associated review events atomically",
+        "supabase/tests/database/initial_schema.test.sql::MGT-011: Function rpc_delete_card exists"
+      ],
+      "evidence_paths": [
+        "tests/components/CardManagementView.test.tsx",
+        "tests/database/rpc.test.ts",
+        "supabase/tests/database/initial_schema.test.sql"
       ],
       "result": "Pass",
       "anomaly_ids": []
@@ -4862,6 +4886,12 @@
     "tests/components/CardManagementView.test.tsx::MGT-010: Rejects duplicate question and answer when manually adding a card": [
       "MGT-010"
     ],
+    "tests/components/CardManagementView.test.tsx::MGT-011: Deleting a card shows confirmation dialog and removes the card on confirm": [
+      "MGT-011"
+    ],
+    "tests/components/CardManagementView.test.tsx::MGT-011: Cancelling card deletion closes modal without deleting card": [
+      "MGT-011"
+    ],
     "tests/components/CsvImportModal.test.tsx::IMP-001: Renders file upload dropzone when opened": [
       "IMP-001"
     ],
@@ -5037,6 +5067,9 @@
       "IMP-013",
       "IMP-014",
       "IMP-016"
+    ],
+    "tests/database/rpc.test.ts::MGT-011: rpc_delete_card deletes card and associated review events atomically": [
+      "MGT-011"
     ],
     "tests/database/schema.test.ts::DAT-001, DAT-002, DAT-003: enforces table creation, user_id, UUID, and timestamptz columns": [
       "DAT-001",
@@ -5595,6 +5628,9 @@
     "supabase/tests/database/initial_schema.test.sql::IMP-009, IMP-010: Function rpc_commit_import exists": [
       "IMP-009",
       "IMP-010"
+    ],
+    "supabase/tests/database/initial_schema.test.sql::MGT-011: Function rpc_delete_card exists": [
+      "MGT-011"
     ],
     "supabase/tests/database/initial_schema.test.sql::DAT-010: Trigger trg_review_events_append_only exists on review_events": [
       "DAT-010"

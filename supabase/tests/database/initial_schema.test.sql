@@ -2,7 +2,7 @@
 -- pgTAP tests for database schema, constraints, RLS, and functions
 
 BEGIN;
-SELECT plan(14);
+SELECT plan(15);
 
 -- 2. Check tables exist
 SELECT has_table('profiles', 'DAT-001: Table profiles exists');
@@ -19,6 +19,7 @@ SELECT has_table('grade_operations', 'DAT-001: Table grade_operations exists');
 SELECT has_function('rpc_submit_grade', ARRAY['uuid', 'uuid', 'uuid', 'integer', 'text', 'timestamptz', 'timestamptz', 'timestamptz', 'double precision', 'boolean', 'jsonb', 'text'], 'REV-003, REV-005: Function rpc_submit_grade exists');
 SELECT has_function('rpc_undo_grade', ARRAY['uuid', 'uuid', 'uuid', 'text'], 'REV-012, REV-013: Function rpc_undo_grade exists');
 SELECT has_function('rpc_commit_import', ARRAY['uuid', 'uuid', 'text', 'integer', 'jsonb'], 'IMP-009, IMP-010: Function rpc_commit_import exists');
+SELECT has_function('rpc_delete_card', ARRAY['uuid'], 'MGT-011: Function rpc_delete_card exists');
 
 -- 4. Check trigger exists
 SELECT has_trigger('review_events', 'trg_review_events_append_only', 'DAT-010: Trigger trg_review_events_append_only exists on review_events');

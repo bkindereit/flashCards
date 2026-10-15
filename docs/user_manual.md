@@ -127,6 +127,10 @@ If you prefer to type questions and answers in directly by hand:
   5. Click the green checkmark button to save. Your review count, accuracy, and spaced repetition memory state are fully preserved!
 - **To Suspend or Pause a Card:**
   Click the pause button in the card's row to temporarily exclude it from study sessions without deleting it.
+- **To Delete a Card Permanently:**
+  1. Click the red **Trash Can icon** on the right side of the card's row.
+  2. In the confirmation dialog, review the card prompt and click **"Delete Card"** to confirm.
+  3. The card and its historical records are permanently removed from the deck.
 - **To Save a Backup File to Your Computer:**
   Click **"Export CSV"** in Card Management or **"Export JSON"** at the top of the home screen to download all your decks and cards.
 

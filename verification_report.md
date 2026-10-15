@@ -3,7 +3,7 @@
 ## 17.1 Identification & Provenance
 - **Application:** Adaptive Flashcard Application (PWA)
 - **Version:** `1.0.0`
-- **Commit SHA:** `fd37b7a9a88342e4a5b2a1fd373f8ce529430434` *(DIRTY - uncommitted changes present)*
+- **Commit SHA:** `d2abea0213fafb41bab1756ca24121bf7b93b7db` *(DIRTY - uncommitted changes present)*
 - **Applicable Specifications:** FCA-SRS-001 (SRS), FCA-VVP-001 (VVP)
 - **Execution Date:** 2026-10-15
 - **Verification Executor:** Antigravity Automated Verification Pipeline
@@ -17,8 +17,8 @@
 |---|---|
 | **Overall Result** | **BLOCKED** |
 | **Release Recommendation** | **DO NOT RELEASE** |
-| **Must Requirements** | Total: 221 \| Passed: 218 \| Blocked: 3 \| Not Run: 0 \| Failed: 0 |
-| **Automated Tests** | 312 tests (274 Vitest Unit, Component, Domain & PGlite Suite, 3 Performance Benchmarks (PRF-001, PRF-002), 14 Database Schema, RLS & RPC Tests (pgTAP via Supabase CLI), 21 End-to-End & Live Accessibility Suite (Playwright)) \| 312 Passed, 0 Failed |
+| **Must Requirements** | Total: 222 \| Passed: 219 \| Blocked: 3 \| Not Run: 0 \| Failed: 0 |
+| **Automated Tests** | 316 tests (277 Vitest Unit, Component, Domain & PGlite Suite, 3 Performance Benchmarks (PRF-001, PRF-002), 15 Database Schema, RLS & RPC Tests (pgTAP via Supabase CLI), 21 End-to-End & Live Accessibility Suite (Playwright)) \| 316 Passed, 0 Failed |
 | **Manual Activities** | Total: 4 \| Passed: 0 \| Not Run: 4 |
 | **Open Anomalies** | Severity 1: 0 \| Severity 2: 0 \| Severity 3: 0 |
 | **Approved Waivers** | 0 (Zero waivers granted) |
@@ -38,7 +38,8 @@
 - **FSRS Core Engine:** `ts-fsrs@4.4.1`
 - **Migrations Applied:**
   - `20261010000000_initial_schema.sql` (SHA-256: `a4d5a80fdf7bd496...`)
-  - `20261015000001_deck_cascade_deletion.sql` (SHA-256: `a4d7114509d6a2b6...`)
+  - `20261015000001_deck_cascade_deletion.sql` (SHA-256: `c912ff6496b56b23...`)
+  - `20261015000002_card_deletion.sql` (SHA-256: `c0ca36c19b3f8a4d...`)
 
 ---
 
@@ -65,8 +66,8 @@
 ---
 
 ## 17.6 Requirement Compliance Matrix Summary
-- **Total Requirements Mapped:** 223 (221 Must, 2 Should)
-- **Passed Must:** 218
+- **Total Requirements Mapped:** 224 (222 Must, 2 Should)
+- **Passed Must:** 219
 - **Blocked Must:** 3 (`PRF-003`, `CIC-006`, `CIC-007`)
 - **Not Run Must:** 0
 - **Failed Must:** 0
@@ -76,15 +77,15 @@
 ---
 
 ## 17.7 Test-Suite Results
-- **Vitest Unit, Component, Domain & PGlite Suite**: passed (Total: 274, Passed: 274, Failed: 0)
+- **Vitest Unit, Component, Domain & PGlite Suite**: passed (Total: 277, Passed: 277, Failed: 0)
 - **Performance Benchmarks (PRF-001, PRF-002)**: passed (Total: 3, Passed: 3, Failed: 0)
-- **Database Schema, RLS & RPC Tests (pgTAP via Supabase CLI)**: passed (Total: 14, Passed: 14, Failed: 0)
+- **Database Schema, RLS & RPC Tests (pgTAP via Supabase CLI)**: passed (Total: 15, Passed: 15, Failed: 0)
 - **End-to-End & Live Accessibility Suite (Playwright)**: passed (Total: 21, Passed: 21, Failed: 0)
 
 ---
 
 ## 17.8 Coverage Results
-- **Overall First-Party Code:** **95.09% Statements** (Gate: >=85%), **84.43% Branches** (Gate: >=80%)
+- **Overall First-Party Code:** **94.99% Statements** (Gate: >=85%), **84.26% Branches** (Gate: >=80%)
 - **Core Domain Modules:**
   - `src/domain/scheduler.ts`: 98.87% Statements / 90.42% Branches (Gate: >=95% / >=90%)
   - `src/domain/fsrsService.ts`: 100% Statements / 92.3% Branches (Gate: >=95% / >=90%)
@@ -95,9 +96,9 @@
 ---
 
 ## 17.9 Performance Results
-- **PRF-001 (Next-Card Selection Latency (p95))**: **4.2922 ms** (Threshold: <= 500 ms) -> **PASSED**
-- **PRF-002-Preview (CSV 10k Preview Latency (max))**: **0.2 s** (Threshold: <= 30 s) -> **PASSED**
-- **PRF-002-Commit (CSV 10k Database Commit Latency)**: **12.195 s** (Threshold: <= 30 s) -> **PASSED**
+- **PRF-001 (Next-Card Selection Latency (p95))**: **4.6556 ms** (Threshold: <= 500 ms) -> **PASSED**
+- **PRF-002-Preview (CSV 10k Preview Latency (max))**: **0.223 s** (Threshold: <= 30 s) -> **PASSED**
+- **PRF-002-Commit (CSV 10k Database Commit Latency)**: **13.002 s** (Threshold: <= 30 s) -> **PASSED**
 
 ---
 

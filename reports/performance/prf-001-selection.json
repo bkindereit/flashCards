@@ -16,12 +16,12 @@
   },
   "thresholdMs": 500,
   "statistics": {
-    "minMs": 2.9349,
-    "medianMs": 3.4876,
-    "p95Ms": 4.2922,
-    "p99Ms": 5.2377,
-    "maxMs": 6.7346,
-    "avgMs": 3.5708
+    "minMs": 2.9489,
+    "medianMs": 3.587,
+    "p95Ms": 4.6556,
+    "p99Ms": 8.3855,
+    "maxMs": 16.0729,
+    "avgMs": 3.7664
   },
   "passed": true
 }

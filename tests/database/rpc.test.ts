@@ -28,9 +28,12 @@ describe('Database RPC Functions (submit_grade, undo_grade, commit_import)', () 
       $$ LANGUAGE plpgsql;
     `);
 
-    const migrationPath = path.resolve(__dirname, '../../supabase/migrations/20261010000000_initial_schema.sql');
-    const migrationSql = fs.readFileSync(migrationPath, 'utf8');
-    await db.exec(migrationSql);
+    const migrationsDir = path.resolve(__dirname, '../../supabase/migrations');
+    const files = fs.readdirSync(migrationsDir).filter(f => f.endsWith('.sql')).sort();
+    for (const f of files) {
+      const sql = fs.readFileSync(path.join(migrationsDir, f), 'utf8');
+      await db.exec(sql);
+    }
 
     // Set auth context
     await db.exec(`SET "request.jwt.claim.sub" = '${userId}';`);
@@ -341,5 +344,42 @@ describe('Database RPC Functions (submit_grade, undo_grade, commit_import)', () 
       );
     `);
     expect(resIdempotent.rows[0]?.rpc_commit_import.inserted_count).toBe(1);
+  });
+
+  it('MGT-011: rpc_delete_card deletes card and associated review events atomically', async () => {
+    // Insert a review event for cardId
+    const eventId = '66666666-6666-6666-6666-666666666666';
+    const opId = '77777777-7777-7777-7777-777777777777';
+    await db.exec(`
+      INSERT INTO public.review_events (
+        id, card_id, deck_id, user_id, operation_id,
+        shown_at, revealed_at, rated_at, result, rating,
+        pre_learning_state, pre_difficulty, pre_stability_days,
+        post_learning_state, post_difficulty, post_stability_days,
+        algorithm_version
+      ) VALUES (
+        '${eventId}', '${cardId}', '${deckId}', '${userId}', '${opId}',
+        NOW(), NOW(), NOW(), 'correct', 3,
+        'learning', 0, 0,
+        'review', 5.0, 1.0,
+        'fsrs-v4'
+      );
+    `);
+
+    // Verify card and event exist
+    const beforeCard = await db.query(`SELECT id FROM public.cards WHERE id = '${cardId}';`);
+    expect(beforeCard.rows.length).toBe(1);
+    const beforeEvent = await db.query(`SELECT id FROM public.review_events WHERE id = '${eventId}';`);
+    expect(beforeEvent.rows.length).toBe(1);
+
+    // Call rpc_delete_card
+    const res = await db.query<{ deleted: boolean }>(`SELECT public.rpc_delete_card('${cardId}'::UUID) AS deleted;`);
+    expect(res.rows[0]?.deleted).toBe(true);
+
+    // Verify card and review event are deleted
+    const afterCard = await db.query(`SELECT id FROM public.cards WHERE id = '${cardId}';`);
+    expect(afterCard.rows.length).toBe(0);
+    const afterEvent = await db.query(`SELECT id FROM public.review_events WHERE id = '${eventId}';`);
+    expect(afterEvent.rows.length).toBe(0);
   });
 });

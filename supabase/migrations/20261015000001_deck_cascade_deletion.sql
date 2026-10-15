@@ -39,4 +39,9 @@ BEGIN
 END;
 $$;
 
-GRANT EXECUTE ON FUNCTION public.rpc_delete_deck(UUID) TO authenticated;
+DO $$
+BEGIN
+    IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'authenticated') THEN
+        GRANT EXECUTE ON FUNCTION public.rpc_delete_deck(UUID) TO authenticated;
+    END IF;
+END $$;

@@ -25,10 +25,13 @@ describe('Database Schema & RPC Migration (PGlite In-Memory Postgres)', () => {
       $$ LANGUAGE plpgsql;
     `);
 
-    // Load and run initial migration
-    const migrationPath = path.resolve(__dirname, '../../supabase/migrations/20261010000000_initial_schema.sql');
-    const migrationSql = fs.readFileSync(migrationPath, 'utf8');
-    await db.exec(migrationSql);
+    // Load and run all migrations in order
+    const migrationsDir = path.resolve(__dirname, '../../supabase/migrations');
+    const files = fs.readdirSync(migrationsDir).filter(f => f.endsWith('.sql')).sort();
+    for (const f of files) {
+      const sql = fs.readFileSync(path.join(migrationsDir, f), 'utf8');
+      await db.exec(sql);
+    }
   });
 
   it('DAT-001, DAT-002, DAT-003: enforces table creation, user_id, UUID, and timestamptz columns', async () => {

@@ -367,3 +367,19 @@ All RPC functions are defined with:
   - Evaluates SHA-256 `content_hash` against existing active cards in target deck.
   - Skips duplicates within target deck (`skipped_duplicate_count`).
   - Atomically inserts new unique cards with cohort ordering.
+
+### 4.4 `rpc_delete_deck`
+- **Parameters**: `(p_deck_id UUID)`
+- **Returns**: `BOOLEAN`
+- **Semantics**:
+  - Verifies deck ownership for authenticated caller.
+  - Deletes all review events associated with the deck.
+  - Deletes the deck record, cascading to cards, study sessions, and import batches.
+
+### 4.5 `rpc_delete_card`
+- **Parameters**: `(p_card_id UUID)`
+- **Returns**: `BOOLEAN`
+- **Semantics**:
+  - Verifies card ownership for authenticated caller.
+  - Explicitly deletes review events for the card to satisfy foreign key `ON DELETE RESTRICT` constraint.
+  - Deletes the card record, cleanly cascading to session card state, selection events, and grade operations.
