@@ -1,0 +1,4 @@
+/Users/bastiankindereit/Coding/Antigravity/flashCards/supabase/tests/database/initial_schema.test.sql .. ok
+All tests successful.
+Files=1, Tests=14,  0 wallclock secs ( 0.01 usr  0.01 sys +  0.02 cusr  0.02 csys =  0.06 CPU)
+Result: PASS

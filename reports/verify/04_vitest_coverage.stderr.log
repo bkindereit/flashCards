@@ -1,0 +1,30 @@
+[90mstderr[2m | tests/unit/useStudySession.test.ts[2m > [22m[2museStudySession Hook (UI-001..UI-016, SES-001..SES-010)[2m > [22m[2mREL-004: Handles RPC grade submission error with recoverable retry banner
+[22m[39mError submitting grade: Error: Database connection failed
+    at [90m/Users/bastiankindereit/Coding/Antigravity/flashCards/[39mtests/unit/useStudySession.test.ts:277:72
+    at [90mfile:///Users/bastiankindereit/Coding/Antigravity/flashCards/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:174:14
+    at [90mfile:///Users/bastiankindereit/Coding/Antigravity/flashCards/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:561:28
+    at [90mfile:///Users/bastiankindereit/Coding/Antigravity/flashCards/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:61:24
+    at new Promise (<anonymous>)
+    at runWithTimeout [90m(file:///Users/bastiankindereit/Coding/Antigravity/flashCards/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:41:12[90m)[39m
+    at runTest [90m(file:///Users/bastiankindereit/Coding/Antigravity/flashCards/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1140:17[90m)[39m
+    at runSuite [90m(file:///Users/bastiankindereit/Coding/Antigravity/flashCards/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1294:15[90m)[39m
+    at runSuite [90m(file:///Users/bastiankindereit/Coding/Antigravity/flashCards/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1294:15[90m)[39m
+    at runFiles [90m(file:///Users/bastiankindereit/Coding/Antigravity/flashCards/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:1351:5[90m)[39m
+
+[90mstderr[2m | tests/unit/useStudySession.test.ts[2m > [22m[2museStudySession Hook (UI-001..UI-016, SES-001..SES-010)[2m > [22m[2mHandles RPC undo error with recoverable error banner
+[22m[39mError undoing grade: Error: Undo timeout
+    at [90m/Users/bastiankindereit/Coding/Antigravity/flashCards/[39mtests/unit/useStudySession.test.ts:380:72
+    at [90mfile:///Users/bastiankindereit/Coding/Antigravity/flashCards/[39mnode_modules/[4m@vitest/runner[24m/dist/index.js:561:22
+
+[90mstderr[2m | tests/components/StudyView.test.tsx[2m > [22m[2mStudyView Component (UI-001..UI-016, ACC-002)[2m > [22m[2mUI-009: Renders recoverable error banner with Retry button when RPC fails
+[22m[39mError submitting grade: { message: [32m'Network connection timeout'[39m }
+
+[90mstderr[2m | tests/components/CsvImportModal.test.tsx[2m > [22m[2mCsvImportModal Component (IMP-001..IMP-016)[2m > [22m[2mIMP-017: Supports delimiter selection and auto-detects semicolon-delimited CSVs
+[22m[39mError: Not implemented: navigation (except hash changes)
+    at module.exports (/Users/bastiankindereit/Coding/Antigravity/flashCards/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at navigateFetch (/Users/bastiankindereit/Coding/Antigravity/flashCards/node_modules/jsdom/lib/jsdom/living/window/navigation.js:77:3)
+    at exports.navigate (/Users/bastiankindereit/Coding/Antigravity/flashCards/node_modules/jsdom/lib/jsdom/living/window/navigation.js:55:3)
+    at Timeout._onTimeout (/Users/bastiankindereit/Coding/Antigravity/flashCards/node_modules/jsdom/lib/jsdom/living/nodes/HTMLHyperlinkElementUtils-impl.js:81:7)
+    at listOnTimeout (node:internal/timers:605:17)
+    at processTimers (node:internal/timers:541:7) [90mundefined[39m
+

@@ -1,0 +1,80 @@
+
+[1m[7m[36m RUN [39m[27m[22m [36mv3.0.5 [39m[90m/Users/bastiankindereit/Coding/Antigravity/flashCards[39m
+      [2mCoverage enabled with [22m[33mv8[39m
+
+ [32m✓[39m tests/unit/branchCoverage.test.ts [2m([22m[2m19 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+ [32m✓[39m tests/unit/domainCoverage.test.ts [2m([22m[2m21 tests[22m[2m)[22m[90m 26[2mms[22m[39m
+ [32m✓[39m tests/unit/scheduler.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 19[2mms[22m[39m
+ [32m✓[39m tests/unit/useStudySession.test.ts [2m([22m[2m16 tests[22m[2m)[22m[90m 93[2mms[22m[39m
+ [32m✓[39m tests/unit/csvParser.test.ts [2m([22m[2m14 tests[22m[2m)[22m[90m 30[2mms[22m[39m
+ [32m✓[39m tests/unit/goldenScenarios.test.ts [2m([22m[2m8 tests[22m[2m)[22m[90m 8[2mms[22m[39m
+ [32m✓[39m tests/components/ProgressDashboardView.test.tsx [2m([22m[2m8 tests[22m[2m)[22m[33m 1206[2mms[22m[39m
+ [32m✓[39m tests/components/App.test.tsx [2m([22m[2m9 tests[22m[2m)[22m[33m 981[2mms[22m[39m
+ [32m✓[39m tests/components/CardManagementView.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[33m 543[2mms[22m[39m
+ [32m✓[39m tests/components/StudyView.test.tsx [2m([22m[2m11 tests[22m[2m)[22m[33m 654[2mms[22m[39m
+ [32m✓[39m tests/unit/schedulerFixtures.test.ts [2m([22m[2m12 tests[22m[2m)[22m[90m 9[2mms[22m[39m
+ [32m✓[39m tests/components/AuthContext.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[90m 103[2mms[22m[39m
+ [32m✓[39m tests/components/CsvImportModal.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[33m 394[2mms[22m[39m
+ [32m✓[39m tests/unit/csvFixtures.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 65[2mms[22m[39m
+ [32m✓[39m tests/database/rpc.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 7944[2mms[22m[39m
+   [33m[2m✓[22m[39m Database RPC Functions (submit_grade, undo_grade, commit_import)[2m > [22mrpc_submit_grade: updates card, session, and creates review event atomically (REV-003, REV-005) [33m2037[2mms[22m[39m
+   [33m[2m✓[22m[39m Database RPC Functions (submit_grade, undo_grade, commit_import)[2m > [22mrpc_submit_grade: increments lapse_count and sets relearning on incorrect review card (REV-007) [33m1577[2mms[22m[39m
+   [33m[2m✓[22m[39m Database RPC Functions (submit_grade, undo_grade, commit_import)[2m > [22mrpc_undo_grade: rolls back card and invalidates review event (REV-011, REV-012) [33m1127[2mms[22m[39m
+   [33m[2m✓[22m[39m Database RPC Functions (submit_grade, undo_grade, commit_import)[2m > [22mrpc_undo_grade: rejects undo after another grade has committed (REV-013) [33m2151[2mms[22m[39m
+   [33m[2m✓[22m[39m Database RPC Functions (submit_grade, undo_grade, commit_import)[2m > [22mrpc_commit_import: inserts unique cards and skips duplicates in deck (IMP-009..IMP-012) [33m1048[2mms[22m[39m
+ [32m✓[39m tests/unit/traceabilityChecker.test.ts [2m([22m[2m4 tests[22m[2m)[22m[90m 259[2mms[22m[39m
+ [32m✓[39m tests/unit/fsrsServiceBranches.test.ts [2m([22m[2m11 tests[22m[2m)[22m[90m 11[2mms[22m[39m
+ [32m✓[39m tests/database/schema.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 6227[2mms[22m[39m
+   [33m[2m✓[22m[39m Database Schema & RPC Migration (PGlite In-Memory Postgres)[2m > [22menforces table creation and primary keys [33m2335[2mms[22m[39m
+   [33m[2m✓[22m[39m Database Schema & RPC Migration (PGlite In-Memory Postgres)[2m > [22menforces DAT-006: correct_count + incorrect_count = review_count [33m1272[2mms[22m[39m
+   [33m[2m✓[22m[39m Database Schema & RPC Migration (PGlite In-Memory Postgres)[2m > [22menforces DAT-012 & DAT-013: percent_correct is derived and immutable [33m990[2mms[22m[39m
+   [33m[2m✓[22m[39m Database Schema & RPC Migration (PGlite In-Memory Postgres)[2m > [22menforces DAT-010: review_events append-only except invalidation [33m1627[2mms[22m[39m
+ [32m✓[39m tests/components/DeckModals.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 667[2mms[22m[39m
+   [33m[2m✓[22m[39m DeckModal & DeleteDeckConfirmationModal (DEK-001..DEK-009)[2m > [22mDEK-001: Renders Create Deck form with required fields and defaults [33m330[2mms[22m[39m
+ [32m✓[39m tests/unit/normalization.test.ts [2m([22m[2m8 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+ [32m✓[39m tests/unit/property.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 862[2mms[22m[39m
+   [33m[2m✓[22m[39m Property-Based Scheduling Tests (TST-010, TST-011)[2m > [22mverifies 10,000 valid histories maintain non-negative counters and valid probabilities [33m861[2mms[22m[39m
+ [32m✓[39m tests/database/rls.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 2737[2mms[22m[39m
+   [33m[2m✓[22m[39m Row-Level Security (RLS) Isolation (SEC-001, SEC-002, SEC-003)[2m > [22mSEC-002: User B cannot select or modify User A records [33m2054[2mms[22m[39m
+   [33m[2m✓[22m[39m Row-Level Security (RLS) Isolation (SEC-001, SEC-002, SEC-003)[2m > [22mSEC-003: Unauthenticated user cannot read private tables [33m682[2mms[22m[39m
+ [32m✓[39m tests/unit/supabaseClient.test.ts [2m([22m[2m1 test[22m[2m)[22m[90m 2[2mms[22m[39m
+ [32m✓[39m tests/components/SessionDurationModal.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[90m 136[2mms[22m[39m
+ [32m✓[39m tests/components/DiagnosticsView.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[90m 136[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m25 passed[39m[22m[90m (25)[39m
+[2m      Tests [22m [1m[32m213 passed[39m[22m[90m (213)[39m
+[2m   Start at [22m 08:24:11
+[2m   Duration [22m 13.96s[2m (transform 1.60s, setup 7.49s, collect 18.42s, tests 23.13s, environment 26.49s, prepare 3.99s)[22m
+
+JUNIT report written to /Users/bastiankindereit/Coding/Antigravity/flashCards/reports/vitest/junit.xml
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   94.57 |    82.85 |      72 |   94.57 |                   
+ src               |   84.95 |     77.5 |   51.06 |   84.95 |                   
+  App.tsx          |   84.95 |     77.5 |   51.06 |   84.95 | ...71-673,678-683 
+ src/components    |   95.12 |    78.53 |   68.33 |   95.12 |                   
+  ...ementView.tsx |    87.5 |    62.68 |   66.66 |    87.5 | ...50,454,519,535 
+  ...portModal.tsx |    93.6 |    62.79 |   77.77 |    93.6 | ...33-135,224-227 
+  DeckModal.tsx    |   95.81 |    80.85 |      30 |   95.81 | ...2-54,56-58,106 
+  ...tionModal.tsx |     100 |      100 |     100 |     100 |                   
+  ...sticsView.tsx |    91.6 |    68.75 |      75 |    91.6 | 34-42,80,121      
+  ...boardView.tsx |   99.66 |    86.87 |    87.5 |   99.66 | 609,692           
+  ...tionModal.tsx |   96.26 |      100 |      80 |   96.26 | 68-71             
+  StudyView.tsx    |   98.43 |    80.64 |      75 |   98.43 | 62-63,236-238     
+ src/context       |   84.44 |    66.66 |     100 |   84.44 |                   
+  AuthContext.tsx  |   84.44 |    66.66 |     100 |   84.44 | ...,93-94,115-116 
+ src/domain        |     100 |    89.01 |     100 |     100 |                   
+  clock.ts         |     100 |      100 |     100 |     100 |                   
+  csvParser.ts     |     100 |    94.38 |     100 |     100 | ...04,247,260-261 
+  diagnostics.ts   |     100 |    63.15 |     100 |     100 | ...02-107,115-122 
+  exportService.ts |     100 |       50 |     100 |     100 | 41-60             
+  fsrsService.ts   |     100 |     92.5 |     100 |     100 | 50,138,166        
+  normalization.ts |     100 |      100 |     100 |     100 |                   
+  scheduler.ts     |     100 |    92.68 |     100 |     100 | ...27,157-159,232 
+ src/hooks         |   98.04 |    90.74 |     100 |   98.04 |                   
+  ...udySession.ts |   98.04 |    90.74 |     100 |   98.04 | ...29-131,306-307 
+ src/lib           |     100 |        0 |     100 |     100 |                   
+  supabase.ts      |     100 |        0 |     100 |     100 | 3-4               
+-------------------|---------|----------|---------|---------|-------------------

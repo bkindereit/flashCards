@@ -1,0 +1,61 @@
+{
+  "generatedAt": "2026-10-15T06:24:29.503Z",
+  "fileCount": 11,
+  "files": [
+    {
+      "path": "assets/browser-BxAfJf0S.js",
+      "sizeBytes": 615,
+      "sha256": "1b32081ae814ffaee99475026772ca828c8f0f1019947ef8dadaf976914e98a6"
+    },
+    {
+      "path": "assets/index-DDjCw4Io.css",
+      "sizeBytes": 31995,
+      "sha256": "45c251bb96e6e9b442213db42c4927e3be2c9c0fd5e9c86ad266ffa85e91b70c"
+    },
+    {
+      "path": "assets/index-DwQagSC2.js",
+      "sizeBytes": 394216,
+      "sha256": "5124308783718fe444be1427f628742b5d5325f777c6db181804ad67f15702f1"
+    },
+    {
+      "path": "favicon.svg",
+      "sizeBytes": 370,
+      "sha256": "7701aff0d89b5b069f238244ed86d79d2947348d767670088291a2d4b2ee673b"
+    },
+    {
+      "path": "icons/icon-192x192.png",
+      "sizeBytes": 70,
+      "sha256": "6b7fa434f92a8b80aab02d9bf1a12e49ffcae424e4013a1c4f68b67e3d2bbcd0"
+    },
+    {
+      "path": "icons/icon-512x512.png",
+      "sizeBytes": 70,
+      "sha256": "6b7fa434f92a8b80aab02d9bf1a12e49ffcae424e4013a1c4f68b67e3d2bbcd0"
+    },
+    {
+      "path": "index.html",
+      "sizeBytes": 851,
+      "sha256": "35e6e9d255127af5941a2a1caa6810162fc78e67209289c65d002dcf59a5546f"
+    },
+    {
+      "path": "manifest.webmanifest",
+      "sizeBytes": 546,
+      "sha256": "b06b150457cce571e7831c6ada677b3070ebdc541d67516e88751b0c888f8b08"
+    },
+    {
+      "path": "registerSW.js",
+      "sizeBytes": 134,
+      "sha256": "9742073ef7fc795e7673d98f272992843298426a0ffd8cb3507784df5143608b"
+    },
+    {
+      "path": "sw.js",
+      "sizeBytes": 1507,
+      "sha256": "92425cfc9ef5178f938507fed9027f2007f84dd559f1f94a809cb9a5973a2742"
+    },
+    {
+      "path": "workbox-9c191d2f.js",
+      "sizeBytes": 15112,
+      "sha256": "04b086f1b2f4215ee4b659a7bc9c76162894abdb43fa876247bc7c0bd6fd1c37"
+    }
+  ]
+}

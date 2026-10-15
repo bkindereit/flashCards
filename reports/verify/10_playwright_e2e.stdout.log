@@ -1,0 +1,26 @@
+
+Running 21 tests using 1 worker
+
+  ✓  1 [chromium] › tests/e2e/accessibility.spec.ts:5:3 › Accessibility Audits (ACC-006, ACC-007) › ACC-006: Sign-in view passes automated WCAG 2.1 AA axe audit (963ms)
+  ✓  2 [chromium] › tests/e2e/accessibility.spec.ts:16:3 › Accessibility Audits (ACC-006, ACC-007) › ACC-007: Layout remains operable at 1280x720 viewport and 200% zoom without horizontal overflow (209ms)
+  ✓  3 [chromium] › tests/e2e/accessibility.spec.ts:34:3 › Accessibility Audits (ACC-006, ACC-007) › ACC-008: Operable on mobile phone viewport (390x844) without horizontal overflow and minimum 44px touch targets (316ms)
+  ✓  4 [chromium] › tests/e2e/accessibility.spec.ts:69:3 › Accessibility Audits (ACC-006, ACC-007) › ACC-008: Operable on tablet viewport (768x1024) without horizontal overflow (206ms)
+  ✓  5 [chromium] › tests/e2e/app.spec.ts:4:3 › Adaptive Flashcard Application E2E (VA-ARC-002, VA-AUT-001) › ARC-004: Manifest and PWA metadata are served correctly (27ms)
+  ✓  6 [chromium] › tests/e2e/app.spec.ts:12:3 › Adaptive Flashcard Application E2E (VA-ARC-002, VA-AUT-001) › AUT-002: Unauthenticated users are presented with Sign-in view (208ms)
+  ✓  7 [chromium] › tests/e2e/app.spec.ts:19:3 › Adaptive Flashcard Application E2E (VA-ARC-002, VA-AUT-001) › AUT-001: Submitting email OTP triggers sign-in confirmation (689ms)
+  ✓  8 [firefox] › tests/e2e/accessibility.spec.ts:5:3 › Accessibility Audits (ACC-006, ACC-007) › ACC-006: Sign-in view passes automated WCAG 2.1 AA axe audit (2.0s)
+  ✓  9 [firefox] › tests/e2e/accessibility.spec.ts:16:3 › Accessibility Audits (ACC-006, ACC-007) › ACC-007: Layout remains operable at 1280x720 viewport and 200% zoom without horizontal overflow (360ms)
+  ✓  10 [firefox] › tests/e2e/accessibility.spec.ts:34:3 › Accessibility Audits (ACC-006, ACC-007) › ACC-008: Operable on mobile phone viewport (390x844) without horizontal overflow and minimum 44px touch targets (348ms)
+  ✓  11 [firefox] › tests/e2e/accessibility.spec.ts:69:3 › Accessibility Audits (ACC-006, ACC-007) › ACC-008: Operable on tablet viewport (768x1024) without horizontal overflow (411ms)
+  ✓  12 [firefox] › tests/e2e/app.spec.ts:4:3 › Adaptive Flashcard Application E2E (VA-ARC-002, VA-AUT-001) › ARC-004: Manifest and PWA metadata are served correctly (32ms)
+  ✓  13 [firefox] › tests/e2e/app.spec.ts:12:3 › Adaptive Flashcard Application E2E (VA-ARC-002, VA-AUT-001) › AUT-002: Unauthenticated users are presented with Sign-in view (413ms)
+  ✓  14 [firefox] › tests/e2e/app.spec.ts:19:3 › Adaptive Flashcard Application E2E (VA-ARC-002, VA-AUT-001) › AUT-001: Submitting email OTP triggers sign-in confirmation (848ms)
+  ✓  15 [webkit] › tests/e2e/accessibility.spec.ts:5:3 › Accessibility Audits (ACC-006, ACC-007) › ACC-006: Sign-in view passes automated WCAG 2.1 AA axe audit (1.8s)
+  ✓  16 [webkit] › tests/e2e/accessibility.spec.ts:16:3 › Accessibility Audits (ACC-006, ACC-007) › ACC-007: Layout remains operable at 1280x720 viewport and 200% zoom without horizontal overflow (372ms)
+  ✓  17 [webkit] › tests/e2e/accessibility.spec.ts:34:3 › Accessibility Audits (ACC-006, ACC-007) › ACC-008: Operable on mobile phone viewport (390x844) without horizontal overflow and minimum 44px touch targets (370ms)
+  ✓  18 [webkit] › tests/e2e/accessibility.spec.ts:69:3 › Accessibility Audits (ACC-006, ACC-007) › ACC-008: Operable on tablet viewport (768x1024) without horizontal overflow (352ms)
+  ✓  19 [webkit] › tests/e2e/app.spec.ts:4:3 › Adaptive Flashcard Application E2E (VA-ARC-002, VA-AUT-001) › ARC-004: Manifest and PWA metadata are served correctly (47ms)
+  ✓  20 [webkit] › tests/e2e/app.spec.ts:12:3 › Adaptive Flashcard Application E2E (VA-ARC-002, VA-AUT-001) › AUT-002: Unauthenticated users are presented with Sign-in view (324ms)
+  ✓  21 [webkit] › tests/e2e/app.spec.ts:19:3 › Adaptive Flashcard Application E2E (VA-ARC-002, VA-AUT-001) › AUT-001: Submitting email OTP triggers sign-in confirmation (1.3s)
+
+  21 passed (18.2s)
