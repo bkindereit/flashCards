@@ -174,12 +174,34 @@ export const App: React.FC = () => {
     }
   };
 
+  const [isDeletingDeck, setIsDeletingDeck] = useState<boolean>(false);
+  const [deleteDeckError, setDeleteDeckError] = useState<string | null>(null);
+
   const handleConfirmDeleteDeck = async () => {
     if (!deckToDelete) return;
-    const { error } = await supabase.from('decks').delete().eq('id', deckToDelete.id);
-    if (!error) {
-      setDecks(prev => prev.filter(d => d.id !== deckToDelete.id));
-      setDeckToDelete(null);
+    setIsDeletingDeck(true);
+    setDeleteDeckError(null);
+    try {
+      // Attempt deletion via rpc_delete_deck first (handles review_events deletion atomically)
+      const { error: rpcError } = await supabase.rpc('rpc_delete_deck', { p_deck_id: deckToDelete.id });
+      if (!rpcError) {
+        setDecks(prev => prev.filter(d => d.id !== deckToDelete.id));
+        setDeckToDelete(null);
+        return;
+      }
+
+      // Fallback to direct delete from 'decks'
+      const { error: directError } = await supabase.from('decks').delete().eq('id', deckToDelete.id);
+      if (directError) {
+        setDeleteDeckError(rpcError?.message || directError.message);
+      } else {
+        setDecks(prev => prev.filter(d => d.id !== deckToDelete.id));
+        setDeckToDelete(null);
+      }
+    } catch (err: unknown) {
+      setDeleteDeckError(err instanceof Error ? err.message : 'Failed to delete deck');
+    } finally {
+      setIsDeletingDeck(false);
     }
   };
 
@@ -539,13 +561,50 @@ export const App: React.FC = () => {
                   >
                     <div>
                       <div className="flex items-start justify-between gap-3 mb-2">
-                        <h3 className="text-base sm:text-lg font-bold text-white leading-snug break-words">{deck.name}</h3>
-                        {deck.is_archived && (
-                          <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 bg-slate-700 text-slate-400 rounded shrink-0">
-                            Archived
-                          </span>
-                        )}
+                        <div className="flex-1 min-w-0">
+                          <h3 className="text-base sm:text-lg font-bold text-white leading-snug break-words">{deck.name}</h3>
+                          {deck.is_archived && (
+                            <span className="inline-block text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 bg-slate-700 text-slate-400 rounded mt-1">
+                              Archived
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Top-right Deck Management Controls */}
+                        <div className="flex items-center gap-1 shrink-0">
+                          <button
+                            onClick={() => {
+                              setDeckToEdit(deck);
+                              setIsDeckModalOpen(true);
+                            }}
+                            className="p-2 min-h-[40px] min-w-[40px] flex items-center justify-center text-slate-400 hover:text-white rounded-lg hover:bg-slate-700/60 transition-colors"
+                            title="Deck Settings"
+                            aria-label="Deck settings"
+                          >
+                            <Settings className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => handleToggleArchive(deck)}
+                            className="p-2 min-h-[40px] min-w-[40px] flex items-center justify-center text-slate-400 hover:text-white rounded-lg hover:bg-slate-700/60 transition-colors"
+                            title={deck.is_archived ? 'Restore Deck' : 'Archive Deck'}
+                            aria-label="Archive or restore deck"
+                          >
+                            <Archive className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => {
+                              setDeckToDelete(deck);
+                              setDeleteDeckError(null);
+                            }}
+                            className="p-2 min-h-[40px] min-w-[40px] flex items-center justify-center text-red-400 hover:text-red-300 rounded-lg hover:bg-red-950/40 transition-colors"
+                            title="Delete Deck"
+                            aria-label="Delete deck"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
                       </div>
+
                       {deck.description && (
                         <p className="text-xs text-slate-400 line-clamp-2 mb-4 break-words">{deck.description}</p>
                       )}
@@ -556,82 +615,54 @@ export const App: React.FC = () => {
                       )}
                     </div>
 
-                    <div className="pt-4 border-t border-slate-700/60 flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap">
-                      <div className="flex items-center gap-1.5 flex-wrap sm:flex-nowrap">
-                        <button
-                          onClick={() => handleStartStudy(deck)}
-                          className="flex items-center gap-1 px-3.5 py-2 min-h-[40px] bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-lg shadow-md transition-colors"
-                          aria-label={`Study ${deck.name}`}
-                        >
-                          <Play className="w-3.5 h-3.5" /> Study
-                        </button>
+                    {/* Bottom Primary Learning & Card Actions Bar */}
+                    <div className="pt-4 border-t border-slate-700/60 flex items-center justify-between gap-2 flex-wrap">
+                      <button
+                        onClick={() => handleStartStudy(deck)}
+                        className="flex items-center gap-1.5 px-4 py-2 min-h-[44px] bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl shadow-md transition-colors"
+                        aria-label={`Study ${deck.name}`}
+                      >
+                        <Play className="w-4 h-4 fill-current" /> <span>Study</span>
+                      </button>
+
+                      <div className="flex items-center gap-1.5 flex-wrap">
                         <button
                           onClick={() => {
                             setActiveDeck(deck);
                             setIsImportModalOpen(true);
                           }}
-                          className="p-2 min-h-[40px] min-w-[40px] flex items-center justify-center bg-slate-700 hover:bg-slate-650 text-slate-300 rounded-lg text-xs"
+                          className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center bg-slate-700 hover:bg-slate-650 text-slate-300 hover:text-white rounded-xl text-xs transition-colors"
                           title="Import CSV"
                           aria-label="Import CSV"
                         >
-                          <Upload className="w-3.5 h-3.5" />
+                          <Upload className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => handleOpenCardManagement(deck, true)}
-                          className="p-2 min-h-[40px] min-w-[40px] flex items-center justify-center bg-slate-700 hover:bg-slate-650 text-slate-300 rounded-lg text-xs"
+                          className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center bg-slate-700 hover:bg-slate-650 text-slate-300 hover:text-white rounded-xl text-xs transition-colors"
                           title="Add Card Manually"
                           aria-label={`Add card to ${deck.name}`}
                         >
-                          <Plus className="w-3.5 h-3.5" />
+                          <Plus className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => handleOpenCardManagement(deck, false)}
-                          className="p-2 min-h-[40px] min-w-[40px] flex items-center justify-center bg-slate-700 hover:bg-slate-650 text-slate-300 rounded-lg text-xs"
+                          className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center bg-slate-700 hover:bg-slate-650 text-slate-300 hover:text-white rounded-xl text-xs transition-colors"
                           title="Manage Cards"
                           aria-label="Manage cards"
                         >
-                          <Layers className="w-3.5 h-3.5" />
+                          <Layers className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => {
                             setSelectedProgressDeckId(deck.id);
                             setCurrentView('progress');
                           }}
-                          className="p-2 min-h-[40px] min-w-[40px] flex items-center justify-center bg-slate-700 hover:bg-slate-650 text-slate-300 rounded-lg text-xs"
+                          className="p-2 min-h-[44px] min-w-[44px] flex items-center justify-center bg-slate-700 hover:bg-slate-650 text-slate-300 hover:text-white rounded-xl text-xs transition-colors"
                           title="Deck Progress"
                           aria-label={`View progress for ${deck.name}`}
                         >
-                          <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
-                        </button>
-                      </div>
-
-                      <div className="flex items-center gap-1">
-                        <button
-                          onClick={() => {
-                            setDeckToEdit(deck);
-                            setIsDeckModalOpen(true);
-                          }}
-                          className="p-2 min-h-[40px] min-w-[40px] flex items-center justify-center text-slate-400 hover:text-white rounded-lg"
-                          title="Deck Settings"
-                          aria-label="Deck settings"
-                        >
-                          <Settings className="w-3.5 h-3.5" />
-                        </button>
-                        <button
-                          onClick={() => handleToggleArchive(deck)}
-                          className="p-2 min-h-[40px] min-w-[40px] flex items-center justify-center text-slate-400 hover:text-white rounded-lg"
-                          title={deck.is_archived ? 'Restore Deck' : 'Archive Deck'}
-                          aria-label="Archive or restore deck"
-                        >
-                          <Archive className="w-3.5 h-3.5" />
-                        </button>
-                        <button
-                          onClick={() => setDeckToDelete(deck)}
-                          className="p-2 min-h-[40px] min-w-[40px] flex items-center justify-center text-red-400 hover:text-red-300 rounded-lg"
-                          title="Delete Deck"
-                          aria-label="Delete deck"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
+                          <TrendingUp className="w-4 h-4 text-emerald-400" />
                         </button>
                       </div>
                     </div>
@@ -678,7 +709,12 @@ export const App: React.FC = () => {
         <DeleteDeckConfirmationModal
           isOpen={true}
           deckName={deckToDelete.name}
-          onClose={() => setDeckToDelete(null)}
+          isDeleting={isDeletingDeck}
+          error={deleteDeckError}
+          onClose={() => {
+            setDeckToDelete(null);
+            setDeleteDeckError(null);
+          }}
           onConfirmDelete={handleConfirmDeleteDeck}
         />
       )}

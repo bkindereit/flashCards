@@ -1,14 +1,14 @@
 {
   "reportVersion": "1.0",
   "specificationVersion": "1.0",
-  "commitSha": "91f947fdd6b42a0a41c9f9859cfb1628082631fe",
+  "commitSha": "b123f9390bd5a9633c51eadc603bafde15fbeb55",
   "applicationVersion": "1.0.0",
   "overallResult": "blocked",
   "releaseRecommendation": "do-not-release",
   "configuration": {
     "repository": "https://github.com/BastianKindereit/flashCards",
     "branch": "main",
-    "isDirty": false,
+    "isDirty": true,
     "nodeVersion": "v24.11.1",
     "npmVersion": "11.6.2",
     "lockfileSha256": "f10b3b955e1c3a6da67b5104897c59865fbed2ddbf54fd234c08bf72a7f7c575",
@@ -27,7 +27,11 @@
     "migrations": [
       {
         "name": "20261010000000_initial_schema.sql",
-        "sha256": "4dca314a9d62299dcd2b2eb17c2dd41d27d330bdbaa96aa83062ec1ac351c91d"
+        "sha256": "a4d5a80fdf7bd4963b4900a11ca4177a2b5aa8c7f0e64efbe8e3730f190a41cd"
+      },
+      {
+        "name": "20261015000001_deck_cascade_deletion.sql",
+        "sha256": "a4d7114509d6a2b683682949ebef5e61739d93707729bc0fb122593cefa02084"
       }
     ]
   },
@@ -276,6 +280,7 @@
       "activityId": "VA-DEK-001",
       "result": "Pass",
       "evidence": [
+        "tests/components/App.test.tsx",
         "tests/components/DeckModals.test.tsx",
         "src/components/DeckModal.tsx"
       ]
@@ -2432,11 +2437,11 @@
     {
       "suiteName": "Vitest Unit, Component, Domain & PGlite Suite",
       "tool": "vitest v3.0.5",
-      "total": 269,
-      "passed": 269,
+      "total": 271,
+      "passed": 271,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 35360,
+      "durationMs": 30443,
       "status": "passed"
     },
     {
@@ -2466,13 +2471,13 @@
       "passed": 21,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 12766,
+      "durationMs": 11319,
       "status": "passed"
     }
   ],
   "coverage": {
-    "overallStatements": 94.7,
-    "overallBranches": 83.6,
+    "overallStatements": 94.82,
+    "overallBranches": 83.63,
     "modules": {
       "src/domain/scheduler.ts": {
         "statements": 100,
@@ -2502,7 +2507,7 @@
       "id": "PRF-001",
       "name": "Next-Card Selection Latency (p95)",
       "metric": "p95_ms",
-      "value": 4.19,
+      "value": 3.9442,
       "threshold": 500,
       "unit": "ms",
       "passed": true
@@ -2511,7 +2516,7 @@
       "id": "PRF-002-Preview",
       "name": "CSV 10k Preview Latency (max)",
       "metric": "preview_max_sec",
-      "value": 0.217,
+      "value": 0.232,
       "threshold": 30,
       "unit": "s",
       "passed": true
@@ -2520,7 +2525,7 @@
       "id": "PRF-002-Commit",
       "name": "CSV 10k Database Commit Latency",
       "metric": "commit_sec",
-      "value": 12.852,
+      "value": 11.953,
       "threshold": 30,
       "unit": "s",
       "passed": true
@@ -2578,19 +2583,19 @@
   "waivers": [],
   "artifacts": [
     {
-      "path": "dist/assets/browser-Dro0Hr-O.js",
-      "sha256": "99188d6a68caf5066f743a7f7fe78c00700ceb3f066d21c7c0b4abcd76ac2e62",
+      "path": "dist/assets/browser-DcXWvYf1.js",
+      "sha256": "66a21de2f4768598127e904e4b7df285d05078a09184a0409722fcf9bf6ca7fa",
       "description": "Static distribution asset (615 bytes)"
     },
     {
-      "path": "dist/assets/index-CWyb22Ct.js",
-      "sha256": "ded35d022c4f6abfc532c347a6e9666708cbdd1a1b34d700692e3cb7ca08b6a3",
-      "description": "Static distribution asset (394227 bytes)"
+      "path": "dist/assets/index-CeKn3dcU.css",
+      "sha256": "a4bc388d98246a1bfbabb772ef3288b565a0b2818c78810caf6ee175446c917f",
+      "description": "Static distribution asset (32270 bytes)"
     },
     {
-      "path": "dist/assets/index-DDjCw4Io.css",
-      "sha256": "45c251bb96e6e9b442213db42c4927e3be2c9c0fd5e9c86ad266ffa85e91b70c",
-      "description": "Static distribution asset (31995 bytes)"
+      "path": "dist/assets/index-E9ZyAMiB.js",
+      "sha256": "b144ad8703bcc126fabb841dec075cbb3657638956a0d7ac807a833dd512dd7d",
+      "description": "Static distribution asset (395526 bytes)"
     },
     {
       "path": "dist/favicon.svg",
@@ -2609,7 +2614,7 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "666aab18716e70966591add021c6dab02e10f43332aa373b5be3865545b8b3ac",
+      "sha256": "ebc16dd83b8791aa6cd44b73110c7547992206f6e21ef97ddf7c9b693e81ecaf",
       "description": "Static distribution asset (851 bytes)"
     },
     {
@@ -2624,7 +2629,7 @@
     },
     {
       "path": "dist/sw.js",
-      "sha256": "aff5cf04d625ae61cba13565320a6a5bb15827d2bf5a6a60bd2269fcd1992274",
+      "sha256": "7073712e8911df1cf3733ca74492dedf8542237ddeb8a3101f70fcc35d3c2613",
       "description": "Static distribution asset (1507 bytes)"
     },
     {
@@ -2638,7 +2643,7 @@
       "role": "Verification Executor",
       "name": "Antigravity Automated Agent",
       "decision": "Verified Automated Baseline; Recommends Do Not Release pending operator signatures",
-      "timestamp": "2026-10-15T17:45:20.410Z"
+      "timestamp": "2026-10-15T18:44:45.321Z"
     },
     {
       "role": "Release Authority",

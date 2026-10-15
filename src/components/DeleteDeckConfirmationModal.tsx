@@ -9,6 +9,8 @@ import { AlertTriangle, Trash2, X } from 'lucide-react';
 interface DeleteDeckConfirmationModalProps {
   isOpen: boolean;
   deckName: string;
+  isDeleting?: boolean;
+  error?: string | null;
   onClose: () => void;
   onConfirmDelete: () => void;
 }
@@ -16,10 +18,18 @@ interface DeleteDeckConfirmationModalProps {
 export const DeleteDeckConfirmationModal: React.FC<DeleteDeckConfirmationModalProps> = ({
   isOpen,
   deckName,
+  isDeleting = false,
+  error = null,
   onClose,
   onConfirmDelete
 }) => {
   const [typedName, setTypedName] = useState<string>('');
+
+  React.useEffect(() => {
+    if (isOpen) {
+      setTypedName('');
+    }
+  }, [isOpen, deckName]);
 
   if (!isOpen) return null;
 
@@ -40,7 +50,8 @@ export const DeleteDeckConfirmationModal: React.FC<DeleteDeckConfirmationModalPr
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-white p-1 rounded-lg"
+            disabled={isDeleting}
+            className="text-slate-400 hover:text-white p-1 rounded-lg disabled:opacity-50"
             aria-label="Cancel deletion"
           >
             <X className="w-5 h-5" />
@@ -52,6 +63,13 @@ export const DeleteDeckConfirmationModal: React.FC<DeleteDeckConfirmationModalPr
           This cannot be undone.
         </p>
 
+        {error && (
+          <div role="alert" className="mb-4 p-3 bg-red-950/90 border border-red-700 text-red-200 text-xs rounded-lg flex items-start gap-2">
+            <AlertTriangle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+            <span>{error}</span>
+          </div>
+        )}
+
         <p className="text-xs text-slate-400 mb-2 font-medium">
           To confirm, type <span className="font-mono text-red-300 bg-red-950/60 px-1 py-0.5 rounded border border-red-800">{deckName}</span> below:
         </p>
@@ -59,27 +77,38 @@ export const DeleteDeckConfirmationModal: React.FC<DeleteDeckConfirmationModalPr
         <input
           type="text"
           value={typedName}
+          disabled={isDeleting}
           onChange={e => setTypedName(e.target.value)}
           placeholder="Type deck name here..."
-          className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white mb-6 focus:ring-2 focus:ring-red-400 focus:outline-none"
+          className="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2 text-white mb-6 focus:ring-2 focus:ring-red-400 focus:outline-none disabled:opacity-50"
           aria-label="Confirm deck name for permanent deletion"
         />
 
         <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-700">
           <button
             type="button"
+            disabled={isDeleting}
             onClick={onClose}
-            className="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 font-medium rounded-lg"
+            className="px-4 py-2 bg-slate-700 hover:bg-slate-600 disabled:opacity-50 text-slate-300 font-medium rounded-lg min-h-[44px]"
           >
             Cancel
           </button>
           <button
             type="button"
-            disabled={!isConfirmed}
+            disabled={!isConfirmed || isDeleting}
             onClick={onConfirmDelete}
-            className="flex items-center gap-2 px-6 py-2 bg-red-600 hover:bg-red-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold rounded-lg shadow-md focus:ring-2 focus:ring-red-400 focus:outline-none"
+            className="flex items-center gap-2 px-6 py-2 bg-red-600 hover:bg-red-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold rounded-lg shadow-md focus:ring-2 focus:ring-red-400 focus:outline-none min-h-[44px]"
           >
-            <Trash2 className="w-4 h-4" /> Delete Deck
+            {isDeleting ? (
+              <>
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                <span>Deleting...</span>
+              </>
+            ) : (
+              <>
+                <Trash2 className="w-4 h-4" /> <span>Delete Deck</span>
+              </>
+            )}
           </button>
         </div>
       </div>

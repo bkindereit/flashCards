@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS public.session_card_state (
 CREATE TABLE IF NOT EXISTS public.review_events (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     card_id UUID NOT NULL REFERENCES public.cards(id) ON DELETE RESTRICT,
-    deck_id UUID NOT NULL REFERENCES public.decks(id) ON DELETE RESTRICT,
+    deck_id UUID NOT NULL REFERENCES public.decks(id) ON DELETE CASCADE,
     user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
     session_id UUID REFERENCES public.study_sessions(id) ON DELETE SET NULL,
     operation_id UUID NOT NULL,
@@ -599,3 +599,34 @@ BEGIN
     );
 END;
 $$;
+
+-- 4. delete_deck RPC (DEK-001, DEK-002)
+CREATE OR REPLACE FUNCTION public.rpc_delete_deck(p_deck_id UUID)
+RETURNS BOOLEAN
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, auth
+AS $$
+DECLARE
+    v_user_id UUID;
+BEGIN
+    v_user_id := auth.uid();
+    IF v_user_id IS NULL THEN
+        RAISE EXCEPTION 'Not authenticated';
+    END IF;
+
+    -- Verify ownership
+    IF NOT EXISTS (SELECT 1 FROM public.decks WHERE id = p_deck_id AND user_id = v_user_id) THEN
+        RAISE EXCEPTION 'Deck not found or access denied';
+    END IF;
+
+    -- Delete review events for this deck explicitly first
+    DELETE FROM public.review_events WHERE deck_id = p_deck_id AND user_id = v_user_id;
+
+    -- Delete deck (which cascades to cards, study_sessions, import_batches)
+    DELETE FROM public.decks WHERE id = p_deck_id AND user_id = v_user_id;
+
+    RETURN TRUE;
+END;
+$$;
+

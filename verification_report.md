@@ -3,7 +3,7 @@
 ## 17.1 Identification & Provenance
 - **Application:** Adaptive Flashcard Application (PWA)
 - **Version:** `1.0.0`
-- **Commit SHA:** `91f947fdd6b42a0a41c9f9859cfb1628082631fe` *(CLEAN)*
+- **Commit SHA:** `b123f9390bd5a9633c51eadc603bafde15fbeb55` *(DIRTY - uncommitted changes present)*
 - **Applicable Specifications:** FCA-SRS-001 (SRS), FCA-VVP-001 (VVP)
 - **Execution Date:** 2026-10-15
 - **Verification Executor:** Antigravity Automated Verification Pipeline
@@ -18,7 +18,7 @@
 | **Overall Result** | **BLOCKED** |
 | **Release Recommendation** | **DO NOT RELEASE** |
 | **Must Requirements** | Total: 221 \| Passed: 218 \| Blocked: 3 \| Not Run: 0 \| Failed: 0 |
-| **Automated Tests** | 307 tests (269 Vitest Unit, Component, Domain & PGlite Suite, 3 Performance Benchmarks (PRF-001, PRF-002), 14 Database Schema, RLS & RPC Tests (pgTAP via Supabase CLI), 21 End-to-End & Live Accessibility Suite (Playwright)) \| 307 Passed, 0 Failed |
+| **Automated Tests** | 309 tests (271 Vitest Unit, Component, Domain & PGlite Suite, 3 Performance Benchmarks (PRF-001, PRF-002), 14 Database Schema, RLS & RPC Tests (pgTAP via Supabase CLI), 21 End-to-End & Live Accessibility Suite (Playwright)) \| 309 Passed, 0 Failed |
 | **Manual Activities** | Total: 4 \| Passed: 0 \| Not Run: 4 |
 | **Open Anomalies** | Severity 1: 0 \| Severity 2: 0 \| Severity 3: 0 |
 | **Approved Waivers** | 0 (Zero waivers granted) |
@@ -37,7 +37,8 @@
 - **Lockfile SHA-256:** `f10b3b955e1c3a6da67b5104897c59865fbed2ddbf54fd234c08bf72a7f7c575`
 - **FSRS Core Engine:** `ts-fsrs@4.4.1`
 - **Migrations Applied:**
-  - `20261010000000_initial_schema.sql` (SHA-256: `4dca314a9d62299d...`)
+  - `20261010000000_initial_schema.sql` (SHA-256: `a4d5a80fdf7bd496...`)
+  - `20261015000001_deck_cascade_deletion.sql` (SHA-256: `a4d7114509d6a2b6...`)
 
 ---
 
@@ -75,7 +76,7 @@
 ---
 
 ## 17.7 Test-Suite Results
-- **Vitest Unit, Component, Domain & PGlite Suite**: passed (Total: 269, Passed: 269, Failed: 0)
+- **Vitest Unit, Component, Domain & PGlite Suite**: passed (Total: 271, Passed: 271, Failed: 0)
 - **Performance Benchmarks (PRF-001, PRF-002)**: passed (Total: 3, Passed: 3, Failed: 0)
 - **Database Schema, RLS & RPC Tests (pgTAP via Supabase CLI)**: passed (Total: 14, Passed: 14, Failed: 0)
 - **End-to-End & Live Accessibility Suite (Playwright)**: passed (Total: 21, Passed: 21, Failed: 0)
@@ -83,7 +84,7 @@
 ---
 
 ## 17.8 Coverage Results
-- **Overall First-Party Code:** **94.70% Statements** (Gate: >=85%), **83.60% Branches** (Gate: >=80%)
+- **Overall First-Party Code:** **94.82% Statements** (Gate: >=85%), **83.63% Branches** (Gate: >=80%)
 - **Core Domain Modules:**
   - `src/domain/scheduler.ts`: 100% Statements / 90.58% Branches (Gate: >=95% / >=90%)
   - `src/domain/fsrsService.ts`: 100% Statements / 92.3% Branches (Gate: >=95% / >=90%)
@@ -94,9 +95,9 @@
 ---
 
 ## 17.9 Performance Results
-- **PRF-001 (Next-Card Selection Latency (p95))**: **4.19 ms** (Threshold: <= 500 ms) -> **PASSED**
-- **PRF-002-Preview (CSV 10k Preview Latency (max))**: **0.217 s** (Threshold: <= 30 s) -> **PASSED**
-- **PRF-002-Commit (CSV 10k Database Commit Latency)**: **12.852 s** (Threshold: <= 30 s) -> **PASSED**
+- **PRF-001 (Next-Card Selection Latency (p95))**: **3.9442 ms** (Threshold: <= 500 ms) -> **PASSED**
+- **PRF-002-Preview (CSV 10k Preview Latency (max))**: **0.232 s** (Threshold: <= 30 s) -> **PASSED**
+- **PRF-002-Commit (CSV 10k Database Commit Latency)**: **11.953 s** (Threshold: <= 30 s) -> **PASSED**
 
 ---
 

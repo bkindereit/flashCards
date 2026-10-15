@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Authoritative Bidirectional Requirements Traceability Matrix — FCA-SRS-001 vs FCA-VVP-001",
   "version": "1.0",
-  "generated_at": "2026-10-15T17:44:25.390Z",
+  "generated_at": "2026-10-15T18:44:33.460Z",
   "requirements": [
     {
       "requirement_id": "ARC-001",
@@ -411,6 +411,7 @@
       ],
       "automated_test_ids": [
         "tests/components/App.test.tsx::AUT-001, DEK-001: Shows deck dashboard when user is authenticated",
+        "tests/components/App.test.tsx::DEK-001, DEK-002: Deletes a deck permanently with explicit name confirmation",
         "tests/components/DeckModals.test.tsx::DEK-001: Renders Create Deck form with required fields and defaults",
         "tests/components/DeckModals.test.tsx::DEK-001: Validates required deck name",
         "tests/components/DeckModals.test.tsx::DEK-001: Submits new deck to supabase and calls onSaved"
@@ -434,9 +435,12 @@
         "VA-DEK-001"
       ],
       "automated_test_ids": [
-        "tests/components/DeckModals.test.tsx::DEK-002: DeleteDeckConfirmationModal enforces typing exact deck name to enable delete"
+        "tests/components/App.test.tsx::DEK-001, DEK-002: Deletes a deck permanently with explicit name confirmation",
+        "tests/components/DeckModals.test.tsx::DEK-002: DeleteDeckConfirmationModal enforces typing exact deck name to enable delete",
+        "tests/components/DeckModals.test.tsx::DEK-002: DeleteDeckConfirmationModal renders error banner and displays loading state during deletion"
       ],
       "evidence_paths": [
+        "tests/components/App.test.tsx",
         "tests/components/DeckModals.test.tsx",
         "src/components/DeckModal.tsx"
       ],
@@ -4788,6 +4792,10 @@
     "tests/components/App.test.tsx::AUT-007: Switches to Create Account view, submits sign up form and calls signUp": [
       "AUT-007"
     ],
+    "tests/components/App.test.tsx::DEK-001, DEK-002: Deletes a deck permanently with explicit name confirmation": [
+      "DEK-001",
+      "DEK-002"
+    ],
     "tests/components/AuthContext.test.tsx::AUT-002: Starts in signed-out state when no session exists": [
       "AUT-002"
     ],
@@ -4869,6 +4877,9 @@
       "DEK-001"
     ],
     "tests/components/DeckModals.test.tsx::DEK-002: DeleteDeckConfirmationModal enforces typing exact deck name to enable delete": [
+      "DEK-002"
+    ],
+    "tests/components/DeckModals.test.tsx::DEK-002: DeleteDeckConfirmationModal renders error banner and displays loading state during deletion": [
       "DEK-002"
     ],
     "tests/components/DeckModals.test.tsx::DEK-009: Edit existing deck updates fields and submits via update RPC": [

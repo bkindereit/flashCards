@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent, act } from '@testing-library/react';
+import { render, screen, fireEvent, act, within } from '@testing-library/react';
 import { App } from '@/App';
 import { AuthProvider } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase';
@@ -30,7 +30,8 @@ vi.mock('@/lib/supabase', () => ({
           order: vi.fn(() => Promise.resolve({ data: [], error: null }))
         }))
       }))
-    }))
+    })),
+    rpc: vi.fn(() => Promise.resolve({ data: true, error: null }))
   }
 }));
 
@@ -311,6 +312,70 @@ describe('App Shell (ARC-001..ARC-010, AUT-002, ARC-006)', () => {
       fireEvent.click(manageBtn);
     });
     expect(screen.getByRole('table')).toBeInTheDocument();
+  });
+
+  it('DEK-001, DEK-002: Deletes a deck permanently with explicit name confirmation', async () => {
+    const deck = createDeck({ id: 'deck-del-1', name: 'Delete Me Deck' });
+    vi.mocked(supabase.auth.getSession).mockResolvedValue({
+      data: {
+        session: {
+          user: { id: 'u1', email: 'test@example.com' }
+        }
+      },
+      error: null
+    } as any);
+
+    vi.mocked(supabase.from).mockReturnValue({
+      select: vi.fn(() => ({
+        order: vi.fn(() => Promise.resolve({ data: [deck], error: null })),
+        eq: vi.fn(() => ({
+          order: vi.fn(() => Promise.resolve({ data: [], error: null }))
+        }))
+      })),
+      update: vi.fn(() => ({
+        eq: vi.fn(() => Promise.resolve({ error: null }))
+      })),
+      delete: vi.fn(() => ({
+        eq: vi.fn(() => Promise.resolve({ error: null }))
+      }))
+    } as any);
+
+    vi.mocked(supabase.rpc).mockResolvedValue({ data: true, error: null } as any);
+
+    await act(async () => {
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      );
+    });
+
+    expect(await screen.findByText('Delete Me Deck')).toBeInTheDocument();
+
+    // Click Delete Deck button
+    const deleteBtn = screen.getByLabelText(/delete deck/i);
+    await act(async () => {
+      fireEvent.click(deleteBtn);
+    });
+
+    // Confirmation modal should appear
+    const dialog = screen.getByRole('dialog');
+    expect(within(dialog).getByRole('heading', { name: /delete deck permanently/i })).toBeInTheDocument();
+    const modalDeleteBtn = within(dialog).getByRole('button', { name: /delete deck/i });
+    expect(modalDeleteBtn).toBeDisabled();
+
+    // Type the deck name to confirm
+    const input = within(dialog).getByLabelText(/confirm deck name for permanent deletion/i);
+    fireEvent.change(input, { target: { value: 'Delete Me Deck' } });
+    expect(modalDeleteBtn).not.toBeDisabled();
+
+    // Confirm deletion
+    await act(async () => {
+      fireEvent.click(modalDeleteBtn);
+    });
+
+    expect(supabase.rpc).toHaveBeenCalledWith('rpc_delete_deck', { p_deck_id: 'deck-del-1' });
+    expect(screen.queryByText('Delete Me Deck')).not.toBeInTheDocument();
   });
 
   it('PRG-001..PRG-006: Navigates to learning progress dashboard from top navbar and deck card', async () => {

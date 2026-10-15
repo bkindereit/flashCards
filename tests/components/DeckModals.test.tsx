@@ -133,6 +133,35 @@ describe('DeckModal & DeleteDeckConfirmationModal (DEK-001..DEK-009)', () => {
     expect(onDelete).toHaveBeenCalled();
   });
 
+  it('DEK-002: DeleteDeckConfirmationModal renders error banner and displays loading state during deletion', () => {
+    const { rerender } = render(
+      <DeleteDeckConfirmationModal
+        isOpen={true}
+        deckName="Spanish Vocab"
+        error="Cannot delete deck with active foreign key references"
+        isDeleting={false}
+        onClose={onClose}
+        onConfirmDelete={onDelete}
+      />
+    );
+
+    expect(screen.getByRole('alert')).toHaveTextContent(/cannot delete deck/i);
+
+    rerender(
+      <DeleteDeckConfirmationModal
+        isOpen={true}
+        deckName="Spanish Vocab"
+        error={null}
+        isDeleting={true}
+        onClose={onClose}
+        onConfirmDelete={onDelete}
+      />
+    );
+
+    expect(screen.getByRole('button', { name: /deleting\.\.\./i })).toBeDisabled();
+    expect(screen.getByLabelText(/cancel deletion/i)).toBeDisabled();
+  });
+
   it('DEK-009: Edit existing deck updates fields and submits via update RPC', async () => {
     const existingDeck = createDeck({
       id: 'deck-edit-1',
