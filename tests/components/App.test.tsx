@@ -431,5 +431,98 @@ describe('App Shell (ARC-001..ARC-010, AUT-002, ARC-006)', () => {
 
     expect(await screen.findByRole('region', { name: /learning progress dashboard/i })).toBeInTheDocument();
   });
+
+  it('AUT-001, DEL-002: Opens and navigates user manual from unauthenticated sign-in screen', async () => {
+    vi.mocked(supabase.auth.getSession).mockResolvedValue({
+      data: { session: null },
+      error: null
+    } as any);
+
+    await act(async () => {
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      );
+    });
+
+    const manualBtn = screen.getByRole('button', { name: /open user manual/i });
+    expect(manualBtn).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.click(manualBtn);
+    });
+
+    // Check manual view is displayed
+    expect(await screen.findByRole('region', { name: /user manual/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: 'Adaptive Flashcards — User Manual' })).toBeInTheDocument();
+
+    // Navigate back to sign in
+    const backBtn = screen.getByRole('button', { name: /back to application/i });
+    await act(async () => {
+      fireEvent.click(backBtn);
+    });
+
+    expect(await screen.findByText('Adaptive Flashcards')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Enter your email address')).toBeInTheDocument();
+  });
+
+  it('UI-001, DEL-002: Opens user manual from top navbar, performs topic search, and returns to decks view', async () => {
+    const deck1 = createDeck({ id: 'deck-1', name: 'Biochemistry' });
+    vi.mocked(supabase.auth.getSession).mockResolvedValue({
+      data: {
+        session: {
+          user: { id: 'u1', email: 'student@example.com' }
+        }
+      },
+      error: null
+    } as any);
+
+    vi.mocked(supabase.from).mockReturnValue({
+      select: vi.fn(() => ({
+        order: vi.fn(() => Promise.resolve({ data: [deck1], error: null })),
+        eq: vi.fn(() => ({
+          order: vi.fn(() => Promise.resolve({ data: [], error: null }))
+        }))
+      }))
+    } as any);
+
+    await act(async () => {
+      render(
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      );
+    });
+
+    // Top navbar manual button
+    const navManualBtn = screen.getByRole('button', { name: /open user manual/i });
+    expect(navManualBtn).toBeInTheDocument();
+
+    await act(async () => {
+      fireEvent.click(navManualBtn);
+    });
+
+    expect(await screen.findByRole('region', { name: /user manual/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: 'Adaptive Flashcards — User Manual' })).toBeInTheDocument();
+
+    // Test search functionality
+    const searchInput = screen.getByLabelText(/search user manual/i);
+    await act(async () => {
+      fireEvent.change(searchInput, { target: { value: 'password' } });
+    });
+
+    // Search query matches
+    expect(screen.getAllByText(/password/i).length).toBeGreaterThan(0);
+
+    // Click "Done" / Back button
+    const doneBtn = screen.getByRole('button', { name: /^done$/i });
+    await act(async () => {
+      fireEvent.click(doneBtn);
+    });
+
+    // Returned to decks view
+    expect(await screen.findByText('Biochemistry')).toBeInTheDocument();
+  });
 });
 

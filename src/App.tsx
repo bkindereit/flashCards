@@ -16,16 +16,17 @@ import { DiagnosticsView } from '@/components/DiagnosticsView';
 import { ProgressDashboardView } from '@/components/ProgressDashboardView';
 import { DeckModal } from '@/components/DeckModal';
 import { DeleteDeckConfirmationModal } from '@/components/DeleteDeckConfirmationModal';
+import { UserManualView } from '@/components/UserManualView';
 import {
   Layers, Plus, Play, Settings, Upload, Activity,
-  Download, LogOut, WifiOff, Archive, Trash2, BookOpen, UserPlus, TrendingUp
+  Download, LogOut, WifiOff, Archive, Trash2, BookOpen, UserPlus, TrendingUp, HelpCircle
 } from 'lucide-react';
 
 export const App: React.FC = () => {
   const { user, isLoading, signInWithOtp, verifyOtp, signInWithPassword, signUp, signOut } = useAuth();
 
   // Navigation state
-  const [currentView, setCurrentView] = useState<'decks' | 'study' | 'cards' | 'diagnostics' | 'progress'>('decks');
+  const [currentView, setCurrentView] = useState<'decks' | 'study' | 'cards' | 'diagnostics' | 'progress' | 'manual'>('decks');
   const [selectedProgressDeckId, setSelectedProgressDeckId] = useState<string | null>(null);
   const [activeDeck, setActiveDeck] = useState<Deck | null>(null);
   const [decks, setDecks] = useState<Deck[]>([]);
@@ -227,6 +228,14 @@ export const App: React.FC = () => {
 
   // Unauthenticated Sign-in View (AUT-001)
   if (!user) {
+    if (currentView === 'manual') {
+      return (
+        <div className="min-h-screen bg-slate-900 text-slate-100 flex flex-col p-4 sm:p-6">
+          <UserManualView onBack={() => setCurrentView('decks')} />
+        </div>
+      );
+    }
+
     return (
       <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center p-4 relative">
         {!isOnline && (
@@ -379,6 +388,19 @@ export const App: React.FC = () => {
             )}
           </div>
 
+          {/* User Manual Access */}
+          <div className="mt-4 pt-3 border-t border-slate-700/40 flex items-center justify-center">
+            <button
+              type="button"
+              onClick={() => setCurrentView('manual')}
+              className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-blue-400 transition-colors py-2 px-3 rounded-lg hover:bg-slate-700/50 min-h-[44px]"
+              aria-label="Open user manual"
+            >
+              <HelpCircle className="w-4 h-4 text-blue-400" />
+              <span>Need help? Read User Manual</span>
+            </button>
+          </div>
+
           {authMsg && (
             <div
               role="alert"
@@ -437,6 +459,15 @@ export const App: React.FC = () => {
           </button>
 
           <button
+            onClick={() => setCurrentView('manual')}
+            className="flex items-center gap-1.5 px-2.5 py-2 sm:px-3 sm:py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-300 text-xs font-semibold rounded-lg transition-colors min-h-[36px] sm:min-h-0"
+            aria-label="Open user manual"
+          >
+            <HelpCircle className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-blue-400" />
+            <span className="hidden sm:inline">Manual</span>
+          </button>
+
+          <button
             onClick={handleExportAll}
             className="flex items-center gap-1.5 px-2.5 py-2 sm:px-3 sm:py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-300 text-xs font-semibold rounded-lg transition-colors min-h-[36px] sm:min-h-0"
             aria-label="Export all data in JSON"
@@ -458,6 +489,10 @@ export const App: React.FC = () => {
 
       {/* Main View Router */}
       <main className="flex-1 p-4 sm:p-6">
+        {currentView === 'manual' && (
+          <UserManualView onBack={() => setCurrentView('decks')} />
+        )}
+
         {currentView === 'diagnostics' && (
           <DiagnosticsView onBack={() => setCurrentView('decks')} />
         )}

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Authoritative Bidirectional Requirements Traceability Matrix — FCA-SRS-001 vs FCA-VVP-001",
   "version": "1.0",
-  "generated_at": "2026-10-15T18:44:33.460Z",
+  "generated_at": "2026-10-15T19:16:16.680Z",
   "requirements": [
     {
       "requirement_id": "ARC-001",
@@ -19,7 +19,6 @@
       ],
       "evidence_paths": [
         "tests/unit/inspection/inspection.test.ts",
-        "dist/index.html",
         "tsconfig.json"
       ],
       "result": "Pass",
@@ -59,8 +58,7 @@
         "tests/unit/inspection/inspection.test.ts::ARC-003: Vite static production build configuration is present and valid"
       ],
       "evidence_paths": [
-        "tests/unit/inspection/inspection.test.ts",
-        "dist/index.html"
+        "tests/unit/inspection/inspection.test.ts"
       ],
       "result": "Pass",
       "anomaly_ids": []
@@ -80,7 +78,6 @@
       ],
       "evidence_paths": [
         "tests/e2e/app.spec.ts",
-        "dist/manifest.webmanifest",
         "vite.config.ts"
       ],
       "result": "Pass",
@@ -100,8 +97,7 @@
         "tests/unit/inspection/inspection.test.ts::ARC-005: Web app manifest and PWA configuration include standalone presentation and service worker"
       ],
       "evidence_paths": [
-        "tests/unit/inspection/inspection.test.ts",
-        "dist/sw.js"
+        "tests/unit/inspection/inspection.test.ts"
       ],
       "result": "Pass",
       "anomaly_ids": []
@@ -218,6 +214,7 @@
       ],
       "automated_test_ids": [
         "tests/components/App.test.tsx::AUT-001, DEK-001: Shows deck dashboard when user is authenticated",
+        "tests/components/App.test.tsx::AUT-001, DEL-002: Opens and navigates user manual from unauthenticated sign-in screen",
         "tests/components/AuthContext.test.tsx::AUT-001: signInWithOtp calls supabase auth with email",
         "tests/e2e/app.spec.ts::AUT-001: Submitting email OTP triggers sign-in confirmation"
       ],
@@ -1526,10 +1523,12 @@
         "VA-UI-001"
       ],
       "automated_test_ids": [
+        "tests/components/App.test.tsx::UI-001, DEL-002: Opens user manual from top navbar, performs topic search, and returns to decks view",
         "tests/components/StudyView.test.tsx::UI-001: Shows question and Reveal Answer button; answer is hidden initially",
         "tests/unit/useStudySession.test.ts::UI-001: Initializes session with first card selected and unrevealed"
       ],
       "evidence_paths": [
+        "tests/components/App.test.tsx",
         "tests/components/StudyView.test.tsx",
         "tests/unit/useStudySession.test.ts",
         "src/components/StudyView.tsx"
@@ -4610,9 +4609,12 @@
         "VA-ARC-001"
       ],
       "automated_test_ids": [
+        "tests/components/App.test.tsx::AUT-001, DEL-002: Opens and navigates user manual from unauthenticated sign-in screen",
+        "tests/components/App.test.tsx::UI-001, DEL-002: Opens user manual from top navbar, performs topic search, and returns to decks view",
         "tests/unit/inspection/inspection.test.ts::DEL-001, DEL-002, DEL-003, DEL-004, DEL-005, DEL-006, DEL-007, DEL-008, DEL-009: Deliverables exist"
       ],
       "evidence_paths": [
+        "tests/components/App.test.tsx",
         "tests/unit/inspection/inspection.test.ts",
         "README.md"
       ],
@@ -4795,6 +4797,14 @@
     "tests/components/App.test.tsx::DEK-001, DEK-002: Deletes a deck permanently with explicit name confirmation": [
       "DEK-001",
       "DEK-002"
+    ],
+    "tests/components/App.test.tsx::AUT-001, DEL-002: Opens and navigates user manual from unauthenticated sign-in screen": [
+      "AUT-001",
+      "DEL-002"
+    ],
+    "tests/components/App.test.tsx::UI-001, DEL-002: Opens user manual from top navbar, performs topic search, and returns to decks view": [
+      "UI-001",
+      "DEL-002"
     ],
     "tests/components/AuthContext.test.tsx::AUT-002: Starts in signed-out state when no session exists": [
       "AUT-002"
