@@ -165,7 +165,10 @@ export function useStudySession({
     });
 
     if (!sel) {
-      setIsEnded(true);
+      const activeCount = cardsPool.filter(c => !c.suspended_at && !c.archived_at).length;
+      if (activeCount === 0) {
+        setIsEnded(true);
+      }
       return;
     }
 

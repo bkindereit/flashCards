@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Authoritative Bidirectional Requirements Traceability Matrix — FCA-SRS-001 vs FCA-VVP-001",
   "version": "1.0",
-  "generated_at": "2026-10-15T19:16:16.680Z",
+  "generated_at": "2026-10-15T19:43:26.094Z",
   "requirements": [
     {
       "requirement_id": "ARC-001",
@@ -1934,9 +1934,11 @@
         "VA-SES-001"
       ],
       "automated_test_ids": [
+        "tests/unit/scheduler.test.ts::SES-004, SES-006: Session continues delivering cards until target duration expires even when all cohort cards have met criterion",
         "tests/unit/useStudySession.test.ts::SES-004: Handles session timer expiration"
       ],
       "evidence_paths": [
+        "tests/unit/scheduler.test.ts",
         "tests/unit/useStudySession.test.ts",
         "src/hooks/useStudySession.ts"
       ],
@@ -1975,10 +1977,12 @@
       ],
       "automated_test_ids": [
         "tests/components/StudyView.test.tsx::SES-006: End Early button finishes session and calls onFinish",
+        "tests/unit/scheduler.test.ts::SES-004, SES-006: Session continues delivering cards until target duration expires even when all cohort cards have met criterion",
         "tests/unit/useStudySession.test.ts::SES-006: endSessionEarly stops session and calls onFinishSession with summary"
       ],
       "evidence_paths": [
         "tests/components/StudyView.test.tsx",
+        "tests/unit/scheduler.test.ts",
         "tests/unit/useStudySession.test.ts",
         "src/hooks/useStudySession.ts"
       ],
@@ -5445,6 +5449,10 @@
     "tests/unit/scheduler.test.ts::SCH-036, SCH-037: Deterministic selection with seeded random tie-breaker": [
       "SCH-036",
       "SCH-037"
+    ],
+    "tests/unit/scheduler.test.ts::SES-004, SES-006: Session continues delivering cards until target duration expires even when all cohort cards have met criterion": [
+      "SES-004",
+      "SES-006"
     ],
     "tests/unit/schedulerFixtures.test.ts::SCH-010, SCH-011: SCHF-001: Ten unseen cards, selects from active cohort": [
       "SCH-010",

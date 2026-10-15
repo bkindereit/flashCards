@@ -3,6 +3,7 @@ import { SchedulerEngine, SchedulerContext } from '@/domain/scheduler';
 import { FsrsService, FSRS_PACKAGE_VERSION, FSRS_PARAMETER_SET_VERSION, SCHEDULING_POLICY_VERSION } from '@/domain/fsrsService';
 import { FixedClock, SeededRandom } from '@/domain/clock';
 import { createCard, createDeck, createStudySession, createSessionCardState } from '@/testing/factories';
+import { Card, SessionCardState } from '@/domain/types';
 
 describe('Scheduler Engine & FSRS Integration (SCH-001..SCH-040)', () => {
   const baseTime = new Date('2026-06-01T12:00:00Z');
@@ -413,5 +414,74 @@ describe('Scheduler Engine & FSRS Integration (SCH-001..SCH-040)', () => {
     expect(sel).not.toBeNull();
     // cardA has much higher utility, and anti-echo did not engage because only 2 active cards
     expect(sel?.selectedCard.id).toBe(cardA.id);
+  });
+
+  it('SES-004, SES-006: Session continues delivering cards until target duration expires even when all cohort cards have met criterion', () => {
+    const deck = createDeck({ cohort_size: 5, new_learning_fraction: 0.30 });
+    const session = createStudySession(deck.id, { duration_seconds: 300, active_duration_seconds: 0 });
+    const clock = new FixedClock(baseTime);
+    const engine = new SchedulerEngine(deck.desired_retention, clock);
+    const fsrs = new FsrsService(deck.desired_retention);
+
+    let cards: Card[] = Array.from({ length: 5 }, (_, i) =>
+      createCard({
+        id: `card-${i + 1}`,
+        deck_id: deck.id,
+        source_order: i + 1,
+        cohort_number: 1,
+        learning_state: 'new'
+      })
+    );
+    const states = new Map<string, SessionCardState>();
+    let cumulativeNew = 0;
+    let lastId: string | undefined = undefined;
+
+    // Simulate 20 questions across 300 seconds (15s per question)
+    let totalQuestions = 0;
+    for (let step = 0; step < 20; step++) {
+      const ctx: SchedulerContext = {
+        deck,
+        session,
+        allCards: cards,
+        sessionStates: states,
+        lastCardId: lastId,
+        cumulativeNewLearningSeconds: cumulativeNew,
+        estimatedReviewSeconds: 15.0,
+        clock
+      };
+
+      const sel = engine.selectNextCard(ctx);
+      expect(sel).not.toBeNull();
+      totalQuestions++;
+
+      const card = sel!.selectedCard;
+      lastId = card.id;
+
+      clock.advance(15000);
+      session.active_duration_seconds += 15;
+      if (card.learning_state === 'new' || card.learning_state === 'learning') {
+        cumulativeNew += 15;
+      }
+
+      const repeatRes = fsrs.repeat(card, 3, clock.now());
+      const postState = {
+        learning_state: 'review' as const,
+        difficulty: repeatRes.card.difficulty,
+        stability_days: repeatRes.card.stability,
+        next_due_at: repeatRes.card.due.toISOString()
+      };
+
+      cards = cards.map(c =>
+        c.id === card.id
+          ? { ...c, ...postState, last_review_at: clock.now().toISOString(), review_count: c.review_count + 1 }
+          : c
+      );
+      const st = states.get(card.id) || createSessionCardState(session.id, card.id, { introduced_in_session: true });
+      st.has_met_criterion = true;
+      states.set(card.id, st);
+    }
+
+    expect(totalQuestions).toBe(20);
+    expect(session.active_duration_seconds).toBe(300);
   });
 });

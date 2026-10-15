@@ -54,7 +54,6 @@ export class SchedulerEngine {
 
     // Ceiling for new learning time (SCH-024)
     const newLearningTimeCeiling = deck.new_learning_fraction * sessionDuration;
-    const acquisitionCeilingReached = ctx.cumulativeNewLearningSeconds >= newLearningTimeCeiling;
 
     // 1. Identify queues
     // Queue 1: Relearning cards
@@ -102,9 +101,19 @@ export class SchedulerEngine {
         // If in session state, check if unresolved failure or pending criterion
         if (!sState || !sState.has_met_criterion) {
           activeLearningCards.push(card);
+        } else {
+          earlyReviewCandidates.push(card);
         }
       }
     }
+
+    // SCH-024: Cumulative valid interaction time on new and learning cards shall not exceed the deck's new-learning time fraction while an eligible review or relearning card exists.
+    const hasEligibleReviewOrRelearning = relearningCandidates.length > 0 ||
+      mandatoryOverdueCandidates.length > 0 ||
+      dueReviewCandidates.length > 0 ||
+      earlyReviewCandidates.length > 0;
+    const acquisitionCeilingReached = hasEligibleReviewOrRelearning &&
+      (ctx.cumulativeNewLearningSeconds >= newLearningTimeCeiling);
 
     // Workload estimation (SCH-027): due and relearning workload
     const dueAndRelearningCount = relearningCandidates.length + mandatoryOverdueCandidates.length + dueReviewCandidates.length;
