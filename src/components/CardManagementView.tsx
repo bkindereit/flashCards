@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { Card, Deck, LearningState } from '@/domain/types';
 import { canonicalNormalize, computeContentHash } from '@/domain/normalization';
-import { Search, Edit2, PauseCircle, PlayCircle, Download, Check, X, AlertCircle } from 'lucide-react';
+import { Search, Edit2, PauseCircle, PlayCircle, Download, Check, X, AlertCircle, Plus } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 interface CardManagementViewProps {
@@ -14,19 +14,112 @@ interface CardManagementViewProps {
   cards: Card[];
   onCardsChange: (updatedCards: Card[]) => void;
   onBackToDeck: () => void;
+  initialAddMode?: boolean;
 }
 
 export const CardManagementView: React.FC<CardManagementViewProps> = ({
   deck,
   cards,
   onCardsChange,
-  onBackToDeck
+  onBackToDeck,
+  initialAddMode = false
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [editingCardId, setEditingCardId] = useState<string | null>(null);
   const [editQuestion, setEditQuestion] = useState<string>('');
   const [editAnswer, setEditAnswer] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
+
+  // Manual Card Creation State (MGT-010)
+  const [isAddingCard, setIsAddingCard] = useState<boolean>(initialAddMode);
+  const [newQuestion, setNewQuestion] = useState<string>('');
+  const [newAnswer, setNewAnswer] = useState<string>('');
+  const [isSavingCard, setIsSavingCard] = useState<boolean>(false);
+
+  // MGT-010: Manually create and concatenate new card onto deck
+  const handleAddCard = async () => {
+    try {
+      setIsSavingCard(true);
+      setError(null);
+      const normQ = canonicalNormalize(newQuestion);
+      const normA = canonicalNormalize(newAnswer);
+
+      if (!normQ || !normA) {
+        setError('Question and answer cannot be blank.');
+        setIsSavingCard(false);
+        return;
+      }
+
+      const newHash = await computeContentHash(normQ, normA);
+
+      // Check duplicates against active cards in deck (MGT-005, MGT-010)
+      const isDuplicate = cards.some(
+        c => !c.archived_at && c.content_hash === newHash
+      );
+
+      if (isDuplicate) {
+        setError('A card with this exact question and answer already exists in the deck.');
+        setIsSavingCard(false);
+        return;
+      }
+
+      // Next source order: concatenated onto the end of the deck (MGT-010, SCH-010)
+      const maxOrder = cards.length > 0 ? Math.max(...cards.map(c => c.source_order || 0)) : 0;
+      const newSourceOrder = maxOrder + 1;
+      const cohortSize = deck.cohort_size || 10;
+      const cohortNumber = Math.floor((newSourceOrder - 1) / cohortSize) + 1;
+
+      const cardToInsert = {
+        user_id: deck.user_id,
+        deck_id: deck.id,
+        question_text: newQuestion.trim(),
+        answer_text: newAnswer.trim(),
+        normalized_question: normQ,
+        normalized_answer: normA,
+        content_hash: newHash,
+        source_order: newSourceOrder,
+        cohort_number: cohortNumber,
+        learning_state: 'new' as LearningState,
+        importance_weight: 1.0,
+        algorithm_version: 'fsrs-v4',
+        review_count: 0,
+        correct_count: 0,
+        incorrect_count: 0,
+        lapse_count: 0,
+        successful_relearning_sessions: 0
+      };
+
+      const { data, error: dbError } = await supabase
+        .from('cards')
+        .insert(cardToInsert)
+        .select()
+        .single();
+
+      if (dbError) throw dbError;
+
+      const createdCard: Card = data || {
+        ...cardToInsert,
+        id: crypto.randomUUID(),
+        first_imported_at: new Date().toISOString(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        difficulty: 0,
+        stability_days: 0,
+        percent_correct: 0
+      };
+
+      // Concatenate onto the end
+      onCardsChange([...cards, createdCard]);
+      setNewQuestion('');
+      setNewAnswer('');
+      setIsAddingCard(false);
+      setError(null);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Database error creating card');
+    } finally {
+      setIsSavingCard(false);
+    }
+  };
 
   // MGT-001: Search cards by question or answer text
   const filteredCards = cards.filter(c => {
@@ -176,15 +269,104 @@ export const CardManagementView: React.FC<CardManagementViewProps> = ({
         </div>
 
         <div className="flex items-center gap-3 w-full sm:w-auto">
+          {/* MGT-010 Manual Card Add Button */}
+          <button
+            onClick={() => setIsAddingCard(prev => !prev)}
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold rounded-lg shadow-sm min-h-[44px]"
+            aria-label="Add card"
+          >
+            <Plus className="w-4 h-4" /> Add Card
+          </button>
+
           {/* MGT-009 Export */}
           <button
             onClick={exportCardsCsv}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-sm font-semibold rounded-lg shadow-sm min-h-[44px]"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-sm font-semibold rounded-lg shadow-sm min-h-[44px]"
           >
             <Download className="w-4 h-4" /> Export CSV
           </button>
         </div>
       </div>
+
+      {/* Manual Card Entry Panel (MGT-010) */}
+      {isAddingCard && (
+        <div className="bg-slate-800/90 border border-blue-500/50 rounded-xl p-5 mb-6 shadow-xl animate-in fade-in duration-150" aria-label="Add card panel">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-base font-bold text-white flex items-center gap-2">
+              <Plus className="w-4 h-4 text-blue-400" />
+              Add Question & Answer Pair (Concatenated to Deck)
+            </h2>
+            <button
+              onClick={() => {
+                setIsAddingCard(false);
+                setNewQuestion('');
+                setNewAnswer('');
+                setError(null);
+              }}
+              className="text-slate-400 hover:text-slate-200 p-1 min-h-[36px] min-w-[36px] flex items-center justify-center"
+              aria-label="Close add card form"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label htmlFor="new-card-question" className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+                Question
+              </label>
+              <textarea
+                id="new-card-question"
+                value={newQuestion}
+                onChange={e => setNewQuestion(e.target.value)}
+                placeholder="Type the question prompt here..."
+                rows={3}
+                className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-base sm:text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none placeholder-slate-500"
+                aria-label="Card question"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="new-card-answer" className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+                Answer
+              </label>
+              <textarea
+                id="new-card-answer"
+                value={newAnswer}
+                onChange={e => setNewAnswer(e.target.value)}
+                placeholder="Type the answer here..."
+                rows={3}
+                className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-white text-base sm:text-sm focus:ring-2 focus:ring-blue-400 focus:outline-none placeholder-slate-500"
+                aria-label="Card answer"
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center justify-end gap-3">
+            <button
+              type="button"
+              onClick={() => {
+                setIsAddingCard(false);
+                setNewQuestion('');
+                setNewAnswer('');
+                setError(null);
+              }}
+              className="px-4 py-2 text-slate-400 hover:text-slate-200 text-sm font-semibold min-h-[44px]"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={handleAddCard}
+              disabled={isSavingCard}
+              className="px-5 py-2 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white text-sm font-semibold rounded-lg shadow-md min-h-[44px] flex items-center gap-2"
+              aria-label="Save card"
+            >
+              <Check className="w-4 h-4" /> Save Card
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Search Bar (MGT-001) */}
       <div className="relative mb-6">
@@ -345,6 +527,15 @@ export const CardManagementView: React.FC<CardManagementViewProps> = ({
                   </tr>
                 );
               })}
+              {filteredCards.length === 0 && (
+                <tr>
+                  <td colSpan={10} className="p-8 text-center text-slate-400 font-sans text-sm">
+                    {cards.length === 0
+                      ? 'No cards in this deck yet. Click "+ Add Card" above to type your first question and answer!'
+                      : 'No cards match your search.'}
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

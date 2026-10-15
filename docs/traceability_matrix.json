@@ -1379,6 +1379,26 @@
       "anomaly_ids": []
     },
     {
+      "requirement_id": "MGT-010",
+      "priority": "Must",
+      "description": "The user shall be able to manually create new cards by typing question and answer text, which shall be validated for non-blank content and uniqueness and concatenated onto the end of the deck in ascending source order.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-MGT-001"
+      ],
+      "automated_test_ids": [
+        "test:mgt-010"
+      ],
+      "evidence_paths": [
+        "src/components/CardManagementView.tsx",
+        "tests/components/CardManagementView.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
       "requirement_id": "UI-001",
       "priority": "Must",
       "description": "The study view shall initially display one question without displaying its answer.",
@@ -4492,6 +4512,9 @@
     ],
     "test:mgt-009": [
       "MGT-009"
+    ],
+    "test:mgt-010": [
+      "MGT-010"
     ],
     "test:ui-001": [
       "UI-001"

@@ -4,8 +4,8 @@
 **Report Version:** 1.0  
 **Baseline Specifications:** FCA-SRS-001 v1.0, FCA-VVP-001 v1.0  
 **Candidate Version:** 1.0.0  
-**Target Commit SHA:** `4999bf56d32db2e37dae2529541c21f4ed5a2351`  
-**Execution Timestamp:** 2026-10-15T05:19:32.737Z  
+**Target Commit SHA:** `57d983f7c1e6193e9464800de74f51a958895fa4`  
+**Execution Timestamp:** 2026-10-15T05:59:50.274Z  
 
 ---
 
@@ -24,7 +24,7 @@
 |---|---|
 | **Overall Result** | **BLOCKED** |
 | **Release Recommendation** | **DO NOT RELEASE** |
-| **Must Requirements** | Total: 214 | Passed: 209 | Blocked: 3 | Not Run: 2 | Failed: 0 |
+| **Must Requirements** | Total: 215 | Passed: 210 | Blocked: 3 | Not Run: 2 | Failed: 0 |
 | **Automated Tests** | 227 tests (192 unit/component/PGlite, 2 benchmarks, 4 traceability, 14 pgTAP, 15 Playwright E2E/Axe) | All Passed (0 failed) |
 | **Manual Activities** | Total: 4 | Passed: 0 | Not Run: 4 |
 | **Open Anomalies** | Severity 1: 0 | Severity 2: 0 | Severity 3: 0 |
@@ -71,8 +71,8 @@
 ---
 
 ## 17.6 Requirement Compliance Matrix Summary
-- **Total Requirements Mapped:** 216 (209 Must, 2 Should)
-- **Passed Must:** 209
+- **Total Requirements Mapped:** 217 (209 Must, 2 Should)
+- **Passed Must:** 210
 - **Blocked Must:** 3 (`PRF-003`, `CIC-006`, `CIC-007`)
 - **Not Run Must:** 2 (`ACC-001`, `ACC-002`)
 - **Deferred Should:** 2 (`MGT-009`, `REL-006`)
@@ -90,7 +90,7 @@
 ---
 
 ## 17.8 Coverage Results
-- **Overall First-Party Code:** **93.84% Statements** (Gate: >=85%), **82.12% Branches** (Gate: >=80%)
+- **Overall First-Party Code:** **93.63% Statements** (Gate: >=85%), **81.85% Branches** (Gate: >=80%)
 - **Core Domain Modules:**
   - `src/domain/csvParser.ts`: 100% Statements / 91.22% Branches (Gate: >=95% / >=90%)
   - `src/domain/fsrsService.ts`: 100% Statements / 92.50% Branches (Gate: >=95% / >=90%)
@@ -154,6 +154,6 @@ In accordance with FCA-VVP-001 Section 17.15 and [docs/limitations.md](docs/limi
 
 | Role | Name | Decision | Timestamp | Signature |
 |---|---|---|---|---|
-| Verification Executor | Antigravity AI Agent | Gated: Do Not Release | 2026-10-15T05:19:32.738Z | *Automated Pipeline Signature* |
+| Verification Executor | Antigravity AI Agent | Gated: Do Not Release | 2026-10-15T05:59:50.274Z | *Automated Pipeline Signature* |
 | Release Authority | ____________________ | _____________________ | ____________________ | _____________________________ |
 

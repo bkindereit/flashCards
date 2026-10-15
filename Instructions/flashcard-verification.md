@@ -250,7 +250,7 @@ Release verification passes only when:
 
 | Activity ID | Requirements | Procedure | Pass criteria | Evidence |
 |---|---|---|---|---|
-| VA-MGT-001 | MGT-001–008 | Search, edit unique content, attempt duplicate edit, suspend, restore. | Required fields and behaviors match; history preserved; suspended card excluded. | E2E trace and database assertions. |
+| VA-MGT-001 | MGT-001–008, MGT-010 | Search, create manual card with concatenation to end, edit unique content, attempt duplicate edit, suspend, restore. | Required fields and behaviors match; history preserved; suspended card excluded; manual card concatenated to end with incremented source order. | E2E trace, component tests, and database assertions. |
 | VA-MGT-002 | MGT-009 | Export a canonical deck and parse it as UTF-8 CSV. | Content and row count match documented export contract. | Export artifact comparison. |
 
 ### 11.6 Study and session activities

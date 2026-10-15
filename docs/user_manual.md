@@ -65,7 +65,7 @@ If you prefer passwordless sign-in or have not set a password:
 
 ---
 
-## Step 3: Upload the `.csv` File from Your Computer
+### Method A: Uploading a `.csv` File from Your Computer
 1. Look at your new deck box on the home screen. Along the bottom of that box, right next to the blue **▶ Study** button, click the **Upload button** (the gray square icon with an **upward-pointing arrow ↑**).
 2. A window titled **"Import CSV Flashcards"** will open:
    - **CSV Delimiter:** The app automatically detects whether your file uses commas (`,`), semicolons (`;`), tabs (`\t`), or pipes (`|`). If your CSV was generated in Europe or Excel with semicolons, the dropdown automatically switches to **Semicolon (;)**, or you can change it manually at any time.
@@ -82,6 +82,19 @@ If you prefer passwordless sign-in or have not set a password:
    - Glance at the table to make sure your questions are under **Question** and your answers are under **Answer**.
 5. Click the blue **"Commit Import"** button in the bottom-right corner of the window.
 6. The window will close — all of your question-and-answer pairs are now uploaded and saved!
+
+---
+
+### Method B: Manually Typing Question & Answer Pairs (No CSV File Needed)
+If you prefer to type questions and answers in directly by hand:
+1. On your deck box, click the **`+` (Add Card)** button (or click **Manage Cards**, the stacked-squares icon).
+2. Click the blue **"+ Add Card"** button at the top right of the screen.
+3. An input panel titled **"Add Question & Answer Pair (Concatenated to Deck)"** will appear:
+   - In the **Question** box, type your question prompt.
+   - In the **Answer** box, type your answer.
+4. Click the blue **"Save Card"** button.
+5. Your card is validated (ensuring non-blank content and no duplicate cards) and concatenated directly onto the end of your deck!
+6. You can repeat this to type in as many question-answer pairs as you want.
 
 ---
 
@@ -105,11 +118,17 @@ If you prefer passwordless sign-in or have not set a password:
 
 ---
 
-## Step 5: Editing Cards or Downloading a Backup Copy
-- **To Fix a Typo, Add a Single Card, or Delete a Card:**
-  On your deck box, click the **Manage Cards** button (the **stacked-squares icon** next to the Upload arrow). You can search for any card using the search box, click **Edit** (pencil icon) to change the text, click **Delete** (trash icon) to remove it, or click **+ New Card** to type in one card manually.
+## Step 5: Editing Existing Cards or Exporting Backups
+- **To Edit Any Existing Card:**
+  1. On your deck box, click the **Manage Cards** button (the stacked-squares icon).
+  2. Find the card you want to modify (you can use the search bar to locate it quickly).
+  3. Click the **Edit (pencil icon)** on the right side of that card's row.
+  4. Type your updated Question and/or Answer directly in the textboxes.
+  5. Click the green checkmark button to save. Your review count, accuracy, and spaced repetition memory state are fully preserved!
+- **To Suspend or Pause a Card:**
+  Click the pause button in the card's row to temporarily exclude it from study sessions without deleting it.
 - **To Save a Backup File to Your Computer:**
-  Click **"Export JSON"** in the top-right corner of the screen at any time to save a complete backup file of your flashcards to your *Downloads* folder.
+  Click **"Export CSV"** in Card Management or **"Export JSON"** at the top of the home screen to download all your decks and cards.
 
 ---
 ---

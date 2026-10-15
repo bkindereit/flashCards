@@ -240,6 +240,7 @@ The content hash shall be SHA-256 over the UTF-8 bytes of `normalized_question`,
 | MGT-007 | Must | The user shall be able to suspend and restore a card. |
 | MGT-008 | Must | A suspended card shall not be selected for study. |
 | MGT-009 | Should | The user shall be able to export a deck's question and answer content as UTF-8 CSV. |
+| MGT-010 | Must | The user shall be able to manually create new cards by typing question and answer text, which shall be validated for non-blank content and uniqueness and concatenated onto the end of the deck in ascending source order. |
 
 ### 8.7 Study interface
 

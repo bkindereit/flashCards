@@ -155,8 +155,12 @@ export const App: React.FC = () => {
     setCurrentView('study');
   };
 
-  const handleOpenCardManagement = async (deck: Deck) => {
+  // Card creation trigger state
+  const [initialAddCardMode, setInitialAddCardMode] = useState<boolean>(false);
+
+  const handleOpenCardManagement = async (deck: Deck, openAddMode: boolean = false) => {
     setActiveDeck(deck);
+    setInitialAddCardMode(openAddMode);
     await loadCardsForDeck(deck.id);
     setCurrentView('cards');
   };
@@ -428,6 +432,7 @@ export const App: React.FC = () => {
             cards={activeDeckCards}
             onCardsChange={updated => setActiveDeckCards(updated)}
             onBackToDeck={() => setCurrentView('decks')}
+            initialAddMode={initialAddCardMode}
           />
         )}
 
@@ -525,7 +530,15 @@ export const App: React.FC = () => {
                           <Upload className="w-3.5 h-3.5" />
                         </button>
                         <button
-                          onClick={() => handleOpenCardManagement(deck)}
+                          onClick={() => handleOpenCardManagement(deck, true)}
+                          className="p-2 min-h-[40px] min-w-[40px] flex items-center justify-center bg-slate-700 hover:bg-slate-650 text-slate-300 rounded-lg text-xs"
+                          title="Add Card Manually"
+                          aria-label={`Add card to ${deck.name}`}
+                        >
+                          <Plus className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={() => handleOpenCardManagement(deck, false)}
                           className="p-2 min-h-[40px] min-w-[40px] flex items-center justify-center bg-slate-700 hover:bg-slate-650 text-slate-300 rounded-lg text-xs"
                           title="Manage Cards"
                           aria-label="Manage cards"
