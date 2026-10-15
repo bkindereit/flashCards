@@ -1,0 +1,15 @@
+
+═══════════════════════════════════════════════════════════
+ Requirements Traceability Checker — FCA-VVP-001 / TST-016..018
+═══════════════════════════════════════════════════════════
+
+Requirements checked:  223
+Must requirements:     221
+  Passed:  218
+  Failed:  0
+  Blocked: 3
+  Not Run: 0
+Test IDs indexed:      373
+
+✓ Traceability check PASSED
+

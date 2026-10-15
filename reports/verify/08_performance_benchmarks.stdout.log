@@ -1,0 +1,16 @@
+
+> flashcards@1.0.0 test:perf
+> vitest run -c vitest.perf.config.ts
+
+
+[1m[7m[36m RUN [39m[27m[22m [36mv3.0.5 [39m[90m/Users/bastiankindereit/Coding/Antigravity/flashCards[39m
+
+ [32m✓[39m tests/performance/benchmark.perf.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 17574[2mms[22m[39m
+   [33m[2m✓[22m[39m Performance Benchmarks (PRF-001, PRF-002)[2m > [22mPRF-001: Next-card selection p95 <= 500 ms over 1,000 selections with 10k cards [33m3481[2mms[22m[39m
+   [33m[2m✓[22m[39m Performance Benchmarks (PRF-001, PRF-002)[2m > [22mPRF-002: Preview and commit of 10,000-row CSV-014 each complete in <= 30 seconds [33m14092[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m   Start at [22m 20:43:54
+[2m   Duration [22m 18.10s[2m (transform 89ms, setup 0ms, collect 155ms, tests 17.57s, environment 0ms, prepare 82ms)[22m
+

@@ -1,0 +1,15 @@
+# npm audit report
+
+@supabase/auth-js  <=2.69.1
+auth-js Vulnerable to Insecure Path Routing from Malformed User Input - https://github.com/advisories/GHSA-8r88-6cj9-9fh5
+fix available via `npm audit fix --force`
+Will install @supabase/supabase-js@2.118.0, which is outside the stated dependency range
+node_modules/@supabase/auth-js
+  @supabase/supabase-js  2.41.1 - 2.49.10 || 2.58.1-canary.0
+  Depends on vulnerable versions of @supabase/auth-js
+  node_modules/@supabase/supabase-js
+
+2 low severity vulnerabilities
+
+To address all issues, run:
+  npm audit fix --force
