@@ -124,6 +124,9 @@ Every mandatory statement below uses **shall**. Requirement IDs are permanent an
 | AUT-004 | Must | The application shall provide an explicit sign-out control. |
 | AUT-005 | Must | Signing out shall remove locally held authentication state and return the interface to the sign-in view. |
 | AUT-006 | Must | The application shall synchronize the authenticated user's committed data when the same account is used on another supported computer. |
+| AUT-007 | Must | The application shall allow a new user to create an account by providing an email address and a password of at least 6 characters. |
+| AUT-008 | Must | The application shall allow a user to authenticate directly using an email address and password. |
+| AUT-009 | Must | The application shall allow a user to verify an email sign-in using a 6-digit one-time code sent to their email address. |
 
 ### 8.3 Deck configuration
 

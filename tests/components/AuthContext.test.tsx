@@ -112,7 +112,7 @@ describe('AuthContext (AUT-001..AUT-006)', () => {
     });
   });
 
-  it('AUT-001: verifyOtp calls supabase.auth.verifyOtp with email and token', async () => {
+  it('AUT-009: verifyOtp calls supabase.auth.verifyOtp with email and token', async () => {
     vi.mocked(supabase.auth.getSession).mockResolvedValue({ data: { session: null }, error: null } as any);
     vi.mocked(supabase.auth.verifyOtp).mockResolvedValue({ data: { user: null, session: null }, error: null } as any);
 
@@ -136,7 +136,7 @@ describe('AuthContext (AUT-001..AUT-006)', () => {
     });
   });
 
-  it('AUT-001: signInWithPassword calls supabase.auth.signInWithPassword with email and password', async () => {
+  it('AUT-008: signInWithPassword calls supabase.auth.signInWithPassword with email and password', async () => {
     vi.mocked(supabase.auth.getSession).mockResolvedValue({ data: { session: null }, error: null } as any);
     vi.mocked(supabase.auth.signInWithPassword).mockResolvedValue({ data: { user: null, session: null }, error: null } as any);
 
@@ -159,7 +159,7 @@ describe('AuthContext (AUT-001..AUT-006)', () => {
     });
   });
 
-  it('AUT-001: signUp calls supabase.auth.signUp with email and password', async () => {
+  it('AUT-007: signUp calls supabase.auth.signUp with email and password', async () => {
     vi.mocked(supabase.auth.getSession).mockResolvedValue({ data: { session: null }, error: null } as any);
     vi.mocked(supabase.auth.signUp).mockResolvedValue({ data: { user: null, session: null }, error: null } as any);
 

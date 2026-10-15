@@ -158,7 +158,7 @@ for (const req of requirements) {
 // ── Bidirectional check: all activity_ids appear in both directions ──────────
 const validActivityIds = new Set([
   'VA-ARC-001', 'VA-ARC-002', 'VA-TST-001', 'VA-COV-001',
-  'VA-AUT-001', 'VA-AUT-002',
+  'VA-AUT-001', 'VA-AUT-002', 'VA-AUT-003',
   'VA-DEK-001', 'VA-DAT-001', 'VA-DAT-002',
   'VA-IMP-001', 'VA-IMP-002', 'VA-IMP-003', 'VA-IMP-004',
   'VA-MGT-001', 'VA-MGT-002',

@@ -227,6 +227,7 @@ Release verification passes only when:
 |---|---|---|---|---|
 | VA-AUT-001 | AUT-001–005 | Use local auth test path to request sign-in, establish session, refresh, and sign out. | Each state transition matches requirements and private views reject signed-out state. | API and Playwright reports. |
 | VA-AUT-002 | AUT-006 | Commit data in Browser A; authenticate same user in Browser B; reload. | Browser B displays committed deck and state. | Cross-context Playwright trace. |
+| VA-AUT-003 | AUT-007–009 | Exercise account registration with minimum 6-character password, password authentication, and 6-digit email OTP verification. | New account registers, password authentication establishes valid session, and 6-digit OTP code establishes valid session. | Component unit tests and Playwright reports. |
 
 ### 11.3 Deck and data activities
 

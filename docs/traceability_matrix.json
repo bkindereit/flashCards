@@ -317,6 +317,66 @@
       "anomaly_ids": []
     },
     {
+      "requirement_id": "AUT-007",
+      "priority": "Must",
+      "description": "The application shall allow a new user to create an account by providing an email address and a password of at least 6 characters.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-AUT-003"
+      ],
+      "automated_test_ids": [
+        "test:aut-007"
+      ],
+      "evidence_paths": [
+        "src/App.tsx",
+        "tests/components/App.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "AUT-008",
+      "priority": "Must",
+      "description": "The application shall allow a user to authenticate directly using an email address and password.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-AUT-003"
+      ],
+      "automated_test_ids": [
+        "test:aut-008"
+      ],
+      "evidence_paths": [
+        "src/App.tsx",
+        "tests/components/App.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "AUT-009",
+      "priority": "Must",
+      "description": "The application shall allow a user to verify an email sign-in using a 6-digit one-time code sent to their email address.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-AUT-003"
+      ],
+      "automated_test_ids": [
+        "test:aut-009"
+      ],
+      "evidence_paths": [
+        "src/context/AuthContext.tsx",
+        "tests/components/AuthContext.test.tsx"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
       "requirement_id": "DEK-001",
       "priority": "Must",
       "description": "The user shall be able to create, rename, archive, restore, and delete a deck.",
@@ -4276,6 +4336,15 @@
     ],
     "test:aut-006": [
       "AUT-006"
+    ],
+    "test:aut-007": [
+      "AUT-007"
+    ],
+    "test:aut-008": [
+      "AUT-008"
+    ],
+    "test:aut-009": [
+      "AUT-009"
     ],
     "test:dek-001": [
       "DEK-001"

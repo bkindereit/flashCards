@@ -183,7 +183,7 @@ describe('App Shell (ARC-001..ARC-010, AUT-002, ARC-006)', () => {
     expect(screen.getByText(/check your email for the magic sign-in link/i)).toBeInTheDocument();
   });
 
-  it('AUT-001: Submits password login form and calls signInWithPassword', async () => {
+  it('AUT-008: Submits password login form and calls signInWithPassword', async () => {
     vi.mocked(supabase.auth.getSession).mockResolvedValue({
       data: { session: null },
       error: null
@@ -214,7 +214,7 @@ describe('App Shell (ARC-001..ARC-010, AUT-002, ARC-006)', () => {
     });
   });
 
-  it('AUT-001: Switches to Create Account view, submits sign up form and calls signUp', async () => {
+  it('AUT-007: Switches to Create Account view, submits sign up form and calls signUp', async () => {
     vi.mocked(supabase.auth.getSession).mockResolvedValue({
       data: { session: null },
       error: null
