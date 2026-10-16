@@ -222,8 +222,12 @@ export function useStudySession({
 
     // Simulate next FSRS state
     const repeatRes = fsrsServiceRef.current.repeat(card, rating as 1 | 3, now);
+    const postLearningState: LearningState = result === 'correct'
+      ? (card.learning_state === 'new' || card.learning_state === 'learning' || card.learning_state === 'relearning' ? 'review' : card.learning_state)
+      : (card.learning_state === 'review' ? 'relearning' : (card.learning_state === 'new' ? 'learning' : card.learning_state));
+
     const postState = {
-      learning_state: result === 'correct' ? (card.learning_state === 'new' || card.learning_state === 'learning' ? 'review' : card.learning_state) : (card.learning_state === 'review' ? 'relearning' : card.learning_state),
+      learning_state: postLearningState,
       difficulty: repeatRes.card.difficulty,
       stability_days: repeatRes.card.stability,
       next_due_at: repeatRes.card.due.toISOString()

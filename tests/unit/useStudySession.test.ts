@@ -496,4 +496,69 @@ describe('useStudySession Hook (UI-001..UI-016, SES-001..SES-010)', () => {
     expect(supabase.rpc).not.toHaveBeenCalledWith('rpc_submit_grade', expect.anything());
     expect(result.current.isEnded).toBe(false);
   });
+
+  it('UI-004, SCH-017: Increments intervening card count for existing unresolved failed cards when grading another card', async () => {
+    const cardA = createCard({ deck_id: deck.id, source_order: 1, learning_state: 'new' });
+    const cardB = createCard({ deck_id: deck.id, source_order: 2, learning_state: 'new' });
+    const cardC = createCard({ deck_id: deck.id, source_order: 3, learning_state: 'new' });
+
+    const { result } = renderHook(() =>
+      useStudySession({
+        deck,
+        initialCards: [cardA, cardB, cardC],
+        sessionDurationMinutes: 15
+      })
+    );
+
+    // Fail card A
+    act(() => {
+      result.current.revealAnswer();
+    });
+    await act(async () => {
+      await result.current.submitGrade('incorrect');
+    });
+
+    // Next card is card B. Fail or succeed card B
+    expect(result.current.currentCard?.id).toBe(cardB.id);
+    act(() => {
+      result.current.revealAnswer();
+    });
+    await act(async () => {
+      await result.current.submitGrade('correct');
+    });
+
+    // Next card should progress to card C since card A delay is not yet met
+    expect(result.current.currentCard?.id).toBe(cardC.id);
+  });
+
+  it('SES-004: Completing a grade when session timer has expired transitions session to ended', async () => {
+    const cardA = createCard({ deck_id: deck.id, source_order: 1, learning_state: 'new' });
+    const cardB = createCard({ deck_id: deck.id, source_order: 2, learning_state: 'new' });
+
+    const { result } = renderHook(() =>
+      useStudySession({
+        deck,
+        initialCards: [cardA, cardB],
+        sessionDurationMinutes: 1 // 60 seconds
+      })
+    );
+
+    // Reveal card
+    act(() => {
+      result.current.revealAnswer();
+    });
+
+    // Advance timer past session duration (70 seconds)
+    act(() => {
+      vi.advanceTimersByTime(70000);
+    });
+
+    // Submit grade for current card
+    await act(async () => {
+      await result.current.submitGrade('correct');
+    });
+
+    // Session should now be ended
+    expect(result.current.isEnded).toBe(true);
+  });
 });

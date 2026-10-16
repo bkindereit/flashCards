@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Authoritative Bidirectional Requirements Traceability Matrix — FCA-SRS-001 vs FCA-VVP-001",
   "version": "1.0",
-  "generated_at": "2026-10-15T19:57:29.804Z",
+  "generated_at": "2026-10-16T16:58:01.837Z",
   "requirements": [
     {
       "requirement_id": "ARC-001",
@@ -1616,7 +1616,8 @@
       "automated_test_ids": [
         "tests/components/StudyView.test.tsx::UI-004, UI-005, UI-006: Answer state provides two and only two primary grading controls",
         "tests/unit/useStudySession.test.ts::UI-004, UI-005: submitGrade submits correct grade and advances to next card",
-        "tests/unit/useStudySession.test.ts::UI-004, UI-006: submitGrade submits incorrect grade and updates metrics"
+        "tests/unit/useStudySession.test.ts::UI-004, UI-006: submitGrade submits incorrect grade and updates metrics",
+        "tests/unit/useStudySession.test.ts::UI-004, SCH-017: Increments intervening card count for existing unresolved failed cards when grading another card"
       ],
       "evidence_paths": [
         "tests/components/StudyView.test.tsx",
@@ -1959,7 +1960,8 @@
       ],
       "automated_test_ids": [
         "tests/unit/scheduler.test.ts::SES-004, SES-006: Session continues delivering cards until target duration expires even when all cohort cards have met criterion",
-        "tests/unit/useStudySession.test.ts::SES-004: Handles session timer expiration"
+        "tests/unit/useStudySession.test.ts::SES-004: Handles session timer expiration",
+        "tests/unit/useStudySession.test.ts::SES-004: Completing a grade when session timer has expired transitions session to ended"
       ],
       "evidence_paths": [
         "tests/unit/scheduler.test.ts",
@@ -2428,6 +2430,7 @@
         "tests/unit/domain/schedulerRequirements.test.ts::SCH-010, SCH-011, SCH-012: Cohort numbers, single active cohort, cohort size ceiling",
         "tests/unit/goldenScenarios.test.ts::TST-015, SCH-010, SCH-011: Golden 1 - New Learning: selects from cohort 1 in source order",
         "tests/unit/scheduler.test.ts::SCH-010, SCH-011, SCH-012: Deterministic cohort numbers and 1 active cohort at a time",
+        "tests/unit/scheduler.test.ts::SCH-010, SCH-013, SCH-015, SCH-016, SCH-017, SCH-020: 65-card deck progresses through active cohort cards without getting trapped in a 2-card loop when cards fail",
         "tests/unit/schedulerFixtures.test.ts::SCH-010, SCH-011: SCHF-001: Ten unseen cards, selects from active cohort"
       ],
       "evidence_paths": [
@@ -2499,12 +2502,15 @@
         "VA-SCH-002"
       ],
       "automated_test_ids": [
-        "tests/unit/domain/schedulerRequirements.test.ts::SCH-013, SCH-014, SCH-015: Learning card lifecycle and session criterion"
+        "tests/unit/branchCoverage.test.ts::SCH-013, SCH-014, SCH-029: routes session-introduced new cards and criterion-met learning cards to appropriate queues",
+        "tests/unit/domain/schedulerRequirements.test.ts::SCH-013, SCH-014, SCH-015: Learning card lifecycle and session criterion",
+        "tests/unit/scheduler.test.ts::SCH-010, SCH-013, SCH-015, SCH-016, SCH-017, SCH-020: 65-card deck progresses through active cohort cards without getting trapped in a 2-card loop when cards fail"
       ],
       "evidence_paths": [
+        "tests/unit/branchCoverage.test.ts",
         "tests/unit/domain/schedulerRequirements.test.ts",
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "tests/unit/scheduler.test.ts",
+        "src/domain/scheduler.ts"
       ],
       "result": "Pass",
       "anomaly_ids": []
@@ -2520,10 +2526,12 @@
         "VA-SCH-002"
       ],
       "automated_test_ids": [
+        "tests/unit/branchCoverage.test.ts::SCH-013, SCH-014, SCH-029: routes session-introduced new cards and criterion-met learning cards to appropriate queues",
         "tests/unit/domain/schedulerRequirements.test.ts::SCH-013, SCH-014, SCH-015: Learning card lifecycle and session criterion",
         "tests/unit/goldenScenarios.test.ts::TST-015, SCH-003, SCH-014: Golden 2 - Success: rating Good updates state and stability"
       ],
       "evidence_paths": [
+        "tests/unit/branchCoverage.test.ts",
         "tests/unit/domain/schedulerRequirements.test.ts",
         "tests/unit/goldenScenarios.test.ts",
         "src/domain/scheduler.ts",
@@ -2544,13 +2552,14 @@
       ],
       "automated_test_ids": [
         "tests/unit/domain/schedulerRequirements.test.ts::SCH-013, SCH-014, SCH-015: Learning card lifecycle and session criterion",
-        "tests/unit/goldenScenarios.test.ts::TST-015, SCH-004, SCH-015: Golden 3 - Lapse: rating Again on review card causes lapse"
+        "tests/unit/goldenScenarios.test.ts::TST-015, SCH-004, SCH-015: Golden 3 - Lapse: rating Again on review card causes lapse",
+        "tests/unit/scheduler.test.ts::SCH-010, SCH-013, SCH-015, SCH-016, SCH-017, SCH-020: 65-card deck progresses through active cohort cards without getting trapped in a 2-card loop when cards fail"
       ],
       "evidence_paths": [
         "tests/unit/domain/schedulerRequirements.test.ts",
         "tests/unit/goldenScenarios.test.ts",
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "tests/unit/scheduler.test.ts",
+        "src/domain/scheduler.ts"
       ],
       "result": "Pass",
       "anomaly_ids": []
@@ -2569,6 +2578,7 @@
         "tests/unit/domain/schedulerRequirements.test.ts::SCH-016, SCH-017: Failed card retry delay and intervening count exception",
         "tests/unit/goldenScenarios.test.ts::TST-015, SCH-016, SCH-017, SCH-032: Golden 4 - Relearning: failed card regains priority after anti-echo delay and intervening count",
         "tests/unit/scheduler.test.ts::SCH-016, SCH-017: Failed card is not repeated until delay & intervening count met",
+        "tests/unit/scheduler.test.ts::SCH-010, SCH-013, SCH-015, SCH-016, SCH-017, SCH-020: 65-card deck progresses through active cohort cards without getting trapped in a 2-card loop when cards fail",
         "tests/unit/schedulerFixtures.test.ts::SCH-016: SCHF-002: Failed learning card excluded because delay not met"
       ],
       "evidence_paths": [
@@ -2595,13 +2605,16 @@
         "tests/unit/domain/schedulerRequirements.test.ts::SCH-016, SCH-017: Failed card retry delay and intervening count exception",
         "tests/unit/goldenScenarios.test.ts::TST-015, SCH-016, SCH-017, SCH-032: Golden 4 - Relearning: failed card regains priority after anti-echo delay and intervening count",
         "tests/unit/scheduler.test.ts::SCH-016, SCH-017: Failed card is not repeated until delay & intervening count met",
-        "tests/unit/schedulerFixtures.test.ts::SCH-017: SCHF-003: Failed learning card selected when delay and intervening met"
+        "tests/unit/scheduler.test.ts::SCH-010, SCH-013, SCH-015, SCH-016, SCH-017, SCH-020: 65-card deck progresses through active cohort cards without getting trapped in a 2-card loop when cards fail",
+        "tests/unit/schedulerFixtures.test.ts::SCH-017: SCHF-003: Failed learning card selected when delay and intervening met",
+        "tests/unit/useStudySession.test.ts::UI-004, SCH-017: Increments intervening card count for existing unresolved failed cards when grading another card"
       ],
       "evidence_paths": [
         "tests/unit/domain/schedulerRequirements.test.ts",
         "tests/unit/goldenScenarios.test.ts",
         "tests/unit/scheduler.test.ts",
         "tests/unit/schedulerFixtures.test.ts",
+        "tests/unit/useStudySession.test.ts",
         "src/domain/scheduler.ts"
       ],
       "result": "Pass",
@@ -2661,13 +2674,14 @@
       ],
       "automated_test_ids": [
         "tests/unit/domain/schedulerRequirements.test.ts::SCH-020, SCH-028: Next cohort locked when remaining session time cannot fit one exposure per card",
+        "tests/unit/scheduler.test.ts::SCH-010, SCH-013, SCH-015, SCH-016, SCH-017, SCH-020: 65-card deck progresses through active cohort cards without getting trapped in a 2-card loop when cards fail",
         "tests/unit/schedulerFixtures.test.ts::SCH-020, SCH-024: SCHF-004: Acquisition ceiling reached blocks new cohort cards"
       ],
       "evidence_paths": [
         "tests/unit/domain/schedulerRequirements.test.ts",
+        "tests/unit/scheduler.test.ts",
         "tests/unit/schedulerFixtures.test.ts",
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "src/domain/scheduler.ts"
       ],
       "result": "Pass",
       "anomaly_ids": []
@@ -2857,10 +2871,12 @@
         "VA-SCH-004"
       ],
       "automated_test_ids": [
+        "tests/unit/branchCoverage.test.ts::SCH-013, SCH-014, SCH-029: routes session-introduced new cards and criterion-met learning cards to appropriate queues",
         "tests/unit/domain/schedulerRequirements.test.ts::SCH-029: Generates candidate pools across queues",
         "tests/unit/schedulerFixtures.test.ts::SCH-029: SCHF-005: Manageable due pool prioritizes due review card"
       ],
       "evidence_paths": [
+        "tests/unit/branchCoverage.test.ts",
         "tests/unit/domain/schedulerRequirements.test.ts",
         "tests/unit/schedulerFixtures.test.ts",
         "src/domain/scheduler.ts",
@@ -5129,6 +5145,11 @@
     "tests/performance/benchmark.perf.ts::PRF-002: Preview and commit of 10,000-row CSV-014 each complete in <= 30 seconds": [
       "PRF-002"
     ],
+    "tests/unit/branchCoverage.test.ts::SCH-013, SCH-014, SCH-029: routes session-introduced new cards and criterion-met learning cards to appropriate queues": [
+      "SCH-013",
+      "SCH-014",
+      "SCH-029"
+    ],
     "tests/unit/csvFixtures.test.ts::TST-009, IMP-001: CSV-001: Empty file is rejected with file error": [
       "TST-009",
       "IMP-001"
@@ -5487,6 +5508,14 @@
       "SES-004",
       "SES-006"
     ],
+    "tests/unit/scheduler.test.ts::SCH-010, SCH-013, SCH-015, SCH-016, SCH-017, SCH-020: 65-card deck progresses through active cohort cards without getting trapped in a 2-card loop when cards fail": [
+      "SCH-010",
+      "SCH-013",
+      "SCH-015",
+      "SCH-016",
+      "SCH-017",
+      "SCH-020"
+    ],
     "tests/unit/schedulerFixtures.test.ts::SCH-010, SCH-011: SCHF-001: Ten unseen cards, selects from active cohort": [
       "SCH-010",
       "SCH-011"
@@ -5589,6 +5618,13 @@
     ],
     "tests/unit/useStudySession.test.ts::REL-003: Browser refresh after confirmed grade initializes session with updated card state and without duplicating grades": [
       "REL-003"
+    ],
+    "tests/unit/useStudySession.test.ts::UI-004, SCH-017: Increments intervening card count for existing unresolved failed cards when grading another card": [
+      "UI-004",
+      "SCH-017"
+    ],
+    "tests/unit/useStudySession.test.ts::SES-004: Completing a grade when session timer has expired transitions session to ended": [
+      "SES-004"
     ],
     "supabase/tests/database/initial_schema.test.sql::DAT-001: Table profiles exists": [
       "DAT-001"

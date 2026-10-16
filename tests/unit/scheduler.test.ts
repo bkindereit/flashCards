@@ -3,7 +3,7 @@ import { SchedulerEngine, SchedulerContext } from '@/domain/scheduler';
 import { FsrsService, FSRS_PACKAGE_VERSION, FSRS_PARAMETER_SET_VERSION, SCHEDULING_POLICY_VERSION } from '@/domain/fsrsService';
 import { FixedClock, SeededRandom } from '@/domain/clock';
 import { createCard, createDeck, createStudySession, createSessionCardState } from '@/testing/factories';
-import { Card, SessionCardState } from '@/domain/types';
+import { Card, SessionCardState, LearningState } from '@/domain/types';
 
 describe('Scheduler Engine & FSRS Integration (SCH-001..SCH-040)', () => {
   const baseTime = new Date('2026-06-01T12:00:00Z');
@@ -483,5 +483,138 @@ describe('Scheduler Engine & FSRS Integration (SCH-001..SCH-040)', () => {
 
     expect(totalQuestions).toBe(20);
     expect(session.active_duration_seconds).toBe(300);
+  });
+
+  it('SCH-010, SCH-013, SCH-015, SCH-016, SCH-017, SCH-020: 65-card deck progresses through active cohort cards without getting trapped in a 2-card loop when cards fail', () => {
+    const deck = createDeck({ cohort_size: 10, min_failed_retry_delay_seconds: 60, min_intervening_cards: 3 });
+    const session = createStudySession(deck.id, { duration_seconds: 900 });
+    const clock = new FixedClock(baseTime);
+    const engine = new SchedulerEngine(deck.desired_retention, clock);
+    const fsrs = new FsrsService(deck.desired_retention);
+
+    let cards = Array.from({ length: 65 }, (_, i) =>
+      createCard({
+        id: `card-${i + 1}`,
+        deck_id: deck.id,
+        learning_state: 'new',
+        source_order: i + 1,
+        cohort_number: Math.floor(i / 10) + 1
+      })
+    );
+
+    const states = new Map<string, SessionCardState>();
+    let lastId: string | undefined;
+    let cumulativeNew = 0;
+
+    const step = (rating: 1 | 3) => {
+      const ctx: SchedulerContext = {
+        deck,
+        session,
+        allCards: cards,
+        sessionStates: states,
+        lastCardId: lastId,
+        cumulativeNewLearningSeconds: cumulativeNew,
+        estimatedReviewSeconds: 15.0,
+        clock
+      };
+      const sel = engine.selectNextCard(ctx);
+      expect(sel).not.toBeNull();
+      const card = sel!.selectedCard;
+      lastId = card.id;
+
+      clock.advance(15000);
+      session.active_duration_seconds += 15;
+      if (card.learning_state === 'new' || card.learning_state === 'learning') {
+        cumulativeNew += 15;
+      }
+
+      const repeatRes = fsrs.repeat(card, rating, clock.now());
+      const isCorrect = rating === 3;
+      const postLearningState: LearningState = isCorrect
+        ? (card.learning_state === 'new' || card.learning_state === 'learning' || card.learning_state === 'relearning' ? 'review' : card.learning_state)
+        : (card.learning_state === 'review' ? 'relearning' : (card.learning_state === 'new' ? 'learning' : card.learning_state));
+
+      cards = cards.map(c =>
+        c.id === card.id
+          ? {
+              ...c,
+              learning_state: postLearningState,
+              difficulty: repeatRes.card.difficulty,
+              stability_days: repeatRes.card.stability,
+              next_due_at: repeatRes.card.due.toISOString(),
+              last_review_at: clock.now().toISOString(),
+              review_count: c.review_count + 1
+            }
+          : c
+      );
+
+      const st = states.get(card.id) || createSessionCardState(session.id, card.id, { introduced_in_session: true });
+      if (isCorrect) {
+        st.has_met_criterion = true;
+        st.has_unresolved_failure = false;
+      } else {
+        st.has_unresolved_failure = true;
+        st.last_failure_at = clock.now().toISOString();
+        st.intervening_cards_since_failure = 0;
+      }
+
+      for (const [sId, otherSt] of states.entries()) {
+        if (sId !== card.id && otherSt.has_unresolved_failure) {
+          otherSt.intervening_cards_since_failure += 1;
+        }
+      }
+      states.set(card.id, st);
+      return card;
+    };
+
+    // 1. Card 1 presented and answered correct
+    const c1 = step(3);
+    expect(c1.id).toBe('card-1');
+
+    // 2. Card 2 presented and answered incorrect
+    const c2 = step(1);
+    expect(c2.id).toBe('card-2');
+
+    // 3. Card 3 presented and answered incorrect
+    const c3 = step(1);
+    expect(c3.id).toBe('card-3');
+
+    // 4. Must NOT loop back to card-2 or card-3! Next must be card-4!
+    const c4 = step(3);
+    expect(c4.id).toBe('card-4');
+
+    // 5. Next must be card-5
+    const c5 = step(3);
+    expect(c5.id).toBe('card-5');
+
+    // 6. Next must be card-6
+    const c6 = step(3);
+    expect(c6.id).toBe('card-6');
+
+    // 7. Card 2 has met delay (4 * 15s = 60s) and intervening count (c4, c5, c6 = 3) -> retried!
+    const c7 = step(3);
+    expect(c7.id).toBe('card-2');
+
+    // 8. Card 3 now has 4 intervening cards (c4, c5, c6, c2) and >60s -> retried!
+    const c8 = step(3);
+    expect(c8.id).toBe('card-3');
+
+    // 9. Both card-2 and card-3 resolved! Next unseen cohort cards continue
+    const c9 = step(3);
+    expect(c9.id).toBe('card-7');
+
+    const c10 = step(3);
+    expect(c10.id).toBe('card-8');
+
+    const c11 = step(3);
+    expect(c11.id).toBe('card-9');
+
+    const c12 = step(3);
+    expect(c12.id).toBe('card-10');
+
+    // 10. Cohort 1 complete! Cohort 2 unlocks! Next must be card-11!
+    const c13 = step(3);
+    expect(c13.id).toBe('card-11');
+    expect(c13.cohort_number).toBe(2);
   });
 });

@@ -326,4 +326,60 @@ describe('Scheduler edge cases', () => {
     // Failed card should not be selected since delay and intervening not met
     expect(result?.selectedCard.id).not.toBe(failedCard.id);
   });
+
+  it('SCH-013, SCH-014, SCH-029: routes session-introduced new cards and criterion-met learning cards to appropriate queues', () => {
+    const deck = createDeck();
+    const session = createStudySession(deck.id, { duration_seconds: 3600 });
+    const clock = new FixedClock(baseTime);
+    const engine = new SchedulerEngine(deck.desired_retention, clock);
+
+    // Card in 'new' state in DB, but already introduced in session and has not met criterion
+    const introducedNewCard = createCard({
+      deck_id: deck.id,
+      learning_state: 'new',
+      source_order: 1,
+      cohort_number: 1
+    });
+
+    // Card in 'learning' state that has met criterion -> routes to earlyReviewCandidates
+    const criterionMetCard = createCard({
+      deck_id: deck.id,
+      learning_state: 'learning',
+      source_order: 2,
+      cohort_number: 1
+    });
+
+    const sState1 = createSessionCardState(session.id, introducedNewCard.id, {
+      introduced_in_session: true,
+      has_met_criterion: false,
+      has_unresolved_failure: false
+    });
+
+    const sState2 = createSessionCardState(session.id, criterionMetCard.id, {
+      introduced_in_session: true,
+      has_met_criterion: true,
+      has_unresolved_failure: false
+    });
+
+    const sessionStates = new Map([
+      [introducedNewCard.id, sState1],
+      [criterionMetCard.id, sState2]
+    ]);
+
+    const ctx: SchedulerContext = {
+      deck,
+      session,
+      allCards: [introducedNewCard, criterionMetCard],
+      sessionStates,
+      cumulativeNewLearningSeconds: 0,
+      estimatedReviewSeconds: 15.0,
+      clock
+    };
+
+    const result = engine.selectNextCard(ctx);
+    expect(result).not.toBeNull();
+    // introducedNewCard is in activeLearningCards, criterionMetCard is in earlyReviewCandidates
+    expect(result?.selectedCard.id).toBe(introducedNewCard.id);
+    expect(result?.queue).toBe('active_cohort');
+  });
 });

@@ -25,8 +25,10 @@ describe('Scheduler Canonical Fixtures (FCA-VVP §10.2, SCHF-001..SCHF-012)', ()
     const engine = new SchedulerEngine(fix.deck.desired_retention, fix.clock);
     const ctx: SchedulerContext = { ...fix };
     const sel = engine.selectNextCard(ctx);
-    // Failed learning card delay not met, and new cards blocked until active cohort graduates -> returns null
-    expect(sel).toBeNull();
+    // Failed learning card delay not met, so it is excluded; next eligible card in cohort is selected
+    expect(sel).not.toBeNull();
+    expect(sel?.selectedCard.id).not.toBe(fix.allCards[0]?.id);
+    expect(sel?.selectedCard.id).toBe(fix.allCards[1]?.id);
   });
 
   it('SCH-017: SCHF-003: Failed learning card selected when delay and intervening met', () => {

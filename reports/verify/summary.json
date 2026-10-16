@@ -1,7 +1,7 @@
 {
-  "startedAt": "2026-10-15T19:55:57.036Z",
-  "completedAt": "2026-10-15T19:57:29.868Z",
-  "totalDurationMs": 92832,
+  "startedAt": "2026-10-16T16:56:48.511Z",
+  "completedAt": "2026-10-16T16:58:01.897Z",
+  "totalDurationMs": 73386,
   "overallPassed": true,
   "counts": {
     "total": 12,
@@ -16,7 +16,7 @@
       "command": "npm ci --dry-run",
       "status": "passed",
       "exitCode": 0,
-      "durationMs": 1312,
+      "durationMs": 881,
       "stdoutPath": "reports/verify/01_frozen_lockfile.stdout.log",
       "stderrPath": "reports/verify/01_frozen_lockfile.stderr.log"
     },
@@ -26,7 +26,7 @@
       "command": "npx tsc -b",
       "status": "passed",
       "exitCode": 0,
-      "durationMs": 3718,
+      "durationMs": 3105,
       "stdoutPath": "reports/verify/02_typecheck.stdout.log",
       "stderrPath": "reports/verify/02_typecheck.stderr.log"
     },
@@ -36,7 +36,7 @@
       "command": "npx eslint . --ext ts,tsx --max-warnings 0",
       "status": "passed",
       "exitCode": 0,
-      "durationMs": 2516,
+      "durationMs": 2273,
       "stdoutPath": "reports/verify/03_eslint.stdout.log",
       "stderrPath": "reports/verify/03_eslint.stderr.log"
     },
@@ -46,7 +46,7 @@
       "command": "npx vitest run --coverage --reporter=default --reporter=junit --outputFile.junit=reports/vitest/junit.xml",
       "status": "passed",
       "exitCode": 0,
-      "durationMs": 30508,
+      "durationMs": 19546,
       "stdoutPath": "reports/verify/04_vitest_coverage.stdout.log",
       "stderrPath": "reports/verify/04_vitest_coverage.stderr.log"
     },
@@ -56,7 +56,7 @@
       "command": "npx vite build",
       "status": "passed",
       "exitCode": 0,
-      "durationMs": 4948,
+      "durationMs": 4929,
       "notes": "11 files hashed",
       "stdoutPath": null,
       "stderrPath": null
@@ -67,7 +67,7 @@
       "command": "node scripts/secret-scan.mjs",
       "status": "passed",
       "exitCode": 0,
-      "durationMs": 230,
+      "durationMs": 124,
       "stdoutPath": "reports/verify/06_secret_scan.stdout.log",
       "stderrPath": "reports/verify/06_secret_scan.stderr.log"
     },
@@ -77,7 +77,7 @@
       "command": "npm audit --omit=dev --audit-level=high",
       "status": "passed",
       "exitCode": 0,
-      "durationMs": 1246,
+      "durationMs": 991,
       "stdoutPath": "reports/verify/07_dependency_audit.stdout.log",
       "stderrPath": "reports/verify/07_dependency_audit.stderr.log"
     },
@@ -87,7 +87,7 @@
       "command": "npm run test:perf",
       "status": "passed",
       "exitCode": 0,
-      "durationMs": 20741,
+      "durationMs": 20057,
       "stdoutPath": "reports/verify/08_performance_benchmarks.stdout.log",
       "stderrPath": "reports/verify/08_performance_benchmarks.stderr.log"
     },
@@ -97,7 +97,7 @@
       "command": "supabase test db",
       "status": "passed",
       "exitCode": 0,
-      "durationMs": 2057,
+      "durationMs": 1205,
       "notes": "All pgTAP assertions passed",
       "stdoutPath": null,
       "stderrPath": null
@@ -108,7 +108,7 @@
       "command": "npx playwright test",
       "status": "passed",
       "exitCode": 0,
-      "durationMs": 24097,
+      "durationMs": 19349,
       "stdoutPath": "reports/verify/10_playwright_e2e.stdout.log",
       "stderrPath": "reports/verify/10_playwright_e2e.stderr.log"
     },
@@ -118,7 +118,7 @@
       "command": "node scripts/sync-traceability.mjs",
       "status": "passed",
       "exitCode": 0,
-      "durationMs": 218,
+      "durationMs": 113,
       "stdoutPath": "reports/verify/11_traceability_sync.stdout.log",
       "stderrPath": "reports/verify/11_traceability_sync.stderr.log"
     },
@@ -128,7 +128,7 @@
       "command": "node scripts/check-traceability.mjs",
       "status": "passed",
       "exitCode": 0,
-      "durationMs": 53,
+      "durationMs": 50,
       "stdoutPath": "reports/verify/12_traceability_check.stdout.log",
       "stderrPath": "reports/verify/12_traceability_check.stderr.log"
     }

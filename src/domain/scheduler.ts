@@ -96,7 +96,11 @@ export class SchedulerEngine {
           }
         }
       } else if (card.learning_state === 'new') {
-        unseenCards.push(card);
+        if (sState?.introduced_in_session && !sState.has_met_criterion) {
+          activeLearningCards.push(card);
+        } else {
+          unseenCards.push(card);
+        }
       } else if (card.learning_state === 'learning') {
         // If in session state, check if unresolved failure or pending criterion
         if (!sState || !sState.has_met_criterion) {
@@ -111,7 +115,7 @@ export class SchedulerEngine {
     const hasEligibleReviewOrRelearning = relearningCandidates.length > 0 ||
       mandatoryOverdueCandidates.length > 0 ||
       dueReviewCandidates.length > 0 ||
-      earlyReviewCandidates.length > 0;
+      earlyReviewCandidates.some(c => !sessionStates.get(c.id)?.introduced_in_session);
     const acquisitionCeilingReached = hasEligibleReviewOrRelearning &&
       (ctx.cumulativeNewLearningSeconds >= newLearningTimeCeiling);
 
@@ -150,29 +154,45 @@ export class SchedulerEngine {
     const cohortSize = deck.cohort_size;
     const sortedNewCards = unseenCards.sort((a, b) => a.source_order - b.source_order);
 
-    let activeCohortCards: Card[] = [];
-    if (!dueWorkloadConsumesRemaining && (!acquisitionCeilingReached || activeLearningCards.length > 0)) {
-      // Find current active cohort
-      // If there are learning cards, their cohort is active
-      if (activeLearningCards.length > 0) {
-        activeCohortCards = activeLearningCards.filter(c => {
-          const sState = sessionStates.get(c.id);
-          return isRetryEligible(c, sState, activeCards.length - 1);
-        });
-      } else if (!acquisitionCeilingReached && sortedNewCards.length > 0) {
-        // Can introduce new cards from active cohort if time allows
-        const firstNew = sortedNewCards[0];
-        if (firstNew) {
-          const activeCohortNum = firstNew.cohort_number || (Math.floor((firstNew.source_order - 1) / cohortSize) + 1);
-          // Check if sufficient time remains for one estimated first exposure per card in cohort (SCH-020, SCH-028)
-          const cohortCards = sortedNewCards.filter(c => (c.cohort_number || (Math.floor((c.source_order - 1) / cohortSize) + 1)) === activeCohortNum);
-          const exposureTime = cohortCards.length * estimatedSecs;
+    const getCohortNum = (card: Card) =>
+      card.cohort_number || (Math.floor((card.source_order - 1) / cohortSize) + 1);
 
-          if (exposureTime <= remainingSessionSecs) {
-            activeCohortCards = cohortCards.slice(0, cohortSize);
+    let activeCohortNum: number | null = null;
+    if (activeLearningCards.length > 0) {
+      activeCohortNum = getCohortNum(activeLearningCards[0]!);
+    } else if (sortedNewCards.length > 0) {
+      activeCohortNum = getCohortNum(sortedNewCards[0]!);
+    }
+
+    let activeCohortCards: Card[] = [];
+    if (activeCohortNum !== null && !dueWorkloadConsumesRemaining) {
+      // 1. Retry-eligible learning cards in active cohort (SCH-013, SCH-015, SCH-017, SCH-025)
+      const eligibleCohortLearning = activeLearningCards.filter(c =>
+        getCohortNum(c) === activeCohortNum && isRetryEligible(c, sessionStates.get(c.id), activeCards.length - 1)
+      );
+
+      // 2. Unseen cards in active cohort (SCH-010, SCH-012, SCH-020, SCH-028)
+      let eligibleCohortUnseen: Card[] = [];
+      if (!acquisitionCeilingReached) {
+        const cohortUnseen = sortedNewCards.filter(c => getCohortNum(c) === activeCohortNum);
+        if (cohortUnseen.length > 0) {
+          const isAlreadyUnlocked = activeCards.some(c =>
+            getCohortNum(c) === activeCohortNum &&
+            Boolean(sessionStates.get(c.id)?.introduced_in_session)
+          );
+
+          if (isAlreadyUnlocked) {
+            eligibleCohortUnseen = cohortUnseen.slice(0, cohortSize);
+          } else {
+            const exposureTime = cohortUnseen.length * estimatedSecs;
+            if (exposureTime <= remainingSessionSecs) {
+              eligibleCohortUnseen = cohortUnseen.slice(0, cohortSize);
+            }
           }
         }
       }
+
+      activeCohortCards = [...eligibleCohortLearning, ...eligibleCohortUnseen];
     }
 
     // -------------------------------------------------------------
@@ -226,7 +246,13 @@ export class SchedulerEngine {
       // SCH-035: Candidates within the same non-new queue shall be ordered by descending base utility.
       // For active_cohort, cards are ordered by source_order ascending (SCH-010).
       if (pool.queue === 'active_cohort') {
-        scored.sort((a, b) => a.card.source_order - b.card.source_order);
+        scored.sort((a, b) => {
+          const aIsLearning = a.card.learning_state === 'learning';
+          const bIsLearning = b.card.learning_state === 'learning';
+          if (aIsLearning && !bIsLearning) return -1;
+          if (!aIsLearning && bIsLearning) return 1;
+          return a.card.source_order - b.card.source_order;
+        });
       } else {
         // Sort non-new queues by descending base_utility (SCH-035)
         scored.sort((a, b) => b.base_utility - a.base_utility);

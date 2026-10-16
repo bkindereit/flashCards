@@ -1,7 +1,7 @@
 {
   "reportVersion": "1.0",
   "specificationVersion": "1.0",
-  "commitSha": "d2abea0213fafb41bab1756ca24121bf7b93b7db",
+  "commitSha": "f9235aec9c86046d590958250c6df4576e8fec3c",
   "applicationVersion": "1.0.0",
   "overallResult": "blocked",
   "releaseRecommendation": "do-not-release",
@@ -1305,9 +1305,10 @@
       "activityId": "VA-SCH-002",
       "result": "Pass",
       "evidence": [
+        "tests/unit/branchCoverage.test.ts",
         "tests/unit/domain/schedulerRequirements.test.ts",
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "tests/unit/scheduler.test.ts",
+        "src/domain/scheduler.ts"
       ]
     },
     {
@@ -1316,6 +1317,7 @@
       "activityId": "VA-SCH-002",
       "result": "Pass",
       "evidence": [
+        "tests/unit/branchCoverage.test.ts",
         "tests/unit/domain/schedulerRequirements.test.ts",
         "tests/unit/goldenScenarios.test.ts",
         "src/domain/scheduler.ts",
@@ -1330,8 +1332,8 @@
       "evidence": [
         "tests/unit/domain/schedulerRequirements.test.ts",
         "tests/unit/goldenScenarios.test.ts",
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "tests/unit/scheduler.test.ts",
+        "src/domain/scheduler.ts"
       ]
     },
     {
@@ -1357,6 +1359,7 @@
         "tests/unit/goldenScenarios.test.ts",
         "tests/unit/scheduler.test.ts",
         "tests/unit/schedulerFixtures.test.ts",
+        "tests/unit/useStudySession.test.ts",
         "src/domain/scheduler.ts"
       ]
     },
@@ -1389,9 +1392,9 @@
       "result": "Pass",
       "evidence": [
         "tests/unit/domain/schedulerRequirements.test.ts",
+        "tests/unit/scheduler.test.ts",
         "tests/unit/schedulerFixtures.test.ts",
-        "src/domain/scheduler.ts",
-        "tests/unit/scheduler.test.ts"
+        "src/domain/scheduler.ts"
       ]
     },
     {
@@ -1490,6 +1493,7 @@
       "activityId": "VA-SCH-004",
       "result": "Pass",
       "evidence": [
+        "tests/unit/branchCoverage.test.ts",
         "tests/unit/domain/schedulerRequirements.test.ts",
         "tests/unit/schedulerFixtures.test.ts",
         "src/domain/scheduler.ts",
@@ -2452,11 +2456,11 @@
     {
       "suiteName": "Vitest Unit, Component, Domain & PGlite Suite",
       "tool": "vitest v3.0.5",
-      "total": 277,
-      "passed": 277,
+      "total": 281,
+      "passed": 281,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 67941,
+      "durationMs": 38719,
       "status": "passed"
     },
     {
@@ -2486,17 +2490,17 @@
       "passed": 21,
       "failed": 0,
       "skipped": 0,
-      "durationMs": 15464,
+      "durationMs": 12227,
       "status": "passed"
     }
   ],
   "coverage": {
-    "overallStatements": 94.99,
-    "overallBranches": 84.26,
+    "overallStatements": 95.19,
+    "overallBranches": 84.72,
     "modules": {
       "src/domain/scheduler.ts": {
-        "statements": 98.87,
-        "branches": 90.42
+        "statements": 100,
+        "branches": 91.58
       },
       "src/domain/fsrsService.ts": {
         "statements": 100,
@@ -2511,8 +2515,8 @@
         "branches": 94.38
       },
       "src/hooks/useStudySession.ts": {
-        "statements": 98.06,
-        "branches": 90
+        "statements": 99.45,
+        "branches": 92.03
       }
     },
     "thresholdMet": true
@@ -2522,7 +2526,7 @@
       "id": "PRF-001",
       "name": "Next-Card Selection Latency (p95)",
       "metric": "p95_ms",
-      "value": 4.6556,
+      "value": 4.5475,
       "threshold": 500,
       "unit": "ms",
       "passed": true
@@ -2531,7 +2535,7 @@
       "id": "PRF-002-Preview",
       "name": "CSV 10k Preview Latency (max)",
       "metric": "preview_max_sec",
-      "value": 0.223,
+      "value": 0.206,
       "threshold": 30,
       "unit": "s",
       "passed": true
@@ -2540,7 +2544,7 @@
       "id": "PRF-002-Commit",
       "name": "CSV 10k Database Commit Latency",
       "metric": "commit_sec",
-      "value": 13.002,
+      "value": 12.616,
       "threshold": 30,
       "unit": "s",
       "passed": true
@@ -2598,14 +2602,14 @@
   "waivers": [],
   "artifacts": [
     {
-      "path": "dist/assets/browser-Bb-WGohB.js",
-      "sha256": "17f90d3a5b280819b819f82255b0deec7fa1b887a6a99cfca81b6464b28d3fba",
+      "path": "dist/assets/browser-CaX4A_A0.js",
+      "sha256": "9299d7f663ecfe9145bcdb91d24bd060ee99fb4246b2e52825b225a801deb1f9",
       "description": "Static distribution asset (615 bytes)"
     },
     {
-      "path": "dist/assets/index-B4PtaYS5.js",
-      "sha256": "b934652ecb8130906e3f803d377be7476281a8c0fb095816eb2b63166809df62",
-      "description": "Static distribution asset (423315 bytes)"
+      "path": "dist/assets/index-BzbSqrEB.js",
+      "sha256": "dab96d5321ffcf95f1907e8235b384461e5b539b0f10a74996a5023af93d7aa9",
+      "description": "Static distribution asset (423706 bytes)"
     },
     {
       "path": "dist/assets/index-GmZUVjIh.css",
@@ -2629,7 +2633,7 @@
     },
     {
       "path": "dist/index.html",
-      "sha256": "f3c36630dc43f339a534a5374c47933feba005998cf0a13f22a4ae8f1bfa8cb8",
+      "sha256": "2738563f3b299dbd49dd136fb99842eb68b30626cbcf7577001dcf13f106339f",
       "description": "Static distribution asset (851 bytes)"
     },
     {
@@ -2644,7 +2648,7 @@
     },
     {
       "path": "dist/sw.js",
-      "sha256": "1a5349e999154a5da3a13eb8635ffdb56a12e21d2ab25aeca6798990ccd34fc8",
+      "sha256": "b15fb0aab7eba1df4d8c0ce57b4a24f366f20a433db4c8b93a60e9bd068974f5",
       "description": "Static distribution asset (1507 bytes)"
     },
     {
@@ -2658,7 +2662,7 @@
       "role": "Verification Executor",
       "name": "Antigravity Automated Agent",
       "decision": "Verified Automated Baseline; Recommends Do Not Release pending operator signatures",
-      "timestamp": "2026-10-15T19:57:40.723Z"
+      "timestamp": "2026-10-16T16:58:12.854Z"
     },
     {
       "role": "Release Authority",
