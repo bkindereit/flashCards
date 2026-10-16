@@ -3,8 +3,8 @@
  * Implements SCH-010..SCH-040 of FCA-SRS-001
  */
 
-import { Card, Deck, StudySession, SessionCardState, QueueName, SelectionResult, SelectionCandidate } from './types';
-import { FsrsService } from './fsrsService';
+import { Card, Deck, StudySession, SessionCardState, QueueName, SelectionResult, SelectionCandidate, AdaptiveWeights } from './types';
+import { FsrsService, DEFAULT_ADAPTIVE_WEIGHTS, computeClusterId } from './fsrsService';
 import { IClock, IRandom, SystemClock, SystemRandom } from './clock';
 
 export interface SchedulerContext {
@@ -15,6 +15,7 @@ export interface SchedulerContext {
   lastCardId?: string;
   cumulativeNewLearningSeconds: number;
   estimatedReviewSeconds: number;
+  adaptiveWeights?: AdaptiveWeights;
   clock?: IClock;
   random?: IRandom;
 }
@@ -31,18 +32,22 @@ export class SchedulerEngine {
   }
 
   /**
-   * Main selection method (SCH-029..SCH-040)
+   * Main selection method (SCH-029..SCH-046)
    */
   selectNextCard(ctx: SchedulerContext): SelectionResult | null {
     const now = (ctx.clock ?? this.clock).now();
     const rng = ctx.random ?? this.random;
     const { deck, session, allCards, sessionStates, lastCardId } = ctx;
+    const weights = ctx.adaptiveWeights ?? deck.adaptive_weights ?? DEFAULT_ADAPTIVE_WEIGHTS;
 
     // Filter out suspended and archived cards (SCH-030)
     const activeCards = allCards.filter(c => !c.suspended_at && !c.archived_at);
     if (activeCards.length === 0) {
       return null;
     }
+
+    const lastCard = lastCardId ? activeCards.find(c => c.id === lastCardId) : undefined;
+    const lastCardClusterId = lastCard ? computeClusterId(lastCard) : null;
 
     const estimatedSecs = ctx.estimatedReviewSeconds > 0 ? ctx.estimatedReviewSeconds : 15.0;
     const examDate = deck.exam_date ? new Date(deck.exam_date) : null;
@@ -227,24 +232,43 @@ export class SchedulerEngine {
         }
       }
 
-      // Calculate utility for candidates (SCH-035)
+      const hasAlternativeCluster = Boolean(
+        lastCardClusterId &&
+        candidates.some(c => computeClusterId(c) !== lastCardClusterId)
+      );
+
+      // Calculate utility and multi-factor priority for candidates (SCH-035, SCH-041..046)
       const scored: SelectionCandidate[] = candidates.map(card => {
-        const u = this.fsrsService.calculateUtility(card, now, examDate, estimatedSecs);
+        const u = this.fsrsService.calculateMultiFactorUtility(
+          card,
+          now,
+          examDate,
+          estimatedSecs,
+          weights,
+          lastCardClusterId,
+          hasAlternativeCluster
+        );
         return {
           card,
           queue: pool.queue,
           base_utility: u.base_utility,
+          composite_utility: u.composite_utility,
           expected_gain: u.expected_gain,
           r_now: u.r_now,
           p0: u.p0,
           pg: u.pg,
           pa: u.pa,
-          reason_code: `${pool.reasonPrefix}_UTILITY_${u.base_utility.toFixed(4)}`
+          streak_factor: u.streak_factor,
+          recent_accuracy_factor: u.recent_accuracy_factor,
+          leech_staleness_factor: u.leech_staleness_factor,
+          complexity_factor: u.complexity_factor,
+          cluster_factor: u.cluster_factor,
+          reason_code: `${pool.reasonPrefix}_UTILITY_${u.composite_utility.toFixed(4)}`
         };
       });
 
-      // SCH-035: Candidates within the same non-new queue shall be ordered by descending base utility.
-      // For active_cohort, cards are ordered by source_order ascending (SCH-010).
+      // SCH-035, SCH-046: Candidates within the same non-new queue ordered by descending priority utility.
+      // For active_cohort, cards are ordered by learning status then source_order ascending (SCH-010).
       if (pool.queue === 'active_cohort') {
         scored.sort((a, b) => {
           const aIsLearning = a.card.learning_state === 'learning';
@@ -254,32 +278,30 @@ export class SchedulerEngine {
           return a.card.source_order - b.card.source_order;
         });
       } else {
-        // Sort non-new queues by descending base_utility (SCH-035)
-        scored.sort((a, b) => b.base_utility - a.base_utility);
+        scored.sort((a, b) => b.composite_utility - a.composite_utility);
       }
 
       // Tie-breaking (SCH-036, SCH-037): equal score within tolerance 1e-6
       let chosenCandidate: SelectionCandidate;
       if (pool.queue === 'active_cohort') {
-        // Deterministic pick based on sorted order for active cohort
         chosenCandidate = scored[0]!;
       } else {
-        const bestScore = scored[0]?.base_utility ?? 0;
+        const bestScore = scored[0]!.composite_utility;
         const epsilon = 1e-6;
-        const tiedCandidates = scored.filter(c => Math.abs(c.base_utility - bestScore) <= epsilon);
+        const tiedCandidates = scored.filter(c => Math.abs(c.composite_utility - bestScore) <= epsilon);
 
         if (tiedCandidates.length <= 1) {
-          chosenCandidate = tiedCandidates[0] ?? scored[0]!;
+          chosenCandidate = tiedCandidates[0]!;
         } else {
           // Seeded random pick among ties
           const idx = Math.floor(rng.next() * tiedCandidates.length);
-          chosenCandidate = tiedCandidates[idx] ?? scored[0]!;
+          chosenCandidate = tiedCandidates[idx]!;
         }
       }
 
       const utilityValues: Record<string, number> = {};
       for (const s of scored) {
-        utilityValues[s.card.id] = s.base_utility;
+        utilityValues[s.card.id] = s.composite_utility;
       }
 
       return {
@@ -289,6 +311,7 @@ export class SchedulerEngine {
         seed: rng.getSeed(),
         candidateIds: scored.map(s => s.card.id),
         utilityValues,
+        adaptiveWeights: weights,
         timestamp: now.toISOString()
       };
     }

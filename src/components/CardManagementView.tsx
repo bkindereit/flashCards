@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import { Card, Deck, LearningState } from '@/domain/types';
 import { canonicalNormalize, computeContentHash } from '@/domain/normalization';
+import { deriveStreakCount, deriveRecentAccuracy } from '@/domain/fsrsService';
 import { Search, Edit2, PauseCircle, PlayCircle, Download, Check, X, AlertCircle, Plus, Trash2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
@@ -425,6 +426,7 @@ export const CardManagementView: React.FC<CardManagementViewProps> = ({
                 <th className="p-3">Reviews</th>
                 <th className="p-3">Correct</th>
                 <th className="p-3">Missed</th>
+                <th className="p-3">Streak</th>
                 <th className="p-3">% Correct</th>
                 <th className="p-3">Next Due</th>
                 <th className="p-3 text-right">Actions</th>
@@ -436,6 +438,8 @@ export const CardManagementView: React.FC<CardManagementViewProps> = ({
                 const percentCorrect = card.review_count > 0
                   ? `${Math.round((card.correct_count / card.review_count) * 100)}%`
                   : '0%';
+                const streakCount = deriveStreakCount(card);
+                const recentPct = Math.round(deriveRecentAccuracy(card) * 100);
 
                 return (
                   <tr key={card.id} className="hover:bg-slate-750 transition-colors">
@@ -495,6 +499,11 @@ export const CardManagementView: React.FC<CardManagementViewProps> = ({
 
                     {/* Missed */}
                     <td className="p-3 text-red-400">{card.incorrect_count}</td>
+
+                    {/* Consecutive Correct Streak (SCH-041, SCH-042) */}
+                    <td className="p-3 text-amber-400 font-semibold" title={`Recent EWMA accuracy: ${recentPct}%`}>
+                      {streakCount}
+                    </td>
 
                     {/* % Correct (DAT-012, DAT-013, MGT-002) */}
                     <td className="p-3 text-cyan-400 font-bold">{percentCorrect}</td>
@@ -562,7 +571,7 @@ export const CardManagementView: React.FC<CardManagementViewProps> = ({
               })}
               {filteredCards.length === 0 && (
                 <tr>
-                  <td colSpan={10} className="p-8 text-center text-slate-400 font-sans text-sm">
+                  <td colSpan={11} className="p-8 text-center text-slate-400 font-sans text-sm">
                     {cards.length === 0
                       ? 'No cards in this deck yet. Click "+ Add Card" above to type your first question and answer!'
                       : 'No cards match your search.'}

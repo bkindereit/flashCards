@@ -116,6 +116,15 @@ If you prefer to type questions and answers in directly by hand:
    - **End Session** *(top right)*: Finishes your study session early and shows your score.
 5. When your timer finishes, you will see the **Study Session Completed** screen with your score and accuracy. Click **"Return to Deck"** to go back to your home screen.
 
+### How the Multi-Factor Adaptive Selection Algorithm Works
+Beyond core FSRS memory stability and difficulty, the selection engine tracks and combines multiple learning signals with **online self-calibrating weights**:
+- **Consecutive Correct Streak (`streak_count`):** Tracks how many times in a row you have answered a card right without a lapse, progressively reducing immediate repetition urgency for well-consolidated streak cards.
+- **Recency-Weighted Accuracy (`recent_accuracy`):** Uses an Exponentially Weighted Moving Average (EWMA) that weights your most recent answers much more heavily than ancient history, immediately boosting priority if your recent accuracy dips.
+- **Leech & Staleness Severity (`leech_score`):** Identifies chronic obstacle cards (high lapse/failure density) as well as long-unasked stale cards so they receive targeted remediation.
+- **Structural Complexity (`complexity_index`):** Measures question and answer length and symbolic/formula structure to allocate appropriate reinforcement **without ever penalizing response time or answer latency**—so math and multi-step analytical problems that naturally take longer to solve are never treated as weak recalls when answered correctly.
+- **Semantic Confusion Cluster Spacing (`cluster_id`):** Detects cards that share normalized domain terminology and spaces them apart when alternative candidates exist to prevent back-to-back interference.
+- **Self-Calibrating Adaptive Weights:** After every graded card, the engine compares predicted recall against your actual outcome and dynamically adjusts feature weights (`w_fsrs`, `w_streak`, `w_recent`, `w_leech`, `w_complexity`, `w_cluster`) so variables that accurately predict your learning needs gain weight while ineffective signals decay.
+
 ---
 
 ## Step 5: Editing Existing Cards or Exporting Backups

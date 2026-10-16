@@ -365,6 +365,26 @@ If no exam date exists, `H` shall be the later of the current time plus 365 days
 | SCH-039 | Must | Each selection shall append a selection event containing the policy version, timestamp, seed or tie-break value, selected queue, candidate IDs, utility values, and selected card ID. |
 | SCH-040 | Must | Candidate selection shall not modify untouched card rows. |
 
+### 9.5 Multi-factor adaptive selection and weight calibration
+
+In addition to FSRS base utility, the engine shall capture, track, and incorporate multi-factor card learning signals into candidate priority scoring while explicitly excluding response-latency or recall-fluency penalties so that math and multi-step reasoning questions are not penalized for computation time:
+
+- **Consecutive correct streak (`streak_count`)**: consecutive valid `Good` ratings without an intervening failure; reduces immediate urgency for well-consolidated streak items.
+- **Recency-weighted accuracy (`recent_accuracy`)**: exponentially weighted moving average (EWMA, default $\alpha = 0.25$) of binary review outcomes so recent performance outweighs distant history.
+- **Leech and staleness severity (`leech_score` and `staleness_score`)**: failure density derived from lapses and misses combined with elapsed staleness since last review to prioritize chronic obstacle cards and long-unasked items.
+- **Structural complexity index (`complexity_index`)**: deterministic measure of prompt/answer length and structural/symbolic density in $[0, 1]$, independent of response latency.
+- **Semantic confusion cluster (`cluster_id`)**: normalized domain token prefix used to penalize consecutive presentation of confusable sibling concepts when alternative candidates exist.
+- **Adaptive multi-factor weights (`AdaptiveWeights`)**: configurable feature weights (`w_fsrs`, `w_streak`, `w_recent`, `w_leech`, `w_complexity`, `w_cluster`) that combine FSRS base utility with the multi-factor signals and dynamically self-calibrate after graded reviews based on empirical recall prediction error.
+
+| ID | Priority | Requirement |
+|---|---|---|
+| SCH-041 | Must | The engine shall track each card's consecutive correct streak (`streak_count`), incrementing on a valid correct grade and resetting to zero on an incorrect grade, and shall apply a diminishing-urgency modifier for high-streak cards. |
+| SCH-042 | Must | The engine shall maintain an exponentially weighted moving average of recent review outcomes (`recent_accuracy`) that weights recent correct and incorrect answers more heavily than older history and increases selection priority when recent accuracy drops. |
+| SCH-043 | Must | The engine shall calculate a leech severity score from lapse and failure density and an elapsed staleness factor since last review, boosting selection priority for leeches and long-unasked cards. |
+| SCH-044 | Must | The engine shall derive a structural complexity index from card question and answer structure without penalizing response latency or recall fluency. |
+| SCH-045 | Must | The engine shall identify semantic confusion clusters from normalized card tokens and apply an interference spacing penalty when the immediately preceding card belongs to the same cluster and alternative candidates exist. |
+| SCH-046 | Must | The engine shall combine FSRS base utility with multi-factor learning signals using configurable adaptive weights and shall dynamically adjust those weights after graded reviews according to empirical recall prediction accuracy. |
+
 ## 10. Review processing
 
 | ID | Priority | Requirement |

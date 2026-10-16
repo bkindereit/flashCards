@@ -10,24 +10,24 @@
   },
   "previewSeconds": {
     "samples": [
-      0.206,
-      0.18,
-      0.178,
-      0.19,
-      0.185
+      0.209,
+      0.176,
+      0.171,
+      0.183,
+      0.176
     ],
-    "min": 0.178,
-    "median": 0.185,
-    "p95": 0.206,
-    "max": 0.206,
+    "min": 0.171,
+    "median": 0.176,
+    "p95": 0.209,
+    "max": 0.209,
     "thresholdSeconds": 30,
     "passed": true
   },
   "commitSeconds": {
     "samples": [
-      12.616
+      12.291
     ],
-    "durationSeconds": 12.616,
+    "durationSeconds": 12.291,
     "thresholdSeconds": 30,
     "rowsCommitted": 10000,
     "passed": true

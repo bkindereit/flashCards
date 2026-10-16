@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Authoritative Bidirectional Requirements Traceability Matrix — FCA-SRS-001 vs FCA-VVP-001",
   "version": "1.0",
-  "generated_at": "2026-10-16T16:58:01.837Z",
+  "generated_at": "2026-10-16T17:24:49.832Z",
   "requirements": [
     {
       "requirement_id": "ARC-001",
@@ -3140,6 +3140,138 @@
       "anomaly_ids": []
     },
     {
+      "requirement_id": "SCH-041",
+      "priority": "Must",
+      "description": "The engine shall track each card's consecutive correct streak (`streak_count`), incrementing on a valid correct grade and resetting to zero on an incorrect grade, and shall apply a diminishing-urgency modifier for high-streak cards.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-004",
+        "VA-SCH-006"
+      ],
+      "automated_test_ids": [
+        "tests/unit/scheduler.test.ts::SCH-041: Tracks consecutive correct streak and discounts urgency for high-streak cards"
+      ],
+      "evidence_paths": [
+        "tests/unit/scheduler.test.ts",
+        "src/domain/fsrsService.ts",
+        "src/domain/scheduler.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-042",
+      "priority": "Must",
+      "description": "The engine shall maintain an exponentially weighted moving average of recent review outcomes (`recent_accuracy`) that weights recent correct and incorrect answers more heavily than older history and increases selection priority when recent accuracy drops.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-004",
+        "VA-SCH-006"
+      ],
+      "automated_test_ids": [
+        "tests/unit/scheduler.test.ts::SCH-042: Recency-weighted accuracy (EWMA) weights recent outcomes higher than older history and boosts priority on recent drop"
+      ],
+      "evidence_paths": [
+        "tests/unit/scheduler.test.ts",
+        "src/domain/fsrsService.ts",
+        "src/domain/scheduler.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-043",
+      "priority": "Must",
+      "description": "The engine shall calculate a leech severity score from lapse and failure density and an elapsed staleness factor since last review, boosting selection priority for leeches and long-unasked cards.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-004",
+        "VA-SCH-006"
+      ],
+      "automated_test_ids": [
+        "tests/unit/scheduler.test.ts::SCH-043: Calculates leech severity and elapsed staleness factor to boost chronic obstacle and long-unasked cards"
+      ],
+      "evidence_paths": [
+        "tests/unit/scheduler.test.ts",
+        "src/domain/fsrsService.ts",
+        "src/domain/scheduler.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-044",
+      "priority": "Must",
+      "description": "The engine shall derive a structural complexity index from card question and answer structure without penalizing response latency or recall fluency.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-004",
+        "VA-SCH-006"
+      ],
+      "automated_test_ids": [
+        "tests/unit/scheduler.test.ts::SCH-044: Derives structural complexity index from text and symbolic structure without penalizing response latency"
+      ],
+      "evidence_paths": [
+        "tests/unit/scheduler.test.ts",
+        "src/domain/fsrsService.ts",
+        "src/domain/scheduler.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-045",
+      "priority": "Must",
+      "description": "The engine shall identify semantic confusion clusters from normalized card tokens and apply an interference spacing penalty when the immediately preceding card belongs to the same cluster and alternative candidates exist.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-004",
+        "VA-SCH-006"
+      ],
+      "automated_test_ids": [
+        "tests/unit/scheduler.test.ts::SCH-045: Identifies semantic confusion clusters and applies interference spacing penalty when preceding card shares cluster"
+      ],
+      "evidence_paths": [
+        "tests/unit/scheduler.test.ts",
+        "src/domain/fsrsService.ts",
+        "src/domain/scheduler.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
+      "requirement_id": "SCH-046",
+      "priority": "Must",
+      "description": "The engine shall combine FSRS base utility with multi-factor learning signals using configurable adaptive weights and shall dynamically adjust those weights after graded reviews according to empirical recall prediction accuracy.",
+      "verification_methods": [
+        "T"
+      ],
+      "activity_ids": [
+        "VA-SCH-004",
+        "VA-SCH-006"
+      ],
+      "automated_test_ids": [
+        "tests/unit/scheduler.test.ts::SCH-046: Combines FSRS utility with multi-factor signals via adaptive weights and dynamically calibrates weights from empirical prediction outcomes"
+      ],
+      "evidence_paths": [
+        "tests/unit/scheduler.test.ts",
+        "src/domain/fsrsService.ts",
+        "src/domain/scheduler.ts"
+      ],
+      "result": "Pass",
+      "anomaly_ids": []
+    },
+    {
       "requirement_id": "REV-001",
       "priority": "Must",
       "description": "Revealing an answer shall record the reveal timestamp without incrementing performance counters.",
@@ -5515,6 +5647,24 @@
       "SCH-016",
       "SCH-017",
       "SCH-020"
+    ],
+    "tests/unit/scheduler.test.ts::SCH-041: Tracks consecutive correct streak and discounts urgency for high-streak cards": [
+      "SCH-041"
+    ],
+    "tests/unit/scheduler.test.ts::SCH-042: Recency-weighted accuracy (EWMA) weights recent outcomes higher than older history and boosts priority on recent drop": [
+      "SCH-042"
+    ],
+    "tests/unit/scheduler.test.ts::SCH-043: Calculates leech severity and elapsed staleness factor to boost chronic obstacle and long-unasked cards": [
+      "SCH-043"
+    ],
+    "tests/unit/scheduler.test.ts::SCH-044: Derives structural complexity index from text and symbolic structure without penalizing response latency": [
+      "SCH-044"
+    ],
+    "tests/unit/scheduler.test.ts::SCH-045: Identifies semantic confusion clusters and applies interference spacing penalty when preceding card shares cluster": [
+      "SCH-045"
+    ],
+    "tests/unit/scheduler.test.ts::SCH-046: Combines FSRS utility with multi-factor signals via adaptive weights and dynamically calibrates weights from empirical prediction outcomes": [
+      "SCH-046"
     ],
     "tests/unit/schedulerFixtures.test.ts::SCH-010, SCH-011: SCHF-001: Ten unseen cards, selects from active cohort": [
       "SCH-010",

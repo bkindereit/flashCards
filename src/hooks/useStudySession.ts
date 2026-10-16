@@ -4,9 +4,20 @@
  */
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Card, Deck, StudySession, SessionCardState, SelectionResult, LearningState } from '@/domain/types';
+import { Card, Deck, StudySession, SessionCardState, SelectionResult, LearningState, AdaptiveWeights } from '@/domain/types';
 import { SchedulerEngine } from '@/domain/scheduler';
-import { FsrsService } from '@/domain/fsrsService';
+import {
+  FsrsService,
+  DEFAULT_ADAPTIVE_WEIGHTS,
+  deriveStreakCount,
+  updateStreakCount,
+  deriveRecentAccuracy,
+  updateRecentAccuracy,
+  computeLeechScore,
+  computeComplexityIndex,
+  computeClusterId,
+  calibrateAdaptiveWeights
+} from '@/domain/fsrsService';
 import { supabase } from '@/lib/supabase';
 
 export interface UseStudySessionProps {
@@ -38,6 +49,9 @@ export function useStudySession({
   const [cards, setCards] = useState<Card[]>(initialCards);
   const [sessionStates, setSessionStates] = useState<Map<string, SessionCardState>>(new Map());
   const [currentSelection, setCurrentSelection] = useState<SelectionResult | null>(null);
+  const [adaptiveWeights, setAdaptiveWeights] = useState<AdaptiveWeights>(
+    () => deck.adaptive_weights ?? DEFAULT_ADAPTIVE_WEIGHTS
+  );
 
   // Interaction state
   const [isRevealed, setIsRevealed] = useState<boolean>(false);
@@ -124,11 +138,18 @@ export function useStudySession({
   }, [isPaused, isEnded]);
 
   // Pick next card
-  const selectNext = useCallback((cardsPool: Card[], states: Map<string, SessionCardState>, lastId?: string) => {
+  const selectNext = useCallback((
+    cardsPool: Card[],
+    states: Map<string, SessionCardState>,
+    lastId?: string,
+    weightsOverride?: AdaptiveWeights
+  ) => {
     if (isExpired) {
       setIsEnded(true);
       return;
     }
+
+    const activeWeights = weightsOverride ?? adaptiveWeights;
 
     const sessionObj: StudySession = {
       id: sessionId,
@@ -144,7 +165,8 @@ export function useStudySession({
         new_learning_fraction: deck.new_learning_fraction,
         min_failed_retry_delay_seconds: deck.min_failed_retry_delay_seconds,
         min_intervening_cards: deck.min_intervening_cards,
-        exam_date: deck.exam_date
+        exam_date: deck.exam_date,
+        adaptive_weights: activeWeights
       },
       cards_reviewed: completedReviews,
       correct_count: correctCount,
@@ -161,7 +183,8 @@ export function useStudySession({
       sessionStates: states,
       lastCardId: lastId,
       cumulativeNewLearningSeconds,
-      estimatedReviewSeconds: ewmaSecondsPerReview
+      estimatedReviewSeconds: ewmaSecondsPerReview,
+      adaptiveWeights: activeWeights
     });
 
     if (!sel) {
@@ -189,6 +212,7 @@ export function useStudySession({
     dueCardsCompleted,
     cumulativeNewLearningSeconds,
     ewmaSecondsPerReview,
+    adaptiveWeights,
     isExpired,
     sessionId
   ]);
@@ -268,7 +292,21 @@ export function useStudySession({
           setCumulativeNewLearningSeconds(prev => prev + validDuration);
         }
 
-        // Update card in cards state
+        // Calibrate adaptive weights based on recall prediction vs actual outcome (SCH-046)
+        const rNow = fsrsServiceRef.current.getRetrievability(card, now);
+        const nextWeights = calibrateAdaptiveWeights(adaptiveWeights, card, rNow, result);
+        setAdaptiveWeights(nextWeights);
+
+        // Update multi-factor card attributes (SCH-041..045)
+        const prevStreak = deriveStreakCount(card);
+        const nextStreak = updateStreakCount(prevStreak, result);
+        const prevRecent = deriveRecentAccuracy(card);
+        const nextRecent = updateRecentAccuracy(prevRecent, card.review_count, result);
+        const nextLapseCount = card.learning_state === 'review' && result === 'incorrect'
+          ? card.lapse_count + 1
+          : card.lapse_count;
+        const nextIncorrectCount = result === 'incorrect' ? card.incorrect_count + 1 : card.incorrect_count;
+
         const updatedCard: Card = {
           ...card,
           learning_state: postState.learning_state as LearningState,
@@ -279,8 +317,18 @@ export function useStudySession({
           last_rating: rating,
           review_count: card.review_count + 1,
           correct_count: result === 'correct' ? card.correct_count + 1 : card.correct_count,
-          incorrect_count: result === 'incorrect' ? card.incorrect_count + 1 : card.incorrect_count,
-          lapse_count: card.learning_state === 'review' && result === 'incorrect' ? card.lapse_count + 1 : card.lapse_count
+          incorrect_count: nextIncorrectCount,
+          lapse_count: nextLapseCount,
+          streak_count: nextStreak,
+          recent_accuracy: nextRecent,
+          leech_score: computeLeechScore({
+            ...card,
+            lapse_count: nextLapseCount,
+            incorrect_count: nextIncorrectCount,
+            leech_score: undefined
+          }),
+          complexity_index: card.complexity_index ?? computeComplexityIndex(card.question_text, card.answer_text),
+          cluster_id: card.cluster_id !== undefined ? card.cluster_id : computeClusterId(card)
         };
 
         const nextCards = cards.map(c => c.id === card.id ? updatedCard : c);
@@ -332,7 +380,7 @@ export function useStudySession({
         }
 
         setIsPending(false);
-        selectNext(nextCards, nextStates, card.id);
+        selectNext(nextCards, nextStates, card.id, nextWeights);
       } catch (err: unknown) {
         setIsPending(false);
         console.error('Error submitting grade:', err);
@@ -353,6 +401,7 @@ export function useStudySession({
     deck.user_id,
     cards,
     sessionStates,
+    adaptiveWeights,
     selectNext
   ]);
 
@@ -436,6 +485,7 @@ export function useStudySession({
     currentCard: currentSelection?.selectedCard ?? null,
     queue: currentSelection?.queue ?? null,
     reasonCode: currentSelection?.reasonCode ?? null,
+    adaptiveWeights,
     isRevealed,
     isPaused,
     isPending,

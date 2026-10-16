@@ -7,6 +7,15 @@ export type LearningState = 'new' | 'learning' | 'review' | 'relearning' | 'susp
 
 export type ReviewResult = 'correct' | 'incorrect';
 
+export interface AdaptiveWeights {
+  w_fsrs: number;
+  w_streak: number;
+  w_recent: number;
+  w_leech: number;
+  w_complexity: number;
+  w_cluster: number;
+}
+
 export interface Card {
   id: string;
   user_id: string;
@@ -41,6 +50,11 @@ export interface Card {
   last_incorrect_at?: string | null;
   successful_relearning_sessions: number;
   percent_correct?: number;
+  streak_count?: number;
+  recent_accuracy?: number;
+  leech_score?: number;
+  complexity_index?: number;
+  cluster_id?: string | null;
 }
 
 export interface Deck {
@@ -54,6 +68,7 @@ export interface Deck {
   new_learning_fraction: number; // 0.00 .. 0.50 (default 0.30)
   min_failed_retry_delay_seconds: number; // default 60
   min_intervening_cards: number; // default 3
+  adaptive_weights?: AdaptiveWeights;
   is_archived: boolean;
   created_at: string;
   updated_at: string;
@@ -75,6 +90,7 @@ export interface StudySession {
     min_failed_retry_delay_seconds: number;
     min_intervening_cards: number;
     exam_date?: string | null;
+    adaptive_weights?: AdaptiveWeights;
   };
   cards_reviewed: number;
   correct_count: number;
@@ -107,11 +123,17 @@ export interface SelectionCandidate {
   card: Card;
   queue: QueueName;
   base_utility: number;
+  composite_utility: number;
   expected_gain: number;
   r_now: number;
   p0: number;
   pg: number;
   pa: number;
+  streak_factor?: number;
+  recent_accuracy_factor?: number;
+  leech_staleness_factor?: number;
+  complexity_factor?: number;
+  cluster_factor?: number;
   reason_code: string;
 }
 
@@ -122,6 +144,7 @@ export interface SelectionResult {
   seed: string;
   candidateIds: string[];
   utilityValues: Record<string, number>;
+  adaptiveWeights?: AdaptiveWeights;
   timestamp: string;
 }
 

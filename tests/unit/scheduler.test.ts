@@ -1,11 +1,26 @@
 import { describe, it, expect } from 'vitest';
 import { SchedulerEngine, SchedulerContext } from '@/domain/scheduler';
-import { FsrsService, FSRS_PACKAGE_VERSION, FSRS_PARAMETER_SET_VERSION, SCHEDULING_POLICY_VERSION } from '@/domain/fsrsService';
+import {
+  FsrsService,
+  FSRS_PACKAGE_VERSION,
+  FSRS_PARAMETER_SET_VERSION,
+  SCHEDULING_POLICY_VERSION,
+  DEFAULT_ADAPTIVE_WEIGHTS,
+  deriveStreakCount,
+  updateStreakCount,
+  deriveRecentAccuracy,
+  updateRecentAccuracy,
+  computeLeechScore,
+  computeStalenessScore,
+  computeComplexityIndex,
+  computeClusterId,
+  calibrateAdaptiveWeights
+} from '@/domain/fsrsService';
 import { FixedClock, SeededRandom } from '@/domain/clock';
 import { createCard, createDeck, createStudySession, createSessionCardState } from '@/testing/factories';
 import { Card, SessionCardState, LearningState } from '@/domain/types';
 
-describe('Scheduler Engine & FSRS Integration (SCH-001..SCH-040)', () => {
+describe('Scheduler Engine & FSRS Integration (SCH-001..SCH-046)', () => {
   const baseTime = new Date('2026-06-01T12:00:00Z');
 
   it('SCH-001, SCH-002: Records pinned versions', () => {
@@ -617,4 +632,335 @@ describe('Scheduler Engine & FSRS Integration (SCH-001..SCH-040)', () => {
     expect(c13.id).toBe('card-11');
     expect(c13.cohort_number).toBe(2);
   });
+
+  it('SCH-041: Tracks consecutive correct streak and discounts urgency for high-streak cards', () => {
+    const deck = createDeck();
+    const session = createStudySession(deck.id);
+    const clock = new FixedClock(baseTime);
+    const engine = new SchedulerEngine(deck.desired_retention, clock);
+
+    // Verify streak helper behavior
+    expect(updateStreakCount(0, 'correct')).toBe(1);
+    expect(updateStreakCount(4, 'correct')).toBe(5);
+    expect(updateStreakCount(5, 'incorrect')).toBe(0);
+
+    const lapsedCard = createCard({ learning_state: 'relearning', correct_count: 5, incorrect_count: 1, last_rating: 1 });
+    expect(deriveStreakCount(lapsedCard)).toBe(0);
+
+    const mixedCard = createCard({ learning_state: 'review', correct_count: 5, incorrect_count: 2, last_rating: 3 });
+    expect(deriveStreakCount(mixedCard)).toBe(3);
+
+    // Two otherwise equal due review cards, except cardHighStreak has a 7-streak and cardLowStreak has a 1-streak
+    const cardHighStreak = createCard({
+      id: 'card-high-streak',
+      deck_id: deck.id,
+      learning_state: 'review',
+      stability_days: 5.0,
+      difficulty: 5.0,
+      correct_count: 7,
+      incorrect_count: 0,
+      review_count: 7,
+      streak_count: 7,
+      last_review_at: new Date(baseTime.getTime() - 5 * 86400000).toISOString(),
+      next_due_at: baseTime.toISOString()
+    });
+
+    const cardLowStreak = createCard({
+      id: 'card-low-streak',
+      deck_id: deck.id,
+      learning_state: 'review',
+      stability_days: 5.0,
+      difficulty: 5.0,
+      correct_count: 1,
+      incorrect_count: 0,
+      review_count: 1,
+      streak_count: 1,
+      last_review_at: new Date(baseTime.getTime() - 5 * 86400000).toISOString(),
+      next_due_at: baseTime.toISOString()
+    });
+
+    const ctx: SchedulerContext = {
+      deck,
+      session,
+      allCards: [cardHighStreak, cardLowStreak],
+      sessionStates: new Map(),
+      cumulativeNewLearningSeconds: 0,
+      estimatedReviewSeconds: 15.0,
+      clock
+    };
+
+    const sel = engine.selectNextCard(ctx);
+    expect(sel?.selectedCard.id).toBe('card-low-streak');
+    expect(sel!.utilityValues['card-low-streak']!).toBeGreaterThan(sel!.utilityValues['card-high-streak']!);
+  });
+
+  it('SCH-042: Recency-weighted accuracy (EWMA) weights recent outcomes higher than older history and boosts priority on recent drop', () => {
+    const deck = createDeck();
+    const session = createStudySession(deck.id);
+    const clock = new FixedClock(baseTime);
+    const engine = new SchedulerEngine(deck.desired_retention, clock);
+
+    // EWMA updates: start at 1.0, miss -> 0.75, miss -> 0.5625
+    const r0 = updateRecentAccuracy(undefined, 0, 'correct');
+    expect(r0).toBe(1.0);
+    const r1 = updateRecentAccuracy(r0, 1, 'incorrect', 0.25);
+    expect(r1).toBeCloseTo(0.75, 5);
+    const r2 = updateRecentAccuracy(r1, 2, 'incorrect', 0.25);
+    expect(r2).toBeCloseTo(0.5625, 5);
+
+    // Derived fallback when recent_accuracy is not explicitly set
+    expect(deriveRecentAccuracy(createCard({ review_count: 0 }))).toBe(1.0);
+    expect(deriveRecentAccuracy(createCard({ review_count: 4, correct_count: 2, incorrect_count: 2, last_rating: 1 }))).toBeCloseTo(0.375, 5);
+    expect(deriveRecentAccuracy(createCard({ review_count: 4, correct_count: 3, incorrect_count: 1, last_rating: 3 }))).toBeCloseTo(0.75, 5);
+
+    // Two cards with identical FSRS stability/difficulty and streak=1, but one has low recent_accuracy (0.35) vs high (0.95)
+    const cardRecentSlump = createCard({
+      id: 'card-recent-slump',
+      deck_id: deck.id,
+      learning_state: 'review',
+      stability_days: 5.0,
+      difficulty: 5.0,
+      review_count: 10,
+      correct_count: 8,
+      incorrect_count: 2,
+      streak_count: 1,
+      recent_accuracy: 0.35,
+      leech_score: 0,
+      last_review_at: new Date(baseTime.getTime() - 5 * 86400000).toISOString(),
+      next_due_at: baseTime.toISOString()
+    });
+
+    const cardRecentStrong = createCard({
+      id: 'card-recent-strong',
+      deck_id: deck.id,
+      learning_state: 'review',
+      stability_days: 5.0,
+      difficulty: 5.0,
+      review_count: 10,
+      correct_count: 8,
+      incorrect_count: 2,
+      streak_count: 1,
+      recent_accuracy: 0.95,
+      leech_score: 0,
+      last_review_at: new Date(baseTime.getTime() - 5 * 86400000).toISOString(),
+      next_due_at: baseTime.toISOString()
+    });
+
+    const sel = engine.selectNextCard({
+      deck,
+      session,
+      allCards: [cardRecentStrong, cardRecentSlump],
+      sessionStates: new Map(),
+      cumulativeNewLearningSeconds: 0,
+      estimatedReviewSeconds: 15.0,
+      clock
+    });
+
+    expect(sel?.selectedCard.id).toBe('card-recent-slump');
+  });
+
+  it('SCH-043: Calculates leech severity and elapsed staleness factor to boost chronic obstacle and long-unasked cards', () => {
+    const deck = createDeck();
+    const session = createStudySession(deck.id);
+    const clock = new FixedClock(baseTime);
+    const engine = new SchedulerEngine(deck.desired_retention, clock);
+
+    const leechCard = createCard({
+      id: 'card-leech',
+      deck_id: deck.id,
+      learning_state: 'review',
+      stability_days: 5.0,
+      difficulty: 5.0,
+      review_count: 8,
+      correct_count: 4,
+      incorrect_count: 4,
+      lapse_count: 3,
+      streak_count: 1,
+      recent_accuracy: 0.90,
+      last_review_at: new Date(baseTime.getTime() - 5 * 86400000).toISOString(),
+      next_due_at: baseTime.toISOString()
+    });
+
+    const normalCard = createCard({
+      id: 'card-normal',
+      deck_id: deck.id,
+      learning_state: 'review',
+      stability_days: 5.0,
+      difficulty: 5.0,
+      review_count: 2,
+      correct_count: 2,
+      incorrect_count: 0,
+      lapse_count: 0,
+      streak_count: 1,
+      recent_accuracy: 0.90,
+      last_review_at: new Date(baseTime.getTime() - 5 * 86400000).toISOString(),
+      next_due_at: baseTime.toISOString()
+    });
+
+    expect(computeLeechScore(leechCard)).toBeCloseTo(0.90, 5);
+    expect(computeLeechScore(normalCard)).toBe(0.0);
+    expect(computeStalenessScore(createCard({ last_review_at: null }), baseTime)).toBe(0.0);
+    expect(
+      computeStalenessScore(
+        createCard({
+          stability_days: 5.0,
+          last_review_at: new Date(baseTime.getTime() - 22 * 86400000).toISOString()
+        }),
+        baseTime
+      )
+    ).toBeCloseTo(0.50, 5);
+
+    const sel = engine.selectNextCard({
+      deck,
+      session,
+      allCards: [normalCard, leechCard],
+      sessionStates: new Map(),
+      cumulativeNewLearningSeconds: 0,
+      estimatedReviewSeconds: 15.0,
+      clock
+    });
+
+    expect(sel?.selectedCard.id).toBe('card-leech');
+  });
+
+  it('SCH-044: Derives structural complexity index from text and symbolic structure without penalizing response latency', () => {
+    const simpleIdx = computeComplexityIndex('Capital of France?', 'Paris');
+    expect(simpleIdx).toBe(0.0);
+
+    const mathIdx = computeComplexityIndex(
+      'Calculate NPV = -C_0 + sum_{t=1}^T (CF_t / (1 + r)^t) when C_0 = $1000, CF_1 = $600, CF_2 = $600, r = 10%',
+      'Step 1: PV_1 = 600 / 1.10 = 545.45\nStep 2: PV_2 = 600 / 1.21 = 495.87\nStep 3: NPV = 545.45 + 495.87 - 1000 = +$41.32'
+    );
+    expect(mathIdx).toBeGreaterThan(0.50);
+    expect(mathIdx).toBeLessThanOrEqual(1.0);
+
+    // Verify complexity boosts reinforcement priority while response latency is not an input or penalty
+    const fsrs = new FsrsService(0.90);
+    const simpleCard = createCard({
+      id: 'simple-card',
+      learning_state: 'review',
+      question_text: 'Capital of France?',
+      answer_text: 'Paris',
+      stability_days: 5.0,
+      last_review_at: new Date(baseTime.getTime() - 5 * 86400000).toISOString(),
+      next_due_at: baseTime.toISOString()
+    });
+    const complexMathCard = createCard({
+      id: 'math-card',
+      learning_state: 'review',
+      question_text: 'Calculate NPV = -C_0 + sum(CF_t / (1 + r)^t) for multi-period cash flows',
+      answer_text: 'NPV = -1000 + 600/1.1 + 600/1.21 = +41.32',
+      stability_days: 5.0,
+      last_review_at: new Date(baseTime.getTime() - 5 * 86400000).toISOString(),
+      next_due_at: baseTime.toISOString()
+    });
+
+    const uSimple = fsrs.calculateMultiFactorUtility(simpleCard, baseTime);
+    const uComplex = fsrs.calculateMultiFactorUtility(complexMathCard, baseTime);
+    expect(uComplex.complexity_factor).toBeGreaterThan(uSimple.complexity_factor);
+    expect(uComplex.composite_utility).toBeGreaterThan(uSimple.composite_utility);
+  });
+
+  it('SCH-045: Identifies semantic confusion clusters and applies interference spacing penalty when preceding card shares cluster', () => {
+    const deck = createDeck();
+    const session = createStudySession(deck.id);
+    const clock = new FixedClock(baseTime);
+    const engine = new SchedulerEngine(deck.desired_retention, clock);
+
+    const rfmCard1 = createCard({
+      id: 'rfm-1',
+      deck_id: deck.id,
+      question_text: 'Scoring RFM: What does Recency measure?',
+      answer_text: 'Time since last purchase',
+      normalized_question: 'Scoring RFM: What does Recency measure?',
+      learning_state: 'review',
+      stability_days: 5.0,
+      last_review_at: new Date(baseTime.getTime() - 5 * 86400000).toISOString(),
+      next_due_at: baseTime.toISOString()
+    });
+    const rfmCard2 = createCard({
+      id: 'rfm-2',
+      deck_id: deck.id,
+      question_text: 'Scoring RFM: What does Frequency measure?',
+      answer_text: 'Number of purchases in period',
+      normalized_question: 'Scoring RFM: What does Frequency measure?',
+      learning_state: 'review',
+      stability_days: 5.0,
+      last_review_at: new Date(baseTime.getTime() - 5 * 86400000).toISOString(),
+      next_due_at: baseTime.toISOString()
+    });
+    const churnCard = createCard({
+      id: 'churn-1',
+      deck_id: deck.id,
+      question_text: 'Attrition rate: How is customer churn calculated?',
+      answer_text: 'Lost customers divided by starting customers',
+      normalized_question: 'Attrition rate: How is customer churn calculated?',
+      learning_state: 'review',
+      stability_days: 5.0,
+      last_review_at: new Date(baseTime.getTime() - 5 * 86400000).toISOString(),
+      next_due_at: baseTime.toISOString()
+    });
+
+    expect(computeClusterId(rfmCard1)).toBe('scoring');
+    expect(computeClusterId(rfmCard2)).toBe('scoring');
+    expect(computeClusterId(churnCard)).toBe('attrition');
+
+    // When rfm-1 was just shown (lastCardId = 'rfm-1'), rfm-2 shares cluster 'scoring' and gets an interference spacing penalty, so churn-1 is selected next!
+    const sel = engine.selectNextCard({
+      deck,
+      session,
+      allCards: [rfmCard1, rfmCard2, churnCard],
+      sessionStates: new Map(),
+      lastCardId: 'rfm-1',
+      cumulativeNewLearningSeconds: 0,
+      estimatedReviewSeconds: 15.0,
+      clock
+    });
+
+    expect(sel?.selectedCard.id).toBe('churn-1');
+  });
+
+  it('SCH-046: Combines FSRS utility with multi-factor signals via adaptive weights and dynamically calibrates weights from empirical prediction outcomes', () => {
+    const initialWeights = { ...DEFAULT_ADAPTIVE_WEIGHTS };
+
+    // Case 1: High-urgency card (low recent accuracy, high leech score, high complexity) is missed (result = 'incorrect') when FSRS predicted rNow = 0.90
+    const vulnerableCard = createCard({
+      learning_state: 'review',
+      review_count: 8,
+      correct_count: 4,
+      incorrect_count: 4,
+      lapse_count: 3,
+      streak_count: 0,
+      recent_accuracy: 0.35,
+      complexity_index: 0.80
+    });
+
+    const calibratedAfterMiss = calibrateAdaptiveWeights(initialWeights, vulnerableCard, 0.90, 'incorrect');
+    // Urgency predictors accurately warned of failure -> weights increase!
+    expect(calibratedAfterMiss.w_recent).toBeGreaterThan(initialWeights.w_recent);
+    expect(calibratedAfterMiss.w_leech).toBeGreaterThan(initialWeights.w_leech);
+    expect(calibratedAfterMiss.w_complexity).toBeGreaterThan(initialWeights.w_complexity);
+
+    // Case 2: High-streak complex card is answered correctly (result = 'correct')
+    const masteredComplexCard = createCard({
+      learning_state: 'review',
+      review_count: 10,
+      correct_count: 10,
+      incorrect_count: 0,
+      lapse_count: 0,
+      streak_count: 8,
+      recent_accuracy: 0.98,
+      complexity_index: 0.90
+    });
+
+    const calibratedAfterHit = calibrateAdaptiveWeights(initialWeights, masteredComplexCard, 0.85, 'correct');
+    // Streak discount validated -> w_streak increases; complexity warning was unnecessary -> w_complexity decays!
+    expect(calibratedAfterHit.w_streak).toBeGreaterThan(initialWeights.w_streak);
+    expect(calibratedAfterHit.w_complexity).toBeLessThan(initialWeights.w_complexity);
+
+    // Case 3: High-streak card unexpectedly missed -> w_streak decreases
+    const calibratedStreakLapse = calibrateAdaptiveWeights(initialWeights, masteredComplexCard, 0.90, 'incorrect');
+    expect(calibratedStreakLapse.w_streak).toBeLessThan(initialWeights.w_streak);
+  });
 });
+

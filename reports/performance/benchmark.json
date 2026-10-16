@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-16T16:57:40.345Z",
+  "generatedAt": "2026-10-16T17:24:25.364Z",
   "prf001": {
     "requirement": "PRF-001",
     "activity": "VA-PRF-001",
@@ -18,12 +18,12 @@
     },
     "thresholdMs": 500,
     "statistics": {
-      "minMs": 2.9358,
-      "medianMs": 3.5059,
-      "p95Ms": 4.5475,
-      "p99Ms": 6.4379,
-      "maxMs": 33.196,
-      "avgMs": 3.7021
+      "minMs": 3.2181,
+      "medianMs": 3.722,
+      "p95Ms": 4.4053,
+      "p99Ms": 4.7566,
+      "maxMs": 6.2951,
+      "avgMs": 3.7745
     },
     "passed": true
   },
@@ -39,24 +39,24 @@
     },
     "previewSeconds": {
       "samples": [
-        0.206,
-        0.18,
-        0.178,
-        0.19,
-        0.185
+        0.209,
+        0.176,
+        0.171,
+        0.183,
+        0.176
       ],
-      "min": 0.178,
-      "median": 0.185,
-      "p95": 0.206,
-      "max": 0.206,
+      "min": 0.171,
+      "median": 0.176,
+      "p95": 0.209,
+      "max": 0.209,
       "thresholdSeconds": 30,
       "passed": true
     },
     "commitSeconds": {
       "samples": [
-        12.616
+        12.291
       ],
-      "durationSeconds": 12.616,
+      "durationSeconds": 12.291,
       "thresholdSeconds": 30,
       "rowsCommitted": 10000,
       "passed": true

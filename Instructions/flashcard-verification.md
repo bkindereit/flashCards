@@ -268,9 +268,9 @@ Release verification passes only when:
 | VA-SCH-001 | SCH-001–009 | Inspect pinned version; run published/reference FSRS vectors and binary grade mappings using fixed clock. | Exact states and enum outputs match; numeric values meet documented tolerance. | Manifest and vector report. |
 | VA-SCH-002 | SCH-010–022 | Execute cohort fixtures and boundary tests for size, failures, retries, criterion, transition, and session counts. | Every expected state and eligibility result matches. | Unit/database report. |
 | VA-SCH-003 | SCH-023–028 | Execute 900-second session fixtures with fractions and workload values below, equal to, and above boundaries. | Allocation and suppression match exact boundary requirements. | Unit report. |
-| VA-SCH-004 | SCH-029–040 | Execute candidate queue, overdue, tie, deterministic, explanation, and no-write tests. | Selected IDs and reason codes match golden scenarios; untouched cards unchanged. | Golden outputs and query log. |
+| VA-SCH-004 | SCH-029–046 | Execute candidate queue, overdue, tie, deterministic, explanation, no-write, streak discounting, EWMA recent accuracy, leech/staleness boost, latency-independent structural complexity, semantic cluster spacing, and adaptive weight calibration tests. | Selected IDs, multi-factor priority scores, calibrated weights, and reason codes match golden scenarios; untouched cards unchanged. | Golden outputs and query log. |
 | VA-SCH-005 | TST-010–011 | Generate at least 10,000 valid histories using a recorded seed. | All invariants pass; failing seed would be retained and minimized. | Property-test report. |
-| VA-SCH-006 | Utility formula | Independently calculate `R_now`, `P0`, `Pg`, `Pa`, expected gain, and utility for golden vectors. | Application output matches independent calculation within `1e-9` absolute tolerance unless the pinned library documents a larger necessary tolerance. | Analysis worksheet/JSON. |
+| VA-SCH-006 | Utility formula, SCH-035, SCH-041–046 | Independently calculate `R_now`, `P0`, `Pg`, `Pa`, expected gain, base utility, multi-factor composite priority score, and online weight updates for golden vectors. | Application output matches independent calculation within `1e-9` absolute tolerance unless the pinned library documents a larger necessary tolerance. | Analysis worksheet/JSON. |
 
 ### 11.8 Review transaction activities
 

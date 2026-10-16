@@ -3,7 +3,7 @@
 ## 17.1 Identification & Provenance
 - **Application:** Adaptive Flashcard Application (PWA)
 - **Version:** `1.0.0`
-- **Commit SHA:** `f9235aec9c86046d590958250c6df4576e8fec3c` *(DIRTY - uncommitted changes present)*
+- **Commit SHA:** `0863e07db81e62eb5dbccc1a9b5d4c21ff421608` *(DIRTY - uncommitted changes present)*
 - **Applicable Specifications:** FCA-SRS-001 (SRS), FCA-VVP-001 (VVP)
 - **Execution Date:** 2026-10-16
 - **Verification Executor:** Antigravity Automated Verification Pipeline
@@ -17,8 +17,8 @@
 |---|---|
 | **Overall Result** | **BLOCKED** |
 | **Release Recommendation** | **DO NOT RELEASE** |
-| **Must Requirements** | Total: 222 \| Passed: 219 \| Blocked: 3 \| Not Run: 0 \| Failed: 0 |
-| **Automated Tests** | 320 tests (281 Vitest Unit, Component, Domain & PGlite Suite, 3 Performance Benchmarks (PRF-001, PRF-002), 15 Database Schema, RLS & RPC Tests (pgTAP via Supabase CLI), 21 End-to-End & Live Accessibility Suite (Playwright)) \| 320 Passed, 0 Failed |
+| **Must Requirements** | Total: 228 \| Passed: 225 \| Blocked: 3 \| Not Run: 0 \| Failed: 0 |
+| **Automated Tests** | 326 tests (287 Vitest Unit, Component, Domain & PGlite Suite, 3 Performance Benchmarks (PRF-001, PRF-002), 15 Database Schema, RLS & RPC Tests (pgTAP via Supabase CLI), 21 End-to-End & Live Accessibility Suite (Playwright)) \| 326 Passed, 0 Failed |
 | **Manual Activities** | Total: 4 \| Passed: 0 \| Not Run: 4 |
 | **Open Anomalies** | Severity 1: 0 \| Severity 2: 0 \| Severity 3: 0 |
 | **Approved Waivers** | 0 (Zero waivers granted) |
@@ -66,8 +66,8 @@
 ---
 
 ## 17.6 Requirement Compliance Matrix Summary
-- **Total Requirements Mapped:** 224 (222 Must, 2 Should)
-- **Passed Must:** 219
+- **Total Requirements Mapped:** 230 (228 Must, 2 Should)
+- **Passed Must:** 225
 - **Blocked Must:** 3 (`PRF-003`, `CIC-006`, `CIC-007`)
 - **Not Run Must:** 0
 - **Failed Must:** 0
@@ -77,7 +77,7 @@
 ---
 
 ## 17.7 Test-Suite Results
-- **Vitest Unit, Component, Domain & PGlite Suite**: passed (Total: 281, Passed: 281, Failed: 0)
+- **Vitest Unit, Component, Domain & PGlite Suite**: passed (Total: 287, Passed: 287, Failed: 0)
 - **Performance Benchmarks (PRF-001, PRF-002)**: passed (Total: 3, Passed: 3, Failed: 0)
 - **Database Schema, RLS & RPC Tests (pgTAP via Supabase CLI)**: passed (Total: 15, Passed: 15, Failed: 0)
 - **End-to-End & Live Accessibility Suite (Playwright)**: passed (Total: 21, Passed: 21, Failed: 0)
@@ -85,20 +85,20 @@
 ---
 
 ## 17.8 Coverage Results
-- **Overall First-Party Code:** **95.19% Statements** (Gate: >=85%), **84.72% Branches** (Gate: >=80%)
+- **Overall First-Party Code:** **95.41% Statements** (Gate: >=85%), **86.24% Branches** (Gate: >=80%)
 - **Core Domain Modules:**
-  - `src/domain/scheduler.ts`: 100% Statements / 91.58% Branches (Gate: >=95% / >=90%)
-  - `src/domain/fsrsService.ts`: 100% Statements / 92.3% Branches (Gate: >=95% / >=90%)
+  - `src/domain/scheduler.ts`: 100% Statements / 94.78% Branches (Gate: >=95% / >=90%)
+  - `src/domain/fsrsService.ts`: 100% Statements / 96.06% Branches (Gate: >=95% / >=90%)
   - `src/domain/normalization.ts`: 100% Statements / 100% Branches (Gate: >=95% / >=90%)
   - `src/domain/csvParser.ts`: 100% Statements / 94.38% Branches (Gate: >=95% / >=90%)
-  - `src/hooks/useStudySession.ts`: 99.45% Statements / 92.03% Branches (Gate: >=95% / >=90%)
+  - `src/hooks/useStudySession.ts`: 99.24% Statements / 92.37% Branches (Gate: >=95% / >=90%)
 
 ---
 
 ## 17.9 Performance Results
-- **PRF-001 (Next-Card Selection Latency (p95))**: **4.5475 ms** (Threshold: <= 500 ms) -> **PASSED**
-- **PRF-002-Preview (CSV 10k Preview Latency (max))**: **0.206 s** (Threshold: <= 30 s) -> **PASSED**
-- **PRF-002-Commit (CSV 10k Database Commit Latency)**: **12.616 s** (Threshold: <= 30 s) -> **PASSED**
+- **PRF-001 (Next-Card Selection Latency (p95))**: **4.4053 ms** (Threshold: <= 500 ms) -> **PASSED**
+- **PRF-002-Preview (CSV 10k Preview Latency (max))**: **0.209 s** (Threshold: <= 30 s) -> **PASSED**
+- **PRF-002-Commit (CSV 10k Database Commit Latency)**: **12.291 s** (Threshold: <= 30 s) -> **PASSED**
 
 ---
 
